@@ -1,0 +1,2484 @@
+<style>
+#NH{
+position:fixed;
+inset:0;
+width:100vw;
+height:100vh;
+height:100dvh;
+overflow:hidden;
+background:radial-gradient(circle at 50% 20%,#1d3440,#080b10 70%);
+color:#fff;
+font-family:Arial,sans-serif;
+z-index:999999;
+}
+
+#NH *{box-sizing:border-box;user-select:none;-webkit-tap-highlight-color:transparent}
+
+.nh-screen{
+position:absolute;
+inset:0;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:15px;
+transition:.25s;
+}
+
+.nh-hide{
+display:none!important;
+}
+
+.nh-panel{
+width:min(450px,94vw);
+max-height:92vh;
+overflow:auto;
+padding:28px 18px;
+border:1px solid rgba(255,255,255,.15);
+border-radius:30px;
+background:rgba(19,29,40,.97);
+box-shadow:0 20px 70px rgba(0,0,0,.7),0 0 30px rgba(102,252,241,.1);
+text-align:center;
+}
+
+.nh-title{
+font-size:clamp(2rem,9vw,3rem);
+font-weight:900;
+margin:0 0 10px;
+text-shadow:0 0 20px rgba(102,252,241,.5);
+}
+
+.nh-sub{
+color:#66fcf1;
+font-size:1.05rem;
+font-weight:bold;
+margin-bottom:25px;
+}
+
+.nh-btn{
+display:block;
+width:min(330px,90%);
+margin:12px auto;
+padding:16px 15px;
+border:0;
+border-radius:50px;
+background:linear-gradient(135deg,#45a29e,#66fcf1);
+color:#061013;
+font-size:1.05rem;
+font-weight:900;
+cursor:pointer;
+box-shadow:0 0 25px rgba(102,252,241,.25);
+}
+
+.nh-btn:active{
+transform:scale(.95);
+}
+
+.nh-btn.alt{
+background:linear-gradient(135deg,#41454b,#62666b);
+color:white;
+box-shadow:none;
+}
+
+.nh-high{
+margin-top:20px;
+color:#66fcf1;
+font-weight:bold;
+font-size:1.1rem;
+}
+
+.nh-lang-title{
+color:#9ca8b4;
+font-weight:bold;
+margin:20px 0 10px;
+}
+
+.nh-langs{
+display:flex;
+justify-content:center;
+gap:7px;
+flex-wrap:wrap;
+}
+
+.nh-lang{
+padding:10px 13px;
+border-radius:15px;
+border:1px solid rgba(255,255,255,.18);
+background:rgba(255,255,255,.06);
+color:#dce2e8;
+font-weight:bold;
+cursor:pointer;
+}
+
+.nh-lang.active{
+border-color:#66fcf1;
+color:#66fcf1;
+background:rgba(102,252,241,.12);
+}
+
+.nh-help{
+text-align:left;
+line-height:1.65;
+color:#ddd;
+}
+
+[dir="rtl"] .nh-help{
+text-align:right;
+}
+
+.nh-help b{
+color:#66fcf1;
+}
+
+.nh-section{
+font-size:1.9rem;
+color:#66fcf1;
+font-weight:900;
+margin-bottom:20px;
+}
+
+/* GAME */
+
+#NHGame{
+position:absolute;
+inset:0;
+overflow:hidden;
+background:
+radial-gradient(circle at 50% 35%,rgba(69,162,158,.12),transparent 40%),
+#070a0f;
+}
+
+#NHHud{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+z-index:20;
+padding:8px;
+padding-top:calc(8px + env(safe-area-inset-top));
+pointer-events:none;
+}
+
+.nh-top{
+width:min(850px,96vw);
+margin:auto;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:5px;
+padding:8px;
+border:1px solid rgba(102,252,241,.2);
+border-radius:20px;
+background:rgba(3,7,12,.9);
+backdrop-filter:blur(10px);
+}
+
+.nh-stat{
+text-align:center;
+font-size:.7rem;
+font-weight:bold;
+color:#c6cdd5;
+}
+
+.nh-value{
+display:block;
+font-size:1.25rem;
+color:#66fcf1;
+font-weight:900;
+margin-top:2px;
+text-shadow:0 0 12px rgba(102,252,241,.6);
+}
+
+#NHLives{
+color:#ff6688;
+font-size:.9rem;
+}
+
+#NHSPEED{
+position:absolute;
+top:calc(75px + env(safe-area-inset-top));
+left:12px;
+z-index:25;
+padding:5px 9px;
+border-radius:12px;
+background:rgba(0,0,0,.6);
+border:1px solid rgba(102,252,241,.2);
+font-size:.65rem;
+font-weight:bold;
+color:#aaa;
+}
+
+#NHSpeedValue{
+color:#66fcf1;
+}
+
+#NHMission{
+position:absolute;
+z-index:20;
+top:calc(105px + env(safe-area-inset-top));
+left:50%;
+transform:translateX(-50%);
+width:min(700px,92vw);
+padding:10px 13px;
+border:2px solid #66fcf1;
+border-radius:20px;
+background:rgba(18,29,39,.97);
+text-align:center;
+box-shadow:0 0 25px rgba(102,252,241,.2);
+}
+
+#NHMissionText{
+font-size:clamp(.9rem,4vw,1.3rem);
+font-weight:900;
+}
+
+#NHMissionDesc{
+margin-top:4px;
+font-size:.7rem;
+color:#aeb7c0;
+}
+
+#NHArena{
+position:absolute;
+left:0;
+right:0;
+bottom:0;
+top:185px;
+overflow:hidden;
+z-index:5;
+}
+
+.nh-target{
+position:absolute;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+border:2px solid #66fcf1;
+background:linear-gradient(135deg,rgba(69,162,158,.95),rgba(20,29,40,.98));
+color:#fff;
+font-weight:900;
+box-shadow:0 0 18px rgba(102,252,241,.4),inset 0 0 10px rgba(0,0,0,.5);
+touch-action:none;
+overflow:hidden;
+white-space:nowrap;
+z-index:5;
+}
+
+.nh-target.golden{
+border-color:#fff;
+background:linear-gradient(135deg,#f1c40f,#e67e22);
+color:#111;
+box-shadow:0 0 30px #f1c40f;
+}
+
+.nh-target.power{
+border-color:#fff;
+background:linear-gradient(135deg,#7d3c98,#9b59b6);
+font-size:28px!important;
+box-shadow:0 0 25px #9b59b6;
+}
+
+#NHCombo{
+position:absolute;
+z-index:30;
+top:calc(125px + env(safe-area-inset-top));
+right:12px;
+opacity:0;
+font-size:2rem;
+font-weight:900;
+color:#f1c40f;
+text-shadow:0 0 20px #f1c40f,2px 2px #000;
+transition:.2s;
+pointer-events:none;
+}
+
+#NHCombo.active{
+opacity:1;
+transform:scale(1.08);
+}
+
+#NHMute{
+position:absolute;
+z-index:50;
+right:14px;
+bottom:calc(15px + env(safe-area-inset-bottom));
+width:50px;
+height:50px;
+border-radius:50%;
+border:1px solid #66fcf1;
+background:rgba(0,0,0,.6);
+color:#fff;
+font-size:20px;
+}
+
+#NHCenter{
+position:absolute;
+z-index:100;
+top:52%;
+left:50%;
+transform:translate(-50%,-50%) scale(0);
+width:100%;
+text-align:center;
+font-size:clamp(2.5rem,12vw,4rem);
+font-weight:900;
+pointer-events:none;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+#NHMission{
+top:calc(105px + env(safe-area-inset-top));
+}
+
+#NHArena{
+top:185px;
+}
+
+#NHCombo{
+right:50%;
+transform:translateX(50%) scale(.5);
+}
+
+#NHCombo.active{
+transform:translateX(50%) scale(1.05);
+}
+
+}
+</style>
+
+
+<div id="NH" dir="ltr">
+
+<!-- START -->
+
+<div id="NHStart" class="nh-screen">
+
+<div class="nh-panel">
+
+<div class="nh-title">
+🔢 NUMBER HUNTER
+</div>
+
+<div id="NHSubtitle" class="nh-sub">
+Think Fast. Catch the Right Numbers!
+</div>
+
+<button
+class="nh-btn"
+onclick="NHShow('mode')"
+>
+▶ PLAY
+</button>
+
+<button
+class="nh-btn alt"
+onclick="NHShow('help')"
+>
+❓ HOW TO PLAY
+</button>
+
+<div class="nh-high">
+🏆 <span id="NHHighLabel">HIGH SCORE</span>:
+<span id="NHHigh">0</span>
+</div>
+
+<div class="nh-lang-title">
+<span id="NHLangTitle">Language</span>
+</div>
+
+<div class="nh-langs">
+
+<button class="nh-lang" onclick="NHLanguage('ar')">
+🇲🇦 العربية
+</button>
+
+<button class="nh-lang" onclick="NHLanguage('fr')">
+🇫🇷 Français
+</button>
+
+<button class="nh-lang active" onclick="NHLanguage('en')">
+🇬🇧 English
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- MODE -->
+
+<div id="NHMode" class="nh-screen nh-hide">
+
+<div class="nh-panel">
+
+<div id="NHModeTitle" class="nh-section">
+SELECT MODE
+</div>
+
+<button
+class="nh-btn"
+onclick="NHStartGame('quick')"
+>
+⏱️ <span id="NHQuick">QUICK HUNT</span>
+<br>
+<small id="NHQuickDesc">
+60 seconds • Max score
+</small>
+</button>
+
+<button
+class="nh-btn"
+onclick="NHStartGame('survival')"
+>
+❤️ <span id="NHSurvival">SURVIVAL</span>
+<br>
+<small id="NHSurvivalDesc">
+3 lives • Endless speed
+</small>
+</button>
+
+<button
+class="nh-btn alt"
+onclick="NHShow('start')"
+>
+← <span id="NHBack1">BACK</span>
+</button>
+
+</div>
+
+</div>
+
+
+<!-- HELP -->
+
+<div id="NHHelp" class="nh-screen nh-hide">
+
+<div class="nh-panel nh-help">
+
+<div
+id="NHHelpTitle"
+class="nh-section"
+style="text-align:center"
+>
+❓ HOW TO PLAY
+</div>
+
+<p id="H1">
+1️⃣ Read the <b>MISSION</b> at the top.
+</p>
+
+<p id="H2">
+2️⃣ Tap the numbers that match the mission.
+</p>
+
+<p id="H3">
+3️⃣ Wrong numbers break your combo.
+</p>
+
+<p id="H4">
+4️⃣ Build a 🔥 COMBO with correct answers.
+</p>
+
+<p id="H5">
+5️⃣ Catch 💣 ❄️ ❤️ ⚡ power-ups.
+</p>
+
+<p id="H6">
+6️⃣ The numbers start slowly and get faster.
+</p>
+
+<button
+class="nh-btn alt"
+onclick="NHShow('start')"
+>
+← <span id="NHBack2">BACK</span>
+</button>
+
+</div>
+
+</div>
+
+
+<!-- GAME -->
+
+<div id="NHGame" class="nh-hide">
+
+<div id="NHHud">
+
+<div class="nh-top">
+
+<div class="nh-stat">
+
+<span id="NHScoreLabel">
+SCORE
+</span>
+
+<span id="NHScore" class="nh-value">
+0
+</span>
+
+</div>
+
+<div
+id="NHTimeBox"
+class="nh-stat"
+>
+
+<span id="NHTimeLabel">
+TIME
+</span>
+
+<span id="NHTime" class="nh-value">
+60
+</span>
+
+</div>
+
+<div
+id="NHLivesBox"
+class="nh-stat"
+>
+
+<span id="NHLivesLabel">
+LIVES
+</span>
+
+<span id="NHLives" class="nh-value">
+❤️❤️❤️
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div id="NHSPEED">
+
+⚡ <span id="NHSPEEDLabel">SPEED</span>:
+
+<span id="NHSpeedValue">
+1.0×
+</span>
+
+</div>
+
+
+<div id="NHMission">
+
+<div id="NHMissionText">
+MISSION
+</div>
+
+<div id="NHMissionDesc">
+Find the correct numbers.
+</div>
+
+</div>
+
+
+<div id="NHCombo">
+🔥 x2
+</div>
+
+
+<div id="NHCenter"></div>
+
+
+<div id="NHArena"></div>
+
+
+<button
+id="NHMute"
+onclick="NHToggleMute()"
+>
+🔊
+</button>
+
+</div>
+
+
+<!-- GAME OVER -->
+
+<div id="NHOver" class="nh-screen nh-hide">
+
+<div class="nh-panel">
+
+<div
+id="NHGameOver"
+class="nh-title"
+style="color:#ff6688"
+>
+GAME OVER
+</div>
+
+<div
+id="NHRecord"
+style="
+display:none;
+color:#f1c40f;
+font-weight:900;
+font-size:1.2rem;
+margin:15px;
+"
+>
+🏆 NEW HIGH SCORE! 🏆
+</div>
+
+<div
+style="
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:8px;
+margin:20px 0;
+"
+>
+
+<div
+style="
+padding:12px;
+background:rgba(0,0,0,.3);
+border-radius:12px;
+"
+>
+
+<span id="EndScoreLabel">
+Score
+</span>
+
+<br>
+
+<b id="EndScore" style="color:#66fcf1">
+0
+</b>
+
+</div>
+
+
+<div
+style="
+padding:12px;
+background:rgba(0,0,0,.3);
+border-radius:12px;
+"
+>
+
+<span id="EndComboLabel">
+Best Combo
+</span>
+
+<br>
+
+<b id="EndCombo" style="color:#66fcf1">
+x0
+</b>
+
+</div>
+
+
+<div
+style="
+padding:12px;
+background:rgba(0,0,0,.3);
+border-radius:12px;
+"
+>
+
+<span id="EndCorrectLabel">
+Correct
+</span>
+
+<br>
+
+<b id="EndCorrect" style="color:#66fcf1">
+0
+</b>
+
+</div>
+
+
+<div
+style="
+padding:12px;
+background:rgba(0,0,0,.3);
+border-radius:12px;
+"
+>
+
+<span id="EndAccuracyLabel">
+Accuracy
+</span>
+
+<br>
+
+<b id="EndAccuracy" style="color:#66fcf1">
+0%
+</b>
+
+</div>
+
+</div>
+
+
+<button
+class="nh-btn"
+onclick="NHShow('mode')"
+>
+🔄 <span id="NHAgain">PLAY AGAIN</span>
+</button>
+
+<button
+class="nh-btn alt"
+onclick="NHShow('start')"
+>
+🏠 <span id="NHMain">MAIN MENU</span>
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+/* =========================================================
+NUMBER HUNTER
+BLOGGER SAFE JAVASCRIPT
+========================================================= */
+
+var NHState = {
+
+mode:"quick",
+playing:false,
+
+score:0,
+combo:0,
+bestCombo:0,
+
+correct:0,
+wrong:0,
+
+lives:3,
+time:60,
+
+elapsed:0,
+level:1,
+
+maxNumber:30,
+
+speed:55,
+spawnRate:1350,
+
+spawnTimer:0,
+missionTimer:0,
+timeCounter:0,
+
+targets:[],
+
+mission:null,
+
+animation:null,
+lastTime:0,
+
+multiplier:1,
+
+frozen:false
+
+};
+
+
+/* =========================================================
+LANGUAGES
+========================================================= */
+
+var NHLang="en";
+
+
+var NHText={
+
+en:{
+
+subtitle:"Think Fast. Catch the Right Numbers!",
+high:"HIGH SCORE",
+language:"Language",
+play:"▶ PLAY",
+how:"❓ HOW TO PLAY",
+mode:"SELECT MODE",
+quick:"QUICK HUNT",
+quickDesc:"60 seconds • Max score",
+survival:"SURVIVAL",
+survivalDesc:"3 lives • Endless speed",
+back:"BACK",
+score:"SCORE",
+time:"TIME",
+lives:"LIVES",
+speed:"SPEED",
+gameover:"GAME OVER",
+again:"PLAY AGAIN",
+main:"MAIN MENU",
+best:"Best Combo",
+correct:"Correct",
+accuracy:"Accuracy",
+record:"🏆 NEW HIGH SCORE! 🏆",
+
+helpTitle:"❓ HOW TO PLAY",
+
+help:[
+"1️⃣ Read the <b>MISSION</b> at the top.",
+"2️⃣ Tap the numbers that match the mission.",
+"3️⃣ Wrong numbers break your combo.",
+"4️⃣ Build a 🔥 COMBO with correct answers.",
+"5️⃣ Catch 💣 ❄️ ❤️ ⚡ power-ups.",
+"6️⃣ The numbers start slowly and get faster."
+],
+
+missions:{
+
+prime:["🔥 KILL PRIME NUMBERS","Numbers with exactly two positive divisors."],
+even:["⚡ KILL EVEN NUMBERS","Numbers divisible by 2."],
+odd:["🔥 KILL ODD NUMBERS","Numbers not divisible by 2."],
+div3:["✖️ KILL MULTIPLES OF 3","Numbers divisible by 3."],
+div4:["🔢 KILL MULTIPLES OF 4","Numbers divisible by 4."],
+div5:["⭐ KILL MULTIPLES OF 5","Numbers divisible by 5."],
+square:["🧠 KILL PERFECT SQUARES","Examples: 4, 9, 16, 25..."]
+
+}
+
+},
+
+
+fr:{
+
+subtitle:"Pense vite. Attrape les bons nombres !",
+high:"MEILLEUR SCORE",
+language:"Langue",
+play:"▶ JOUER",
+how:"❓ COMMENT JOUER",
+mode:"CHOISIR LE MODE",
+quick:"CHASSE RAPIDE",
+quickDesc:"60 secondes • Score maximum",
+survival:"SURVIE",
+survivalDesc:"3 vies • Vitesse croissante",
+back:"RETOUR",
+score:"SCORE",
+time:"TEMPS",
+lives:"VIES",
+speed:"VITESSE",
+gameover:"PARTIE TERMINÉE",
+again:"REJOUER",
+main:"MENU PRINCIPAL",
+best:"Meilleur combo",
+correct:"Corrects",
+accuracy:"Précision",
+record:"🏆 NOUVEAU RECORD ! 🏆",
+
+helpTitle:"❓ COMMENT JOUER",
+
+help:[
+"1️⃣ Lis la <b>MISSION</b> en haut.",
+"2️⃣ Touche les nombres qui correspondent à la mission.",
+"3️⃣ Un mauvais nombre casse ton combo.",
+"4️⃣ Construis un 🔥 COMBO avec les bonnes réponses.",
+"5️⃣ Attrape les bonus 💣 ❄️ ❤️ ⚡.",
+"6️⃣ Les nombres commencent lentement puis accélèrent."
+],
+
+missions:{
+
+prime:["🔥 ÉLIMINE LES NOMBRES PREMIERS","Nombres ayant exactement deux diviseurs positifs."],
+even:["⚡ ÉLIMINE LES NOMBRES PAIRS","Nombres divisibles par 2."],
+odd:["🔥 ÉLIMINE LES NOMBRES IMPAIRS","Nombres non divisibles par 2."],
+div3:["✖️ ÉLIMINE LES MULTIPLES DE 3","Nombres divisibles par 3."],
+div4:["🔢 ÉLIMINE LES MULTIPLES DE 4","Nombres divisibles par 4."],
+div5:["⭐ ÉLIMINE LES MULTIPLES DE 5","Nombres divisibles par 5."],
+square:["🧠 ÉLIMINE LES CARRÉS PARFAITS","Exemples : 4, 9, 16, 25..."]
+
+}
+
+},
+
+
+ar:{
+
+subtitle:"فكّر بسرعة، واقتنص الأعداد الصحيحة!",
+high:"أعلى نتيجة",
+language:"اللغة",
+play:"▶ العب الآن",
+how:"❓ طريقة اللعب",
+mode:"اختر نمط اللعب",
+quick:"⚡ الصيد السريع",
+quickDesc:"60 ثانية • حقق أكبر نتيجة",
+survival:"❤️ البقاء",
+survivalDesc:"3 أرواح • سرعة متزايدة",
+back:"رجوع",
+score:"النقاط",
+time:"الوقت",
+lives:"الأرواح",
+speed:"السرعة",
+gameover:"انتهت اللعبة",
+again:"العب من جديد",
+main:"القائمة الرئيسية",
+best:"أفضل سلسلة",
+correct:"الإجابات الصحيحة",
+accuracy:"الدقة",
+record:"🏆 رقم قياسي جديد! 🏆",
+
+helpTitle:"❓ طريقة اللعب",
+
+help:[
+"1️⃣ اقرأ <b>المهمة</b> الموجودة في الأعلى.",
+"2️⃣ اضغط على الأعداد التي تحقق المهمة.",
+"3️⃣ العدد الخاطئ يكسر السلسلة.",
+"4️⃣ اجمع إجابات صحيحة لبناء 🔥 سلسلة.",
+"5️⃣ التقط المكافآت 💣 ❄️ ❤️ ⚡.",
+"6️⃣ تبدأ الأعداد ببطء ثم تتسارع مع الوقت."
+],
+
+missions:{
+
+prime:["🔥 اقتل الأعداد الأولية","أعداد لها قاسمان موجبان فقط."],
+even:["⚡ اقتل الأعداد الزوجية","أعداد تقبل القسمة على 2."],
+odd:["🔥 اقتل الأعداد الفردية","أعداد لا تقبل القسمة على 2."],
+div3:["✖️ اقتل مضاعفات 3","أعداد تقبل القسمة على 3."],
+div4:["🔢 اقتل مضاعفات 4","أعداد تقبل القسمة على 4."],
+div5:["⭐ اقتل مضاعفات 5","أعداد تقبل القسمة على 5."],
+square:["🧠 اقتل المربعات الكاملة","مثل: 4، 9، 16، 25..."]
+
+}
+
+}
+
+};
+
+
+/* =========================================================
+SCREEN
+========================================================= */
+
+function NHShow(screen){
+
+document.getElementById("NHStart").classList.add("nh-hide");
+document.getElementById("NHMode").classList.add("nh-hide");
+document.getElementById("NHHelp").classList.add("nh-hide");
+document.getElementById("NHGame").classList.add("nh-hide");
+document.getElementById("NHOver").classList.add("nh-hide");
+
+if(screen==="start"){
+document.getElementById("NHStart").classList.remove("nh-hide");
+}
+
+if(screen==="mode"){
+document.getElementById("NHMode").classList.remove("nh-hide");
+}
+
+if(screen==="help"){
+document.getElementById("NHHelp").classList.remove("nh-hide");
+}
+
+if(screen==="game"){
+document.getElementById("NHGame").classList.remove("nh-hide");
+}
+
+if(screen==="over"){
+document.getElementById("NHOver").classList.remove("nh-hide");
+}
+
+}
+
+
+/* =========================================================
+LANGUAGE
+========================================================= */
+
+function NHLanguage(lang){
+
+NHLang=lang;
+
+try{
+localStorage.setItem("NHLanguage",lang);
+}catch(e){}
+
+NHApplyLanguage();
+
+}
+
+
+function NHApplyLanguage(){
+
+var t=NHText[NHLang];
+
+var rtl=NHLang==="ar";
+
+document.getElementById("NH").dir=rtl?"rtl":"ltr";
+
+document.getElementById("NHSubtitle").innerHTML=t.subtitle;
+document.getElementById("NHHighLabel").innerHTML=t.high;
+document.getElementById("NHLangTitle").innerHTML=t.language;
+
+document.querySelectorAll(".nh-lang").forEach(function(b){
+b.classList.remove("active");
+});
+
+var buttons=document.querySelectorAll(".nh-lang");
+
+if(NHLang==="ar")buttons[0].classList.add("active");
+if(NHLang==="fr")buttons[1].classList.add("active");
+if(NHLang==="en")buttons[2].classList.add("active");
+
+document.getElementById("NHModeTitle").innerHTML=t.mode;
+document.getElementById("NHQuick").innerHTML=t.quick;
+document.getElementById("NHQuickDesc").innerHTML=t.quickDesc;
+document.getElementById("NHSurvival").innerHTML=t.survival;
+document.getElementById("NHSurvivalDesc").innerHTML=t.survivalDesc;
+
+document.getElementById("NHBack1").innerHTML=t.back;
+document.getElementById("NHBack2").innerHTML=t.back;
+
+document.getElementById("NHScoreLabel").innerHTML=t.score;
+document.getElementById("NHTimeLabel").innerHTML=t.time;
+document.getElementById("NHLivesLabel").innerHTML=t.lives;
+document.getElementById("NHSPEEDLabel").innerHTML=t.speed;
+
+document.getElementById("NHGameOver").innerHTML=t.gameover;
+document.getElementById("NHAgain").innerHTML=t.again;
+document.getElementById("NHMain").innerHTML=t.main;
+
+document.getElementById("EndScoreLabel").innerHTML=t.score;
+document.getElementById("EndComboLabel").innerHTML=t.best;
+document.getElementById("EndCorrectLabel").innerHTML=t.correct;
+document.getElementById("EndAccuracyLabel").innerHTML=t.accuracy;
+document.getElementById("NHRecord").innerHTML=t.record;
+
+document.getElementById("NHHelpTitle").innerHTML=t.helpTitle;
+
+for(var i=0;i<6;i++){
+document.getElementById("H"+(i+1)).innerHTML=t.help[i];
+}
+
+if(NHState.mission){
+NHUpdateMission();
+}
+
+}
+
+
+/* =========================================================
+MATH
+========================================================= */
+
+function NHPrime(n){
+
+if(n<2)return false;
+
+if(n===2)return true;
+
+if(n%2===0)return false;
+
+for(var i=3;i*i<=n;i+=2){
+if(n%i===0)return false;
+}
+
+return true;
+
+}
+
+
+function NHSquare(n){
+
+var s=Math.sqrt(n);
+
+return s===Math.floor(s);
+
+}
+
+
+/* =========================================================
+MISSIONS
+========================================================= */
+
+function NHNewMission(){
+
+var missions=[
+
+{
+id:"prime",
+check:function(n){return NHPrime(n);}
+},
+
+{
+id:"even",
+check:function(n){return n%2===0;}
+},
+
+{
+id:"odd",
+check:function(n){return n%2!==0;}
+},
+
+{
+id:"div3",
+check:function(n){return n%3===0;}
+},
+
+{
+id:"div4",
+check:function(n){return n%4===0;}
+},
+
+{
+id:"div5",
+check:function(n){return n%5===0;}
+},
+
+{
+id:"square",
+check:function(n){return NHSquare(n);}
+}
+
+];
+
+
+var m=missions[
+Math.floor(Math.random()*missions.length)
+];
+
+
+NHState.mission=m;
+
+NHState.missionTimer=9000;
+
+NHUpdateMission();
+
+}
+
+
+function NHUpdateMission(){
+
+var t=NHText[NHLang];
+
+var m=NHState.mission;
+
+if(t.missions[m.id]){
+
+document.getElementById("NHMissionText").innerHTML=
+t.missions[m.id][0];
+
+document.getElementById("NHMissionDesc").innerHTML=
+t.missions[m.id][1];
+
+}
+
+}
+
+
+/* =========================================================
+START GAME
+========================================================= */
+
+function NHStartGame(mode){
+
+NHState.mode=mode;
+NHState.playing=true;
+
+NHState.score=0;
+NHState.combo=0;
+NHState.bestCombo=0;
+NHState.correct=0;
+NHState.wrong=0;
+
+NHState.lives=3;
+NHState.time=60;
+
+NHState.elapsed=0;
+NHState.level=1;
+
+NHState.maxNumber=30;
+
+NHState.speed=55;
+NHState.spawnRate=1350;
+
+NHState.spawnTimer=200;
+NHState.missionTimer=0;
+NHState.timeCounter=0;
+
+NHState.multiplier=1;
+NHState.frozen=false;
+
+NHClearArena();
+
+document.getElementById("NHTimeBox").style.display=
+mode==="quick"?"block":"none";
+
+document.getElementById("NHLivesBox").style.display=
+mode==="survival"?"block":"none";
+
+NHShow("game");
+
+NHNewMission();
+
+NHUpdateHUD();
+
+NHSpawn();
+
+NHState.lastTime=performance.now();
+
+if(NHState.animation){
+cancelAnimationFrame(NHState.animation);
+}
+
+NHState.animation=
+requestAnimationFrame(NHLoop);
+
+}
+
+
+/* =========================================================
+GAME LOOP
+========================================================= */
+
+function NHLoop(now){
+
+if(!NHState.playing)return;
+
+var dt=now-NHState.lastTime;
+
+NHState.lastTime=now;
+
+if(dt>100)dt=16;
+
+dt=Math.min(dt,50);
+
+if(!NHState.frozen){
+
+NHState.elapsed+=dt;
+
+
+/* SPEED INCREASE */
+
+var timeMultiplier=
+1+
+Math.min(
+1.8,
+NHState.elapsed/60000*1.8
+);
+
+var levelMultiplier=
+1+
+(NHState.level-1)*.10;
+
+NHState.speed=
+55*
+timeMultiplier*
+levelMultiplier;
+
+
+/* SPAWN SPEED */
+
+NHState.spawnRate=
+Math.max(
+430,
+1350-
+NHState.elapsed*6-
+(NHState.level-1)*45
+);
+
+
+/* SPEED DISPLAY */
+
+document.getElementById("NHSpeedValue").innerHTML=
+(NHState.speed/55).toFixed(1)+"×";
+
+
+/* SPAWN */
+
+NHState.spawnTimer-=dt;
+
+if(NHState.spawnTimer<=0){
+
+NHSpawn();
+
+NHState.spawnTimer=NHState.spawnRate;
+
+}
+
+
+/* MISSION */
+
+NHState.missionTimer-=dt;
+
+if(NHState.missionTimer<=0){
+
+NHNewMission();
+
+}
+
+
+/* TIMER */
+
+if(NHState.mode==="quick"){
+
+NHState.timeCounter+=dt;
+
+if(NHState.timeCounter>=1000){
+
+NHState.timeCounter-=1000;
+
+NHState.time--;
+
+NHUpdateHUD();
+
+if(NHState.time<=0){
+
+NHEndGame();
+
+return;
+
+}
+
+}
+
+
+/* TARGET MOVEMENT */
+
+var arenaHeight=
+document.getElementById("NHArena").clientHeight;
+
+for(
+var i=NHState.targets.length-1;
+i>=0;
+i--
+){
+
+var target=NHState.targets[i];
+
+target.y+=
+target.speed*
+dt/
+1000;
+
+target.el.style.transform=
+"translate3d("+
+target.x+
+"px,"+
+target.y+
+"px,0)";
+
+
+if(
+target.y>
+arenaHeight+
+target.size+
+10
+){
+
+if(
+target.correct &&
+!target.destroyed
+){
+
+NHState.combo=0;
+
+if(NHState.mode==="survival"){
+
+NHLoseLife();
+
+if(!NHState.playing)return;
+
+}else{
+
+NHState.score=
+Math.max(
+0,
+NHState.score-50
+);
+
+}
+
+NHUpdateHUD();
+
+}
+
+NHDestroy(target,false);
+
+}
+
+}
+
+}
+
+NHState.animation=
+requestAnimationFrame(NHLoop);
+
+}
+
+
+/* =========================================================
+SPAWN
+========================================================= */
+
+function NHSpawn(){
+
+if(!NHState.playing)return;
+
+var arena=
+document.getElementById("NHArena");
+
+var width=arena.clientWidth;
+
+var power=
+Math.random()<.05;
+
+var target={
+x:0,
+y:0,
+size:64,
+speed:NHState.speed*(.85+Math.random()*.3),
+correct:false,
+power:false,
+destroyed:false,
+el:null
+};
+
+
+/* POWER */
+
+if(power){
+
+target.power=true;
+target.size=68;
+
+target.powerType=
+NHState.mode==="survival"
+?
+["💣","❄️","❤️"][Math.floor(Math.random()*3)]
+:
+["💣","❄️","⚡"][Math.floor(Math.random()*3)];
+
+target.el=document.createElement("div");
+
+target.el.className="nh-target power";
+
+target.el.innerHTML=target.powerType;
+
+target.el.style.width="68px";
+target.el.style.height="68px";
+target.el.style.fontSize="28px";
+
+}
+
+
+/* NUMBER */
+
+else{
+
+target.el=document.createElement("div");
+
+target.el.className="nh-target";
+
+target.el.style.width=
+target.size+"px";
+
+target.el.style.height=
+target.size+"px";
+
+target.el.style.fontSize=
+NHState.maxNumber>=100
+?
+"20px"
+:
+"25px";
+
+
+var want=
+Math.random()<.45;
+
+var number=1;
+
+var attempts=0;
+
+do{
+
+number=
+1+
+Math.floor(
+Math.random()*
+NHState.maxNumber
+);
+
+attempts++;
+
+}
+while(
+NHState.mission &&
+NHState.mission.check(number)!==want &&
+attempts<100
+);
+
+target.number=number;
+
+target.correct=
+NHState.mission.check(number);
+
+target.el.innerHTML=number;
+
+
+/* GOLD */
+
+if(
+target.correct &&
+Math.random()<.015
+){
+
+target.el.classList.add("golden");
+target.golden=true;
+
+}
+
+}
+
+
+/* =====================================================
+CRITICAL POSITION FIX
+===================================================== */
+
+var padding=10;
+
+var maxX=
+Math.max(
+padding,
+width-
+target.size-
+padding
+);
+
+target.x=
+padding+
+Math.random()*
+Math.max(
+0,
+maxX-padding
+);
+
+target.y=
+-target.size-5;
+
+
+/* =====================================================
+CLICK
+===================================================== */
+
+target.el.onclick=function(e){
+
+if(e)e.stopPropagation();
+
+NHHit(target);
+
+};
+
+
+/* ADD */
+
+arena.appendChild(target.el);
+
+NHState.targets.push(target);
+
+target.el.style.transform=
+"translate3d("+
+target.x+
+"px,"+
+target.y+
+"px,0)";
+
+}
+
+
+/* =========================================================
+HIT
+========================================================= */
+
+function NHHit(t){
+
+if(
+!NHState.playing ||
+t.destroyed
+)return;
+
+t.destroyed=true;
+
+var r=t.el.getBoundingClientRect();
+
+var x=r.left+r.width/2;
+var y=r.top+r.height/2;
+
+
+/* POWER */
+
+if(t.power){
+
+NHPower(
+t.powerType,
+x,
+y
+);
+
+NHDestroy(t,true);
+
+return;
+
+}
+
+
+/* CORRECT */
+
+if(t.correct){
+
+NHState.correct++;
+
+NHState.combo++;
+
+if(
+NHState.combo>
+NHState.bestCombo
+){
+
+NHState.bestCombo=
+NHState.combo;
+
+}
+
+var points=
+t.golden
+?
+1000
+:
+100;
+
+points*=
+Math.min(
+10,
+1+
+Math.floor(
+NHState.combo/5
+)
+);
+
+points*=
+NHState.multiplier;
+
+NHState.score+=Math.round(points);
+
+NHFloat(
+"+"+Math.round(points),
+x,
+y,
+"#2ecc71"
+);
+
+NHParticles(
+x,
+y,
+"#2ecc71",
+12
+);
+
+NHSoundCorrect();
+
+if(NHState.combo===5){
+
+NHCenterMessage(
+"🔥 ON FIRE!",
+"#f1c40f"
+);
+
+}
+
+if(NHState.combo===10){
+
+NHCenterMessage(
+"🚀 UNSTOPPABLE!",
+"#ff6688"
+);
+
+}
+
+}
+
+
+/* WRONG */
+
+else{
+
+NHState.wrong++;
+
+NHState.combo=0;
+
+NHFloat(
+"❌ WRONG",
+x,
+y,
+"#ff3366"
+);
+
+NHParticles(
+x,
+y,
+"#ff3366",
+15
+);
+
+NHSoundWrong();
+
+if(NHState.mode==="survival"){
+
+NHLoseLife();
+
+if(!NHState.playing)return;
+
+}else{
+
+NHState.score=
+Math.max(
+0,
+NHState.score-200
+);
+
+}
+
+}
+
+
+NHUpdateHUD();
+
+NHCheckLevel();
+
+NHDestroy(t,true);
+
+}
+
+
+/* =========================================================
+POWER
+========================================================= */
+
+function NHPower(type,x,y){
+
+NHSoundPower();
+
+
+if(type==="💣"){
+
+NHFloat("💥 BOOM!",x,y,"#fff");
+
+var copy=NHState.targets.slice();
+
+copy.forEach(function(t){
+
+if(
+!t.correct &&
+!t.power &&
+!t.destroyed
+){
+
+t.destroyed=true;
+
+NHState.score+=50;
+
+NHDestroy(t,true);
+
+}
+
+});
+
+}
+
+
+if(type==="❄️"){
+
+NHFloat(
+"❄️ FREEZE!",
+x,
+y,
+"#66ffff"
+);
+
+NHState.frozen=true;
+
+setTimeout(function(){
+
+NHState.frozen=false;
+
+},3000);
+
+}
+
+
+if(type==="❤️"){
+
+NHFloat(
+"+1 LIFE",
+x,
+y,
+"#ff6688"
+);
+
+NHState.lives=
+Math.min(
+5,
+NHState.lives+1
+);
+
+NHUpdateHUD();
+
+}
+
+
+if(type==="⚡"){
+
+NHFloat(
+"⚡ DOUBLE SCORE!",
+x,
+y,
+"#f1c40f"
+);
+
+NHState.multiplier=2;
+
+setTimeout(function(){
+
+NHState.multiplier=1;
+
+},5000);
+
+}
+
+}
+
+
+/* =========================================================
+DESTROY
+========================================================= */
+
+function NHDestroy(t,animate){
+
+var index=
+NHState.targets.indexOf(t);
+
+if(index!==-1){
+
+NHState.targets.splice(
+index,
+1
+);
+
+}
+
+if(!t.el)return;
+
+if(!t.el.parentNode)return;
+
+if(animate){
+
+t.el.style.transition=
+"transform .18s,opacity .18s";
+
+t.el.style.transform=
+"translate3d("+
+t.x+
+"px,"+
+t.y+
+"px,0) scale(1.5)";
+
+t.el.style.opacity="0";
+
+setTimeout(function(){
+
+if(t.el.parentNode)t.el.remove();
+
+},200);
+
+}else{
+
+t.el.remove();
+
+}
+
+}
+
+
+/* =========================================================
+LIFE
+========================================================= */
+
+function NHLoseLife(){
+
+NHState.lives--;
+
+if(NHState.lives<=0){
+
+NHState.lives=0;
+
+NHUpdateHUD();
+
+NHEndGame();
+
+}
+
+}
+
+
+/* =========================================================
+LEVEL
+========================================================= */
+
+function NHCheckLevel(){
+
+var level=
+Math.floor(
+NHState.score/2000
+)+1;
+
+if(level>NHState.level){
+
+NHState.level=level;
+
+NHState.maxNumber=
+Math.min(
+1000,
+30+
+(NHState.level-1)*25
+);
+
+NHCenterMessage(
+"LEVEL "+NHState.level,
+"#66fcf1"
+);
+
+}
+
+}
+
+
+/* =========================================================
+HUD
+========================================================= */
+
+function NHUpdateHUD(){
+
+document.getElementById("NHScore").innerHTML=
+NHState.score;
+
+document.getElementById("NHTime").innerHTML=
+Math.max(0,NHState.time);
+
+var hearts="";
+
+for(
+var i=0;
+i<NHState.lives;
+i++
+){
+
+hearts+="❤️";
+
+}
+
+document.getElementById("NHLives").innerHTML=
+hearts||"💔";
+
+var combo=
+document.getElementById("NHCombo");
+
+if(NHState.combo>=2){
+
+combo.innerHTML=
+"🔥 x"+NHState.combo;
+
+combo.classList.add("active");
+
+}else{
+
+combo.classList.remove("active");
+
+}
+
+}
+
+
+/* =========================================================
+FLOATING TEXT
+========================================================= */
+
+function NHFloat(text,x,y,color){
+
+var e=document.createElement("div");
+
+e.innerHTML=text;
+
+e.style.position="fixed";
+e.style.left=x+"px";
+e.style.top=y+"px";
+e.style.zIndex="9999999";
+e.style.pointerEvents="none";
+e.style.fontSize="22px";
+e.style.fontWeight="900";
+e.style.color=color;
+e.style.textShadow="2px 2px #000";
+
+document.body.appendChild(e);
+
+e.animate(
+[
+{
+transform:"translate(-50%,-50%)",
+opacity:1
+},
+{
+transform:"translate(-50%,-150%)",
+opacity:0
+}
+],
+{
+duration:800
+}
+).onfinish=function(){
+
+e.remove();
+
+};
+
+}
+
+
+/* =========================================================
+CENTER
+========================================================= */
+
+function NHCenterMessage(text,color){
+
+var e=
+document.getElementById("NHCenter");
+
+e.innerHTML=text;
+e.style.color=color;
+
+e.animate(
+[
+{
+transform:"translate(-50%,-50%) scale(0)",
+opacity:0
+},
+{
+transform:"translate(-50%,-50%) scale(1.1)",
+opacity:1
+},
+{
+transform:"translate(-50%,-50%) scale(0)",
+opacity:0
+}
+],
+{
+duration:1100
+}
+);
+
+}
+
+
+/* =========================================================
+PARTICLES
+========================================================= */
+
+function NHParticles(x,y,color,count){
+
+for(
+var i=0;
+i<count;
+i++
+){
+
+var p=document.createElement("div");
+
+p.style.position="fixed";
+p.style.left=x+"px";
+p.style.top=y+"px";
+p.style.width="7px";
+p.style.height="7px";
+p.style.borderRadius="50%";
+p.style.background=color;
+p.style.zIndex="9999999";
+
+var a=Math.random()*Math.PI*2;
+
+var d=40+Math.random()*70;
+
+var dx=Math.cos(a)*d;
+var dy=Math.sin(a)*d;
+
+document.body.appendChild(p);
+
+p.animate(
+[
+{
+transform:"translate(-50%,-50%)",
+opacity:1
+},
+{
+transform:
+"translate(calc(-50% + "+
+dx+
+"px),calc(-50% + "+
+dy+
+"px))",
+opacity:0
+}
+],
+{
+duration:500+Math.random()*400
+}
+).onfinish=function(){
+
+p.remove();
+
+};
+
+}
+
+}
+
+
+/* =========================================================
+AUDIO
+========================================================= */
+
+var NHMuted=false;
+var NHAudio=null;
+
+
+function NHInitAudio(){
+
+if(NHMuted)return;
+
+try{
+
+if(!NHAudio){
+
+NHAudio=
+new(
+window.AudioContext||
+window.webkitAudioContext
+)();
+
+}
+
+if(NHAudio.state==="suspended"){
+
+NHAudio.resume();
+
+}
+
+}catch(e){}
+
+}
+
+
+function NHTone(freq,duration,type){
+
+if(NHMuted)return;
+
+NHInitAudio();
+
+if(!NHAudio)return;
+
+try{
+
+var o=NHAudio.createOscillator();
+
+var g=NHAudio.createGain();
+
+o.type=type||"sine";
+
+o.frequency.value=freq;
+
+g.gain.setValueAtTime(
+.07,
+NHAudio.currentTime
+);
+
+g.gain.exponentialRampToValueAtTime(
+.001,
+NHAudio.currentTime+duration
+);
+
+o.connect(g);
+g.connect(NHAudio.destination);
+
+o.start();
+
+o.stop(
+NHAudio.currentTime+duration
+);
+
+}catch(e){}
+
+}
+
+
+function NHSoundCorrect(){
+
+NHTone(700,.08);
+
+setTimeout(function(){
+
+NHTone(1050,.1);
+
+},50);
+
+}
+
+
+function NHSoundWrong(){
+
+NHTone(180,.25,"sawtooth");
+
+}
+
+
+function NHSoundPower(){
+
+NHTone(900,.08,"triangle");
+
+setTimeout(function(){
+
+NHTone(1200,.1,"triangle");
+
+},70);
+
+}
+
+
+function NHToggleMute(){
+
+NHMuted=!NHMuted;
+
+document.getElementById("NHMute").innerHTML=
+NHMuted?"🔇":"🔊";
+
+if(!NHMuted){
+
+NHInitAudio();
+
+NHTone(600,.08);
+
+}
+
+}
+
+
+/* =========================================================
+GAME OVER
+========================================================= */
+
+function NHEndGame(){
+
+if(!NHState.playing)return;
+
+NHState.playing=false;
+
+if(NHState.animation){
+
+cancelAnimationFrame(
+NHState.animation
+);
+
+}
+
+document.getElementById("EndScore").innerHTML=
+NHState.score;
+
+document.getElementById("EndCombo").innerHTML=
+"x"+NHState.bestCombo;
+
+document.getElementById("EndCorrect").innerHTML=
+NHState.correct;
+
+var total=
+NHState.correct+
+NHState.wrong;
+
+var accuracy=
+total?
+Math.round(
+NHState.correct/
+total*
+100
+):
+0;
+
+document.getElementById("EndAccuracy").innerHTML=
+accuracy+"%";
+
+
+var old=NHGetHighScore();
+
+if(
+NHState.score>old &&
+NHState.score>0
+){
+
+NHSetHighScore(
+NHState.score
+);
+
+document.getElementById("NHRecord").style.display=
+"block";
+
+}else{
+
+document.getElementById("NHRecord").style.display=
+"none";
+
+}
+
+NHClearArena();
+
+NHShow("over");
+
+NHRefreshHigh();
+
+}
+
+
+/* =========================================================
+CLEAR
+========================================================= */
+
+function NHClearArena(){
+
+var arena=
+document.getElementById("NHArena");
+
+var children=
+arena.querySelectorAll(".nh-target");
+
+for(
+var i=0;
+i<children.length;
+i++
+){
+
+children[i].remove();
+
+}
+
+NHState.targets=[];
+
+}
+
+
+/* =========================================================
+HIGH SCORE
+========================================================= */
+
+function NHGetHighScore(){
+
+try{
+
+return parseInt(
+localStorage.getItem(
+"NHHighScore"
+)||"0",
+10
+);
+
+}catch(e){
+
+return 0;
+
+}
+
+}
+
+
+function NHSetHighScore(value){
+
+try{
+
+localStorage.setItem(
+"NHHighScore",
+String(value)
+);
+
+}catch(e){}
+
+}
+
+
+function NHRefreshHigh(){
+
+document.getElementById("NHHigh").innerHTML=
+NHGetHighScore();
+
+}
+
+
+/* =========================================================
+RESIZE
+========================================================= */
+
+window.addEventListener(
+"resize",
+function(){
+
+if(!NHState.playing)return;
+
+var arena=
+document.getElementById("NHArena");
+
+var width=arena.clientWidth;
+
+NHState.targets.forEach(function(t){
+
+var maxX=
+Math.max(
+10,
+width-t.size-10
+);
+
+if(t.x>maxX)t.x=maxX;
+if(t.x<10)t.x=10;
+
+});
+
+}
+);
+
+
+/* =========================================================
+INIT
+========================================================= */
+
+try{
+
+var saved=
+localStorage.getItem("NHLanguage");
+
+if(saved==="ar"||
+saved==="fr"||
+saved==="en"){
+
+NHLang=saved;
+
+}
+
+}catch(e){}
+
+NHApplyLanguage();
+
+NHRefreshHigh();
+
+NHShow("start");
+
+</script>
