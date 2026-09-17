@@ -1,668 +1,1614 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="theme-color" content="#f7f9fd">
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,
+           initial-scale=1,
+           maximum-scale=1,
+           user-scalable=no,
+           viewport-fit=cover"
+>
+
+<meta name="theme-color" content="#f6f8fd">
+
 <title>NUMBER HUNTER — IA Math</title>
 
 <style>
+
+/* =========================================================
+   IA MATH — NUMBER HUNTER
+   DESIGN SYSTEM
+========================================================= */
+
 :root{
   --bg:#f6f8fd;
-  --surface:#fff;
-  --surface2:#f1f5ff;
-  --primary:#2864d7;
-  --primary2:#3b82f6;
+  --surface:#ffffff;
+  --surface-soft:#f1f5ff;
+
+  --blue:#2864d7;
+  --blue-dark:#2459b7;
+  --blue-light:#eaf2ff;
+
   --purple:#8554e8;
-  --purple2:#a06bea;
+  --purple-light:#f0e8ff;
+
   --text:#18243a;
   --muted:#718096;
+
   --border:#dfe7f5;
+
   --success:#17a673;
-  --danger:#e34d5b;
+  --success-light:#e9f9f2;
+
+  --danger:#df4d59;
+  --danger-light:#fff0f2;
+
   --gold:#f2b632;
-  --shadow:0 14px 40px rgba(42,76,130,.12);
+
+  --shadow:
+    0 14px 40px rgba(42,76,130,.12);
+
+  --shadow-small:
+    0 7px 20px rgba(42,76,130,.10);
 }
+
 
 *{
   box-sizing:border-box;
 }
 
-html,body{
+
+html,
+body{
+
   margin:0;
+
   width:100%;
   height:100%;
+
   overflow:hidden;
+
   background:var(--bg);
+
   color:var(--text);
-  font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;
+
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Tahoma,
+    Arial,
+    sans-serif;
+
   touch-action:none;
+
+  -webkit-user-select:none;
+  user-select:none;
 }
+
 
 button{
+
   font:inherit;
+
   border:0;
+
   cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
+
+  -webkit-tap-highlight-color:
+    transparent;
+
+  touch-action:manipulation;
+
 }
+
+
+/* =========================================================
+   APP
+========================================================= */
 
 #app{
+
+  position:relative;
+
   width:100%;
   height:100%;
-  position:relative;
+
   overflow:hidden;
+
 }
 
+
+/* =========================================================
+   SCREENS
+========================================================= */
+
 .screen{
+
   position:absolute;
+
   inset:0;
+
   display:none;
+
   overflow:auto;
+
   padding:
     env(safe-area-inset-top)
     16px
     env(safe-area-inset-bottom);
+
 }
+
 
 .screen.active{
+
   display:flex;
+
   flex-direction:column;
+
 }
+
 
 .shell{
+
   width:min(100%,760px);
+
   margin:auto;
-  padding:18px 0 24px;
+
+  padding:
+    16px 0
+    24px;
+
 }
+
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 .brand{
+
   display:flex;
+
   align-items:center;
+
   justify-content:space-between;
+
   gap:12px;
-  margin-bottom:18px;
+
+  margin-bottom:16px;
+
 }
+
+
+.brand-info{
+
+  text-align:right;
+
+}
+
 
 .brand-title{
-  font-weight:900;
-  font-size:clamp(24px,7vw,38px);
-  letter-spacing:.5px;
-  color:#234e9e;
+
+  color:var(--blue-dark);
+
+  font-weight:950;
+
+  font-size:
+    clamp(25px,7vw,38px);
+
+  line-height:1.1;
+
 }
+
 
 .brand-sub{
-  font-size:12px;
+
   color:var(--muted);
-  margin-top:2px;
+
+  font-size:12px;
+
+  font-weight:700;
+
+  margin-top:4px;
+
 }
 
-.logo{
-  width:54px;
-  height:54px;
-  border-radius:17px;
-  background:linear-gradient(135deg,#1970e9,#1745bd);
-  display:grid;
-  place-items:center;
-  color:white;
-  font-weight:1000;
-  font-size:20px;
-  box-shadow:0 8px 20px rgba(40,100,215,.24);
-}
-
-.icon-btn{
-  width:48px;
-  height:48px;
-  border-radius:16px;
-  background:#fff;
-  border:1px solid var(--border);
-  color:var(--text);
-  box-shadow:0 7px 20px rgba(42,76,130,.08);
-  font-size:21px;
-}
 
 .top-actions{
+
   display:flex;
+
   gap:8px;
-  align-items:center;
+
 }
+
+
+.icon-btn{
+
+  width:48px;
+  height:48px;
+
+  border-radius:16px;
+
+  background:#fff;
+
+  border:1px solid var(--border);
+
+  color:var(--text);
+
+  box-shadow:var(--shadow-small);
+
+  font-size:20px;
+
+}
+
+
+.icon-btn:active{
+
+  transform:scale(.94);
+
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
 
 .hero{
-  background:linear-gradient(
-    135deg,
-    #fff 0%,
-    #f4f8ff 62%,
-    #f7f1ff 100%
-  );
-  border:1px solid var(--border);
-  border-radius:30px;
-  padding:25px 20px;
-  text-align:center;
-  box-shadow:var(--shadow);
+
   position:relative;
+
   overflow:hidden;
+
+  padding:25px 18px;
+
+  text-align:center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #f3f8ff 60%,
+      #f7f1ff 100%
+    );
+
+  border:
+    1px solid var(--border);
+
+  border-radius:30px;
+
+  box-shadow:var(--shadow);
+
 }
 
-.hero:after{
+
+.hero::after{
+
   content:"";
+
   position:absolute;
-  width:180px;
-  height:180px;
+
+  width:190px;
+  height:190px;
+
   border-radius:50%;
+
   background:#dceaff;
+
   opacity:.45;
+
   left:-80px;
-  bottom:-100px;
+  bottom:-110px;
+
 }
+
+
+.game-logo{
+
+  width:64px;
+  height:64px;
+
+  margin:0 auto 12px;
+
+  border-radius:20px;
+
+  display:grid;
+
+  place-items:center;
+
+  color:#fff;
+
+  font-size:21px;
+
+  font-weight:1000;
+
+  background:
+    linear-gradient(
+      135deg,
+      #1970e9,
+      #1745bd
+    );
+
+  box-shadow:
+    0 10px 25px
+    rgba(40,100,215,.25);
+
+}
+
 
 .hero h1{
+
+  position:relative;
+  z-index:1;
+
   margin:0;
-  font-size:clamp(32px,11vw,62px);
+
+  color:var(--blue-dark);
+
   font-weight:1000;
-  color:#2459b7;
+
+  font-size:
+    clamp(31px,10vw,60px);
+
   letter-spacing:1px;
+
 }
+
 
 .hero p{
-  margin:8px 0 0;
-  color:#6a7890;
-  font-weight:700;
+
+  position:relative;
+  z-index:1;
+
+  margin:9px 0 0;
+
+  color:#68778e;
+
+  font-weight:750;
+
 }
+
 
 .mini-equation{
-  font-size:clamp(18px,6vw,30px);
-  color:#8c67e8;
-  font-weight:900;
-  margin:14px 0 0;
-}
 
-.menu-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-top:16px;
-}
-
-.menu-card{
-  min-height:112px;
-  border-radius:24px;
-  background:#fff;
-  border:1px solid var(--border);
-  box-shadow:var(--shadow);
-  padding:17px;
-  text-align:right;
   position:relative;
-  overflow:hidden;
-}
+  z-index:1;
 
-.menu-card.primary{
-  background:linear-gradient(135deg,#2e6cdf,#2456c7);
-  color:#fff;
-  border:0;
-}
-
-.menu-card.purple{
-  background:linear-gradient(135deg,#9561ec,#7542db);
-  color:#fff;
-  border:0;
-}
-
-.menu-card .emoji{
-  font-size:25px;
-}
-
-.menu-card h3{
-  margin:8px 0 3px;
-  font-size:18px;
-}
-
-.menu-card p{
-  margin:0;
-  font-size:12px;
-  opacity:.8;
-}
-
-.big-action{
-  width:100%;
-  min-height:58px;
-  border-radius:20px;
-  background:linear-gradient(135deg,#2f6fe1,#2456c7);
-  color:#fff;
-  font-weight:900;
-  font-size:19px;
-  box-shadow:0 12px 24px rgba(40,100,215,.22);
   margin-top:14px;
+
+  color:var(--purple);
+
+  font-weight:950;
+
+  font-size:
+    clamp(17px,5vw,28px);
+
 }
 
-.secondary{
-  background:#fff;
-  color:#2459b7;
-  border:1px solid var(--border);
-  box-shadow:0 8px 20px rgba(42,76,130,.08);
-}
+
+/* =========================================================
+   HOME STATS
+========================================================= */
 
 .stats{
+
   display:grid;
-  grid-template-columns:1fr 1fr 1fr;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
   gap:9px;
+
   margin-top:14px;
+
 }
+
 
 .stat{
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:19px;
-  padding:11px 8px;
+
+  padding:11px 7px;
+
   text-align:center;
+
+  background:#fff;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:19px;
+
+  box-shadow:var(--shadow-small);
+
 }
+
 
 .stat b{
+
   display:block;
+
+  color:var(--blue-dark);
+
   font-size:20px;
-  color:#2459b7;
+
+  font-weight:950;
+
 }
+
 
 .stat span{
-  font-size:11px;
+
+  display:block;
+
+  margin-top:2px;
+
   color:var(--muted);
-  font-weight:700;
+
+  font-size:10px;
+
+  font-weight:750;
+
 }
+
+
+/* =========================================================
+   HOME MENU
+========================================================= */
+
+.menu-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap:12px;
+
+  margin-top:15px;
+
+}
+
+
+.menu-card{
+
+  min-height:112px;
+
+  padding:16px;
+
+  text-align:right;
+
+  border-radius:24px;
+
+  background:#fff;
+
+  border:
+    1px solid var(--border);
+
+  color:var(--text);
+
+  box-shadow:var(--shadow-small);
+
+}
+
+
+.menu-card:active{
+
+  transform:scale(.98);
+
+}
+
+
+.menu-card.primary{
+
+  color:#fff;
+
+  border:0;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2e6cdf,
+      #2456c7
+    );
+
+}
+
+
+.menu-card.purple{
+
+  color:#fff;
+
+  border:0;
+
+  background:
+    linear-gradient(
+      135deg,
+      #9561ec,
+      #7542db
+    );
+
+}
+
+
+.menu-card .emoji{
+
+  font-size:25px;
+
+}
+
+
+.menu-card h3{
+
+  margin:
+    7px 0 3px;
+
+  font-size:17px;
+
+  font-weight:900;
+
+}
+
+
+.menu-card p{
+
+  margin:0;
+
+  font-size:11px;
+
+  opacity:.78;
+
+}
+
+
+.big-action{
+
+  width:100%;
+
+  min-height:58px;
+
+  margin-top:13px;
+
+  padding:10px 15px;
+
+  border-radius:20px;
+
+  color:#fff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2f6fe1,
+      #2456c7
+    );
+
+  font-size:18px;
+
+  font-weight:900;
+
+  box-shadow:
+    0 12px 25px
+    rgba(40,100,215,.22);
+
+}
+
+
+.big-action:active{
+
+  transform:scale(.985);
+
+}
+
+
+.secondary{
+
+  color:var(--blue-dark);
+
+  background:#fff;
+
+  border:
+    1px solid var(--border);
+
+  box-shadow:var(--shadow-small);
+
+}
+
+
+/* =========================================================
+   CARDS
+========================================================= */
 
 .card{
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:26px;
-  box-shadow:var(--shadow);
+
   padding:18px;
+
+  background:#fff;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:26px;
+
+  box-shadow:var(--shadow);
+
 }
+
 
 .section-title{
+
+  margin:
+    0 0 14px;
+
+  color:var(--blue-dark);
+
   font-size:25px;
+
   font-weight:950;
-  color:#2459b7;
-  margin:0 0 14px;
+
 }
+
+
+/* =========================================================
+   MISSIONS
+========================================================= */
 
 .mission-list{
+
   display:grid;
+
   gap:10px;
+
 }
+
 
 .mission-choice{
+
+  width:100%;
+
   display:flex;
+
   align-items:center;
+
   gap:12px;
-  background:#f8faff;
-  border:1px solid var(--border);
-  border-radius:19px;
-  padding:14px;
+
+  padding:13px;
+
   text-align:right;
+
   color:var(--text);
+
+  background:#f8faff;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:19px;
+
 }
+
+
+.mission-choice:active{
+
+  transform:scale(.985);
+
+}
+
 
 .mission-choice.selected{
-  border-color:#6c9ff0;
+
   background:#eef5ff;
-  box-shadow:0 6px 18px rgba(40,100,215,.10);
+
+  border-color:#75a3ec;
+
+  box-shadow:
+    0 7px 20px
+    rgba(40,100,215,.10);
+
 }
 
-.mission-choice .mi{
-  width:42px;
-  height:42px;
-  border-radius:14px;
-  background:#e7efff;
+
+.mission-icon{
+
+  width:43px;
+  height:43px;
+
+  flex:0 0 43px;
+
   display:grid;
+
   place-items:center;
-  font-size:20px;
-}
 
-.mission-choice.p .mi{
-  background:#f0e8ff;
-}
-
-.mission-choice strong{
-  display:block;
-}
-
-.mission-choice small{
-  color:var(--muted);
-}
-
-.lang-row{
-  display:flex;
-  gap:8px;
-  margin-top:14px;
-}
-
-.lang{
-  flex:1;
-  padding:11px;
   border-radius:14px;
-  background:#f4f7fc;
-  border:1px solid var(--border);
-  font-weight:800;
+
+  background:#e7efff;
+
+  font-size:20px;
+
 }
 
-.lang.on{
-  background:#eaf2ff;
-  color:#2459b7;
-  border-color:#8eb4f4;
+
+.mission-choice.purple .mission-icon{
+
+  background:var(--purple-light);
+
 }
+
+
+.mission-text strong{
+
+  display:block;
+
+  font-size:15px;
+
+  font-weight:900;
+
+}
+
+
+.mission-text small{
+
+  display:block;
+
+  margin-top:2px;
+
+  color:var(--muted);
+
+  font-size:10px;
+
+}
+
+
+/* =========================================================
+   HOW TO PLAY
+========================================================= */
 
 .how{
-  line-height:1.8;
+
+  line-height:1.85;
+
   color:#536276;
+
 }
 
-.how strong{
-  color:#2459b7;
-}
 
-.how .rule{
-  background:#f7f9fe;
-  border:1px solid var(--border);
-  border-radius:17px;
-  padding:10px;
+.rule{
+
   margin:8px 0;
+
+  padding:11px;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:17px;
+
+  background:#f7f9fe;
+
 }
 
-/* GAME */
+
+.rule strong{
+
+  color:var(--blue-dark);
+
+}
+
+
+/* =========================================================
+   GAME SCREEN
+========================================================= */
 
 #game{
+
   padding:0;
+
   overflow:hidden;
-  background:linear-gradient(180deg,#f7f9fd,#edf3ff);
+
+  background:
+    linear-gradient(
+      180deg,
+      #f8faff 0%,
+      #edf3ff 100%
+    );
+
 }
+
+
+/* =========================================================
+   GAME HEADER
+========================================================= */
 
 .game-top{
+
   position:absolute;
-  top:calc(env(safe-area-inset-top) + 10px);
-  left:10px;
-  right:10px;
-  z-index:20;
+
+  z-index:30;
+
+  top:
+    calc(
+      env(safe-area-inset-top)
+      + 8px
+    );
+
+  left:9px;
+  right:9px;
+
 }
+
+
+.game-actions{
+
+  display:flex;
+
+  justify-content:flex-start;
+
+  margin-bottom:7px;
+
+}
+
+
+.exit-btn{
+
+  height:40px;
+
+  padding:
+    0 14px;
+
+  border-radius:14px;
+
+  color:#d44c57;
+
+  background:#fff;
+
+  border:
+    1px solid #efcbd0;
+
+  box-shadow:var(--shadow-small);
+
+  font-size:13px;
+
+  font-weight:900;
+
+}
+
+
+.exit-btn:active{
+
+  transform:scale(.94);
+
+}
+
+
+/* =========================================================
+   HUD
+========================================================= */
 
 .hud{
+
   display:grid;
-  grid-template-columns:1fr 1.3fr 1fr;
+
+  grid-template-columns:
+    1fr 1fr 1.15fr;
+
   gap:7px;
+
 }
+
 
 .hud-box{
-  background:rgba(255,255,255,.94);
-  border:1px solid var(--border);
-  box-shadow:0 8px 24px rgba(42,76,130,.12);
-  border-radius:16px;
-  padding:8px;
+
+  min-height:61px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  justify-content:center;
+
+  padding:6px;
+
   text-align:center;
+
+  background:
+    rgba(255,255,255,.96);
+
+  border:
+    1px solid var(--border);
+
+  border-radius:17px;
+
+  box-shadow:
+    0 8px 24px
+    rgba(42,76,130,.11);
+
   backdrop-filter:blur(8px);
+
 }
+
 
 .hud-box b{
-  display:block;
-  color:#2459b7;
-  font-size:17px;
+
+  color:var(--blue-dark);
+
+  font-size:18px;
+
+  line-height:1;
+
+  font-weight:950;
+
 }
+
 
 .hud-box small{
-  font-size:10px;
+
+  margin-top:5px;
+
   color:var(--muted);
+
+  font-size:9px;
+
   font-weight:800;
+
 }
+
 
 .hearts{
-  font-size:15px;
+
+  font-size:15px !important;
+
   letter-spacing:0;
+
 }
+
+
+/* =========================================================
+   MISSION BAR
+========================================================= */
 
 .mission-bar{
-  margin-top:8px;
-  background:rgba(255,255,255,.95);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:10px 14px;
+
+  margin-top:7px;
+
+  min-height:48px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  padding:8px 13px;
+
   text-align:center;
-  box-shadow:0 8px 24px rgba(42,76,130,.10);
-  font-weight:900;
-  color:#2459b7;
+
+  color:var(--blue-dark);
+
+  background:
+    rgba(255,255,255,.96);
+
+  border:
+    1px solid var(--border);
+
+  border-radius:18px;
+
+  box-shadow:
+    0 8px 24px
+    rgba(42,76,130,.10);
+
+  font-size:15px;
+
+  font-weight:950;
+
 }
+
+
+/* =========================================================
+   ARENA
+========================================================= */
 
 .arena{
+
   position:absolute;
+
   inset:0;
+
   overflow:hidden;
+
 }
+
+
+/* =========================================================
+   TARGETS
+========================================================= */
 
 .target{
+
   position:absolute;
-  width:clamp(58px,16vw,78px);
-  height:clamp(58px,16vw,78px);
-  border-radius:50%;
-  background:linear-gradient(145deg,#fff,#edf3ff);
-  border:3px solid #4d82df;
-  box-shadow:0 10px 24px rgba(44,93,174,.18);
+
+  z-index:10;
+
+  width:64px;
+  height:64px;
+
   display:grid;
+
   place-items:center;
-  font-weight:950;
-  font-size:clamp(19px,5.5vw,26px);
+
+  padding:0;
+
+  border-radius:50%;
+
   color:#204f9f;
-  transform:translate(-50%,-50%);
-  will-change:transform;
-  z-index:5;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #edf3ff
+    );
+
+  border:
+    3px solid #4d82df;
+
+  box-shadow:
+    0 9px 22px
+    rgba(44,93,174,.17);
+
+  font-size:23px;
+
+  font-weight:950;
+
+  transform:
+    translate(-50%,-50%);
+
+  will-change:
+    top,
+    left,
+    transform;
+
 }
+
 
 .target:active{
-  transform:translate(-50%,-50%) scale(.9);
+
+  transform:
+    translate(-50%,-50%)
+    scale(.90);
+
 }
 
-.target.wrong{
-  border-color:#d9a0a5;
-  background:#fff3f4;
-  color:#c83f4c;
-}
 
 .target.correct-hit{
-  animation:pop .16s ease-out forwards;
+
+  animation:
+    targetCorrect
+    .20s
+    ease-out
+    forwards;
+
 }
+
 
 .target.wrong-hit{
-  animation:shake .35s ease;
+
+  animation:
+    targetWrong
+    .30s
+    ease;
+
 }
 
-@keyframes pop{
+
+.target.wrong{
+
+  color:#c23d49;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fff,
+      #fff1f3
+    );
+
+  border-color:#d999a0;
+
+}
+
+
+@keyframes targetCorrect{
+
+  from{
+
+    transform:
+      translate(-50%,-50%)
+      scale(1);
+
+    opacity:1;
+
+  }
+
   to{
-    transform:translate(-50%,-50%) scale(1.5);
+
+    transform:
+      translate(-50%,-50%)
+      scale(1.45);
+
     opacity:0;
+
   }
+
 }
 
-@keyframes shake{
+
+@keyframes targetWrong{
+
   0%,100%{
-    transform:translate(-50%,-50%);
+
+    transform:
+      translate(-50%,-50%);
+
   }
+
   25%{
-    transform:translate(calc(-50% - 6px),-50%);
+
+    transform:
+      translate(
+        calc(-50% - 7px),
+        -50%
+      );
+
   }
+
   75%{
-    transform:translate(calc(-50% + 6px),-50%);
+
+    transform:
+      translate(
+        calc(-50% + 7px),
+        -50%
+      );
+
   }
+
 }
+
+
+/* =========================================================
+   FEEDBACK
+========================================================= */
 
 .feedback{
+
   position:absolute;
-  top:27%;
+
+  z-index:50;
+
+  top:30%;
+
   left:50%;
-  transform:translateX(-50%);
-  z-index:30;
+
+  padding:
+    9px 15px;
+
+  transform:
+    translateX(-50%);
+
   pointer-events:none;
-  padding:9px 15px;
-  border-radius:15px;
-  background:rgba(255,255,255,.96);
-  box-shadow:var(--shadow);
-  font-weight:900;
+
   opacity:0;
+
+  border-radius:15px;
+
+  background:
+    rgba(255,255,255,.97);
+
+  box-shadow:var(--shadow);
+
+  font-size:17px;
+
+  font-weight:950;
+
 }
+
 
 .feedback.show{
-  animation:feed .75s ease;
+
+  animation:
+    feedbackAnimation
+    .80s
+    ease;
+
 }
+
 
 .feedback.good{
+
   color:var(--success);
+
 }
+
 
 .feedback.bad{
+
   color:var(--danger);
+
 }
 
-@keyframes feed{
+
+@keyframes feedbackAnimation{
+
   0%{
+
     opacity:0;
-    transform:translate(-50%,8px);
+
+    transform:
+      translate(
+        -50%,
+        10px
+      );
+
   }
+
   15%,75%{
+
     opacity:1;
-    transform:translate(-50%,0);
+
+    transform:
+      translate(
+        -50%,
+        0
+      );
+
   }
+
   100%{
+
     opacity:0;
-    transform:translate(-50%,-8px);
+
+    transform:
+      translate(
+        -50%,
+        -10px
+      );
+
   }
+
 }
+
+
+/* =========================================================
+   BOMB
+========================================================= */
 
 .bottom-tools{
+
   position:absolute;
-  bottom:calc(env(safe-area-inset-bottom) + 13px);
+
+  z-index:35;
+
   left:0;
   right:0;
-  z-index:20;
+
+  bottom:
+    calc(
+      env(safe-area-inset-bottom)
+      + 12px
+    );
+
   display:flex;
+
   justify-content:center;
+
 }
+
 
 .bomb{
-  width:78px;
-  height:52px;
+
+  width:82px;
+  height:55px;
+
   border-radius:18px;
+
+  color:var(--text);
+
   background:#fff;
-  border:1px solid var(--border);
-  box-shadow:0 10px 25px rgba(42,76,130,.14);
-  font-size:24px;
+
+  border:
+    1px solid var(--border);
+
+  box-shadow:
+    0 10px 25px
+    rgba(42,76,130,.14);
+
+  font-size:23px;
+
 }
+
 
 .bomb small{
+
   display:block;
-  font-size:9px;
-  color:var(--muted);
-  font-weight:800;
+
   margin-top:-3px;
+
+  color:var(--muted);
+
+  font-size:9px;
+
+  font-weight:800;
+
 }
+
+
+.bomb:active{
+
+  transform:scale(.94);
+
+}
+
 
 .bomb.cool{
-  opacity:.42;
+
+  opacity:.40;
+
   filter:grayscale(.7);
+
 }
+
+
+/* =========================================================
+   GAME OVER
+========================================================= */
 
 .overlay{
+
   position:absolute;
+
   inset:0;
-  z-index:60;
+
+  z-index:100;
+
   display:none;
+
   place-items:center;
-  background:rgba(245,248,253,.82);
-  backdrop-filter:blur(9px);
+
   padding:20px;
+
+  background:
+    rgba(245,248,253,.84);
+
+  backdrop-filter:
+    blur(9px);
+
 }
+
 
 .overlay.show{
+
   display:grid;
+
 }
+
 
 .result{
+
   width:min(100%,420px);
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:30px;
+
   padding:26px;
+
   text-align:center;
+
+  background:#fff;
+
+  border:
+    1px solid var(--border);
+
+  border-radius:30px;
+
   box-shadow:var(--shadow);
+
 }
+
+
+.result-icon{
+
+  font-size:42px;
+
+  margin-bottom:4px;
+
+}
+
 
 .result h2{
+
   margin:0;
-  color:#2459b7;
-  font-size:34px;
+
+  color:var(--blue-dark);
+
+  font-size:32px;
+
+  font-weight:1000;
+
 }
 
-.result .final-score{
-  font-size:45px;
-  font-weight:1000;
-  color:#8554e8;
+
+.final-score{
+
   margin:8px 0;
+
+  color:var(--purple);
+
+  font-size:48px;
+
+  line-height:1;
+
+  font-weight:1000;
+
 }
+
+
+.result-info{
+
+  color:var(--muted);
+
+  font-size:13px;
+
+  font-weight:750;
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
 
 .toast{
+
   position:absolute;
-  top:calc(env(safe-area-inset-top) + 12px);
-  right:12px;
+
+  z-index:150;
+
+  top:
+    calc(
+      env(safe-area-inset-top)
+      + 12px
+    );
+
   left:12px;
-  z-index:100;
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:11px;
-  text-align:center;
-  box-shadow:var(--shadow);
+  right:12px;
+
   display:none;
+
+  padding:11px;
+
+  text-align:center;
+
+  border-radius:16px;
+
+  background:#fff;
+
+  border:
+    1px solid var(--border);
+
+  box-shadow:var(--shadow);
+
+  font-size:13px;
+
+  font-weight:900;
+
 }
 
-@media(max-width:480px){
-  .menu-grid{
-    grid-template-columns:1fr 1fr;
-  }
 
-  .shell{
-    padding-top:12px;
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:480px){
+
+  .menu-card{
+
+    min-height:105px;
+
+    padding:14px;
+
   }
 
   .hero{
-    padding:22px 15px;
+
+    padding:
+      21px 14px;
+
   }
 
-  .menu-card{
-    min-height:105px;
-    padding:14px;
+  .target{
+
+    width:60px;
+    height:60px;
+
+    font-size:21px;
+
   }
+
 }
+
+
 </style>
 </head>
+
 
 <body>
 
 <div id="app">
 
-<!-- HOME -->
-<section id="home" class="screen active">
+
+<!-- =======================================================
+     HOME
+======================================================= -->
+
+<section
+  id="home"
+  class="screen active"
+>
+
 <div class="shell">
 
+
 <header class="brand">
-<div>
-<div class="brand-title">IA Math</div>
-<div class="brand-sub">Mathématiques • NUMBER HUNTER</div>
+
+<div class="brand-info">
+
+<div class="brand-title">
+IA Math
 </div>
 
-<div class="top-actions">
-<button class="icon-btn" id="langBtn">文</button>
-<button class="icon-btn" id="soundBtn">🔊</button>
+<div class="brand-sub">
+Mathématiques • NUMBER HUNTER
 </div>
+
+</div>
+
+
+<div class="top-actions">
+
+<button
+  class="icon-btn"
+  id="langBtn"
+  type="button"
+>
+文
+</button>
+
+
+<button
+  class="icon-btn"
+  id="soundBtn"
+  type="button"
+>
+🔊
+</button>
+
+</div>
+
 </header>
+
 
 <div class="hero">
 
-<div class="logo" style="margin:0 auto 10px">√N</div>
+<div class="game-logo">
+√N
+</div>
 
-<h1>NUMBER HUNTER</h1>
+<h1>
+NUMBER HUNTER
+</h1>
 
-<p id="tagline">رياضيات • سرعة • دقة</p>
+<p id="tagline">
+رياضيات • سرعة • دقة
+</p>
 
 <div class="mini-equation">
 2 · 3 · 5 · 7 · 11 · 13
@@ -670,81 +1616,196 @@ button{
 
 </div>
 
+
 <div class="stats">
 
-<div class="stat">
-<b id="best">0</b>
-<span>أفضل نتيجة</span>
-</div>
 
 <div class="stat">
-<b id="games">0</b>
-<span>المباريات</span>
+
+<b id="best">
+0
+</b>
+
+<span id="bestLabel">
+أفضل نتيجة
+</span>
+
 </div>
+
 
 <div class="stat">
-<b id="streak">0</b>
-<span>أفضل كومبو</span>
-</div>
+
+<b id="games">
+0
+</b>
+
+<span id="gamesLabel">
+المباريات
+</span>
 
 </div>
+
+
+<div class="stat">
+
+<b id="streak">
+0
+</b>
+
+<span id="comboLabel">
+أفضل كومبو
+</span>
+
+</div>
+
+
+</div>
+
 
 <div class="menu-grid">
 
-<button class="menu-card primary" id="playBtn">
-<div class="emoji">▶️</div>
-<h3 id="playT">ابدأ اللعب</h3>
-<p id="playP">مهمات رياضية متنوعة</p>
+
+<button
+  class="menu-card primary"
+  id="playBtn"
+  type="button"
+>
+
+<div class="emoji">
+▶️
+</div>
+
+<h3 id="playT">
+ابدأ اللعب
+</h3>
+
+<p id="playP">
+مهمات رياضية متنوعة
+</p>
+
 </button>
 
-<button class="menu-card purple" id="quickBtn">
-<div class="emoji">⚡</div>
-<h3 id="quickT">صيد سريع</h3>
-<p id="quickP">60 ثانية من التركيز</p>
+
+<button
+  class="menu-card purple"
+  id="quickBtn"
+  type="button"
+>
+
+<div class="emoji">
+⚡
+</div>
+
+<h3 id="quickT">
+صيد سريع
+</h3>
+
+<p id="quickP">
+60 ثانية من التركيز
+</p>
+
 </button>
 
-<button class="menu-card" id="missionsBtn">
-<div class="emoji">🎯</div>
-<h3 id="missionsT">اختيار المهمة</h3>
-<p id="missionsP">اختر نوع التحدي</p>
+
+<button
+  class="menu-card"
+  id="missionsBtn"
+  type="button"
+>
+
+<div class="emoji">
+🎯
+</div>
+
+<h3 id="missionsT">
+اختيار المهمة
+</h3>
+
+<p id="missionsP">
+اختر نوع التحدي
+</p>
+
 </button>
 
-<button class="menu-card" id="howBtn">
-<div class="emoji">ℹ️</div>
-<h3 id="howT">طريقة اللعب</h3>
-<p id="howP">القواعد والقلوب والقنبلة</p>
+
+<button
+  class="menu-card"
+  id="howBtn"
+  type="button"
+>
+
+<div class="emoji">
+ℹ️
+</div>
+
+<h3 id="howT">
+طريقة اللعب
+</h3>
+
+<p id="howP">
+القواعد والقلوب والقنبلة
+</p>
+
 </button>
+
 
 </div>
 
-<button class="big-action secondary" id="survivalBtn">
+
+<button
+  class="big-action secondary"
+  id="survivalBtn"
+  type="button"
+>
 ❤️ وضع البقاء — 3 قلوب
 </button>
+
 
 </div>
 </section>
 
 
-<!-- MISSIONS -->
-<section id="missions" class="screen">
+
+<!-- =======================================================
+     MISSIONS
+======================================================= -->
+
+<section
+  id="missions"
+  class="screen"
+>
+
 <div class="shell">
 
-<div class="brand">
 
-<button class="icon-btn" id="missionsBack">
+<header class="brand">
+
+<button
+  class="icon-btn"
+  id="missionsBack"
+  type="button"
+>
 ←
 </button>
 
-<div style="text-align:right">
-<div class="brand-title" id="chooseTitle">
+
+<div class="brand-info">
+
+<div
+  class="brand-title"
+  id="chooseTitle"
+>
 اختيار المهمة
 </div>
+
 <div class="brand-sub">
 NUMBER HUNTER
 </div>
-</div>
 
 </div>
+
+</header>
+
 
 <div class="card">
 
@@ -752,160 +1813,377 @@ NUMBER HUNTER
 🎯 اختر نوع الأعداد
 </h2>
 
-<div id="missionList" class="mission-list"></div>
 
-<button class="big-action" id="startSelected">
+<div
+  id="missionList"
+  class="mission-list"
+>
+</div>
+
+
+<button
+  class="big-action"
+  id="startSelected"
+  type="button"
+>
 ابدأ بهذه المهمة
 </button>
 
+
 </div>
 
 </div>
+
 </section>
 
 
-<!-- HOW -->
-<section id="how" class="screen">
+
+<!-- =======================================================
+     HOW TO PLAY
+======================================================= -->
+
+<section
+  id="how"
+  class="screen"
+>
+
 <div class="shell">
 
-<div class="brand">
 
-<button class="icon-btn" id="howBack">
+<header class="brand">
+
+<button
+  class="icon-btn"
+  id="howBack"
+  type="button"
+>
 ←
 </button>
 
-<div style="text-align:right">
-<div class="brand-title">طريقة اللعب</div>
-<div class="brand-sub">NUMBER HUNTER</div>
+
+<div class="brand-info">
+
+<div class="brand-title">
+طريقة اللعب
+</div>
+
+<div class="brand-sub">
+NUMBER HUNTER
 </div>
 
 </div>
+
+</header>
+
 
 <div class="card how">
 
+
 <div class="rule">
-<strong>🎯 الهدف:</strong>
+
+<strong>
+🎯 الهدف:
+</strong>
+
 اضغط فقط على الأعداد التي تحقق المهمة المكتوبة أعلى الشاشة.
+
 </div>
 
+
 <div class="rule">
-<strong>❤️ القلوب:</strong>
-لديك 3 قلوب. كل اختيار خاطئ يفقد قلبًا.
+
+<strong>
+❤️ القلوب:
+</strong>
+
+لديك 3 قلوب.
+كل اختيار خاطئ يفقد قلبًا.
 عند وصول القلوب إلى صفر تنتهي اللعبة.
+
 </div>
 
+
 <div class="rule">
-<strong>🔥 الكومبو:</strong>
+
+<strong>
+🔥 الكومبو:
+</strong>
+
 كل إجابة صحيحة متتالية ترفع الكومبو وتزيد النقاط.
 الخطأ يصفر الكومبو.
+
 </div>
 
+
 <div class="rule">
-<strong>💣 القنبلة:</strong>
-تمسح الأعداد الظاهرة فورًا، ولا تمنح نقاطًا ولا تخصم قلبًا.
+
+<strong>
+💣 القنبلة:
+</strong>
+
+تمسح جميع الأعداد الظاهرة.
+لا تمنح نقاطًا ولا تخصم قلبًا.
 تعود بعد 6 ثوانٍ.
+
 </div>
+
 
 <div class="rule">
-<strong>⚡ السرعة:</strong>
-مع ارتفاع المستوى تزداد سرعة الأعداد تدريجيًا.
+
+<strong>
+⚡ السرعة:
+</strong>
+
+تبدأ الأعداد ببطء،
+ثم تزداد السرعة تدريجيًا مع تقدم المستوى.
+
 </div>
+
 
 <div class="rule">
-<strong>📐 الدقة الرياضية:</strong>
-اللعبة تتحقق حسابيًا من الأولية، الزوجية، الفردية، المضاعفات، القواسم، المربعات، والمقارنات.
+
+<strong>
+🔢 الكثافة:
+</strong>
+
+تبدأ اللعبة بعدد قليل من الأرقام،
+ثم يزداد العدد تدريجيًا مع المستوى.
+
 </div>
 
-<button class="big-action" id="howPlay">
+
+<div class="rule">
+
+<strong>
+📐 التحقق الرياضي:
+</strong>
+
+اللعبة تتحقق حسابيًا من كل رقم قبل احتساب الإجابة صحيحة أو خاطئة.
+
+</div>
+
+
+<button
+  class="big-action"
+  id="howPlay"
+  type="button"
+>
 ▶ ابدأ اللعب
 </button>
 
+
 </div>
+
 </div>
+
 </section>
 
 
-<!-- GAME -->
-<section id="game" class="screen">
+
+<!-- =======================================================
+     GAME
+======================================================= -->
+
+<section
+  id="game"
+  class="screen"
+>
+
 
 <div class="game-top">
 
+
+<div class="game-actions">
+
+<button
+  id="exitGame"
+  class="exit-btn"
+  type="button"
+>
+🚪 خروج
+</button>
+
+</div>
+
+
 <div class="hud">
 
-<div class="hud-box">
-<b id="score">0</b>
-<small>النقاط</small>
-</div>
 
 <div class="hud-box">
-<b id="level">1</b>
-<small>المستوى</small>
+
+<b id="score">
+0
+</b>
+
+<small id="scoreLabel">
+النقاط
+</small>
+
 </div>
+
 
 <div class="hud-box">
-<b id="heartHud" class="hearts">❤️❤️❤️</b>
-<small id="timeHud">القلوب</small>
-</div>
+
+<b id="level">
+1
+</b>
+
+<small id="levelLabel">
+المستوى
+</small>
 
 </div>
 
-<div class="mission-bar" id="missionBar">
-اضغط على الأعداد الأولية
-</div>
+
+<div class="hud-box">
+
+<b
+  id="heartHud"
+  class="hearts"
+>
+❤️❤️❤️
+</b>
+
+<small id="timeHud">
+القلوب
+</small>
 
 </div>
 
-<div id="arena" class="arena"></div>
 
-<div id="feedback" class="feedback"></div>
+</div>
+
+
+<div
+  class="mission-bar"
+  id="missionBar"
+>
+🎯 الأعداد الأولية
+</div>
+
+
+</div>
+
+
+<div
+  id="arena"
+  class="arena"
+>
+</div>
+
+
+<div
+  id="feedback"
+  class="feedback"
+>
+</div>
+
 
 <div class="bottom-tools">
-<button id="bomb" class="bomb">
+
+<button
+  id="bomb"
+  class="bomb"
+  type="button"
+>
+
 💣
-<small>قنبلة</small>
+
+<small id="bombText">
+قنبلة
+</small>
+
 </button>
+
 </div>
 
-<div id="gameOverlay" class="overlay">
+
+<div
+  id="gameOverlay"
+  class="overlay"
+>
+
 
 <div class="result">
+
+
+<div class="result-icon">
+🏆
+</div>
+
 
 <h2 id="resultTitle">
 انتهت اللعبة
 </h2>
 
-<div class="final-score" id="finalScore">
+
+<div
+  class="final-score"
+  id="finalScore"
+>
 0
 </div>
 
-<div id="resultInfo" style="color:#718096;font-weight:700">
+
+<div
+  class="result-info"
+  id="resultInfo"
+>
 النقاط
 </div>
 
-<button class="big-action" id="againBtn">
+
+<button
+  class="big-action"
+  id="againBtn"
+  type="button"
+>
 ↻ إعادة اللعب
 </button>
 
-<button class="big-action secondary" id="menuBtn">
+
+<button
+  class="big-action secondary"
+  id="menuBtn"
+  type="button"
+>
 ⌂ القائمة
 </button>
 
+
 </div>
+
 </div>
+
 
 </section>
 
-<div id="toast" class="toast"></div>
+
+<div
+  id="toast"
+  class="toast"
+>
+</div>
+
 
 </div>
 
 
+
 <script>
+
 (() => {
 
 "use strict";
 
-const $ = id => document.getElementById(id);
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+const $ = id =>
+  document.getElementById(id);
+
 
 const screens = [
   "home",
@@ -914,317 +2192,648 @@ const screens = [
   "game"
 ];
 
+
+/* =========================================================
+   GAME STATE
+========================================================= */
+
 const state = {
 
-  lang: localStorage.getItem("nh_lang") || "ar",
+  lang:
+    localStorage.getItem("nh_lang")
+    || "ar",
 
   sound:
-    localStorage.getItem("nh_sound") !== "off",
+    localStorage.getItem("nh_sound")
+    !== "off",
 
   best:
-    +(localStorage.getItem("nh_best") || 0),
+    Number(
+      localStorage.getItem("nh_best")
+      || 0
+    ),
 
   games:
-    +(localStorage.getItem("nh_games") || 0),
+    Number(
+      localStorage.getItem("nh_games")
+      || 0
+    ),
 
   bestCombo:
-    +(localStorage.getItem("nh_combo") || 0),
+    Number(
+      localStorage.getItem("nh_combo")
+      || 0
+    ),
+
 
   score:0,
+
   combo:0,
+
   level:1,
+
   lives:3,
+
 
   running:false,
 
   quick:false,
+
   survival:false,
+
 
   timeLeft:60,
 
+
   mission:null,
+
 
   targets:new Map(),
 
   nextId:1,
 
+
   spawnTimer:null,
+
   timer:null,
+
+
+  animationFrame:null,
 
   lastFrame:0,
 
+
   bombReady:true,
+
   bombCooldown:null,
 
+
   selected:0
+
 };
 
 
+/* =========================================================
+   MISSIONS
+========================================================= */
+
 const missions = [
 
-{
-  id:"prime",
-  icon:"🔵",
-  ar:"الأعداد الأولية",
-  fr:"Nombres premiers",
-  en:"Prime numbers",
+  {
+    id:"prime",
 
-  test:n => isPrime(n),
+    icon:"🔵",
 
-  make:() =>
-    pick([
-      2,3,5,7,11,13,17,19,23,29,
-      31,37,41,43,47,53,59,61,
-      67,71,73,79,83,89,97
-    ])
-},
+    ar:"الأعداد الأولية",
 
-{
-  id:"nonprime",
-  icon:"⚪",
-  ar:"الأعداد غير الأولية",
-  fr:"Nombres non premiers",
-  en:"Non-prime numbers",
+    fr:"Nombres premiers",
 
-  test:n =>
-    n >= 2 && !isPrime(n),
+    en:"Prime numbers",
 
-  make:() =>
-    pick([
-      4,6,8,9,10,12,14,15,16,
-      18,20,21,22,24,25,26,27,
-      28,30,32,33,34,35,36,38,
-      39,40,42,44,45,46,48,49,50
-    ])
-},
+    test:n =>
+      isPrime(n),
 
-{
-  id:"even",
-  icon:"🟦",
-  ar:"الأعداد الزوجية",
-  fr:"Nombres pairs",
-  en:"Even numbers",
+    make:() =>
+      pick([
+        2,3,5,7,11,13,
+        17,19,23,29,
+        31,37,41,43,
+        47,53,59,61,
+        67,71,73,79,
+        83,89,97
+      ])
+  },
 
-  test:n => n % 2 === 0,
 
-  make:() => randEven()
-},
+  {
+    id:"nonprime",
 
-{
-  id:"odd",
-  icon:"🟪",
-  ar:"الأعداد الفردية",
-  fr:"Nombres impairs",
-  en:"Odd numbers",
+    icon:"⚪",
 
-  test:n => n % 2 !== 0,
+    ar:"الأعداد غير الأولية",
 
-  make:() => randOdd()
-},
+    fr:"Nombres non premiers",
 
-{
-  id:"m3",
-  icon:"3️⃣",
-  ar:"مضاعفات 3",
-  fr:"Multiples de 3",
-  en:"Multiples of 3",
+    en:"Non-prime numbers",
 
-  test:n => n % 3 === 0,
+    /*
+       رياضيًا:
+       كل عدد طبيعي أكبر أو يساوي 1
+       ليس أوليًا = غير أولي.
+       لذلك 1 صحيح هنا.
+    */
 
-  make:() => 3 * rand(1,33)
-},
+    test:n =>
+      n >= 1 &&
+      !isPrime(n),
 
-{
-  id:"m4",
-  icon:"4️⃣",
-  ar:"مضاعفات 4",
-  fr:"Multiples de 4",
-  en:"Multiples of 4",
+    make:() =>
+      pick([
+        1,4,6,8,9,10,
+        12,14,15,16,
+        18,20,21,22,
+        24,25,26,27,
+        28,30,32,33,
+        34,35,36,38,
+        39,40,42,44,
+        45,46,48,49,50
+      ])
+  },
 
-  test:n => n % 4 === 0,
 
-  make:() => 4 * rand(1,24)
-},
+  {
+    id:"even",
 
-{
-  id:"m5",
-  icon:"5️⃣",
-  ar:"مضاعفات 5",
-  fr:"Multiples de 5",
-  en:"Multiples of 5",
+    icon:"🟦",
 
-  test:n => n % 5 === 0,
+    ar:"الأعداد الزوجية",
 
-  make:() => 5 * rand(1,19)
-},
+    fr:"Nombres pairs",
 
-{
-  id:"d24",
-  icon:"➗",
-  ar:"قواسم 24",
-  fr:"Diviseurs de 24",
-  en:"Divisors of 24",
+    en:"Even numbers",
 
-  test:n =>
-    n > 0 && 24 % n === 0,
+    test:n =>
+      n % 2 === 0,
 
-  make:() =>
-    pick([1,2,3,4,6,8,12,24])
-},
+    make:() =>
+      rand(1,49)*2
+  },
 
-{
-  id:"d36",
-  icon:"➗",
-  ar:"قواسم 36",
-  fr:"Diviseurs de 36",
-  en:"Divisors of 36",
 
-  test:n =>
-    n > 0 && 36 % n === 0,
+  {
+    id:"odd",
 
-  make:() =>
-    pick([1,2,3,4,6,9,12,18,36])
-},
+    icon:"🟪",
 
-{
-  id:"square",
-  icon:"²",
-  ar:"المربعات الكاملة",
-  fr:"Carrés parfaits",
-  en:"Perfect squares",
+    ar:"الأعداد الفردية",
 
-  test:n =>
-    Number.isInteger(Math.sqrt(n)),
+    fr:"Nombres impairs",
 
-  make:() =>
-    pick([1,4,9,16,25,36,49,64,81])
-},
+    en:"Odd numbers",
 
-{
-  id:"gt50",
-  icon:">",
-  ar:"أعداد أكبر من 50",
-  fr:"Nombres supérieurs à 50",
-  en:"Numbers greater than 50",
+    test:n =>
+      n % 2 !== 0,
 
-  test:n =>
-    n > 50,
+    make:() =>
+      rand(1,50)*2-1
+  },
 
-  make:() =>
-    rand(51,99)
-},
 
-{
-  id:"lt25",
-  icon:"<",
-  ar:"أعداد أصغر من 25",
-  fr:"Nombres inférieurs à 25",
-  en:"Numbers less than 25",
+  {
+    id:"m3",
 
-  test:n =>
-    n < 25,
+    icon:"3️⃣",
 
-  make:() =>
-    rand(1,24)
-}
+    ar:"مضاعفات 3",
+
+    fr:"Multiples de 3",
+
+    en:"Multiples of 3",
+
+    test:n =>
+      n % 3 === 0,
+
+    make:() =>
+      3*rand(1,33)
+  },
+
+
+  {
+    id:"m4",
+
+    icon:"4️⃣",
+
+    ar:"مضاعفات 4",
+
+    fr:"Multiples de 4",
+
+    en:"Multiples of 4",
+
+    test:n =>
+      n % 4 === 0,
+
+    make:() =>
+      4*rand(1,24)
+  },
+
+
+  {
+    id:"m5",
+
+    icon:"5️⃣",
+
+    ar:"مضاعفات 5",
+
+    fr:"Multiples de 5",
+
+    en:"Multiples of 5",
+
+    test:n =>
+      n % 5 === 0,
+
+    make:() =>
+      5*rand(1,19)
+  },
+
+
+  {
+    id:"d24",
+
+    icon:"➗",
+
+    ar:"قواسم 24",
+
+    fr:"Diviseurs de 24",
+
+    en:"Divisors of 24",
+
+    test:n =>
+      n > 0 &&
+      24 % n === 0,
+
+    make:() =>
+      pick([
+        1,2,3,4,
+        6,8,12,24
+      ])
+  },
+
+
+  {
+    id:"d36",
+
+    icon:"➗",
+
+    ar:"قواسم 36",
+
+    fr:"Diviseurs de 36",
+
+    en:"Divisors of 36",
+
+    test:n =>
+      n > 0 &&
+      36 % n === 0,
+
+    make:() =>
+      pick([
+        1,2,3,4,6,
+        9,12,18,36
+      ])
+  },
+
+
+  {
+    id:"square",
+
+    icon:"²",
+
+    ar:"المربعات الكاملة",
+
+    fr:"Carrés parfaits",
+
+    en:"Perfect squares",
+
+    test:n =>
+      Number.isInteger(
+        Math.sqrt(n)
+      ),
+
+    make:() =>
+      pick([
+        1,4,9,
+        16,25,36,
+        49,64,81
+      ])
+  },
+
+
+  {
+    id:"gt50",
+
+    icon:">",
+
+    ar:"أعداد أكبر من 50",
+
+    fr:"Nombres supérieurs à 50",
+
+    en:"Numbers greater than 50",
+
+    test:n =>
+      n > 50,
+
+    make:() =>
+      rand(51,99)
+  },
+
+
+  {
+    id:"lt25",
+
+    icon:"<",
+
+    ar:"أعداد أصغر من 25",
+
+    fr:"Nombres inférieurs à 25",
+
+    en:"Numbers less than 25",
+
+    test:n =>
+      n < 25,
+
+    make:() =>
+      rand(1,24)
+  }
 
 ];
 
 
+/* =========================================================
+   TRANSLATIONS
+========================================================= */
+
 const T = {
 
-ar:{
-  tag:"رياضيات • سرعة • دقة",
-  play:"ابدأ اللعب",
-  playP:"مهمات رياضية متنوعة",
-  quick:"صيد سريع",
-  quickP:"60 ثانية من التركيز",
-  missions:"اختيار المهمة",
-  missionsP:"اختر نوع التحدي",
-  how:"طريقة اللعب",
-  howP:"القواعد والقلوب والقنبلة",
-  choose:"اختيار المهمة",
-  start:"ابدأ بهذه المهمة",
-  score:"النقاط",
-  level:"المستوى",
-  hearts:"القلوب",
-  time:"الوقت",
-  correct:"✓ صحيح!",
-  wrong:"✕ خطأ — فقدت قلبًا",
-  bomb:"قنبلة",
-  gameOver:"انتهت اللعبة",
-  timeOver:"انتهى الوقت",
-  again:"↻ إعادة اللعب",
-  menu:"⌂ القائمة",
-  best:"أفضل نتيجة",
-  games:"المباريات",
-  bestCombo:"أفضل كومبو",
-  bombMsg:"💣 تم مسح الأعداد الظاهرة",
-  cool:"قيد الشحن"
-},
+  ar:{
 
-fr:{
-  tag:"Mathématiques • Vitesse • Précision",
-  play:"JOUER",
-  playP:"Défis mathématiques",
-  quick:"CHASSE RAPIDE",
-  quickP:"60 secondes",
-  missions:"CHOIX DE LA MISSION",
-  missionsP:"Choisissez le défi",
-  how:"COMMENT JOUER",
-  howP:"Règles, vies et bombe",
-  choose:"CHOIX DE LA MISSION",
-  start:"COMMENCER",
-  score:"SCORE",
-  level:"NIVEAU",
-  hearts:"VIES",
-  time:"TEMPS",
-  correct:"✓ Correct !",
-  wrong:"✕ Erreur — une vie perdue",
-  bomb:"Bombe",
-  gameOver:"PARTIE TERMINÉE",
-  timeOver:"TEMPS ÉCOULÉ",
-  again:"↻ REJOUER",
-  menu:"⌂ MENU",
-  best:"MEILLEUR SCORE",
-  games:"PARTIES",
-  bestCombo:"MEILLEUR COMBO",
-  bombMsg:"💣 Nombres visibles effacés",
-  cool:"RECHARGE"
-},
+    tag:
+      "رياضيات • سرعة • دقة",
 
-en:{
-  tag:"Mathematics • Speed • Precision",
-  play:"PLAY",
-  playP:"Mathematics challenges",
-  quick:"QUICK HUNT",
-  quickP:"60 seconds",
-  missions:"MISSION SELECT",
-  missionsP:"Choose a challenge",
-  how:"HOW TO PLAY",
-  howP:"Rules, lives and bomb",
-  choose:"MISSION SELECT",
-  start:"START MISSION",
-  score:"SCORE",
-  level:"LEVEL",
-  hearts:"LIVES",
-  time:"TIME",
-  correct:"✓ Correct!",
-  wrong:"✕ Wrong — life lost",
-  bomb:"Bomb",
-  gameOver:"GAME OVER",
-  timeOver:"TIME'S UP",
-  again:"↻ PLAY AGAIN",
-  menu:"⌂ MENU",
-  best:"HIGH SCORE",
-  games:"GAMES",
-  bestCombo:"BEST COMBO",
-  bombMsg:"💣 Visible numbers cleared",
-  cool:"RECHARGING"
-}
+    play:
+      "ابدأ اللعب",
+
+    playP:
+      "مهمات رياضية متنوعة",
+
+    quick:
+      "صيد سريع",
+
+    quickP:
+      "60 ثانية من التركيز",
+
+    missions:
+      "اختيار المهمة",
+
+    missionsP:
+      "اختر نوع التحدي",
+
+    how:
+      "طريقة اللعب",
+
+    howP:
+      "القواعد والقلوب والقنبلة",
+
+    choose:
+      "اختيار المهمة",
+
+    start:
+      "ابدأ بهذه المهمة",
+
+    score:
+      "النقاط",
+
+    level:
+      "المستوى",
+
+    hearts:
+      "القلوب",
+
+    time:
+      "الوقت",
+
+    correct:
+      "✓ صحيح!",
+
+    wrong:
+      "✕ خطأ — فقدت قلبًا",
+
+    bomb:
+      "قنبلة",
+
+    gameOver:
+      "انتهت اللعبة",
+
+    timeOver:
+      "انتهى الوقت",
+
+    again:
+      "↻ إعادة اللعب",
+
+    menu:
+      "⌂ القائمة",
+
+    best:
+      "أفضل نتيجة",
+
+    games:
+      "المباريات",
+
+    bestCombo:
+      "أفضل كومبو",
+
+    bombMsg:
+      "💣 تم مسح الأعداد الظاهرة",
+
+    recharging:
+      "قيد الشحن",
+
+    exit:
+      "🚪 خروج",
+
+    survival:
+      "❤️ وضع البقاء — 3 قلوب"
+
+  },
+
+
+  fr:{
+
+    tag:
+      "Mathématiques • Vitesse • Précision",
+
+    play:
+      "JOUER",
+
+    playP:
+      "Défis mathématiques",
+
+    quick:
+      "CHASSE RAPIDE",
+
+    quickP:
+      "60 secondes",
+
+    missions:
+      "CHOIX DE LA MISSION",
+
+    missionsP:
+      "Choisissez le défi",
+
+    how:
+      "COMMENT JOUER",
+
+    howP:
+      "Règles, vies et bombe",
+
+    choose:
+      "CHOIX DE LA MISSION",
+
+    start:
+      "COMMENCER",
+
+    score:
+      "SCORE",
+
+    level:
+      "NIVEAU",
+
+    hearts:
+      "VIES",
+
+    time:
+      "TEMPS",
+
+    correct:
+      "✓ Correct !",
+
+    wrong:
+      "✕ Erreur — une vie perdue",
+
+    bomb:
+      "Bombe",
+
+    gameOver:
+      "PARTIE TERMINÉE",
+
+    timeOver:
+      "TEMPS ÉCOULÉ",
+
+    again:
+      "↻ REJOUER",
+
+    menu:
+      "⌂ MENU",
+
+    best:
+      "MEILLEUR SCORE",
+
+    games:
+      "PARTIES",
+
+    bestCombo:
+      "MEILLEUR COMBO",
+
+    bombMsg:
+      "💣 Nombres visibles effacés",
+
+    recharging:
+      "RECHARGE",
+
+    exit:
+      "🚪 Quitter",
+
+    survival:
+      "❤️ Mode survie — 3 vies"
+
+  },
+
+
+  en:{
+
+    tag:
+      "Mathematics • Speed • Precision",
+
+    play:
+      "PLAY",
+
+    playP:
+      "Mathematics challenges",
+
+    quick:
+      "QUICK HUNT",
+
+    quickP:
+      "60 seconds",
+
+    missions:
+      "MISSION SELECT",
+
+    missionsP:
+      "Choose a challenge",
+
+    how:
+      "HOW TO PLAY",
+
+    howP:
+      "Rules, lives and bomb",
+
+    choose:
+      "MISSION SELECT",
+
+    start:
+      "START MISSION",
+
+    score:
+      "SCORE",
+
+    level:
+      "LEVEL",
+
+    hearts:
+      "LIVES",
+
+    time:
+      "TIME",
+
+    correct:
+      "✓ Correct!",
+
+    wrong:
+      "✕ Wrong — life lost",
+
+    bomb:
+      "Bomb",
+
+    gameOver:
+      "GAME OVER",
+
+    timeOver:
+      "TIME'S UP",
+
+    again:
+      "↻ PLAY AGAIN",
+
+    menu:
+      "⌂ MENU",
+
+    best:
+      "HIGH SCORE",
+
+    games:
+      "GAMES",
+
+    bestCombo:
+      "BEST COMBO",
+
+    bombMsg:
+      "💣 Visible numbers cleared",
+
+    recharging:
+      "RECHARGING",
+
+    exit:
+      "🚪 Exit",
+
+    survival:
+      "❤️ Survival — 3 lives"
+
+  }
 
 };
 
+
+/* =========================================================
+   BASIC FUNCTIONS
+========================================================= */
 
 function text(key){
 
@@ -1247,39 +2856,57 @@ function missionName(m){
 }
 
 
-function rand(a,b){
+function rand(min,max){
 
   return Math.floor(
-    Math.random()*(b-a+1)
-  )+a;
+    Math.random() *
+    (max-min+1)
+  ) + min;
 
 }
 
 
-function pick(a){
+function pick(array){
 
-  return a[
+  return array[
     Math.floor(
-      Math.random()*a.length
+      Math.random() *
+      array.length
     )
   ];
 
 }
 
 
-function randEven(){
+function shuffle(array){
 
-  return rand(1,49)*2;
+  for(
+    let i=array.length-1;
+    i>0;
+    i--
+  ){
+
+    const j=
+      rand(0,i);
+
+    [
+      array[i],
+      array[j]
+    ]=[
+      array[j],
+      array[i]
+    ];
+
+  }
+
+  return array;
 
 }
 
 
-function randOdd(){
-
-  return rand(1,50)*2-1;
-
-}
-
+/* =========================================================
+   PRIME TEST
+========================================================= */
 
 function isPrime(n){
 
@@ -1298,7 +2925,7 @@ function isPrime(n){
     i+=2
   ){
 
-    if(n%i===0)
+    if(n % i === 0)
       return false;
 
   }
@@ -1308,34 +2935,23 @@ function isPrime(n){
 }
 
 
-function shuffle(a){
+/* =========================================================
+   SCREEN NAVIGATION
+========================================================= */
 
-  for(
-    let i=a.length-1;
-    i>0;
-    i--
-  ){
-
-    const j=rand(0,i);
-
-    [a[i],a[j]] =
-      [a[j],a[i]];
-
-  }
-
-  return a;
-
-}
-
-
-function show(id){
+function showScreen(id){
 
   screens.forEach(
-    s =>
-      $(s).classList.toggle(
-        "active",
-        s===id
-      )
+    screen => {
+
+      $(screen)
+        .classList
+        .toggle(
+          "active",
+          screen===id
+        );
+
+    }
   );
 
   if(id==="home")
@@ -1343,6 +2959,10 @@ function show(id){
 
 }
 
+
+/* =========================================================
+   HOME
+========================================================= */
 
 function updateHome(){
 
@@ -1354,6 +2974,17 @@ function updateHome(){
 
   $("streak").textContent =
     state.bestCombo;
+
+
+  $("bestLabel").textContent =
+    text("best");
+
+  $("gamesLabel").textContent =
+    text("games");
+
+  $("comboLabel").textContent =
+    text("bestCombo");
+
 
   $("tagline").textContent =
     text("tag");
@@ -1382,6 +3013,10 @@ function updateHome(){
   $("howP").textContent =
     text("howP");
 
+  $("survivalBtn").textContent =
+    text("survival");
+
+
   document.documentElement.lang =
     state.lang;
 
@@ -1393,65 +3028,89 @@ function updateHome(){
 }
 
 
+/* =========================================================
+   MISSION SELECT
+========================================================= */
+
 function buildMissions(){
 
-  $("missionList").innerHTML="";
+  const list =
+    $("missionList");
+
+  list.innerHTML="";
+
 
   missions.forEach(
-    (m,i)=>{
+    (mission,index)=>{
 
-      const b =
-        document.createElement("button");
-
-      b.className =
-        "mission-choice"+
-        (
-          i===state.selected
-            ? " selected"
-            : ""
-        )+
-        (
-          i%4===1
-            ? " p"
-            : ""
+      const button =
+        document.createElement(
+          "button"
         );
 
-      b.innerHTML=`
-        <span class="mi">
-          ${m.icon}
+      button.type="button";
+
+      button.className =
+        "mission-choice";
+
+      if(
+        index===
+        state.selected
+      ){
+
+        button.classList.add(
+          "selected"
+        );
+
+      }
+
+      if(index % 3 === 1){
+
+        button.classList.add(
+          "purple"
+        );
+
+      }
+
+
+      button.innerHTML=`
+
+        <span class="mission-icon">
+          ${mission.icon}
         </span>
 
-        <span>
+        <span class="mission-text">
+
           <strong>
-            ${missionName(m)}
+            ${missionName(mission)}
           </strong>
 
           <small>
-            ${
-              m.id==="d24" ||
-              m.id==="d36"
-              ? "اختيار عددي دقيق"
-              : m.id==="square"
-              ? "1، 4، 9، 16…"
-              : "تحقق رياضي مباشر"
-            }
+            ${missionDescription(mission)}
           </small>
+
         </span>
       `;
 
-      b.onclick=()=>{
 
-        state.selected=i;
+      button.addEventListener(
+        "click",
+        () => {
 
-        buildMissions();
+          state.selected =
+            index;
 
-      };
+          buildMissions();
 
-      $("missionList")
-        .appendChild(b);
+        }
+      );
+
+
+      list.appendChild(button);
 
     }
   );
+
 
   $("chooseTitle").textContent =
     text("choose");
@@ -1462,6 +3121,53 @@ function buildMissions(){
 }
 
 
+/* =========================================================
+   MISSION DESCRIPTION
+========================================================= */
+
+function missionDescription(mission){
+
+  if(
+    mission.id==="d24"
+  ){
+
+    return "1، 2، 3، 4، 6، 8، 12، 24";
+
+  }
+
+  if(
+    mission.id==="d36"
+  ){
+
+    return "1، 2، 3، 4، 6، 9، 12، 18، 36";
+
+  }
+
+  if(
+    mission.id==="square"
+  ){
+
+    return "1، 4، 9، 16، 25…";
+
+  }
+
+  if(
+    mission.id==="prime"
+  ){
+
+    return "2، 3، 5، 7، 11…";
+
+  }
+
+  return "تحقق رياضي مباشر";
+
+}
+
+
+/* =========================================================
+   HUD
+========================================================= */
+
 function updateHud(){
 
   $("score").textContent =
@@ -1470,54 +3176,70 @@ function updateHud(){
   $("level").textContent =
     state.level;
 
-  $("heartHud").textContent =
-    "❤️".repeat(state.lives)+
-    "🖤".repeat(3-state.lives);
-
-  $("timeHud").textContent =
-    state.quick
-      ? text("time")
-      : text("hearts");
 
   if(state.quick){
 
     $("heartHud").textContent =
-      `${state.timeLeft}s`;
+      state.timeLeft+"s";
+
+    $("timeHud").textContent =
+      text("time");
+
+  }else{
+
+    $("heartHud").textContent =
+      "❤️".repeat(
+        state.lives
+      )+
+      "🖤".repeat(
+        3-state.lives
+      );
+
+    $("timeHud").textContent =
+      text("hearts");
 
   }
 
-  $("missionBar").textContent =
-    "🎯 "+
-    missionName(state.mission);
+
+  if(state.mission){
+
+    $("missionBar").textContent =
+      "🎯 "+
+      missionName(
+        state.mission
+      );
+
+  }
+
+
+  $("bombText").textContent =
+    state.bombReady
+      ? text("bomb")
+      : text("recharging");
+
+
+  $("exitGame").textContent =
+    text("exit");
 
 }
 
 
-function toast(msg){
+/* =========================================================
+   FEEDBACK
+========================================================= */
 
-  const el=$("toast");
+function showFeedback(
+  message,
+  good
+){
 
-  el.textContent=msg;
+  const element =
+    $("feedback");
 
-  el.style.display="block";
+  element.textContent =
+    message;
 
-  clearTimeout(toast.t);
-
-  toast.t=setTimeout(
-    ()=>el.style.display="none",
-    1100
-  );
-
-}
-
-
-function feedback(msg,good){
-
-  const el=$("feedback");
-
-  el.textContent=msg;
-
-  el.className =
+  element.className =
     "feedback "+
     (
       good
@@ -1525,116 +3247,253 @@ function feedback(msg,good){
         : "bad"
     );
 
-  void el.offsetWidth;
 
-  el.classList.add("show");
+  void element.offsetWidth;
+
+
+  element.classList.add(
+    "show"
+  );
 
 }
 
 
-function beep(freq=500,dur=.06){
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(message){
+
+  const element =
+    $("toast");
+
+  element.textContent =
+    message;
+
+  element.style.display =
+    "block";
+
+
+  clearTimeout(
+    showToast.timer
+  );
+
+
+  showToast.timer =
+    setTimeout(
+      () => {
+
+        element.style.display =
+          "none";
+
+      },
+      1200
+    );
+
+}
+
+
+/* =========================================================
+   SOUND
+========================================================= */
+
+function beep(
+  frequency=500,
+  duration=.07,
+  type="sine"
+){
 
   if(!state.sound)
     return;
 
+
   try{
 
-    const C =
+    const AudioContext =
       window.AudioContext ||
       window.webkitAudioContext;
 
-    if(!C)
+
+    if(!AudioContext)
       return;
 
-    const c =
+
+    const audio =
       beep.ctx ||
-      (beep.ctx=new C());
+      (
+        beep.ctx =
+        new AudioContext()
+      );
 
-    const o =
-      c.createOscillator();
 
-    const g =
-      c.createGain();
+    if(
+      audio.state ===
+      "suspended"
+    ){
 
-    o.frequency.value =
-      freq;
+      audio.resume();
 
-    o.type="sine";
+    }
 
-    g.gain.setValueAtTime(
+
+    const oscillator =
+      audio.createOscillator();
+
+
+    const gain =
+      audio.createGain();
+
+
+    oscillator.type =
+      type;
+
+    oscillator.frequency.value =
+      frequency;
+
+
+    gain.gain.setValueAtTime(
       .045,
-      c.currentTime
+      audio.currentTime
     );
 
-    g.gain.exponentialRampToValueAtTime(
+
+    gain.gain.exponentialRampToValueAtTime(
       .001,
-      c.currentTime+dur
+      audio.currentTime+
+      duration
     );
 
-    o.connect(g);
-    g.connect(c.destination);
 
-    o.start();
+    oscillator.connect(gain);
 
-    o.stop(
-      c.currentTime+dur
+    gain.connect(
+      audio.destination
     );
 
-  }catch(_){}
+
+    oscillator.start();
+
+    oscillator.stop(
+      audio.currentTime+
+      duration
+    );
+
+
+  }catch(error){
+
+    /* Sound is optional. */
+
+  }
 
 }
 
 
+/* =========================================================
+   START GAME
+========================================================= */
+
 function startGame({
 
   quick=false,
+
   survival=false,
+
   mission=null
 
 }={}){
 
+
   stopGame(false);
 
-  state.quick=quick;
-  state.survival=survival;
+
+  state.quick =
+    quick;
+
+  state.survival =
+    survival;
+
 
   state.score=0;
+
   state.combo=0;
+
   state.level=1;
+
   state.lives=3;
+
 
   state.timeLeft=60;
 
+
   state.running=true;
+
 
   state.bombReady=true;
 
+
   state.mission =
     mission ||
-    missions[state.selected] ||
+    missions[
+      state.selected
+    ] ||
     missions[0];
+
+
+  state.nextId=1;
+
 
   $("arena").innerHTML="";
 
   state.targets.clear();
 
+
   $("gameOverlay")
-    .classList.remove("show");
+    .classList
+    .remove("show");
+
 
   $("bomb")
-    .classList.remove("cool");
+    .classList
+    .remove("cool");
 
-  show("game");
+
+  showScreen("game");
+
 
   updateHud();
 
-  beep(700,.08);
 
-  state.spawnTimer =
-    setInterval(
-      spawnWave,
-      760
+  beep(
+    700,
+    .08
+  );
+
+
+  /*
+     مهم جدًا:
+     animation loop واحد فقط.
+  */
+
+  state.lastFrame =
+    performance.now();
+
+
+  state.animationFrame =
+    requestAnimationFrame(
+      animateTargets
     );
+
+
+  /*
+     نبدأ بموجة واحدة فقط.
+     اللعبة لا يجب أن تكون مزدحمة منذ البداية.
+  */
+
+  spawnWave();
+
+
+  scheduleNextWave();
+
 
   state.timer =
     setInterval(
@@ -1642,28 +3501,30 @@ function startGame({
       1000
     );
 
-  state.lastFrame =
-    performance.now();
-
-  spawnWave();
-  spawnWave();
-
 }
 
 
-function stopGame(count=true){
+/* =========================================================
+   STOP GAME
+========================================================= */
+
+function stopGame(
+  countGame=true
+){
 
   state.running=false;
 
+
   if(state.spawnTimer){
 
-    clearInterval(
+    clearTimeout(
       state.spawnTimer
     );
 
     state.spawnTimer=null;
 
   }
+
 
   if(state.timer){
 
@@ -1675,20 +3536,62 @@ function stopGame(count=true){
 
   }
 
-  state.targets.forEach(
-    t =>
-      t.el.remove()
-  );
+
+  if(
+    state.animationFrame
+  ){
+
+    cancelAnimationFrame(
+      state.animationFrame
+    );
+
+    state.animationFrame=null;
+
+  }
+
+
+  if(
+    state.bombCooldown
+  ){
+
+    clearTimeout(
+      state.bombCooldown
+    );
+
+    state.bombCooldown=null;
+
+  }
+
+
+  for(
+    const target
+    of state.targets.values()
+  ){
+
+    if(
+      target.el &&
+      target.el.parentNode
+    ){
+
+      target.el.remove();
+
+    }
+
+  }
+
 
   state.targets.clear();
 
-  if(count){
+
+  if(countGame){
 
     state.games++;
 
     localStorage.setItem(
       "nh_games",
-      state.games
+      String(
+        state.games
+      )
     );
 
   }
@@ -1696,79 +3599,251 @@ function stopGame(count=true){
 }
 
 
+/* =========================================================
+   EXIT GAME
+========================================================= */
+
+function exitGame(){
+
+  if(!state.running)
+    return;
+
+
+  stopGame(false);
+
+
+  $("gameOverlay")
+    .classList
+    .remove("show");
+
+
+  showScreen("home");
+
+
+  beep(
+    300,
+    .07
+  );
+
+}
+
+
+/* =========================================================
+   QUICK TIMER
+========================================================= */
+
 function secondTick(){
 
   if(!state.running)
     return;
 
-  if(state.quick){
 
-    state.timeLeft--;
+  if(!state.quick)
+    return;
 
-    updateHud();
 
-    if(state.timeLeft<=0){
+  state.timeLeft--;
 
-      endGame(
-        text("timeOver")
-      );
+  updateHud();
 
-    }
+
+  if(
+    state.timeLeft<=0
+  ){
+
+    endGame(
+      text("timeOver")
+    );
 
   }
 
 }
 
 
-function makeCorrect(){
+/* =========================================================
+   SPAWN SCHEDULE
+========================================================= */
+
+function scheduleNextWave(){
+
+  if(!state.running)
+    return;
+
+
+  /*
+     المستوى 1:
+     موجة كل 1800ms تقريبًا.
+
+     ثم تقل المدة تدريجيًا.
+
+     الحد الأدنى 800ms.
+  */
+
+  const delay =
+    Math.max(
+      800,
+      1800 -
+      (
+        state.level-1
+      )*55
+    );
+
+
+  state.spawnTimer =
+    setTimeout(
+      () => {
+
+        spawnWave();
+
+        scheduleNextWave();
+
+      },
+      delay
+    );
+
+}
+
+
+/* =========================================================
+   NUMBER COUNT
+========================================================= */
+
+function getTargetCount(){
+
+  /*
+     المستوى 1  = 3
+     المستوى 2  = 3
+     المستوى 3  = 4
+     المستوى 5  = 5
+     المستوى 7  = 6
+     ...
+     الحد الأقصى = 8
+
+     لا نريد ازدحامًا مبكرًا.
+  */
+
+  return Math.min(
+    8,
+    3+
+    Math.floor(
+      (
+        state.level-1
+      )/2
+    )
+  );
+
+}
+
+
+/* =========================================================
+   CORRECT NUMBER
+========================================================= */
+
+function makeCorrectNumber(){
 
   return state.mission.make();
 
 }
 
 
+/* =========================================================
+   SPAWN WAVE
+========================================================= */
+
 function spawnWave(){
 
   if(!state.running)
     return;
 
+
   const arena =
     $("arena");
+
 
   const rect =
     arena.getBoundingClientRect();
 
+
+  if(
+    rect.width<=0 ||
+    rect.height<=0
+  ){
+
+    return;
+
+  }
+
+
   const count =
-    rand(4,6);
+    getTargetCount();
 
-  const values=[
-    makeCorrect()
-  ];
 
-  let tries=0;
+  const values=[];
+
+
+  /*
+     دائمًا نضمن وجود جواب صحيح واحد
+     على الأقل.
+  */
+
+  const correct =
+    makeCorrectNumber();
+
+
+  values.push(
+    correct
+  );
+
+
+  /*
+     نبحث عن أرقام خاطئة.
+  */
+
+  let attempts=0;
+
 
   while(
     values.length<count &&
-    tries<300
+    attempts<500
   ){
 
-    tries++;
+    attempts++;
+
 
     const n=
       rand(1,99);
 
+
     if(
-      !values.includes(n) &&
-      !state.mission.test(n)
+      values.includes(n)
     ){
 
-      values.push(n);
+      continue;
 
     }
 
+
+    if(
+      state.mission.test(n)
+    ){
+
+      continue;
+
+    }
+
+
+    values.push(n);
+
   }
 
-  if(values.length<count){
+
+  /*
+     احتياط إضافي.
+  */
+
+  if(
+    values.length<count
+  ){
 
     for(
       let n=1;
@@ -1790,113 +3865,191 @@ function spawnWave(){
 
   }
 
+
   shuffle(values);
 
+
+  /*
+     حجم الرقم يتكيف مع الهاتف.
+  */
+
   const size =
-    Math.min(
-      78,
-      Math.max(
-        58,
-        rect.width*.16
+    Math.max(
+      56,
+      Math.min(
+        68,
+        rect.width*.155
       )
     );
 
-  const occupied=[];
+
+  /*
+     لا نضع الرقم تحت HUD.
+  */
+
+  const startY =
+    -size/2-10;
+
+
+  /*
+     توزيع أفقي بسيط
+     يمنع تكدس الأرقام.
+  */
+
+  const columns =
+    Math.min(
+      values.length,
+      Math.max(
+        3,
+        Math.floor(
+          rect.width/
+          (size+10)
+        )
+      )
+    );
+
 
   values.forEach(
-    value=>{
+    (value,index)=>{
 
-      let x =
-        rand(
-          size/2+5,
-          rect.width-size/2-5
-        );
+      let x;
 
-      let t=0;
 
-      while(
-        t<20 &&
-        occupied.some(
-          p =>
-            Math.abs(p-x)<
-            size*.9
-        )
+      if(
+        index<columns
       ){
 
-        x=
-          rand(
-            size/2+5,
-            rect.width-size/2-5
-          );
+        const columnWidth =
+          rect.width/
+          columns;
 
-        t++;
+        x =
+          columnWidth*
+          (index+.5);
+
+      }else{
+
+        x =
+          rand(
+            size/2+8,
+            rect.width-size/2-8
+          );
 
       }
 
-      occupied.push(x);
 
-      const el =
-        document.createElement("button");
+      /*
+         السرعة تدريجية.
+         
+         المستوى 1 بطيء.
+         المستوى الأعلى أسرع.
+      */
 
-      el.className="target";
+      const baseSpeed =
+        rect.height/
+        (
+          6.2 -
+          Math.min(
+            3.0,
+            (
+              state.level-1
+            )*.18
+          )
+        );
 
-      el.textContent=value;
 
-      el.style.width=
+      const speed =
+        baseSpeed+
+        rand(-5,5);
+
+
+      const element =
+        document.createElement(
+          "button"
+        );
+
+
+      element.type="button";
+
+      element.className=
+        "target";
+
+
+      element.textContent =
+        value;
+
+
+      element.style.width =
         size+"px";
 
-      el.style.height=
+      element.style.height =
         size+"px";
 
-      el.style.left=
+
+      element.style.left =
         x+"px";
 
-      el.style.top=
-        (-size/2-5)+"px";
 
-      arena.appendChild(el);
+      element.style.top =
+        startY+"px";
+
+
+      $("arena")
+        .appendChild(
+          element
+        );
+
 
       const id =
         state.nextId++;
 
-      const obj={
 
-        id,
-        value,
+      const target={
+
+        id:id,
+
+        value:value,
 
         correct:
-          state.mission.test(value),
+          state.mission.test(
+            value
+          ),
 
-        el,
+        el:element,
 
-        x,
+        x:x,
 
-        y:-size/2-5,
+        y:startY,
 
-        size,
+        size:size,
 
-        speed:
-          rect.height/
-          Math.max(
-            2.0,
-            4.3-state.level*.11
-          )+
-          rand(-10,10)
+        speed:speed
 
       };
 
+
       state.targets.set(
         id,
-        obj
+        target
       );
 
-      el.addEventListener(
+
+      /*
+         pointerdown أفضل للهاتف
+         من click في هذا النوع من الألعاب.
+      */
+
+      element.addEventListener(
         "pointerdown",
-        e=>{
+        event => {
 
-          e.preventDefault();
+          event.preventDefault();
 
-          hitTarget(obj);
+          event.stopPropagation();
+
+          hitTarget(
+            target
+          );
 
         },
         {
@@ -1907,63 +4060,96 @@ function spawnWave(){
     }
   );
 
-  requestAnimationFrame(
-    animateTargets
-  );
-
 }
 
 
-function animateTargets(){
+/* =========================================================
+   ANIMATION LOOP
+========================================================= */
+
+function animateTargets(
+  timestamp
+){
 
   if(!state.running)
     return;
 
-  const now=
-    performance.now();
 
-  const dt=
+  const delta =
     Math.min(
-      .035,
-      (
-        now-
-        (state.lastFrame||now)
-      )/1000
+      .04,
+      Math.max(
+        0,
+        (
+          timestamp-
+          state.lastFrame
+        )/1000
+      )
     );
 
-  state.lastFrame=now;
 
-  const arena=
+  state.lastFrame =
+    timestamp;
+
+
+  const arena =
     $("arena");
 
-  const h=
+
+  const height =
     arena.clientHeight;
 
+
   for(
-    const [id,t]
-    of [...state.targets]
+    const [
+      id,
+      target
+    ]
+    of [
+      ...state.targets
+    ]
   ){
 
-    t.y +=
-      t.speed*dt;
+    target.y +=
+      target.speed*
+      delta;
 
-    t.el.style.top =
-      t.y+"px";
+
+    target.el.style.top =
+      target.y+"px";
+
+
+    /*
+       إذا خرج الرقم من الشاشة
+       نحذفه بدون عقوبة.
+    */
 
     if(
-      t.y >
-      h+t.size
+      target.y >
+      height+
+      target.size+
+      10
     ){
 
-      state.targets.delete(id);
+      state.targets.delete(
+        id
+      );
 
-      t.el.remove();
+
+      if(
+        target.el.parentNode
+      ){
+
+        target.el.remove();
+
+      }
 
     }
 
   }
 
-  if(state.running)
+
+  state.animationFrame =
     requestAnimationFrame(
       animateTargets
     );
@@ -1971,19 +4157,67 @@ function animateTargets(){
 }
 
 
-function hitTarget(t){
+/* =========================================================
+   HIT TARGET
+========================================================= */
+
+function hitTarget(target){
+
+  /*
+     هذا هو التصحيح الأساسي:
+     نستعمل target.id مع Map.
+  */
 
   if(
     !state.running ||
-    !state.targets.has(t)
-  )
+    !target ||
+    !state.targets.has(
+      target.id
+    )
+  ){
+
     return;
 
-  state.targets.delete(t);
+  }
 
-  if(t.correct){
+
+  /*
+     نحذف الهدف فورًا
+     لمنع الضغط المزدوج.
+  */
+
+  state.targets.delete(
+    target.id
+  );
+
+
+  target.el.style.pointerEvents =
+    "none";
+
+
+  /* =======================================================
+     CORRECT
+  ======================================================= */
+
+  if(
+    target.correct
+  ){
 
     state.combo++;
+
+
+    /*
+       النقاط:
+
+       أول إجابة:
+       +12
+
+       ثم ترتفع تدريجيًا
+       مع الكومبو.
+
+       الحد الأقصى للمكافأة
+       هنا +60.
+    */
 
     const gained =
       10+
@@ -1992,38 +4226,66 @@ function hitTarget(t){
         state.combo
       )*2;
 
+
     state.score +=
       gained;
 
-    if(
-      state.combo%8===0
-    ){
 
-      state.level =
-        Math.min(
-          30,
-          state.level+1
-        );
+    /*
+       كل 5 إجابات صحيحة
+       متتالية = مستوى أعلى.
+    */
 
-    }
+    state.level =
+      Math.min(
+        30,
+        1+
+        Math.floor(
+          state.combo/5
+        )
+      );
 
-    t.el.classList.add(
+
+    target.el.classList.add(
       "correct-hit"
     );
 
-    setTimeout(
-      ()=>t.el.remove(),
-      180
-    );
 
-    feedback(
+    showFeedback(
       text("correct")+
       "  +"+
       gained,
       true
     );
 
-    beep(720,.055);
+
+    beep(
+      760,
+      .07,
+      "sine"
+    );
+
+
+    setTimeout(
+      () => {
+
+        if(
+          target.el &&
+          target.el.parentNode
+        ){
+
+          target.el.remove();
+
+        }
+
+      },
+      200
+    );
+
+
+    /*
+       أفضل Combo
+    */
 
     if(
       state.combo>
@@ -2033,26 +4295,35 @@ function hitTarget(t){
       state.bestCombo =
         state.combo;
 
+
       localStorage.setItem(
         "nh_combo",
-        state.bestCombo
+        String(
+          state.bestCombo
+        )
       );
 
     }
 
-  }else{
+  }
 
-    t.el.classList.add(
-      "wrong",
-      "wrong-hit"
-    );
 
-    setTimeout(
-      ()=>t.el.remove(),
-      380
-    );
+  /* =======================================================
+     WRONG
+  ======================================================= */
+
+  else{
+
+    /*
+       تصفير Combo.
+    */
 
     state.combo=0;
+
+
+    /*
+       خصم قلب واحد.
+    */
 
     state.lives =
       Math.max(
@@ -2060,16 +4331,54 @@ function hitTarget(t){
         state.lives-1
       );
 
-    feedback(
+
+    target.el.classList.add(
+      "wrong",
+      "wrong-hit"
+    );
+
+
+    showFeedback(
       text("wrong"),
       false
     );
 
-    beep(190,.11);
 
-    if(state.lives<=0){
+    beep(
+      180,
+      .12,
+      "square"
+    );
 
-      updateHud();
+
+    setTimeout(
+      () => {
+
+        if(
+          target.el &&
+          target.el.parentNode
+        ){
+
+          target.el.remove();
+
+        }
+
+      },
+      320
+    );
+
+
+    updateHud();
+
+
+    /*
+       فقدان القلب الثالث
+       = GAME OVER.
+    */
+
+    if(
+      state.lives<=0
+    ){
 
       endGame(
         text("gameOver")
@@ -2081,60 +4390,113 @@ function hitTarget(t){
 
   }
 
+
   updateHud();
 
 }
 
+
+/* =========================================================
+   BOMB
+========================================================= */
 
 function useBomb(){
 
   if(
     !state.running ||
     !state.bombReady
-  )
+  ){
+
     return;
+
+  }
+
 
   state.bombReady=false;
 
+
   $("bomb")
-    .classList.add("cool");
+    .classList
+    .add("cool");
+
+
+  /*
+     القنبلة لا تعطي نقاطًا.
+     لا تخصم قلبًا.
+     فقط تمسح الأهداف الحالية.
+  */
 
   for(
-    const t
+    const target
     of state.targets.values()
   ){
 
-    t.el.classList.add(
+    target.el.classList.add(
       "correct-hit"
     );
 
+
     setTimeout(
-      ()=>t.el.remove(),
-      180
+      () => {
+
+        if(
+          target.el &&
+          target.el.parentNode
+        ){
+
+          target.el.remove();
+
+        }
+
+      },
+      200
     );
 
   }
 
+
   state.targets.clear();
 
-  toast(
+
+  showToast(
     text("bombMsg")
   );
 
-  beep(330,.12);
+
+  beep(
+    330,
+    .13,
+    "sawtooth"
+  );
+
+
+  /*
+     إعادة شحن القنبلة
+     بعد 6 ثوان.
+  */
 
   state.bombCooldown =
     setTimeout(
-      ()=>{
+      () => {
 
-        if(state.running){
+        if(
+          state.running
+        ){
 
           state.bombReady=true;
 
           $("bomb")
-            .classList.remove(
+            .classList
+            .remove(
               "cool"
             );
+
+          updateHud();
+
+          beep(
+            520,
+            .05
+          );
 
         }
 
@@ -2142,240 +4504,439 @@ function useBomb(){
       6000
     );
 
+
+  updateHud();
+
 }
 
+
+/* =========================================================
+   END GAME
+========================================================= */
 
 function endGame(reason){
 
   if(!state.running)
     return;
 
+
+  /*
+     إيقاف كل شيء.
+  */
+
   stopGame(true);
+
+
+  /*
+     حفظ أفضل نتيجة.
+  */
 
   if(
     state.score>
     state.best
   ){
 
-    state.best=
+    state.best =
       state.score;
+
 
     localStorage.setItem(
       "nh_best",
-      state.best
+      String(
+        state.best
+      )
     );
 
   }
 
+
   $("resultTitle").textContent =
     reason;
+
 
   $("finalScore").textContent =
     state.score;
 
+
   $("resultInfo").textContent =
-    `${text("score")} • ${
-      state.combo
-    } ${text("bestCombo").toLowerCase()}`;
+    text("score")+
+    " • Combo: "+
+    state.combo;
+
 
   $("againBtn").textContent =
     text("again");
 
+
   $("menuBtn").textContent =
     text("menu");
 
-  $("gameOverlay")
-    .classList.add("show");
 
-  beep(120,.2);
+  $("gameOverlay")
+    .classList
+    .add("show");
+
+
+  beep(
+    120,
+    .20,
+    "sawtooth"
+  );
+
 
   updateHome();
 
 }
 
 
-function setLang(l){
+/* =========================================================
+   LANGUAGE
+========================================================= */
 
-  state.lang=l;
+function setLanguage(language){
+
+  state.lang =
+    language;
+
 
   localStorage.setItem(
     "nh_lang",
-    l
+    language
   );
+
 
   updateHome();
 
   buildMissions();
 
-  if(state.mission)
+
+  if(
+    state.mission
+  ){
+
     updateHud();
 
+  }
+
+
   $("langBtn").textContent =
-    l==="ar"
+    language==="ar"
       ? "文"
-      : l==="fr"
+      : language==="fr"
       ? "FR"
       : "EN";
 
 }
 
 
-$("playBtn").onclick=()=>{
+/* =========================================================
+   BUTTON EVENTS
+========================================================= */
 
-  startGame({
-    mission:
-      missions[state.selected]
-  });
+$("playBtn")
+.addEventListener(
+  "click",
+  () => {
 
-};
+    startGame({
+      mission:
+        missions[
+          state.selected
+        ]
+    });
 
-
-$("quickBtn").onclick=()=>{
-
-  startGame({
-    quick:true,
-    mission:missions[2]
-  });
-
-};
-
-
-$("survivalBtn").onclick=()=>{
-
-  startGame({
-    survival:true,
-    mission:
-      missions[state.selected]
-  });
-
-};
+  }
+);
 
 
-$("missionsBtn").onclick=()=>{
+$("quickBtn")
+.addEventListener(
+  "click",
+  () => {
 
-  buildMissions();
+    startGame({
 
-  show("missions");
+      quick:true,
 
-};
+      mission:
+        missions[
+          state.selected
+        ]
 
+    });
 
-$("howBtn").onclick=()=>{
-
-  show("how");
-
-};
-
-
-$("missionsBack").onclick=()=>{
-
-  show("home");
-
-};
+  }
+);
 
 
-$("howBack").onclick=()=>{
+$("survivalBtn")
+.addEventListener(
+  "click",
+  () => {
 
-  show("home");
+    startGame({
 
-};
+      survival:true,
 
+      mission:
+        missions[
+          state.selected
+        ]
 
-$("howPlay").onclick=()=>{
+    });
 
-  startGame({
-    mission:
-      missions[state.selected]
-  });
-
-};
-
-
-$("startSelected").onclick=()=>{
-
-  startGame({
-    mission:
-      missions[state.selected]
-  });
-
-};
+  }
+);
 
 
-$("bomb").onclick=
-  useBomb;
+$("missionsBtn")
+.addEventListener(
+  "click",
+  () => {
+
+    buildMissions();
+
+    showScreen(
+      "missions"
+    );
+
+  }
+);
 
 
-$("againBtn").onclick=()=>{
+$("howBtn")
+.addEventListener(
+  "click",
+  () => {
 
-  startGame({
-    quick:state.quick,
-    survival:state.survival,
-    mission:state.mission
-  });
+    showScreen(
+      "how"
+    );
 
-};
-
-
-$("menuBtn").onclick=()=>{
-
-  stopGame(false);
-
-  $("gameOverlay")
-    .classList.remove("show");
-
-  show("home");
-
-};
+  }
+);
 
 
-$("soundBtn").onclick=()=>{
+$("missionsBack")
+.addEventListener(
+  "click",
+  () => {
 
-  state.sound=
-    !state.sound;
+    showScreen(
+      "home"
+    );
 
-  localStorage.setItem(
-    "nh_sound",
-    state.sound
-      ? "on"
-      : "off"
-  );
-
-  $("soundBtn").textContent =
-    state.sound
-      ? "🔊"
-      : "🔇";
-
-  if(state.sound)
-    beep(600,.06);
-
-};
+  }
+);
 
 
-$("langBtn").onclick=()=>{
+$("howBack")
+.addEventListener(
+  "click",
+  () => {
 
-  setLang(
-    state.lang==="ar"
-      ? "fr"
-      : state.lang==="fr"
-      ? "en"
-      : "ar"
-  );
+    showScreen(
+      "home"
+    );
 
-};
+  }
+);
 
 
-setLang(
+$("howPlay")
+.addEventListener(
+  "click",
+  () => {
+
+    startGame({
+
+      mission:
+        missions[
+          state.selected
+        ]
+
+    });
+
+  }
+);
+
+
+$("startSelected")
+.addEventListener(
+  "click",
+  () => {
+
+    startGame({
+
+      mission:
+        missions[
+          state.selected
+        ]
+
+    });
+
+  }
+);
+
+
+/*
+   زر الخروج الجديد.
+*/
+
+$("exitGame")
+.addEventListener(
+  "click",
+  exitGame
+);
+
+
+/*
+   القنبلة.
+*/
+
+$("bomb")
+.addEventListener(
+  "click",
+  useBomb
+);
+
+
+/*
+   إعادة اللعب.
+*/
+
+$("againBtn")
+.addEventListener(
+  "click",
+  () => {
+
+    startGame({
+
+      quick:
+        state.quick,
+
+      survival:
+        state.survival,
+
+      mission:
+        state.mission
+
+    });
+
+  }
+);
+
+
+/*
+   العودة للقائمة.
+*/
+
+$("menuBtn")
+.addEventListener(
+  "click",
+  () => {
+
+    stopGame(false);
+
+    $("gameOverlay")
+      .classList
+      .remove("show");
+
+    showScreen(
+      "home"
+    );
+
+  }
+);
+
+
+/*
+   الصوت.
+*/
+
+$("soundBtn")
+.addEventListener(
+  "click",
+  () => {
+
+    state.sound =
+      !state.sound;
+
+
+    localStorage.setItem(
+      "nh_sound",
+      state.sound
+        ? "on"
+        : "off"
+    );
+
+
+    $("soundBtn").textContent =
+      state.sound
+        ? "🔊"
+        : "🔇";
+
+
+    if(
+      state.sound
+    ){
+
+      beep(
+        600,
+        .06
+      );
+
+    }
+
+  }
+);
+
+
+/*
+   اللغة:
+   AR → FR → EN → AR
+*/
+
+$("langBtn")
+.addEventListener(
+  "click",
+  () => {
+
+    setLanguage(
+
+      state.lang==="ar"
+        ? "fr"
+        : state.lang==="fr"
+        ? "en"
+        : "ar"
+
+    );
+
+  }
+);
+
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+setLanguage(
   state.lang
 );
+
 
 $("soundBtn").textContent =
   state.sound
     ? "🔊"
     : "🔇";
 
+
+buildMissions();
+
 updateHome();
 
 })();
+
 </script>
 
 </body>
