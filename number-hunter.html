@@ -8,16 +8,23 @@
 
 <style>
 :root{
-  --bg:#f6f8fd;--surface:#fff;--surface2:#f1f5ff;--primary:#2864d7;
-  --primary2:#3b82f6;--purple:#8554e8;--purple2:#a06bea;
-  --text:#18243a;--muted:#718096;--border:#dfe7f5;
-  --success:#17a673;--danger:#e34d5b;--gold:#f2b632;
-  --shadow:0 14px 40px rgba(42,76,130,.12);
+  --bg:#f6f8fd;
+  --surface:#fff;
+  --surface2:#f1f5ff;
+  --primary:#2864d7;
+  --primary2:#3b82f6;
+  --purple:#8554e8;
+  --purple2:#a06bea;
+  --text:#18243a;
+  --muted:#718096;
+  --border:#dfe7f5;
+  --success:#17a673;
+  --danger:#e34d5b;
+  --gold:#f2b632;
+  --shadow:0 14px 40px rgba(42,76,130,.12)
 }
 
-*{
-  box-sizing:border-box
-}
+*{box-sizing:border-box}
 
 html,body{
   margin:0;
@@ -34,7 +41,8 @@ button{
   font:inherit;
   border:0;
   cursor:pointer;
-  -webkit-tap-highlight-color:transparent
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation
 }
 
 #app{
@@ -223,6 +231,12 @@ button{
   box-shadow:0 8px 20px rgba(42,76,130,.08)
 }
 
+.danger-btn{
+  color:var(--danger);
+  background:#fff;
+  border-color:#f0d5d8
+}
+
 .stats{
   display:grid;
   grid-template-columns:1fr 1fr 1fr;
@@ -295,7 +309,8 @@ button{
   background:#e7efff;
   display:grid;
   place-items:center;
-  font-size:20px
+  font-size:20px;
+  flex:none
 }
 
 .mission-choice.p .mi{
@@ -310,25 +325,11 @@ button{
   color:var(--muted)
 }
 
-.lang-row{
-  display:flex;
-  gap:8px;
-  margin-top:14px
-}
-
-.lang{
-  flex:1;
-  padding:11px;
-  border-radius:14px;
-  background:#f4f7fc;
-  border:1px solid var(--border);
-  font-weight:800
-}
-
-.lang.on{
-  background:#eaf2ff;
-  color:#2459b7;
-  border-color:#8eb4f4
+.choice-note{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:700;
+  margin:-5px 0 12px
 }
 
 .how{
@@ -347,6 +348,8 @@ button{
   padding:10px;
   margin:8px 0
 }
+
+/* ================= GAME ================= */
 
 #game{
   padding:0;
@@ -404,13 +407,29 @@ button{
   text-align:center;
   box-shadow:0 8px 24px rgba(42,76,130,.10);
   font-weight:900;
-  color:#2459b7
+  color:#2459b7;
+  min-height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center
 }
 
+/*
+  مساحة اللعب تبدأ أسفل الـ HUD
+  وتنتهي فوق الأزرار السفلية.
+*/
 .arena{
   position:absolute;
-  inset:0;
-  overflow:hidden
+  left:10px;
+  right:10px;
+  top:calc(env(safe-area-inset-top) + 112px);
+  bottom:calc(env(safe-area-inset-bottom) + 78px);
+  overflow:hidden;
+  border:1px solid rgba(40,100,199,.12);
+  border-radius:30px;
+  background:rgba(255,255,255,.48);
+  touch-action:none;
+  user-select:none
 }
 
 .target{
@@ -428,7 +447,10 @@ button{
   color:#204f9f;
   transform:translate(-50%,-50%);
   will-change:transform;
-  z-index:5
+  z-index:5;
+  padding:0;
+  user-select:none;
+  -webkit-user-select:none
 }
 
 .target:active{
@@ -470,7 +492,7 @@ button{
 
 .feedback{
   position:absolute;
-  top:27%;
+  top:34%;
   left:50%;
   transform:translateX(-50%);
   z-index:30;
@@ -512,21 +534,34 @@ button{
 
 .bottom-tools{
   position:absolute;
-  bottom:calc(env(safe-area-inset-bottom) + 13px);
-  left:0;
-  right:0;
-  z-index:20;
+  bottom:calc(env(safe-area-inset-bottom) + 12px);
+  left:12px;
+  right:12px;
+  z-index:40;
   display:flex;
-  justify-content:center
+  justify-content:space-between;
+  align-items:center;
+  pointer-events:none
 }
 
-.bomb{
-  width:78px;
+.game-tool{
+  pointer-events:auto;
   height:52px;
   border-radius:18px;
   background:#fff;
   border:1px solid var(--border);
-  box-shadow:0 10px 25px rgba(42,76,130,.14);
+  box-shadow:0 10px 25px rgba(42,76,130,.14)
+}
+
+.exit-game{
+  width:58px;
+  font-size:23px;
+  color:#667085
+}
+
+.bomb{
+  min-width:88px;
+  padding:0 13px;
   font-size:24px
 }
 
@@ -593,7 +628,60 @@ button{
   padding:11px;
   text-align:center;
   box-shadow:var(--shadow);
-  display:none
+  display:none;
+  font-weight:800
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+  position:absolute;
+  inset:0;
+  z-index:200;
+  display:none;
+  place-items:center;
+  padding:20px;
+  background:rgba(245,248,253,.78);
+  backdrop-filter:blur(8px)
+}
+
+.modal.show{
+  display:grid
+}
+
+.modal-card{
+  width:min(100%,390px);
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:28px;
+  padding:24px;
+  box-shadow:var(--shadow);
+  text-align:center
+}
+
+.modal-card h2{
+  margin:0 0 8px;
+  color:#2459b7
+}
+
+.modal-card p{
+  margin:0;
+  color:var(--muted);
+  line-height:1.7;
+  font-size:14px
+}
+
+.modal-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:18px
+}
+
+.modal-actions button{
+  min-height:52px;
+  border-radius:17px;
+  font-weight:900
 }
 
 @media(max-width:480px){
@@ -615,6 +703,38 @@ button{
     padding:14px
   }
 
+  .arena{
+    top:calc(env(safe-area-inset-top) + 108px);
+    bottom:calc(env(safe-area-inset-bottom) + 76px)
+  }
+
+}
+
+@media(max-height:700px){
+
+  .game-top{
+    top:calc(env(safe-area-inset-top) + 6px)
+  }
+
+  .hud-box{
+    padding:6px
+  }
+
+  .mission-bar{
+    margin-top:5px;
+    padding:7px 10px;
+    min-height:38px
+  }
+
+  .arena{
+    top:calc(env(safe-area-inset-top) + 92px);
+    bottom:calc(env(safe-area-inset-bottom) + 70px)
+  }
+
+  .bottom-tools{
+    bottom:calc(env(safe-area-inset-bottom) + 8px)
+  }
+
 }
 </style>
 </head>
@@ -632,23 +752,19 @@ button{
 <header class="brand">
 
 <div>
-<div class="brand-title">IA Math</div>
-<div class="brand-sub">
+<div class="brand-title" id="brandTitle">IA Math</div>
+<div class="brand-sub" id="brandSub">
 Mathématiques • NUMBER HUNTER
 </div>
 </div>
 
 <div class="top-actions">
 
-<button
-class="icon-btn"
-id="langBtn">
-文
+<button class="icon-btn" id="langBtn">
+FR
 </button>
 
-<button
-class="icon-btn"
-id="soundBtn">
+<button class="icon-btn" id="soundBtn">
 🔊
 </button>
 
@@ -659,13 +775,11 @@ id="soundBtn">
 
 <div class="hero">
 
-<div
-class="logo"
-style="margin:0 auto 10px">
+<div class="logo" style="margin:0 auto 10px">
 √N
 </div>
 
-<h1>
+<h1 id="homeTitle">
 NUMBER HUNTER
 </h1>
 
@@ -684,17 +798,17 @@ NUMBER HUNTER
 
 <div class="stat">
 <b id="best">0</b>
-<span>أفضل نتيجة</span>
+<span id="bestLabel">أفضل نتيجة</span>
 </div>
 
 <div class="stat">
 <b id="games">0</b>
-<span>المباريات</span>
+<span id="gamesLabel">المباريات</span>
 </div>
 
 <div class="stat">
 <b id="streak">0</b>
-<span>أفضل كومبو</span>
+<span id="comboLabel">أفضل كومبو</span>
 </div>
 
 </div>
@@ -702,13 +816,9 @@ NUMBER HUNTER
 
 <div class="menu-grid">
 
-<button
-class="menu-card primary"
-id="playBtn">
+<button class="menu-card primary" id="playBtn">
 
-<div class="emoji">
-▶️
-</div>
+<div class="emoji">▶️</div>
 
 <h3 id="playT">
 ابدأ اللعب
@@ -721,13 +831,9 @@ id="playBtn">
 </button>
 
 
-<button
-class="menu-card purple"
-id="quickBtn">
+<button class="menu-card purple" id="quickBtn">
 
-<div class="emoji">
-⚡
-</div>
+<div class="emoji">⚡</div>
 
 <h3 id="quickT">
 صيد سريع
@@ -740,13 +846,9 @@ id="quickBtn">
 </button>
 
 
-<button
-class="menu-card"
-id="missionsBtn">
+<button class="menu-card" id="missionsBtn">
 
-<div class="emoji">
-🎯
-</div>
+<div class="emoji">🎯</div>
 
 <h3 id="missionsT">
 اختيار المهمة
@@ -759,20 +861,16 @@ id="missionsBtn">
 </button>
 
 
-<button
-class="menu-card"
-id="howBtn">
+<button class="menu-card" id="randomBtn">
 
-<div class="emoji">
-ℹ️
-</div>
+<div class="emoji">🎲</div>
 
-<h3 id="howT">
-طريقة اللعب
+<h3 id="randomT">
+التحدي العشوائي
 </h3>
 
-<p id="howP">
-القواعد والقلوب والقنبلة
+<p id="randomP">
+مهمة جديدة كل 20 ثانية
 </p>
 
 </button>
@@ -788,6 +886,24 @@ id="survivalBtn">
 
 </button>
 
+
+<button
+class="big-action secondary"
+id="howBtn">
+
+ℹ️ طريقة اللعب
+
+</button>
+
+
+<button
+class="big-action secondary danger-btn"
+id="resetBtn">
+
+إعادة الإحصائيات
+
+</button>
+
 </div>
 
 </section>
@@ -795,30 +911,24 @@ id="survivalBtn">
 
 <!-- ================= MISSIONS ================= -->
 
-<section
-id="missions"
-class="screen">
+<section id="missions" class="screen">
 
 <div class="shell">
 
 <div class="brand">
 
-<button
-class="icon-btn"
-id="missionsBack">
+<button class="icon-btn" id="missionsBack">
 ←
 </button>
 
 <div style="text-align:right">
 
-<div
-class="brand-title"
-id="chooseTitle">
+<div class="brand-title" id="chooseTitle">
 اختيار المهمة
 </div>
 
-<div class="brand-sub">
-NUMBER HUNTER
+<div class="brand-sub" id="chooseSub">
+اختر التحدي ثم ابدأ اللعب
 </div>
 
 </div>
@@ -828,9 +938,14 @@ NUMBER HUNTER
 
 <div class="card">
 
-<h2 class="section-title">
+<h2 class="section-title" id="missionHeading">
 🎯 اختر نوع الأعداد
 </h2>
+
+<div
+id="choiceNote"
+class="choice-note">
+</div>
 
 <div
 id="missionList"
@@ -850,29 +965,29 @@ id="startSelected">
 </section>
 
 
-<!-- ================= HOW TO PLAY ================= -->
+<!-- ================= HOW ================= -->
 
-<section
-id="how"
-class="screen">
+<section id="how" class="screen">
 
 <div class="shell">
 
 <div class="brand">
 
-<button
-class="icon-btn"
-id="howBack">
+<button class="icon-btn" id="howBack">
 ←
 </button>
 
 <div style="text-align:right">
 
-<div class="brand-title">
+<div
+class="brand-title"
+id="howTitle">
 طريقة اللعب
 </div>
 
-<div class="brand-sub">
+<div
+class="brand-sub"
+id="howSub">
 NUMBER HUNTER
 </div>
 
@@ -884,56 +999,50 @@ NUMBER HUNTER
 <div class="card how">
 
 <div class="rule">
-
-<strong>🎯 الهدف:</strong>
-
+<strong id="howGoalTitle">🎯 الهدف:</strong>
+<span id="howGoal">
 اضغط فقط على الأعداد التي تحقق المهمة المكتوبة أعلى الشاشة.
-
+</span>
 </div>
 
 
 <div class="rule">
-
-<strong>❤️ القلوب:</strong>
-
+<strong id="howLivesTitle">❤️ القلوب:</strong>
+<span id="howLives">
 لديك 3 قلوب. كل اختيار خاطئ يفقد قلبًا. عند وصول القلوب إلى صفر تنتهي اللعبة.
-
+</span>
 </div>
 
 
 <div class="rule">
-
-<strong>🔥 الكومبو:</strong>
-
+<strong id="howComboTitle">🔥 الكومبو:</strong>
+<span id="howCombo">
 كل إجابة صحيحة متتالية ترفع الكومبو وتزيد النقاط. الخطأ يصفر الكومبو.
-
+</span>
 </div>
 
 
 <div class="rule">
-
-<strong>💣 القنبلة:</strong>
-
+<strong id="howBombTitle">💣 القنبلة:</strong>
+<span id="howBomb">
 تمسح الأعداد الظاهرة فورًا، ولا تمنح نقاطًا ولا تخصم قلبًا. تعود بعد 6 ثوانٍ.
-
+</span>
 </div>
 
 
 <div class="rule">
-
-<strong>⚡ السرعة:</strong>
-
+<strong id="howSpeedTitle">⚡ السرعة:</strong>
+<span id="howSpeed">
 مع ارتفاع المستوى تزداد سرعة الأعداد تدريجيًا.
-
+</span>
 </div>
 
 
 <div class="rule">
-
-<strong>📐 الدقة الرياضية:</strong>
-
+<strong id="howAccuracyTitle">📐 الدقة الرياضية:</strong>
+<span id="howAccuracy">
 اللعبة تتحقق حسابيًا من الأولية، الزوجية، الفردية، المضاعفات، القواسم، المربعات، والمقارنات.
-
+</span>
 </div>
 
 
@@ -954,9 +1063,7 @@ id="howPlay">
 
 <!-- ================= GAME ================= -->
 
-<section
-id="game"
-class="screen">
+<section id="game" class="screen">
 
 <div class="game-top">
 
@@ -968,7 +1075,7 @@ class="screen">
 0
 </b>
 
-<small>
+<small id="scoreLabel">
 النقاط
 </small>
 
@@ -981,7 +1088,7 @@ class="screen">
 1
 </b>
 
-<small>
+<small id="levelLabel">
 المستوى
 </small>
 
@@ -990,9 +1097,7 @@ class="screen">
 
 <div class="hud-box">
 
-<b
-id="heartHud"
-class="hearts">
+<b id="heartHud" class="hearts">
 ❤️❤️❤️
 </b>
 
@@ -1031,12 +1136,22 @@ class="feedback">
 <div class="bottom-tools">
 
 <button
+id="exitGame"
+class="game-tool exit-game"
+aria-label="Exit">
+
+✕
+
+</button>
+
+
+<button
 id="bomb"
-class="bomb">
+class="game-tool bomb">
 
 💣
 
-<small>
+<small id="bombText">
 قنبلة
 </small>
 
@@ -1064,27 +1179,21 @@ id="finalScore">
 <div
 id="resultInfo"
 style="color:#718096;font-weight:700">
-
 النقاط
-
 </div>
 
 
 <button
 class="big-action"
 id="againBtn">
-
 ↻ إعادة اللعب
-
 </button>
 
 
 <button
 class="big-action secondary"
 id="menuBtn">
-
 ⌂ القائمة
-
 </button>
 
 </div>
@@ -1092,6 +1201,43 @@ id="menuBtn">
 </div>
 
 </section>
+
+
+<!-- ================= RESET MODAL ================= -->
+
+<div
+id="resetModal"
+class="modal">
+
+<div class="modal-card">
+
+<h2 id="resetTitle">
+إعادة الإحصائيات؟
+</h2>
+
+<p id="resetMessage">
+سيتم حذف أفضل نتيجة وعدد المباريات وأفضل كومبو. هذا الإجراء لا يمكن التراجع عنه.
+</p>
+
+<div class="modal-actions">
+
+<button
+id="resetCancel"
+class="secondary">
+إلغاء
+</button>
+
+<button
+id="resetConfirm"
+class="big-action danger-btn">
+إعادة الضبط
+</button>
+
+</div>
+
+</div>
+
+</div>
 
 
 <div
@@ -1108,6 +1254,10 @@ class="toast">
 
 "use strict";
 
+
+/* =====================================================
+   BASIC
+===================================================== */
 
 const $ = id =>
 document.getElementById(id);
@@ -1152,7 +1302,13 @@ quick:false,
 
 survival:false,
 
+random:false,
+
 timeLeft:60,
+
+elapsed:0,
+
+startTime:0,
 
 mission:null,
 
@@ -1164,13 +1320,19 @@ spawnTimer:null,
 
 timer:null,
 
+raf:null,
+
 lastFrame:0,
 
 bombReady:true,
 
 bombCooldown:null,
 
-selected:0
+selected:0,
+
+choiceMode:"normal",
+
+randomBucket:-1
 
 };
 
@@ -1182,245 +1344,203 @@ selected:0
 const missions = [
 
 {
-
 id:"prime",
-
 icon:"🔵",
-
 ar:"الأعداد الأولية",
-
 fr:"Nombres premiers",
-
 en:"Prime numbers",
-
+desc:{
+ar:"اختر الأعداد الأولية فقط",
+fr:"Choisissez uniquement les nombres premiers",
+en:"Choose prime numbers only"
+},
 test:n=>isPrime(n),
-
 make:()=>pick([
 2,3,5,7,11,13,17,19,23,29,
-31,37,41,43,47,53,59,61,
-67,71,73,79,83,89,97
+31,37,41,43,47,53,59,61,67,
+71,73,79,83,89,97
 ])
-
 },
 
 
 {
-
 id:"nonprime",
-
 icon:"⚪",
-
 ar:"الأعداد غير الأولية",
-
 fr:"Nombres non premiers",
-
 en:"Non-prime numbers",
-
+desc:{
+ar:"اختر الأعداد غير الأولية",
+fr:"Choisissez les nombres non premiers",
+en:"Choose non-prime numbers"
+},
 test:n=>n>=2&&!isPrime(n),
-
 make:()=>pick([
 4,6,8,9,10,12,14,15,16,
 18,20,21,22,24,25,26,27,
 28,30,32,33,34,35,36,38,
 39,40,42,44,45,46,48,49,50
 ])
-
 },
 
 
 {
-
 id:"even",
-
 icon:"🟦",
-
 ar:"الأعداد الزوجية",
-
 fr:"Nombres pairs",
-
 en:"Even numbers",
-
+desc:{
+ar:"اختر الأعداد القابلة للقسمة على 2",
+fr:"Choisissez les nombres divisibles par 2",
+en:"Choose numbers divisible by 2"
+},
 test:n=>n%2===0,
-
 make:()=>randEven()
-
 },
 
 
 {
-
 id:"odd",
-
 icon:"🟪",
-
 ar:"الأعداد الفردية",
-
 fr:"Nombres impairs",
-
 en:"Odd numbers",
-
+desc:{
+ar:"اختر الأعداد الفردية",
+fr:"Choisissez les nombres impairs",
+en:"Choose odd numbers"
+},
 test:n=>n%2!==0,
-
 make:()=>randOdd()
-
 },
 
 
 {
-
 id:"m3",
-
 icon:"3️⃣",
-
 ar:"مضاعفات 3",
-
 fr:"Multiples de 3",
-
 en:"Multiples of 3",
-
+desc:{
+ar:"اختر مضاعفات العدد 3",
+fr:"Choisissez les multiples de 3",
+en:"Choose multiples of 3"
+},
 test:n=>n%3===0,
-
 make:()=>3*rand(1,33)
-
 },
 
 
 {
-
 id:"m4",
-
 icon:"4️⃣",
-
 ar:"مضاعفات 4",
-
 fr:"Multiples de 4",
-
 en:"Multiples of 4",
-
+desc:{
+ar:"اختر مضاعفات العدد 4",
+fr:"Choisissez les multiples de 4",
+en:"Choose multiples of 4"
+},
 test:n=>n%4===0,
-
 make:()=>4*rand(1,24)
-
 },
 
 
 {
-
 id:"m5",
-
 icon:"5️⃣",
-
 ar:"مضاعفات 5",
-
 fr:"Multiples de 5",
-
 en:"Multiples of 5",
-
+desc:{
+ar:"اختر مضاعفات العدد 5",
+fr:"Choisissez les multiples de 5",
+en:"Choose multiples of 5"
+},
 test:n=>n%5===0,
-
 make:()=>5*rand(1,19)
-
 },
 
 
 {
-
 id:"d24",
-
 icon:"➗",
-
 ar:"قواسم 24",
-
 fr:"Diviseurs de 24",
-
 en:"Divisors of 24",
-
+desc:{
+ar:"اختر القواسم الصحيحة للعدد 24",
+fr:"Choisissez les diviseurs de 24",
+en:"Choose the divisors of 24"
+},
 test:n=>n>0&&24%n===0,
-
-make:()=>pick([
-1,2,3,4,6,8,12,24
-])
-
+make:()=>pick([1,2,3,4,6,8,12,24])
 },
 
 
 {
-
 id:"d36",
-
 icon:"➗",
-
 ar:"قواسم 36",
-
 fr:"Diviseurs de 36",
-
 en:"Divisors of 36",
-
+desc:{
+ar:"اختر القواسم الصحيحة للعدد 36",
+fr:"Choisissez les diviseurs de 36",
+en:"Choose the divisors of 36"
+},
 test:n=>n>0&&36%n===0,
-
-make:()=>pick([
-1,2,3,4,6,9,12,18,36
-])
-
+make:()=>pick([1,2,3,4,6,9,12,18,36])
 },
 
 
 {
-
 id:"square",
-
 icon:"²",
-
 ar:"المربعات الكاملة",
-
 fr:"Carrés parfaits",
-
 en:"Perfect squares",
-
+desc:{
+ar:"مثل 1، 4، 9، 16…",
+fr:"Comme 1, 4, 9, 16…",
+en:"Such as 1, 4, 9, 16…"
+},
 test:n=>Number.isInteger(Math.sqrt(n)),
-
-make:()=>pick([
-1,4,9,16,25,36,49,64,81
-])
-
+make:()=>pick([1,4,9,16,25,36,49,64,81])
 },
 
 
 {
-
 id:"gt50",
-
 icon:">",
-
 ar:"أعداد أكبر من 50",
-
 fr:"Nombres supérieurs à 50",
-
 en:"Numbers greater than 50",
-
+desc:{
+ar:"اختر الأعداد الأكبر من 50",
+fr:"Choisissez les nombres supérieurs à 50",
+en:"Choose numbers greater than 50"
+},
 test:n=>n>50,
-
 make:()=>rand(51,99)
-
 },
 
 
 {
-
 id:"lt25",
-
 icon:"<",
-
 ar:"أعداد أصغر من 25",
-
 fr:"Nombres inférieurs à 25",
-
 en:"Numbers less than 25",
-
+desc:{
+ar:"اختر الأعداد الأصغر من 25",
+fr:"Choisissez les nombres inférieurs à 25",
+en:"Choose numbers less than 25"
+},
 test:n=>n<25,
-
 make:()=>rand(1,24)
-
 }
 
 ];
@@ -1430,525 +1550,669 @@ make:()=>rand(1,24)
    TRANSLATIONS
 ===================================================== */
 
-const T = {
+const T={
 
 ar:{
 
-tag:
-"رياضيات • سرعة • دقة",
+brandSub:"رياضيات • صائد الأعداد",
 
-play:
-"ابدأ اللعب",
+title:"صائد الأعداد",
 
-playP:
-"مهمات رياضية متنوعة",
+tag:"رياضيات • سرعة • دقة",
 
-quick:
-"صيد سريع",
+play:"ابدأ اللعب",
 
-quickP:
-"60 ثانية من التركيز",
+playP:"مهمات رياضية متنوعة",
 
-missions:
-"اختيار المهمة",
+quick:"الصيد السريع",
 
-missionsP:
-"اختر نوع التحدي",
+quickP:"60 ثانية • حطم رقمك",
 
-how:
-"طريقة اللعب",
+missions:"اختيار المهمة",
 
-howP:
-"القواعد والقلوب والقنبلة",
+missionsP:"اختر نوع التحدي",
 
-choose:
-"اختيار المهمة",
+random:"التحدي العشوائي",
 
-start:
-"ابدأ بهذه المهمة",
+randomP:"مهمة جديدة كل 20 ثانية",
 
-score:
-"النقاط",
+survival:"❤️ وضع البقاء — 3 قلوب",
 
-level:
-"المستوى",
+how:"طريقة اللعب",
 
-hearts:
-"القلوب",
+reset:"إعادة الإحصائيات",
 
-time:
-"الوقت",
+best:"أفضل نتيجة",
 
-correct:
-"✓ صحيح!",
+games:"المباريات",
 
-wrong:
-"✕ خطأ — فقدت قلبًا",
+bestCombo:"أفضل كومبو",
 
-bomb:
-"قنبلة",
+choose:"اختيار المهمة",
 
-gameOver:
-"انتهت اللعبة",
+chooseSub:"اختر التحدي ثم ابدأ اللعب",
 
-timeOver:
-"انتهى الوقت",
+missionHeading:"🎯 اختر نوع الأعداد",
 
-again:
-"↻ إعادة اللعب",
+normalNote:"اختر المهمة التي تريد اللعب بها.",
 
-menu:
-"⌂ القائمة",
+quickNote:"اختر المهمة أولًا، ثم ستبدأ مطاردة مدتها 60 ثانية.",
 
-best:
-"أفضل نتيجة",
+survivalNote:"اختر المهمة أولًا، وستبدأ بثلاثة قلوب.",
 
-games:
-"المباريات",
+start:"ابدأ بهذه المهمة",
 
-bestCombo:
-"أفضل كومبو",
+score:"النقاط",
 
-bombMsg:
-"💣 تم مسح الأعداد الظاهرة",
+level:"المستوى",
 
-cool:
-"قيد الشحن"
+hearts:"القلوب",
+
+time:"الوقت",
+
+correct:"✓ صحيح!",
+
+wrong:"✕ خطأ — فقدت قلبًا",
+
+bomb:"قنبلة",
+
+bombMsg:"💣 تم مسح الأعداد الظاهرة",
+
+cool:"قيد الشحن",
+
+exit:"خروج",
+
+gameOver:"انتهت اللعبة",
+
+timeOver:"انتهى الوقت",
+
+again:"↻ إعادة اللعب",
+
+menu:"⌂ القائمة",
+
+randomMission:"🎲 مهمة جديدة",
+
+seconds:"ث",
+
+howGoalTitle:"🎯 الهدف:",
+
+howGoal:"اضغط فقط على الأعداد التي تحقق المهمة المكتوبة أعلى الشاشة.",
+
+howLivesTitle:"❤️ القلوب:",
+
+howLives:"لديك 3 قلوب. كل اختيار خاطئ يفقد قلبًا. عند وصول القلوب إلى صفر تنتهي اللعبة.",
+
+howComboTitle:"🔥 الكومبو:",
+
+howCombo:"كل إجابة صحيحة متتالية ترفع الكومبو وتزيد النقاط. الخطأ يصفر الكومبو.",
+
+howBombTitle:"💣 القنبلة:",
+
+howBomb:"تمسح الأعداد الظاهرة فورًا، ولا تمنح نقاطًا ولا تخصم قلبًا. تعود بعد 6 ثوانٍ.",
+
+howSpeedTitle:"⚡ السرعة:",
+
+howSpeed:"مع ارتفاع المستوى تزداد سرعة الأعداد تدريجيًا.",
+
+howAccuracyTitle:"📐 الدقة الرياضية:",
+
+howAccuracy:"اللعبة تتحقق حسابيًا من الأولية، الزوجية، الفردية، المضاعفات، القواسم، المربعات، والمقارنات.",
+
+howPlay:"▶ ابدأ اللعب",
+
+resetTitle:"إعادة الإحصائيات؟",
+
+resetMessage:"سيتم حذف أفضل نتيجة وعدد المباريات وأفضل كومبو. هذا الإجراء لا يمكن التراجع عنه.",
+
+cancel:"إلغاء",
+
+resetConfirm:"إعادة الضبط",
+
+resetDone:"تمت إعادة الإحصائيات"
 
 },
 
 
 fr:{
 
-tag:
-"Mathématiques • Vitesse • Précision",
+brandSub:"Mathématiques • CHASSE AUX NOMBRES",
 
-play:
-"JOUER",
+title:"CHASSE AUX NOMBRES",
 
-playP:
-"Défis mathématiques",
+tag:"Mathématiques • Vitesse • Précision",
 
-quick:
-"CHASSE RAPIDE",
+play:"JOUER",
 
-quickP:
-"60 secondes",
+playP:"Défis mathématiques",
 
-missions:
-"CHOIX DE LA MISSION",
+quick:"CHASSE RAPIDE",
 
-missionsP:
-"Choisissez le défi",
+quickP:"60 secondes • battez votre record",
 
-how:
-"COMMENT JOUER",
+missions:"CHOIX DE LA MISSION",
 
-howP:
-"Règles, vies et bombe",
+missionsP:"Choisissez le défi",
 
-choose:
-"CHOIX DE LA MISSION",
+random:"DÉFI ALÉATOIRE",
 
-start:
-"COMMENCER",
+randomP:"Nouvelle mission toutes les 20 secondes",
 
-score:
-"SCORE",
+survival:"❤️ MODE SURVIE — 3 VIES",
 
-level:
-"NIVEAU",
+how:"COMMENT JOUER",
 
-hearts:
-"VIES",
+reset:"RÉINITIALISER",
 
-time:
-"TEMPS",
+best:"MEILLEUR SCORE",
 
-correct:
-"✓ Correct !",
+games:"PARTIES",
 
-wrong:
-"✕ Erreur — une vie perdue",
+bestCombo:"MEILLEUR COMBO",
 
-bomb:
-"Bombe",
+choose:"CHOIX DE LA MISSION",
 
-gameOver:
-"PARTIE TERMINÉE",
+chooseSub:"Choisissez le défi puis commencez",
 
-timeOver:
-"TEMPS ÉCOULÉ",
+missionHeading:"🎯 Choisissez le type de nombres",
 
-again:
-"↻ REJOUER",
+normalNote:"Choisissez la mission que vous voulez jouer.",
 
-menu:
-"⌂ MENU",
+quickNote:"Choisissez d'abord la mission. La partie dure 60 secondes.",
 
-best:
-"MEILLEUR SCORE",
+survivalNote:"Choisissez d'abord la mission. Vous commencez avec 3 vies.",
 
-games:
-"PARTIES",
+start:"COMMENCER",
 
-bestCombo:
-"MEILLEUR COMBO",
+score:"SCORE",
 
-bombMsg:
-"💣 Nombres visibles effacés",
+level:"NIVEAU",
 
-cool:
-"RECHARGE"
+hearts:"VIES",
+
+time:"TEMPS",
+
+correct:"✓ Correct !",
+
+wrong:"✕ Erreur — une vie perdue",
+
+bomb:"Bombe",
+
+bombMsg:"💣 Nombres visibles effacés",
+
+cool:"RECHARGE",
+
+exit:"Sortie",
+
+gameOver:"PARTIE TERMINÉE",
+
+timeOver:"TEMPS ÉCOULÉ",
+
+again:"↻ REJOUER",
+
+menu:"⌂ MENU",
+
+randomMission:"🎲 Nouvelle mission",
+
+seconds:"s",
+
+howGoalTitle:"🎯 Objectif :",
+
+howGoal:"Appuyez uniquement sur les nombres qui correspondent à la mission affichée.",
+
+howLivesTitle:"❤️ Vies :",
+
+howLives:"Vous avez 3 vies. Chaque erreur fait perdre une vie. À zéro, la partie est terminée.",
+
+howComboTitle:"🔥 Combo :",
+
+howCombo:"Chaque bonne réponse consécutive augmente le combo et le score. Une erreur remet le combo à zéro.",
+
+howBombTitle:"💣 Bombe :",
+
+howBomb:"Elle efface immédiatement les nombres visibles sans donner de points ni retirer de vie. Recharge en 6 secondes.",
+
+howSpeedTitle:"⚡ Vitesse :",
+
+howSpeed:"La vitesse des nombres augmente progressivement avec le niveau.",
+
+howAccuracyTitle:"📐 Précision mathématique :",
+
+howAccuracy:"Le jeu vérifie mathématiquement les nombres premiers, pairs, impairs, multiples, diviseurs, carrés et comparaisons.",
+
+howPlay:"▶ COMMENCER",
+
+resetTitle:"Réinitialiser les statistiques ?",
+
+resetMessage:"Le meilleur score, le nombre de parties et le meilleur combo seront supprimés. Cette action est irréversible.",
+
+cancel:"ANNULER",
+
+resetConfirm:"RÉINITIALISER",
+
+resetDone:"Statistiques réinitialisées"
 
 },
 
 
 en:{
 
-tag:
-"Mathematics • Speed • Precision",
+brandSub:"Mathematics • NUMBER HUNTER",
 
-play:
-"PLAY",
+title:"NUMBER HUNTER",
 
-playP:
-"Mathematics challenges",
+tag:"Mathematics • Speed • Precision",
 
-quick:
-"QUICK HUNT",
+play:"PLAY",
 
-quickP:
-"60 seconds",
+playP:"Mathematics challenges",
 
-missions:
-"MISSION SELECT",
+quick:"QUICK HUNT",
 
-missionsP:
-"Choose a challenge",
+quickP:"60 seconds • beat your record",
 
-how:
-"HOW TO PLAY",
+missions:"MISSION SELECT",
 
-howP:
-"Rules, lives and bomb",
+missionsP:"Choose a challenge",
 
-choose:
-"MISSION SELECT",
+random:"RANDOM CHALLENGE",
 
-start:
-"START MISSION",
+randomP:"New mission every 20 seconds",
 
-score:
-"SCORE",
+survival:"❤️ SURVIVAL MODE — 3 LIVES",
 
-level:
-"LEVEL",
+how:"HOW TO PLAY",
 
-hearts:
-"LIVES",
+reset:"RESET STATS",
 
-time:
-"TIME",
+best:"HIGH SCORE",
 
-correct:
-"✓ Correct!",
+games:"GAMES",
 
-wrong:
-"✕ Wrong — life lost",
+bestCombo:"BEST COMBO",
 
-bomb:
-"Bomb",
+choose:"MISSION SELECT",
 
-gameOver:
-"GAME OVER",
+chooseSub:"Choose a challenge and start",
 
-timeOver:
-"TIME'S UP",
+missionHeading:"🎯 Choose the number type",
 
-again:
-"↻ PLAY AGAIN",
+normalNote:"Choose the mission you want to play.",
 
-menu:
-"⌂ MENU",
+quickNote:"Choose the mission first. The hunt lasts 60 seconds.",
 
-best:
-"HIGH SCORE",
+survivalNote:"Choose the mission first. You start with 3 lives.",
 
-games:
-"GAMES",
+start:"START MISSION",
 
-bestCombo:
-"BEST COMBO",
+score:"SCORE",
 
-bombMsg:
-"💣 Visible numbers cleared",
+level:"LEVEL",
 
-cool:
-"RECHARGING"
+hearts:"LIVES",
+
+time:"TIME",
+
+correct:"✓ Correct!",
+
+wrong:"✕ Wrong — life lost",
+
+bomb:"Bomb",
+
+bombMsg:"💣 Visible numbers cleared",
+
+cool:"RECHARGING",
+
+exit:"Exit",
+
+gameOver:"GAME OVER",
+
+timeOver:"TIME'S UP",
+
+again:"↻ PLAY AGAIN",
+
+menu:"⌂ MENU",
+
+randomMission:"🎲 New mission",
+
+seconds:"s",
+
+howGoalTitle:"🎯 Goal:",
+
+howGoal:"Tap only the numbers that match the mission displayed above.",
+
+howLivesTitle:"❤️ Lives:",
+
+howLives:"You have 3 lives. Every wrong choice removes one life. At zero, the game ends.",
+
+howComboTitle:"🔥 Combo:",
+
+howCombo:"Every consecutive correct answer increases the combo and score. A mistake resets the combo.",
+
+howBombTitle:"💣 Bomb:",
+
+howBomb:"It instantly clears visible numbers without scoring or losing a life. It recharges in 6 seconds.",
+
+howSpeedTitle:"⚡ Speed:",
+
+howSpeed:"Numbers gradually move faster as the level increases.",
+
+howAccuracyTitle:"📐 Mathematical accuracy:",
+
+howAccuracy:"The game mathematically checks primes, even, odd, multiples, divisors, squares and comparisons.",
+
+howPlay:"▶ START GAME",
+
+resetTitle:"Reset statistics?",
+
+resetMessage:"Your high score, number of games and best combo will be deleted. This cannot be undone.",
+
+cancel:"CANCEL",
+
+resetConfirm:"RESET",
+
+resetDone:"Statistics reset"
 
 }
 
 };
 
 
-/* =====================================================
-   HELPERS
-===================================================== */
-
 function text(key){
-
-return T[state.lang][key]
-|| T.en[key]
-|| key;
-
+  return T[state.lang][key] || T.en[key] || key;
 }
 
 
 function missionName(m){
+  return m[state.lang] || m.en;
+}
 
-return m[state.lang]
-|| m.en;
 
+function missionDesc(m){
+  return m.desc[state.lang] || m.desc.en;
 }
 
 
 function rand(a,b){
-
-return Math.floor(
-Math.random()*(b-a+1)
-)+a;
-
+  return Math.floor(Math.random()*(b-a+1))+a;
 }
 
 
 function pick(a){
-
-return a[
-Math.floor(
-Math.random()*a.length
-)
-];
-
+  return a[Math.floor(Math.random()*a.length)];
 }
 
 
 function randEven(){
-
-return rand(1,49)*2;
-
+  return rand(1,49)*2;
 }
 
 
 function randOdd(){
-
-return rand(1,50)*2-1;
-
+  return rand(1,50)*2-1;
 }
 
 
 function isPrime(n){
 
-if(n<2)return false;
+  if(n<2)return false;
 
-if(n===2)return true;
+  if(n===2)return true;
 
-if(n%2===0)return false;
+  if(n%2===0)return false;
 
-for(
-let i=3;
-i*i<=n;
-i+=2
-){
+  for(let i=3;i*i<=n;i+=2){
 
-if(n%i===0)
-return false;
+    if(n%i===0)return false;
 
-}
+  }
 
-return true;
-
+  return true;
 }
 
 
 function shuffle(a){
 
-for(
-let i=a.length-1;
-i>0;
-i--
-){
+  for(let i=a.length-1;i>0;i--){
 
-let j=rand(0,i);
+    const j=rand(0,i);
 
-[
-a[i],
-a[j]
-]=[
-a[j],
-a[i]
-];
+    [a[i],a[j]]=
+    [a[j],a[i]];
 
-}
+  }
 
-return a;
-
+  return a;
 }
 
 
 /* =====================================================
-   SCREEN MANAGEMENT
+   SCREEN
 ===================================================== */
 
 function show(id){
 
-screens.forEach(
-s=>
-$(s).classList.toggle(
-"active",
-s===id
-)
-);
+  screens.forEach(
+    s=>$(s).classList.toggle(
+      "active",
+      s===id
+    )
+  );
 
-if(id==="home")
-updateHome();
+  if(id==="home")
+    updateHome();
 
 }
 
 
 /* =====================================================
-   HOME
+   HOME LANGUAGE
 ===================================================== */
 
 function updateHome(){
 
-$("best").textContent=
-state.best;
+  $("best").textContent=state.best;
+  $("games").textContent=state.games;
+  $("streak").textContent=state.bestCombo;
 
-$("games").textContent=
-state.games;
+  $("bestLabel").textContent=text("best");
+  $("gamesLabel").textContent=text("games");
+  $("comboLabel").textContent=text("bestCombo");
 
-$("streak").textContent=
-state.bestCombo;
+  $("brandSub").textContent=text("brandSub");
 
-$("tagline").textContent=
-text("tag");
+  $("homeTitle").innerHTML=
+    state.lang==="ar"
+    ?"صائد<br>الأعداد"
+    :
+    state.lang==="fr"
+    ?"CHASSE AUX<br>NOMBRES"
+    :
+    "NUMBER<br>HUNTER";
 
-$("playT").textContent=
-text("play");
+  $("tagline").textContent=text("tag");
 
-$("playP").textContent=
-text("playP");
+  $("playT").textContent=text("play");
+  $("playP").textContent=text("playP");
 
-$("quickT").textContent=
-text("quick");
+  $("quickT").textContent=text("quick");
+  $("quickP").textContent=text("quickP");
 
-$("quickP").textContent=
-text("quickP");
+  $("missionsT").textContent=text("missions");
+  $("missionsP").textContent=text("missionsP");
 
-$("missionsT").textContent=
-text("missions");
+  $("randomT").textContent=text("random");
+  $("randomP").textContent=text("randomP");
 
-$("missionsP").textContent=
-text("missionsP");
+  $("survivalBtn").textContent=text("survival");
 
-$("howT").textContent=
-text("how");
+  $("howBtn").textContent=
+    "ℹ️ "+text("how");
 
-$("howP").textContent=
-text("howP");
+  $("resetBtn").textContent=
+    text("reset");
 
-document.documentElement.lang=
-state.lang;
+  document.documentElement.lang=
+    state.lang;
 
-document.documentElement.dir=
-state.lang==="ar"
-?"rtl"
-:"ltr";
+  document.documentElement.dir=
+    state.lang==="ar"
+    ?"rtl"
+    :"ltr";
+
+  document.title=
+    text("title")+" — IA Math";
 
 }
 
 
 /* =====================================================
-   MISSION LIST
+   MISSIONS SCREEN
 ===================================================== */
 
-function buildMissions(){
+function openMissionChoice(mode){
 
-$("missionList").innerHTML="";
+  state.choiceMode=mode;
 
-missions.forEach(
-(m,i)=>{
+  buildMissions();
 
-const b=
-document.createElement("button");
-
-b.className=
-"mission-choice"
-+(i===state.selected
-?" selected"
-:"")
-+(i%4===1
-?" p"
-:"");
-
-b.innerHTML=`
-
-<span class="mi">
-${m.icon}
-</span>
-
-<span>
-
-<strong>
-${missionName(m)}
-</strong>
-
-<small>
-
-${
-m.id==="d24"||
-m.id==="d36"
-
-?"اختيار عددي دقيق"
-
-:
-
-m.id==="square"
-
-?"1، 4، 9، 16…"
-
-:
-
-"تحقق رياضي مباشر"
+  show("missions");
 
 }
 
-</small>
 
-</span>
+function buildMissions(){
 
-`;
+  $("missionList").innerHTML="";
 
-b.onclick=()=>{
+  missions.forEach(
+    (m,i)=>{
 
-state.selected=i;
+      const b=
+        document.createElement("button");
 
-buildMissions();
+      b.className=
+        "mission-choice"
+        +(i===state.selected
+          ?" selected"
+          :"")
+        +(i%4===1
+          ?" p"
+          :"");
 
-};
+      b.innerHTML=`
 
-$("missionList")
-.appendChild(b);
+        <span class="mi">
+          ${m.icon}
+        </span>
 
-});
+        <span>
+
+          <strong>
+            ${missionName(m)}
+          </strong>
+
+          <small>
+            ${missionDesc(m)}
+          </small>
+
+        </span>
+
+      `;
+
+      b.onclick=()=>{
+
+        state.selected=i;
+
+        buildMissions();
+
+      };
+
+      $("missionList")
+        .appendChild(b);
+
+    }
+  );
 
 
-$("chooseTitle").textContent=
-text("choose");
+  $("chooseTitle").textContent=
+    text("choose");
 
-$("startSelected").textContent=
-text("start");
+  $("chooseSub").textContent=
+    text("chooseSub");
+
+  $("missionHeading").textContent=
+    text("missionHeading");
+
+
+  let note="";
+
+  if(state.choiceMode==="quick")
+    note=text("quickNote");
+
+  else if(state.choiceMode==="survival")
+    note=text("survivalNote");
+
+  else
+    note=text("normalNote");
+
+  $("choiceNote").textContent=note;
+
+  $("startSelected").textContent=
+    text("start");
+
+}
+
+
+/* =====================================================
+   HOW SCREEN
+===================================================== */
+
+function updateHow(){
+
+  $("howTitle").textContent=
+    text("how");
+
+  $("howSub").textContent=
+    text("brandSub");
+
+  $("howGoalTitle").textContent=
+    text("howGoalTitle");
+
+  $("howGoal").textContent=
+    text("howGoal");
+
+  $("howLivesTitle").textContent=
+    text("howLivesTitle");
+
+  $("howLives").textContent=
+    text("howLives");
+
+  $("howComboTitle").textContent=
+    text("howComboTitle");
+
+  $("howCombo").textContent=
+    text("howCombo");
+
+  $("howBombTitle").textContent=
+    text("howBombTitle");
+
+  $("howBomb").textContent=
+    text("howBomb");
+
+  $("howSpeedTitle").textContent=
+    text("howSpeedTitle");
+
+  $("howSpeed").textContent=
+    text("howSpeed");
+
+  $("howAccuracyTitle").textContent=
+    text("howAccuracyTitle");
+
+  $("howAccuracy").textContent=
+    text("howAccuracy");
+
+  $("howPlay").textContent=
+    text("howPlay");
 
 }
 
@@ -1959,33 +2223,51 @@ text("start");
 
 function updateHud(){
 
-$("score").textContent=
-state.score;
+  $("score").textContent=
+    state.score;
 
-$("level").textContent=
-state.level;
+  $("level").textContent=
+    state.level;
 
-$("heartHud").textContent=
-"❤️".repeat(state.lives)
-+
-"🖤".repeat(3-state.lives);
+  $("scoreLabel").textContent=
+    text("score");
 
-$("timeHud").textContent=
-state.quick
-?text("time")
-:text("hearts");
+  $("levelLabel").textContent=
+    text("level");
 
-if(state.quick){
 
-$("heartHud").textContent=
-`${state.timeLeft}s`;
+  if(state.quick){
 
-}
+    $("heartHud").textContent=
+      state.timeLeft+
+      text("seconds");
 
-$("missionBar").textContent=
-"🎯 "
-+
-missionName(state.mission);
+    $("timeHud").textContent=
+      text("time");
+
+  }else{
+
+    $("heartHud").textContent=
+      "❤️".repeat(state.lives)
+      +
+      "🖤".repeat(
+        3-state.lives
+      );
+
+    $("timeHud").textContent=
+      text("hearts");
+
+  }
+
+
+  if(state.mission){
+
+    $("missionBar").textContent=
+      "🎯 "
+      +
+      missionName(state.mission);
+
+  }
 
 }
 
@@ -1996,22 +2278,21 @@ missionName(state.mission);
 
 function toast(msg){
 
-const el=$("toast");
+  const el=$("toast");
 
-el.textContent=
-msg;
+  el.textContent=msg;
 
-el.style.display=
-"block";
+  el.style.display="block";
 
-clearTimeout(toast.t);
+  clearTimeout(toast.t);
 
-toast.t=
-setTimeout(
-()=>
-el.style.display="none",
-1100
-);
+  toast.t=
+    setTimeout(
+      ()=>{
+        el.style.display="none";
+      },
+      1100
+    );
 
 }
 
@@ -2022,22 +2303,18 @@ el.style.display="none",
 
 function feedback(msg,good){
 
-const el=
-$("feedback");
+  const el=$("feedback");
 
-el.textContent=
-msg;
+  el.textContent=msg;
 
-el.className=
-"feedback "
-+
-(good
-?"good"
-:"bad");
+  el.className=
+    "feedback "
+    +
+    (good?"good":"bad");
 
-void el.offsetWidth;
+  void el.offsetWidth;
 
-el.classList.add("show");
+  el.classList.add("show");
 
 }
 
@@ -2046,62 +2323,57 @@ el.classList.add("show");
    SOUND
 ===================================================== */
 
-function beep(
-freq=500,
-dur=.06
-){
+function beep(freq=500,dur=.06){
 
-if(!state.sound)
-return;
+  if(!state.sound)
+    return;
 
-try{
+  try{
 
-const C=
-window.AudioContext
-||
-window.webkitAudioContext;
+    const C=
+      window.AudioContext||
+      window.webkitAudioContext;
 
-if(!C)
-return;
+    if(!C)return;
 
-const c=
-beep.ctx
-||
-(beep.ctx=new C());
+    const c=
+      beep.ctx||
+      (beep.ctx=new C());
 
-const o=
-c.createOscillator();
+    if(c.state==="suspended")
+      c.resume();
 
-const g=
-c.createGain();
+    const o=
+      c.createOscillator();
 
-o.frequency.value=
-freq;
+    const g=
+      c.createGain();
 
-o.type=
-"sine";
+    o.frequency.value=freq;
 
-g.gain.setValueAtTime(
-.045,
-c.currentTime
-);
+    o.type="sine";
 
-g.gain.exponentialRampToValueAtTime(
-.001,
-c.currentTime+dur
-);
+    g.gain.setValueAtTime(
+      .045,
+      c.currentTime
+    );
 
-o.connect(g);
+    g.gain.exponentialRampToValueAtTime(
+      .001,
+      c.currentTime+dur
+    );
 
-g.connect(c.destination);
+    o.connect(g);
 
-o.start();
+    g.connect(c.destination);
 
-o.stop(
-c.currentTime+dur
-);
+    o.start();
 
-}catch(_){}
+    o.stop(
+      c.currentTime+dur
+    );
+
+  }catch(_){}
 
 }
 
@@ -2111,584 +2383,929 @@ c.currentTime+dur
 ===================================================== */
 
 function startGame({
-quick=false,
-survival=false,
-mission=null
+  quick=false,
+  survival=false,
+  random=false,
+  mission=null
 }={}){
 
-stopGame(false);
+  stopGame(false);
 
-state.quick=
-quick;
+  state.quick=quick;
 
-state.survival=
-survival;
+  state.survival=survival;
 
-state.score=0;
+  state.random=random;
 
-state.combo=0;
+  state.score=0;
 
-state.level=1;
+  state.combo=0;
 
-state.lives=3;
+  state.level=1;
 
-state.timeLeft=60;
+  state.lives=3;
 
-state.running=true;
+  state.timeLeft=60;
 
-state.bombReady=true;
+  state.elapsed=0;
 
-state.mission=
-mission
-||
-missions[state.selected]
-||
-missions[0];
+  state.startTime=
+    performance.now();
 
-$("arena").innerHTML="";
+  state.running=true;
 
-state.targets.clear();
+  state.bombReady=true;
 
-$("gameOverlay")
-.classList.remove("show");
+  state.randomBucket=-1;
 
-$("bomb")
-.classList.remove("cool");
 
-show("game");
+  if(random){
 
-updateHud();
+    state.mission=
+      randomMission(null);
 
-beep(700,.08);
+  }else{
 
-state.spawnTimer=
-setInterval(
-spawnWave,
-760
-);
+    state.mission=
+      mission
+      ||
+      missions[state.selected]
+      ||
+      missions[0];
 
-state.timer=
-setInterval(
-secondTick,
-1000
-);
+  }
 
-spawnWave();
 
-spawnWave();
+  $("arena").innerHTML="";
+
+  state.targets.clear();
+
+  $("gameOverlay")
+    .classList.remove("show");
+
+  $("bomb")
+    .classList.remove("cool");
+
+  show("game");
+
+  updateHud();
+
+  beep(700,.08);
+
+
+  /*
+    Random:
+    أول تغيير بعد 20 ثانية.
+  */
+
+  state.spawnTimer=
+    setInterval(
+      spawnWave,
+      760
+    );
+
+
+  state.timer=
+    setInterval(
+      secondTick,
+      250
+    );
+
+
+  spawnWave();
+  spawnWave();
+
+  state.lastFrame=
+    performance.now();
+
+  state.raf=
+    requestAnimationFrame(
+      animateTargets
+    );
 
 }
 
 
 /* =====================================================
-   STOP GAME
+   STOP
 ===================================================== */
 
 function stopGame(count=true){
 
-state.running=false;
+  state.running=false;
 
-if(state.spawnTimer){
 
-clearInterval(
-state.spawnTimer
-);
+  if(state.spawnTimer){
 
-state.spawnTimer=null;
+    clearInterval(
+      state.spawnTimer
+    );
 
-}
+    state.spawnTimer=null;
 
-if(state.timer){
+  }
 
-clearInterval(
-state.timer
-);
 
-state.timer=null;
+  if(state.timer){
 
-}
+    clearInterval(
+      state.timer
+    );
 
-state.targets.forEach(
-t=>
-t.el.remove()
-);
+    state.timer=null;
 
-state.targets.clear();
+  }
 
-if(count){
 
-state.games++;
+  if(state.raf){
 
-localStorage.setItem(
-"nh_games",
-state.games
-);
+    cancelAnimationFrame(
+      state.raf
+    );
 
-}
+    state.raf=null;
+
+  }
+
+
+  if(state.bombCooldown){
+
+    clearTimeout(
+      state.bombCooldown
+    );
+
+    state.bombCooldown=null;
+
+  }
+
+
+  state.targets.forEach(
+    t=>t.el.remove()
+  );
+
+  state.targets.clear();
+
+
+  if(count){
+
+    state.games++;
+
+    localStorage.setItem(
+      "nh_games",
+      state.games
+    );
+
+  }
 
 }
 
 
 /* =====================================================
-   TIMER
+   SECOND / RANDOM TIMER
 ===================================================== */
 
 function secondTick(){
 
-if(!state.running)
-return;
+  if(!state.running)
+    return;
 
-if(state.quick){
 
-state.timeLeft--;
+  state.elapsed=
+    (
+      performance.now()
+      -
+      state.startTime
+    )/1000;
 
-updateHud();
 
-if(state.timeLeft<=0)
+  if(state.quick){
 
-endGame(
-text("timeOver")
-);
+    state.timeLeft=
+      Math.max(
+        0,
+        60-Math.floor(state.elapsed)
+      );
 
-}
+    updateHud();
+
+    if(state.timeLeft<=0){
+
+      endGame(
+        text("timeOver")
+      );
+
+      return;
+
+    }
+
+  }
+
+
+  if(state.random){
+
+    const bucket=
+      Math.floor(
+        state.elapsed/20
+      );
+
+
+    if(bucket!==state.randomBucket){
+
+      state.randomBucket=bucket;
+
+      if(bucket>0)
+        nextRandomMission();
+
+    }
+
+  }
 
 }
 
 
 /* =====================================================
-   CORRECT NUMBER
+   RANDOM MISSION
+===================================================== */
+
+function randomMission(exclude){
+
+  let m;
+
+  do{
+
+    m=
+      missions[
+        rand(0,missions.length-1)
+      ];
+
+  }while(
+    exclude &&
+    m.id===exclude.id &&
+    missions.length>1
+  );
+
+  return m;
+
+}
+
+
+function nextRandomMission(){
+
+  if(!state.running||!state.random)
+    return;
+
+
+  const old=
+    state.mission;
+
+
+  state.mission=
+    randomMission(old);
+
+
+  /*
+    عند تغيير المهمة:
+    نحذف الأعداد القديمة ونولد موجة جديدة
+    حتى يكون هناك دائمًا عدد صحيح للمهمة الجديدة.
+  */
+
+  state.targets.forEach(
+    t=>t.el.remove()
+  );
+
+  state.targets.clear();
+
+  spawnWave();
+  spawnWave();
+
+  updateHud();
+
+  feedback(
+    text("randomMission")
+    +" — "
+    +missionName(state.mission),
+    true
+  );
+
+  beep(850,.08);
+
+}
+
+
+/* =====================================================
+   SPAWN
 ===================================================== */
 
 function makeCorrect(){
 
-return state.mission.make();
+  return state.mission.make();
 
 }
 
-
-/* =====================================================
-   SPAWN WAVE
-===================================================== */
 
 function spawnWave(){
 
-if(!state.running)
-return;
-
-const arena=
-$("arena");
-
-const rect=
-arena.getBoundingClientRect();
-
-const count=
-rand(4,6);
-
-const values=[
-makeCorrect()
-];
-
-let tries=0;
-
-while(
-values.length<count
-&&
-tries<300
-){
-
-tries++;
-
-const n=
-rand(1,99);
-
-if(
-!values.includes(n)
-&&
-!state.mission.test(n)
-){
-
-values.push(n);
-
-}
-
-}
+  if(!state.running)
+    return;
 
 
-/*
-If the chosen rule is very broad,
-still guarantee a distractor by finding one.
-*/
+  const arena=
+    $("arena");
 
-if(values.length<count){
+  const rect=
+    arena.getBoundingClientRect();
 
-for(
-let n=1;
-n<=99 &&
-values.length<count;
-n++
-){
 
-if(
-!values.includes(n)
-&&
-!state.mission.test(n)
-){
+  const count=
+    rand(4,6);
 
-values.push(n);
 
-}
+  /*
+    الرقم الأول مضمون أنه صحيح.
+  */
 
-}
+  const values=[
+    makeCorrect()
+  ];
 
-}
 
-shuffle(values);
+  let tries=0;
 
-const size=
-Math.min(
-78,
-Math.max(
-58,
-rect.width*.16
-)
-);
 
-const topSafe=
-Math.max(
-105,
-rect.height*.16
-);
+  /*
+    بقية الأرقام يجب أن تكون خاطئة
+    بالنسبة للمهمة الحالية.
+  */
 
-const bottomSafe=
-Math.max(
-75,
-rect.height*.12
-);
+  while(
+    values.length<count &&
+    tries<500
+  ){
 
-const occupied=[];
+    tries++;
 
-values.forEach(
-value=>{
+    const n=
+      rand(1,99);
 
-let x=
-rand(
-size/2+5,
-rect.width-size/2-5
-);
+    if(
+      !values.includes(n) &&
+      !state.mission.test(n)
+    ){
 
-let y=
--size/2-5;
+      values.push(n);
 
-let t=0;
+    }
 
-while(
-t<20
-&&
-occupied.some(
-p=>
-Math.abs(p-x)
-<
-size*.9
-)
-){
+  }
 
-x=
-rand(
-size/2+5,
-rect.width-size/2-5
-);
 
-t++;
+  /*
+    احتياط إضافي.
+  */
 
-}
+  if(values.length<count){
 
-occupied.push(x);
+    for(
+      let n=1;
+      n<=99 &&
+      values.length<count;
+      n++
+    ){
 
-const el=
-document.createElement(
-"button"
-);
+      if(
+        !values.includes(n) &&
+        !state.mission.test(n)
+      ){
 
-el.className=
-"target";
+        values.push(n);
 
-el.textContent=
-value;
+      }
 
-el.style.width=
-el.style.height=
-size+"px";
+    }
 
-el.style.left=
-x+"px";
+  }
 
-el.style.top=
-y+"px";
 
-arena.appendChild(el);
+  shuffle(values);
 
-const id=
-state.nextId++;
 
-const obj={
-id,
-value,
-correct:
-state.mission.test(value),
-el,
-x,
-y,
-size,
+  const size=
+    Math.min(
+      78,
+      Math.max(
+        58,
+        rect.width*.16
+      )
+    );
 
-speed:
-rect.height/
-(
-Math.max(
-2.0,
-4.3-state.level*.11
-)
-)
-+
-rand(-10,10)
 
-};
+  const occupied=[];
 
-state.targets.set(
-id,
-obj
-);
 
-el.addEventListener(
-"pointerdown",
-e=>{
+  values.forEach(
+    value=>{
 
-e.preventDefault();
+      let x=
+        rand(
+          Math.ceil(size/2)+5,
+          Math.floor(
+            rect.width-size/2-5
+          )
+        );
 
-hitTarget(obj);
 
-},
-{
-passive:false
-}
-);
+      /*
+        تبدأ الأعداد من أعلى منطقة اللعب.
+      */
 
-});
+      let y=
+        -size/2-5;
 
-requestAnimationFrame(
-()=>
-animateTargets()
-);
+
+      let attempts=0;
+
+
+      while(
+        attempts<20 &&
+        occupied.some(
+          p=>
+            Math.abs(p-x)
+            <
+            size*.9
+        )
+      ){
+
+        x=
+          rand(
+            Math.ceil(size/2)+5,
+            Math.floor(
+              rect.width-size/2-5
+            )
+          );
+
+        attempts++;
+
+      }
+
+
+      occupied.push(x);
+
+
+      const el=
+        document.createElement(
+          "button"
+        );
+
+
+      el.className=
+        "target";
+
+      el.type="button";
+
+      el.textContent=
+        value;
+
+
+      el.style.width=
+        size+"px";
+
+      el.style.height=
+        size+"px";
+
+      el.style.left=
+        x+"px";
+
+      el.style.top=
+        y+"px";
+
+
+      arena.appendChild(el);
+
+
+      const id=
+        state.nextId++;
+
+
+      const obj={
+
+        id,
+
+        value,
+
+        el,
+
+        x,
+
+        y,
+
+        size,
+
+        speed:
+          rect.height/
+          Math.max(
+            2.0,
+            4.3-state.level*.11
+          )
+          +
+          rand(-10,10)
+
+      };
+
+
+      /*
+        نربط الكائن بالزر.
+      */
+
+      el.__numberHunterTarget=
+        obj;
+
+
+      state.targets.set(
+        id,
+        obj
+      );
+
+    }
+  );
 
 }
 
 
 /* =====================================================
-   ANIMATE
+   ANIMATION
 ===================================================== */
 
-function animateTargets(){
+function animateTargets(now){
 
-if(!state.running)
-return;
+  if(!state.running)
+    return;
 
-const now=
-performance.now();
 
-const dt=
-Math.min(
-.035,
-(
-now-
-(
-state.lastFrame
-||
-now
-)
-)/1000
-);
+  const dt=
+    Math.min(
+      .035,
+      (
+        now-
+        (
+          state.lastFrame||
+          now
+        )
+      )/1000
+    );
 
-state.lastFrame=
-now;
 
-const arena=
-$("arena");
+  state.lastFrame=now;
 
-const h=
-arena.clientHeight;
 
-for(
-const [
-id,
-t
-]
-of [
-...state.targets
-]
-){
+  const arena=
+    $("arena");
 
-t.y+=
-t.speed*dt;
+  const h=
+    arena.clientHeight;
 
-t.el.style.transform=
-`translate(-50%,-50%)`;
 
-t.el.style.top=
-t.y+"px";
+  for(
+    const [
+      id,
+      t
+    ]
+    of [...state.targets]
+  ){
 
-if(
-t.y>
-h+t.size
-){
+    t.y+=
+      t.speed*dt;
 
-state.targets.delete(id);
 
-t.el.remove();
+    t.el.style.top=
+      t.y+"px";
 
-}
 
-}
+    if(
+      t.y>
+      h+t.size
+    ){
 
-if(state.running)
+      state.targets.delete(id);
 
-requestAnimationFrame(
-animateTargets
-);
+      t.el.remove();
+
+    }
+
+  }
+
+
+  /*
+    استمرار الحركة.
+  */
+
+  if(state.running){
+
+    state.raf=
+      requestAnimationFrame(
+        animateTargets
+      );
+
+  }
 
 }
 
 
 /* =====================================================
-   HIT TARGET
+   TOUCH / CLICK
+===================================================== */
+
+/*
+  مهم جدًا:
+
+  لا نعتمد pointerdown لقتل الرقم.
+
+  pointerdown = بداية اللمس فقط
+  pointerup   = نتحقق من المسافة
+  إذا تحرك الإصبع أكثر من 8px => سحب/تمرير
+  وبالتالي لا يتم احتساب الرقم.
+*/
+
+let pressTarget=null;
+
+let pressPointerId=null;
+
+let pressX=0;
+
+let pressY=0;
+
+
+$("arena").addEventListener(
+  "pointerdown",
+  event=>{
+
+    const target=
+      event.target.closest(
+        ".target"
+      );
+
+
+    if(
+      !target||
+      !state.running
+    )
+      return;
+
+
+    pressTarget=target;
+
+    pressPointerId=
+      event.pointerId;
+
+    pressX=
+      event.clientX;
+
+    pressY=
+      event.clientY;
+
+
+    try{
+
+      target.setPointerCapture(
+        event.pointerId
+      );
+
+    }catch(_){}
+
+
+    event.preventDefault();
+
+    event.stopPropagation();
+
+  },
+  {
+    passive:false
+  }
+);
+
+
+$("arena").addEventListener(
+  "pointerup",
+  event=>{
+
+    if(
+      !pressTarget||
+      event.pointerId!==
+      pressPointerId
+    )
+      return;
+
+
+    const dx=
+      event.clientX-
+      pressX;
+
+    const dy=
+      event.clientY-
+      pressY;
+
+
+    const distance=
+      Math.hypot(dx,dy);
+
+
+    const target=
+      pressTarget;
+
+
+    pressTarget=null;
+
+    pressPointerId=null;
+
+
+    /*
+      8px هي عتبة السماح.
+      أي حركة أكبر = Swipe/Drag.
+    */
+
+    if(
+      distance<=8 &&
+      target.isConnected
+    ){
+
+      const obj=
+        target.__numberHunterTarget;
+
+      if(obj)
+        hitTarget(obj);
+
+    }
+
+
+    event.preventDefault();
+
+  },
+  {
+    passive:false
+  }
+);
+
+
+$("arena").addEventListener(
+  "pointercancel",
+  ()=>{
+    pressTarget=null;
+    pressPointerId=null;
+  }
+);
+
+
+/* =====================================================
+   HIT
 ===================================================== */
 
 function hitTarget(t){
 
-if(
-!state.running
-||
-!state.targets.has(t)
-)
-return;
+  if(
+    !state.running||
+    !state.targets.has(t.id)
+  )
+    return;
 
-state.targets.delete(t);
 
-if(t.correct){
+  state.targets.delete(
+    t.id
+  );
 
-state.combo++;
 
-state.score +=
-10
-+
-Math.min(
-25,
-state.combo
-)*2;
+  /*
+    نتحقق من المهمة الحالية لحظة الضغط،
+    وليس من نتيجة قديمة.
+  */
 
-if(
-state.combo%8===0
-)
+  const correct=
+    state.mission.test(
+      t.value
+    );
 
-state.level=
-Math.min(
-30,
-state.level+1
-);
 
-t.el.classList.add(
-"correct-hit"
-);
+  if(correct){
 
-setTimeout(
-()=>
-t.el.remove(),
-180
-);
+    state.combo++;
 
-feedback(
-text("correct")
-+
-"  +"
-+
-(
-10+
-Math.min(
-25,
-state.combo
-)*2
-),
-true
-);
 
-beep(
-720,
-.055
-);
+    const gained=
+      10+
+      Math.min(
+        25,
+        state.combo
+      )*2;
 
-if(
-state.combo>
-state.bestCombo
-){
 
-state.bestCombo=
-state.combo;
+    state.score+=
+      gained;
 
-localStorage.setItem(
-"nh_combo",
-state.bestCombo
-);
 
-}
+    if(
+      state.combo%8===0
+    ){
 
-}
+      state.level=
+        Math.min(
+          30,
+          state.level+1
+        );
 
-else{
+    }
 
-t.el.classList.add(
-"wrong",
-"wrong-hit"
-);
 
-setTimeout(
-()=>
-t.el.remove(),
-380
-);
+    t.el.classList.add(
+      "correct-hit"
+    );
 
-state.combo=0;
 
-state.lives=
-Math.max(
-0,
-state.lives-1
-);
+    setTimeout(
+      ()=>t.el.remove(),
+      180
+    );
 
-feedback(
-text("wrong"),
-false
-);
 
-beep(
-190,
-.11
-);
+    feedback(
+      text("correct")
+      +"  +"
+      +gained,
+      true
+    );
 
-if(
-state.lives<=0
-){
 
-updateHud();
+    beep(
+      720,
+      .055
+    );
 
-endGame(
-text("gameOver")
-);
 
-return;
+    if(
+      state.combo>
+      state.bestCombo
+    ){
 
-}
+      state.bestCombo=
+        state.combo;
 
-}
+      localStorage.setItem(
+        "nh_combo",
+        state.bestCombo
+      );
 
-updateHud();
+    }
+
+  }else{
+
+    t.el.classList.add(
+      "wrong",
+      "wrong-hit"
+    );
+
+
+    setTimeout(
+      ()=>t.el.remove(),
+      380
+    );
+
+
+    state.combo=0;
+
+    state.lives=
+      Math.max(
+        0,
+        state.lives-1
+      );
+
+
+    feedback(
+      text("wrong"),
+      false
+    );
+
+
+    beep(
+      190,
+      .11
+    );
+
+
+    if(
+      state.lives<=0
+    ){
+
+      updateHud();
+
+      endGame(
+        text("gameOver")
+      );
+
+      return;
+
+    }
+
+  }
+
+
+  updateHud();
 
 }
 
@@ -2699,123 +3316,238 @@ updateHud();
 
 function useBomb(){
 
-if(
-!state.running
-||
-!state.bombReady
-)
-return;
+  if(
+    !state.running||
+    !state.bombReady
+  )
+    return;
 
-state.bombReady=false;
 
-$("bomb")
-.classList.add("cool");
+  state.bombReady=false;
 
-for(
-const t
-of state.targets.values()
-){
 
-t.el.classList.add(
-"correct-hit"
-);
+  $("bomb")
+    .classList.add(
+      "cool"
+    );
 
-setTimeout(
-()=>
-t.el.remove(),
-180
-);
 
-}
+  for(
+    const t
+    of state.targets.values()
+  ){
 
-state.targets.clear();
+    t.el.classList.add(
+      "correct-hit"
+    );
 
-toast(
-text("bombMsg")
-);
 
-beep(
-330,
-.12
-);
+    setTimeout(
+      ()=>t.el.remove(),
+      180
+    );
 
-state.bombCooldown=
-setTimeout(
-()=>{
+  }
 
-if(state.running){
 
-state.bombReady=true;
+  state.targets.clear();
 
-$("bomb")
-.classList.remove(
-"cool"
-);
 
-}
+  toast(
+    text("bombMsg")
+  );
 
-},
-6000
-);
+
+  beep(
+    330,
+    .12
+  );
+
+
+  state.bombCooldown=
+    setTimeout(
+      ()=>{
+
+        if(state.running){
+
+          state.bombReady=true;
+
+          $("bomb")
+            .classList.remove(
+              "cool"
+            );
+
+        }
+
+      },
+      6000
+    );
 
 }
 
 
 /* =====================================================
-   END GAME
+   END
 ===================================================== */
 
 function endGame(reason){
 
-if(!state.running)
-return;
+  if(!state.running)
+    return;
 
-stopGame(true);
 
-if(
-state.score>
-state.best
-){
+  stopGame(true);
 
-state.best=
-state.score;
 
-localStorage.setItem(
-"nh_best",
-state.best
-);
+  if(
+    state.score>
+    state.best
+  ){
+
+    state.best=
+      state.score;
+
+    localStorage.setItem(
+      "nh_best",
+      state.best
+    );
+
+  }
+
+
+  $("resultTitle")
+    .textContent=
+    reason;
+
+
+  $("finalScore")
+    .textContent=
+    state.score;
+
+
+  $("resultInfo")
+    .textContent=
+    text("score")
+    +" • "
+    +text("bestCombo")
+    +" : "
+    +state.bestCombo;
+
+
+  $("againBtn")
+    .textContent=
+    text("again");
+
+
+  $("menuBtn")
+    .textContent=
+    text("menu");
+
+
+  $("gameOverlay")
+    .classList.add(
+      "show"
+    );
+
+
+  beep(
+    120,
+    .2
+  );
+
+
+  updateHome();
 
 }
 
-$("resultTitle")
-.textContent=
-reason;
 
-$("finalScore")
-.textContent=
-state.score;
+/* =====================================================
+   EXIT
+===================================================== */
 
-$("resultInfo")
-.textContent=
-`${text("score")} • ${state.combo} ${text("bestCombo").toLowerCase()}`;
+function exitGame(){
 
-$("againBtn")
-.textContent=
-text("again");
+  if(!state.running){
 
-$("menuBtn")
-.textContent=
-text("menu");
+    $("gameOverlay")
+      .classList.remove(
+        "show"
+      );
 
-$("gameOverlay")
-.classList.add("show");
+    show("home");
 
-beep(
-120,
-.2
-);
+    return;
 
-updateHome();
+  }
+
+
+  stopGame(false);
+
+
+  $("gameOverlay")
+    .classList.remove(
+      "show"
+    );
+
+
+  show("home");
+
+}
+
+
+/* =====================================================
+   RESET STATS
+===================================================== */
+
+function openResetModal(){
+
+  $("resetModal")
+    .classList.add(
+      "show"
+    );
+
+}
+
+
+function closeResetModal(){
+
+  $("resetModal")
+    .classList.remove(
+      "show"
+    );
+
+}
+
+
+function resetStats(){
+
+  state.best=0;
+
+  state.games=0;
+
+  state.bestCombo=0;
+
+
+  localStorage.removeItem(
+    "nh_best"
+  );
+
+  localStorage.removeItem(
+    "nh_games"
+  );
+
+  localStorage.removeItem(
+    "nh_combo"
+  );
+
+
+  updateHome();
+
+  closeResetModal();
+
+  toast(
+    text("resetDone")
+  );
 
 }
 
@@ -2826,177 +3558,305 @@ updateHome();
 
 function setLang(l){
 
-state.lang=
-l;
+  state.lang=l;
 
-localStorage.setItem(
-"nh_lang",
-l
-);
+  localStorage.setItem(
+    "nh_lang",
+    l
+  );
 
-updateHome();
 
-buildMissions();
+  updateHome();
 
-updateHud();
+  buildMissions();
 
-$("langBtn").textContent=
-l==="ar"
-?"文"
-:
-l==="fr"
-?"FR"
-:
-"EN";
+  updateHow();
+
+
+  if(state.mission)
+    updateHud();
+
+
+  $("langBtn").textContent=
+    l==="ar"
+    ?"FR"
+    :
+    l==="fr"
+    ?"EN"
+    :
+    "AR";
 
 }
 
 
 /* =====================================================
-   BUTTONS
+   BUTTON EVENTS
 ===================================================== */
 
-$("playBtn").onclick=
-()=>
-startGame({
-mission:
-missions[state.selected]
-});
 
+/* Normal */
+
+$("playBtn").onclick=
+  ()=>{
+    openMissionChoice(
+      "normal"
+    );
+  };
+
+
+/* Quick = mission choice first */
 
 $("quickBtn").onclick=
-()=>
-startGame({
-quick:true,
-mission:
-missions[2]
-});
+  ()=>{
+    openMissionChoice(
+      "quick"
+    );
+  };
 
 
-$("survivalBtn").onclick=
-()=>
-startGame({
-survival:true,
-mission:
-missions[state.selected]
-});
-
+/* Mission list */
 
 $("missionsBtn").onclick=
-()=>{
+  ()=>{
+    openMissionChoice(
+      "normal"
+    );
+  };
 
-buildMissions();
 
-show("missions");
+/* Random */
 
-};
+$("randomBtn").onclick=
+  ()=>{
+    startGame({
+      random:true
+    });
+  };
+
+
+/* Survival = mission choice first */
+
+$("survivalBtn").onclick=
+  ()=>{
+    openMissionChoice(
+      "survival"
+    );
+  };
 
 
 $("howBtn").onclick=
-()=>
-show("how");
+  ()=>{
+
+    updateHow();
+
+    show("how");
+
+  };
 
 
 $("missionsBack").onclick=
-()=>
-show("home");
+  ()=>{
+    show("home");
+  };
 
 
 $("howBack").onclick=
-()=>
-show("home");
+  ()=>{
+    show("home");
+  };
+
+
+/*
+  زر البدء من صفحة المهمة:
+  يحترم الوضع الذي اختاره المستخدم.
+*/
+
+$("startSelected").onclick=
+  ()=>{
+
+    const mission=
+      missions[state.selected];
+
+
+    if(
+      state.choiceMode==="quick"
+    ){
+
+      startGame({
+        quick:true,
+        mission
+      });
+
+      return;
+
+    }
+
+
+    if(
+      state.choiceMode==="survival"
+    ){
+
+      startGame({
+        survival:true,
+        mission
+      });
+
+      return;
+
+    }
+
+
+    startGame({
+      mission
+    });
+
+  };
 
 
 $("howPlay").onclick=
-()=>
-startGame({
-mission:
-missions[state.selected]
-});
-
-
-$("startSelected").onclick=
-()=>
-startGame({
-mission:
-missions[state.selected]
-});
+  ()=>{
+    openMissionChoice(
+      "normal"
+    );
+  };
 
 
 $("bomb").onclick=
-useBomb;
+  useBomb;
 
+
+$("exitGame").onclick=
+  exitGame;
+
+
+/*
+  إعادة اللعب:
+  Quick/Survival يحافظان على المهمة.
+  Random يبدأ بمهمة عشوائية جديدة.
+*/
 
 $("againBtn").onclick=
-()=>
-startGame({
+  ()=>{
 
-quick:
-state.quick,
+    if(state.random){
 
-survival:
-state.survival,
+      startGame({
+        random:true
+      });
 
-mission:
-state.mission
+    }else{
 
-});
+      startGame({
+
+        quick:
+          state.quick,
+
+        survival:
+          state.survival,
+
+        mission:
+          state.mission
+
+      });
+
+    }
+
+  };
 
 
 $("menuBtn").onclick=
-()=>{
+  ()=>{
 
-stopGame(false);
+    stopGame(false);
 
-$("gameOverlay")
-.classList.remove("show");
+    $("gameOverlay")
+      .classList.remove(
+        "show"
+      );
 
-show("home");
+    show("home");
 
-};
+  };
 
+
+/* Sound */
 
 $("soundBtn").onclick=
-()=>{
+  ()=>{
 
-state.sound=
-!state.sound;
+    state.sound=
+      !state.sound;
 
-localStorage.setItem(
-"nh_sound",
-state.sound
-?"on"
-:"off"
-);
+    localStorage.setItem(
+      "nh_sound",
+      state.sound
+      ?"on"
+      :"off"
+    );
 
-$("soundBtn").textContent=
-state.sound
-?"🔊"
-:"🔇";
+    $("soundBtn")
+      .textContent=
+      state.sound
+      ?"🔊"
+      :"🔇";
 
-if(state.sound)
-beep(
-600,
-.06
-);
 
-};
+    if(state.sound)
+      beep(600,.06);
 
+  };
+
+
+/* Language */
 
 $("langBtn").onclick=
-()=>{
+  ()=>{
 
-setLang(
-state.lang==="ar"
-?"fr"
-:
-state.lang==="fr"
-?"en"
-:
-"ar"
+    setLang(
+      state.lang==="ar"
+      ?"fr"
+      :
+      state.lang==="fr"
+      ?"en"
+      :
+      "ar"
+    );
+
+  };
+
+
+/* Reset */
+
+$("resetBtn").onclick=
+  openResetModal;
+
+
+$("resetCancel").onclick=
+  closeResetModal;
+
+
+$("resetConfirm").onclick=
+  resetStats;
+
+
+/* Prevent modal background from acting as game */
+
+$("resetModal").addEventListener(
+  "pointerdown",
+  e=>{
+    if(
+      e.target===
+      $("resetModal")
+    ){
+
+      e.preventDefault();
+
+    }
+  },
+  {
+    passive:false
+  }
 );
-
-};
 
 
 /* =====================================================
@@ -3004,15 +3864,22 @@ state.lang==="fr"
 ===================================================== */
 
 setLang(
-state.lang
+  state.lang
 );
 
-$("soundBtn").textContent=
-state.sound
-?"🔊"
-:"🔇";
+
+$("soundBtn")
+  .textContent=
+  state.sound
+  ?"🔊"
+  :"🔇";
+
 
 updateHome();
+
+updateHow();
+
+buildMissions();
 
 })();
 
