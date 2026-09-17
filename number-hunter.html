@@ -2,11 +2,14 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
+
 <meta name="viewport"
-      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+
 <title>NUMBER HUNTER</title>
 
 <style>
+
 :root{
 --blue:#2864c7;
 --blue2:#3d73dc;
@@ -572,9 +575,7 @@ border:1px solid var(--border);
 
 
 /* =====================================================
-   IMPORTANT:
-   ARENA HAS ITS OWN SPACE.
-   CONTROLS HAVE ANOTHER SPACE.
+   ARENA
 ===================================================== */
 
 #arena{
@@ -582,11 +583,6 @@ position:absolute;
 
 left:10px;
 right:10px;
-
-/*
-لا تجعل arena يصل إلى أسفل الشاشة.
-هناك 84px محجوزة للأزرار.
-*/
 
 top:calc(env(safe-area-inset-top,0px) + 266px);
 
@@ -945,10 +941,7 @@ font-size:25px;
 }
 
 
-/*
-الشاشات القصيرة جدًا:
-نرفع منطقة اللعب كلها.
-*/
+/* SHORT SCREEN */
 
 @media(max-height:700px){
 
@@ -997,6 +990,7 @@ env(safe-area-inset-bottom,0px) + 84px
 
 <div id="app">
 
+
 <!-- ================= HOME ================= -->
 
 <section id="homeScreen" class="screen active">
@@ -1007,7 +1001,9 @@ env(safe-area-inset-bottom,0px) + 84px
 
 <div class="logo">√N</div>
 
-<h1>
+<!-- العنوان يتغير حسب اللغة -->
+
+<h1 id="gameTitle">
 NUMBER<br>
 HUNTER
 </h1>
@@ -1024,18 +1020,29 @@ HUNTER
 <div class="stats-grid">
 
 <div class="stat">
+
 <b id="bestScore">0</b>
+
 <span id="bestScoreLabel"></span>
+
 </div>
 
+
 <div class="stat">
+
 <b id="games">0</b>
+
 <span id="gamesLabel"></span>
+
 </div>
 
+
 <div class="stat">
+
 <b id="bestCombo">0</b>
+
 <span id="bestComboLabel"></span>
+
 </div>
 
 </div>
@@ -1106,13 +1113,22 @@ type="button">
 <button
 id="howBtn"
 type="button">
-ℹ️ <span id="howText"></span>
+
+ℹ️
+
+<span id="howText"></span>
+
 </button>
+
 
 <button
 id="resetBtn"
 type="button">
-🔄 <span id="resetText"></span>
+
+🔄
+
+<span id="resetText"></span>
+
 </button>
 
 </div>
@@ -1160,18 +1176,25 @@ class="screen choice-screen">
 class="back"
 id="choiceBack"
 type="button">
-← <span id="choiceBackText"></span>
+
+←
+
+<span id="choiceBackText"></span>
+
 </button>
+
 
 <h2
 class="choice-title"
 id="choiceTitle">
 </h2>
 
+
 <p
 class="choice-sub"
 id="choiceSub">
 </p>
+
 
 <div
 class="mission-grid"
@@ -1250,12 +1273,8 @@ class="combo">
 </div>
 
 
-<!-- منطقة الأرقام -->
-
 <div id="arena"></div>
 
-
-<!-- منطقة التحكم مستقلة -->
 
 <div class="controls">
 
@@ -1263,7 +1282,9 @@ class="combo">
 class="exit-btn"
 id="exitBtn"
 type="button">
+
 ✕
+
 </button>
 
 
@@ -1295,9 +1316,12 @@ id="overIcon">
 💔
 </div>
 
+
 <h2 id="overTitle"></h2>
 
+
 <p id="overText"></p>
+
 
 <div class="dialog-actions">
 
@@ -1306,6 +1330,7 @@ class="primary"
 id="againBtn"
 type="button">
 </button>
+
 
 <button
 class="secondary-btn"
@@ -1334,15 +1359,18 @@ id="resetModal">
 🔄
 </div>
 
+
 <h2
 class="modal-title"
 id="resetTitle">
 </h2>
 
+
 <div
 class="modal-text"
 id="resetQuestion">
 </div>
+
 
 <div class="modal-actions">
 
@@ -1351,6 +1379,7 @@ class="modal-btn primary-modal"
 id="confirmResetBtn"
 type="button">
 </button>
+
 
 <button
 class="modal-btn secondary-modal"
@@ -1377,15 +1406,18 @@ id="howModal">
 ℹ️
 </div>
 
+
 <h2
 class="modal-title"
 id="howTitle">
 </h2>
 
+
 <div
 class="modal-text"
 id="howContent">
 </div>
+
 
 <button
 class="modal-btn secondary-modal"
@@ -1403,6 +1435,7 @@ class="toast"
 id="toast">
 </div>
 
+
 </div>
 
 
@@ -1415,6 +1448,9 @@ id="toast">
 const I18N={
 
 ar:{
+
+gameTitle:"صياد الأرقام",
+
 heroTag:"رياضيات • سرعة • دقة",
 
 bestScore:"أفضل نتيجة",
@@ -1505,10 +1541,15 @@ targetPrime:"الأعداد الأولية",
 targetNonprime:"الأعداد غير الأولية",
 targetEven:"الأعداد الزوجية",
 targetOdd:"الأعداد الفردية",
+
 targetMultiple:"مضاعفات",
+
 targetSquare:"المربعات الكاملة",
+
 targetDivisor:"قواسم العدد",
+
 targetGreater:"أعداد أكبر من",
+
 targetLess:"أعداد أصغر من",
 
 challengeNew:"مهمة جديدة",
@@ -1521,10 +1562,14 @@ finalScore:"نتيجتك",
 finalCombo:"أفضل كومبو",
 
 levelUp:"🔥 كومبو رائع!"
+
 },
 
 
 fr:{
+
+gameTitle:"CHASSE AUX NOMBRES",
+
 heroTag:"Maths • Vitesse • Précision",
 
 bestScore:"Meilleur score",
@@ -1615,10 +1660,15 @@ targetPrime:"Nombres premiers",
 targetNonprime:"Nombres non premiers",
 targetEven:"Nombres pairs",
 targetOdd:"Nombres impairs",
+
 targetMultiple:"Multiples de",
+
 targetSquare:"Carrés parfaits",
+
 targetDivisor:"Diviseurs de",
+
 targetGreater:"Nombres supérieurs à",
+
 targetLess:"Nombres inférieurs à",
 
 challengeNew:"Nouvelle mission",
@@ -1631,10 +1681,14 @@ finalScore:"Votre score",
 finalCombo:"Meilleur combo",
 
 levelUp:"🔥 Super combo !"
+
 },
 
 
 en:{
+
+gameTitle:"NUMBER HUNTER",
+
 heroTag:"Math • Speed • Accuracy",
 
 bestScore:"Best score",
@@ -1725,10 +1779,15 @@ targetPrime:"Prime numbers",
 targetNonprime:"Non-prime numbers",
 targetEven:"Even numbers",
 targetOdd:"Odd numbers",
+
 targetMultiple:"Multiples of",
+
 targetSquare:"Perfect squares",
+
 targetDivisor:"Divisors of",
+
 targetGreater:"Numbers greater than",
+
 targetLess:"Numbers less than",
 
 challengeNew:"New mission",
@@ -1741,7 +1800,9 @@ finalScore:"Your score",
 finalCombo:"Best combo",
 
 levelUp:"🔥 Great combo!"
+
 }
+
 };
 
 
@@ -1895,17 +1956,8 @@ return I18N[lang][key]||key;
 
 
 /* =====================================================
-   VISUAL VIEWPORT
+   MOBILE VIEWPORT
 ===================================================== */
-
-/*
-هذا هو الإصلاح الأساسي للمشكلة التي ظهرت في الصورة.
-
-Chrome قد يغيّر المساحة المرئية بسبب شريط
-العنوان السفلي.
-
-نأخذ الارتفاع الحقيقي من visualViewport.
-*/
 
 function updateViewport(){
 
@@ -2012,6 +2064,13 @@ lang==="ar"
 
 const map={
 
+/*
+التحديث الأخير:
+عنوان اللعبة الرئيسي يتغير مع اللغة.
+*/
+
+gameTitle:"gameTitle",
+
 heroTag:"heroTag",
 
 bestScoreLabel:"bestScore",
@@ -2060,7 +2119,9 @@ closeHowBtn:"cancel"
 };
 
 
-for(const id in map){
+for(
+const id in map
+){
 
 $(id).textContent=
 t(map[id]);
@@ -2346,10 +2407,6 @@ return isPrime(n);
 
 case"nonprime":
 
-/*
-1 ليس أوليًا، لذلك هو غير أولي.
-*/
-
 return !isPrime(n);
 
 
@@ -2455,8 +2512,7 @@ state.elapsed/1000;
 
 
 /*
-البداية بطيئة.
-ثم تزداد السرعة تدريجيًا.
+السرعة تبدأ ببطء ثم ترتفع تدريجيًا.
 */
 
 const speed=
@@ -2470,7 +2526,7 @@ seconds*1.25+
 
 
 /*
-الكثافة تزيد تدريجيًا.
+الكثافة ترتفع تدريجيًا.
 */
 
 const interval=
@@ -2550,11 +2606,6 @@ radius+3,
 w-radius-2
 )
 );
-
-
-/*
-الأرقام تبدأ فوق منطقة اللعب
-*/
 
 const y=-70;
 
@@ -2675,7 +2726,7 @@ arena.clientHeight;
 
 
 /*
-المستوى يرتفع كل 8 ثوان.
+المستوى يرتفع تدريجيًا.
 */
 
 const newLevel=
@@ -2698,7 +2749,7 @@ state.level;
 
 
 /*
-تحريك كل رقم.
+تحريك الأرقام.
 */
 
 for(
@@ -2710,10 +2761,6 @@ o.y+=
 o.speed*dt;
 
 
-/*
-نستعمل translate فقط.
-*/
-
 o.el.style.transform=
 `
 translate(-50%,${o.y}px)
@@ -2721,8 +2768,8 @@ translate(-50%,${o.y}px)
 
 
 /*
-خارج منطقة اللعب = إزالة فقط.
-لا خسارة قلب.
+إذا خرج الرقم من منطقة اللعب
+يختفي فقط ولا يخسر اللاعب قلبًا.
 */
 
 if(
@@ -2885,9 +2932,7 @@ state.targets.get(id);
 
 
 /*
-مهم:
-إذا تم الضغط مرتين بسرعة
-لن تتم معالجة الرقم مرتين.
+حماية من الضغط المزدوج على نفس الرقم.
 */
 
 if(!obj)
@@ -2915,8 +2960,9 @@ state.mission
 if(correct){
 
 /*
-صحيح:
-نقاط
+الإجابة الصحيحة:
++ نقاط
++ كومبو
 */
 
 state.combo++;
@@ -2962,9 +3008,9 @@ t("levelUp")
 }else{
 
 /*
-خطأ:
-قلب واحد
-كومبو صفر
+الإجابة الخاطئة:
+- قلب
+- تصفير الكومبو
 */
 
 state.hearts--;
@@ -3027,8 +3073,10 @@ return;
 
 
 /*
-القنبلة لا تعطي نقاطًا
-ولا تخصم قلبًا.
+القنبلة:
+تمسح جميع الأعداد الموجودة.
+لا تضيف نقاطًا.
+لا تخسر قلبًا.
 */
 
 clearTargets();
@@ -3294,10 +3342,6 @@ showScreen(
 );
 
 
-/*
-تحديث مساحة الهاتف قبل بدء اللعبة.
-*/
-
 updateViewport();
 
 
@@ -3497,11 +3541,10 @@ el.classList.remove(
 ===================================================== */
 
 /*
-مهم جدًا:
+لا يتم اعتبار Scroll ضغطة.
 
-pointerdown على الرقم فقط.
-
-أي Scroll خارج الرقم لا يفعل شيئًا.
+فقط عندما يكون العنصر نفسه رقمًا
+يتم تنفيذ hitTarget().
 */
 
 $("arena")
@@ -3571,8 +3614,8 @@ openMissionChoice(
 
 
 /*
-العشوائي فقط يبدأ مباشرة
-ويغير المهمة كل 20 ثانية.
+العشوائي فقط يبدأ مباشرة.
+المهمة تتغير كل 20 ثانية.
 */
 
 $("randomMode")
@@ -3628,6 +3671,7 @@ $("homeBtn")
 .addEventListener(
 "click",
 ()=>{
+
 stopGame(false);
 
 $("gameOverOverlay")
@@ -3640,13 +3684,14 @@ showScreen(
 );
 
 applyLanguage();
+
 }
 );
 
 
 /* =====================================================
    RESET
-   خارج اللعبة فقط
+   موجود خارج اللعبة فقط
 ===================================================== */
 
 $("resetBtn")
@@ -3740,12 +3785,10 @@ button.addEventListener(
 lang=
 button.dataset.lang;
 
-
 localStorage.setItem(
 "nh_lang",
 lang
 );
-
 
 applyLanguage();
 
