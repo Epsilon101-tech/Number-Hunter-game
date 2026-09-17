@@ -4,1271 +4,969 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-      content="width=device-width,
-      initial-scale=1,
-      maximum-scale=1,
-      user-scalable=no,
-      viewport-fit=cover">
+content="width=device-width,
+initial-scale=1,
+maximum-scale=1,
+user-scalable=no,
+viewport-fit=cover">
 
-<title>صائد الأرقام</title>
+<meta name="theme-color" content="#2864c7">
+
+<title>NUMBER HUNTER</title>
 
 <style>
+
 :root{
-  --blue:#2864c7;
-  --blue2:#3d73dc;
-  --blue-dark:#214b8d;
-  --purple:#8552df;
-  --purple2:#9a63ef;
-  --cyan:#27c9d1;
-  --gold:#f4b942;
-  --green:#21a66f;
-  --red:#e5484d;
+--blue:#2864c7;
+--blue2:#3d73dc;
+--purple:#8552df;
+--gold:#f4b942;
+--green:#21a66f;
+--red:#e5484d;
 
-  --bg:#f4f7fd;
-  --card:#ffffff;
-  --text:#17335f;
-  --muted:#71809a;
-  --border:#dce5f2;
+--bg:#f4f7fd;
+--card:#ffffff;
+--text:#17335f;
+--muted:#71809a;
+--border:#dce5f2;
 
-  --shadow:
-    0 12px 35px rgba(40,100,199,.12);
-
-  --safe-top:env(safe-area-inset-top,0px);
-  --safe-bottom:env(safe-area-inset-bottom,0px);
+--shadow:0 12px 35px rgba(40,100,199,.12);
 }
 
 *{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
 }
 
 html,
 body{
-  margin:0;
-  padding:0;
-  width:100%;
-  min-height:100%;
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Tahoma,
-    Arial,
-    sans-serif;
-
-  background:
-    radial-gradient(
-      circle at 10% 20%,
-      rgba(61,115,220,.10),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 90% 80%,
-      rgba(133,82,223,.09),
-      transparent 28%
-    ),
-    var(--bg);
-
-  color:var(--text);
+margin:0;
+padding:0;
+width:100%;
+min-height:100%;
+background:var(--bg);
+color:var(--text);
+font-family:
+system-ui,
+-apple-system,
+"Segoe UI",
+Tahoma,
+Arial,
+sans-serif;
 }
 
 body{
-  overflow-x:hidden;
+overflow-x:hidden;
 }
 
 button{
-  font:inherit;
-  border:0;
-  cursor:pointer;
-  touch-action:manipulation;
+font:inherit;
+border:0;
+cursor:pointer;
+touch-action:manipulation;
 }
 
-button:focus{
-  outline:none;
+button:active{
+transform:scale(.97);
 }
-
-.hidden{
-  display:none !important;
-}
-
-/* =========================================================
-   APP
-========================================================= */
 
 #app{
-  width:100%;
-  min-height:100dvh;
-  position:relative;
+width:100%;
+min-height:100dvh;
+padding:
+14px
+16px
+calc(60px + env(safe-area-inset-bottom));
 }
 
 .screen{
-  width:100%;
-  min-height:100dvh;
+display:none;
+width:100%;
+max-width:720px;
+margin:auto;
 }
 
-/* =========================================================
+.screen.active{
+display:block;
+}
+
+/* =========================
    HOME
-========================================================= */
-
-#homeScreen{
-  padding:
-    calc(var(--safe-top) + 18px)
-    18px
-    calc(var(--safe-bottom) + 34px);
-
-  overflow-y:auto;
-}
-
-.home-wrap{
-  width:min(100%,680px);
-  margin:0 auto;
-}
-
-.topbar{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  margin-bottom:16px;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.brand-mark{
-  width:54px;
-  height:54px;
-  border-radius:18px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  color:white;
-  font-size:23px;
-  font-weight:900;
-
-  background:
-    linear-gradient(
-      145deg,
-      #3b7de4,
-      #2259b9
-    );
-
-  box-shadow:
-    0 10px 24px rgba(40,100,199,.24);
-}
-
-.brand-name{
-  font-size:21px;
-  font-weight:900;
-  color:var(--text);
-}
-
-.header-actions{
-  display:flex;
-  gap:8px;
-}
-
-.icon-btn{
-  width:50px;
-  height:50px;
-  border-radius:17px;
-
-  background:rgba(255,255,255,.92);
-  border:1px solid var(--border);
-  color:var(--text);
-
-  font-size:22px;
-
-  box-shadow:0 5px 18px rgba(40,100,199,.08);
-}
-
-.icon-btn:active{
-  transform:scale(.95);
-}
-
-/* HERO */
+========================= */
 
 .hero{
-  position:relative;
-  overflow:hidden;
+position:relative;
+overflow:hidden;
 
-  padding:38px 22px 32px;
-  margin-bottom:18px;
+background:
+linear-gradient(
+135deg,
+#ffffff 0%,
+#f9fbff 55%,
+#f7f2ff 100%
+);
 
-  text-align:center;
+border:1px solid var(--border);
+border-radius:38px;
 
-  border-radius:34px;
+padding:30px 18px 26px;
 
-  background:
-    linear-gradient(
-      135deg,
-      #ffffff 0%,
-      #ffffff 48%,
-      #faf7ff 100%
-    );
+text-align:center;
 
-  border:1px solid var(--border);
-  box-shadow:var(--shadow);
+box-shadow:var(--shadow);
 }
 
 .hero:before,
 .hero:after{
-  content:"";
-  position:absolute;
-  border-radius:50%;
-  pointer-events:none;
+content:"";
+position:absolute;
+border-radius:50%;
+pointer-events:none;
 }
 
 .hero:before{
-  width:230px;
-  height:230px;
-  left:-125px;
-  bottom:-135px;
-  background:rgba(61,115,220,.09);
+width:230px;
+height:230px;
+background:rgba(40,100,199,.07);
+left:-110px;
+bottom:-130px;
 }
 
 .hero:after{
-  width:190px;
-  height:190px;
-  right:-100px;
-  top:-110px;
-  background:rgba(133,82,223,.08);
+width:230px;
+height:230px;
+background:rgba(133,82,223,.07);
+right:-110px;
+top:-130px;
 }
 
-.hero-logo{
-  position:relative;
-  z-index:1;
+.logo{
+width:126px;
+height:126px;
 
-  width:120px;
-  height:120px;
-  margin:0 auto 22px;
+margin:0 auto 22px;
 
-  border-radius:32px;
+border-radius:34px;
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
+display:grid;
+place-items:center;
 
-  color:white;
-  font-size:35px;
-  font-weight:900;
+background:
+linear-gradient(
+145deg,
+var(--blue2),
+var(--blue)
+);
 
-  background:
-    linear-gradient(
-      145deg,
-      #3479df,
-      #2258b8
-    );
+color:white;
 
-  box-shadow:
-    0 18px 35px rgba(40,100,199,.24);
+font-size:40px;
+font-weight:950;
+
+box-shadow:
+0 16px 35px rgba(40,100,199,.25);
+
+position:relative;
+z-index:1;
 }
 
-.logo-title{
-  position:relative;
-  z-index:1;
+.brand{
+font-size:clamp(42px,10vw,68px);
+line-height:.98;
+font-weight:950;
+letter-spacing:-2px;
 
-  margin:0;
+margin:0;
 
-  font-size:clamp(38px,10vw,66px);
-  line-height:.98;
-  letter-spacing:-2px;
+color:#2859a7;
 
-  color:var(--blue);
-  font-weight:950;
+position:relative;
+z-index:1;
 }
 
-.logo-subtitle{
-  position:relative;
-  z-index:1;
+.tagline{
+font-size:21px;
+font-weight:800;
+color:var(--muted);
 
-  margin:20px 0 0;
+margin:22px 0 12px;
 
-  font-size:20px;
-  font-weight:700;
-  color:var(--muted);
+position:relative;
+z-index:1;
 }
 
-.math-line{
-  position:relative;
-  z-index:1;
+.mathline{
+font-size:28px;
+font-weight:950;
+color:#8050d4;
 
-  margin-top:25px;
-
-  color:var(--purple);
-
-  font-size:28px;
-  font-weight:900;
-  letter-spacing:4px;
+position:relative;
+z-index:1;
 }
 
-/* STATS */
+/* =========================
+   HOME STATS
+========================= */
 
 .stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
 
-  margin-bottom:18px;
+margin:16px 0;
 }
 
-.stat-card{
-  min-height:105px;
+.stat{
+background:#fff;
 
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
+border:1px solid var(--border);
+border-radius:27px;
 
-  background:rgba(255,255,255,.96);
+padding:13px 5px;
 
-  border:1px solid var(--border);
-  border-radius:27px;
+text-align:center;
 
-  box-shadow:0 7px 22px rgba(40,100,199,.08);
+box-shadow:
+0 8px 22px rgba(40,100,199,.07);
 }
 
-.stat-value{
-  font-size:34px;
-  font-weight:950;
-  color:var(--blue);
-  line-height:1;
+.stat b{
+display:block;
+font-size:34px;
+line-height:1.1;
+color:var(--blue);
 }
 
-.stat-label{
-  margin-top:9px;
-  color:var(--muted);
-  font-size:15px;
-  font-weight:800;
+.stat span{
+display:block;
+font-size:14px;
+font-weight:800;
+color:var(--muted);
+margin-top:6px;
 }
 
-/* MODES */
+/* =========================
+   HOME BUTTONS
+========================= */
 
-.mode-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
+.home-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:13px;
 }
 
-.mode-card{
-  min-height:190px;
+.menu-btn{
+min-height:140px;
 
-  padding:20px 16px;
+border-radius:30px;
 
-  border-radius:31px;
+padding:18px 12px;
 
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
 
-  text-align:center;
+text-align:center;
 
-  border:1px solid rgba(255,255,255,.7);
+box-shadow:var(--shadow);
 
-  box-shadow:
-    0 14px 32px rgba(40,100,199,.12);
-
-  transition:
-    transform .15s ease,
-    box-shadow .15s ease;
+border:1px solid rgba(255,255,255,.7);
 }
 
-.mode-card:active{
-  transform:scale(.97);
+.menu-btn .ico{
+font-size:37px;
+line-height:1;
+margin-bottom:10px;
 }
 
-.mode-icon{
-  font-size:42px;
-  margin-bottom:10px;
+.menu-btn strong{
+font-size:23px;
+font-weight:950;
 }
 
-.mode-title{
-  font-size:23px;
-  font-weight:950;
-  margin-bottom:7px;
+.menu-btn small{
+font-size:14px;
+font-weight:700;
+margin-top:7px;
+opacity:.88;
 }
 
-.mode-description{
-  font-size:14px;
-  font-weight:700;
-  opacity:.82;
+.blue{
+background:linear-gradient(145deg,#3978df,#2864c7);
+color:#fff;
 }
 
-.mode-hunt{
-  color:white;
-  background:
-    linear-gradient(
-      145deg,
-      #3479df,
-      #2864c7
-    );
+.purple{
+background:linear-gradient(145deg,#9656e9,#7848d3);
+color:#fff;
 }
 
-.mode-quick{
-  color:white;
-  background:
-    linear-gradient(
-      145deg,
-      #9b55e8,
-      #7950d7
-    );
+.gold{
+background:linear-gradient(145deg,#f4b942,#e5a71c);
+color:#fff;
 }
 
-.mode-random{
-  color:white;
-  background:
-    linear-gradient(
-      145deg,
-      #efb52e,
-      #df9c19
-    );
+.dark{
+background:linear-gradient(145deg,#315e91,#234b79);
+color:#fff;
 }
 
-.mode-survival{
-  color:white;
-  background:
-    linear-gradient(
-      145deg,
-      #315e9b,
-      #21497f
-    );
+.white{
+background:#fff;
+color:var(--text);
 }
 
-/* HOME SECONDARY */
-
-.secondary-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-  margin-top:12px;
+.full{
+grid-column:1/-1;
+min-height:78px;
 }
 
-.secondary-btn{
-  min-height:85px;
+/* =========================
+   MISSION SELECTION
+========================= */
 
-  padding:15px;
+.back-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
 
-  border-radius:26px;
-
-  background:white;
-  color:var(--text);
-
-  border:1px solid var(--border);
-
-  font-size:18px;
-  font-weight:900;
-
-  box-shadow:
-    0 8px 24px rgba(40,100,199,.08);
+margin-bottom:10px;
 }
 
-.secondary-btn:active{
-  transform:scale(.97);
+.back{
+width:52px;
+height:52px;
+
+border-radius:18px;
+
+background:#fff;
+color:var(--blue);
+
+border:1px solid var(--border);
+
+font-size:27px;
+
+box-shadow:
+0 7px 20px rgba(40,100,199,.08);
 }
 
-.reset-note{
-  margin-top:14px;
-  padding:16px 18px;
+.page-title{
+text-align:center;
 
-  border-radius:22px;
+font-size:32px;
+font-weight:950;
 
-  background:rgba(255,255,255,.75);
-  border:1px solid var(--border);
-
-  text-align:center;
-
-  color:var(--muted);
-  font-size:13px;
-  font-weight:700;
+margin:8px 0 20px;
 }
 
-/* =========================================================
-   GAME
-========================================================= */
-
-#gameScreen{
-  position:fixed;
-  inset:0;
-
-  width:100vw;
-  height:100dvh;
-
-  overflow:hidden;
-
-  background:
-    radial-gradient(
-      circle at 15% 25%,
-      rgba(61,115,220,.13),
-      transparent 27%
-    ),
-    radial-gradient(
-      circle at 85% 75%,
-      rgba(133,82,223,.10),
-      transparent 28%
-    ),
-    var(--bg);
-
-  z-index:1000;
+.choice-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
 }
 
-.game-shell{
-  position:relative;
+.choice{
+background:#fff;
 
-  width:100%;
-  height:100%;
+border:2px solid var(--border);
+border-radius:26px;
 
-  overflow:hidden;
+padding:20px 10px;
+
+min-height:112px;
+
+text-align:center;
+
+color:var(--text);
+
+box-shadow:
+0 8px 22px rgba(40,100,199,.07);
 }
 
-/* GAME TOP STATS */
-
-.game-stats{
-  position:absolute;
-
-  top:calc(var(--safe-top) + 14px);
-  left:18px;
-  right:18px;
-
-  height:92px;
-
-  display:grid;
-  grid-template-columns:1fr 1.25fr 1fr;
-  gap:10px;
-
-  z-index:50;
+.choice b{
+display:block;
+font-size:21px;
+font-weight:950;
 }
 
-.game-stat{
-  min-width:0;
-
-  border-radius:28px;
-
-  background:rgba(255,255,255,.96);
-  border:1px solid var(--border);
-
-  box-shadow:
-    0 8px 25px rgba(40,100,199,.09);
-
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
+.choice small{
+display:block;
+color:var(--muted);
+font-weight:700;
+margin-top:7px;
 }
 
-.game-stat-value{
-  font-size:34px;
-  font-weight:950;
-  line-height:1;
-  color:var(--blue);
+/* =========================
+   GAME HUD
+========================= */
+
+.hud{
+display:grid;
+grid-template-columns:1fr 1.25fr 1fr;
+gap:8px;
+
+margin-bottom:14px;
 }
 
-.game-stat-label{
-  margin-top:7px;
-  font-size:14px;
-  font-weight:800;
-  color:var(--muted);
+.hud-card{
+background:#fff;
+
+border:1px solid var(--border);
+border-radius:27px;
+
+min-height:105px;
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+
+text-align:center;
+
+box-shadow:var(--shadow);
+}
+
+.hud-card b{
+font-size:36px;
+line-height:1;
+
+font-weight:950;
+color:var(--blue);
+}
+
+.hud-card span{
+font-size:15px;
+font-weight:850;
+color:var(--muted);
+
+margin-top:8px;
 }
 
 .hearts{
-  font-size:29px;
-  line-height:1;
-  white-space:nowrap;
-  letter-spacing:-2px;
+font-size:31px;
+white-space:nowrap;
+letter-spacing:1px;
 }
 
-/* MISSION */
+/*
+  مهم:
+  لا يوجد game-logo هنا.
+  شعار √N لا يظهر داخل اللعبة.
+*/
 
-.mission-box{
-  position:absolute;
+/* =========================
+   MISSION TITLE
+========================= */
 
-  top:calc(var(--safe-top) + 118px);
-  left:20px;
-  right:20px;
+.mission-title{
+background:#fff;
 
-  min-height:78px;
+border:1px solid var(--border);
+border-radius:30px;
 
-  padding:15px 16px;
+min-height:80px;
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
+padding:10px 14px;
 
-  text-align:center;
+display:flex;
+align-items:center;
+justify-content:center;
 
-  background:rgba(255,255,255,.97);
+text-align:center;
 
-  border:1px solid var(--border);
-  border-radius:27px;
+font-size:27px;
+font-weight:950;
 
-  box-shadow:
-    0 9px 28px rgba(40,100,199,.10);
+color:var(--text);
 
-  color:var(--text);
+box-shadow:var(--shadow);
 
-  font-size:24px;
-  font-weight:950;
-
-  z-index:50;
+margin-bottom:9px;
 }
 
-.mission-inner{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-.mission-icon{
-  font-size:27px;
-}
-
-/* GAME INFO */
+/* =========================
+   GAME INFO
+========================= */
 
 .game-info{
-  position:absolute;
+display:flex;
+justify-content:space-between;
+align-items:center;
 
-  top:calc(var(--safe-top) + 207px);
-  left:25px;
-  right:25px;
+gap:10px;
 
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-
-  z-index:50;
-
-  pointer-events:none;
+margin-bottom:9px;
 }
 
-.combo{
-  min-width:108px;
+.pill{
+background:#fff;
 
-  padding:9px 15px;
+border:1px solid var(--border);
 
-  border-radius:24px;
+border-radius:24px;
 
-  background:rgba(255,255,255,.95);
-  border:1px solid var(--border);
+padding:10px 17px;
 
-  color:var(--blue);
+font-size:18px;
+font-weight:950;
 
-  font-size:18px;
-  font-weight:950;
-
-  text-align:center;
+box-shadow:
+0 7px 18px rgba(40,100,199,.08);
 }
 
 .timer{
-  min-width:108px;
+background:var(--purple);
 
-  padding:10px 16px;
+color:white;
 
-  border-radius:25px;
+border-radius:24px;
 
-  background:var(--purple);
+padding:10px 17px;
 
-  color:white;
+font-size:18px;
+font-weight:950;
 
-  font-size:18px;
-  font-weight:950;
-
-  text-align:center;
-
-  box-shadow:
-    0 8px 20px rgba(133,82,223,.22);
+box-shadow:
+0 8px 20px rgba(133,82,223,.22);
 }
 
-/* ARENA */
+/* =========================
+   GAME AREA
+========================= */
 
-#arena{
-  position:absolute;
+.game-area{
 
-  top:calc(var(--safe-top) + 260px);
+position:relative;
 
-  left:18px;
-  right:18px;
+width:100%;
 
-  bottom:
-    calc(
-      var(--safe-bottom) + 104px
-    );
+/*
+  ارتفاع متجاوب مع الهاتف
+*/
+height:clamp(
+430px,
+58dvh,
+690px
+);
 
-  overflow:hidden;
+min-height:430px;
 
-  border-radius:31px;
+overflow:hidden;
 
-  background:
-    radial-gradient(
-      circle at 20% 25%,
-      rgba(61,115,220,.045),
-      transparent 35%
-    ),
-    radial-gradient(
-      circle at 80% 75%,
-      rgba(133,82,223,.045),
-      transparent 35%
-    ),
-    rgba(255,255,255,.38);
+border:2px solid var(--border);
 
-  border:2px solid rgba(220,229,242,.85);
+border-radius:32px;
 
-  box-shadow:
-    inset 0 0 40px rgba(40,100,199,.035);
+background:
 
-  z-index:10;
+radial-gradient(
+circle at 18% 18%,
+rgba(40,100,199,.07),
+transparent 30%
+),
+
+radial-gradient(
+circle at 82% 80%,
+rgba(133,82,223,.06),
+transparent 32%
+),
+
+#fff;
+
+box-shadow:
+inset 0 0 35px rgba(40,100,199,.04),
+0 8px 25px rgba(40,100,199,.06);
+
+touch-action:none;
 }
 
-/* TARGET */
+/* =========================
+   TARGET NUMBERS
+========================= */
 
 .target{
-  position:absolute;
 
-  width:clamp(58px,16vw,76px);
-  height:clamp(58px,16vw,76px);
+position:absolute;
 
-  border-radius:50%;
+width:70px;
+height:70px;
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
+border-radius:50%;
 
-  background:
-    radial-gradient(
-      circle at 35% 30%,
-      #ffffff,
-      #f9fbff 62%,
-      #edf3fc 100%
-    );
+display:grid;
+place-items:center;
 
-  border:
-    6px solid var(--blue);
+background:rgba(255,255,255,.97);
 
-  color:var(--text);
+border:6px solid var(--blue);
 
-  font-size:clamp(20px,5.7vw,30px);
-  font-weight:950;
+color:#17335f;
 
-  box-shadow:
-    0 8px 24px rgba(40,100,199,.12);
+font-size:25px;
 
-  user-select:none;
-  -webkit-user-select:none;
+font-weight:950;
 
-  will-change:transform;
+box-shadow:
+0 7px 18px rgba(40,100,199,.13);
 
-  z-index:20;
+user-select:none;
 
-  cursor:pointer;
+touch-action:none;
 
-  touch-action:manipulation;
-
-  animation:
-    targetAppear .18s ease-out;
+will-change:transform;
 }
 
-.target.correct-hint{
-  border-color:var(--green);
+.target.hit{
+animation:
+hit .18s ease-out forwards;
 }
 
-.target:active{
-  transform:scale(.90);
+@keyframes hit{
+
+to{
+transform:scale(1.45);
+opacity:0;
 }
 
-@keyframes targetAppear{
-  from{
-    opacity:0;
-    transform:scale(.55);
-  }
-  to{
-    opacity:1;
-    transform:scale(1);
-  }
 }
 
-.target.hit-good{
-  animation:goodHit .22s ease-out forwards;
+/* =========================
+   FEEDBACK
+========================= */
+
+.feedback{
+
+position:absolute;
+
+left:50%;
+top:45%;
+
+transform:
+translate(-50%,-50%);
+
+z-index:50;
+
+font-size:30px;
+
+font-weight:950;
+
+pointer-events:none;
+
+opacity:0;
 }
 
-.target.hit-bad{
-  animation:badHit .22s ease-out forwards;
+.feedback.show{
+animation:
+feedback .55s ease-out;
 }
 
-@keyframes goodHit{
-  to{
-    opacity:0;
-    transform:scale(1.5);
-  }
+@keyframes feedback{
+
+0%{
+opacity:0;
+transform:
+translate(-50%,-20%)
+scale(.7);
 }
 
-@keyframes badHit{
-  30%{
-    transform:translateX(-7px);
-  }
-  60%{
-    transform:translateX(7px);
-  }
-  100%{
-    opacity:0;
-    transform:scale(.65);
-  }
+25%{
+opacity:1;
+transform:
+translate(-50%,-50%)
+scale(1.1);
 }
 
-/* FALLING TARGET */
-.target.falling{
-  transition:none;
+100%{
+opacity:0;
+transform:
+translate(-50%,-100%)
+scale(1);
 }
 
-/* POWER / EXIT */
-
-.game-controls{
-  position:absolute;
-
-  left:22px;
-  right:22px;
-
-  bottom:
-    calc(
-      var(--safe-bottom) + 17px
-    );
-
-  height:70px;
-
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-
-  z-index:60;
 }
 
-.game-btn{
-  height:70px;
+/* =========================
+   GAME CONTROLS
+========================= */
 
-  border-radius:27px;
+.controls{
 
-  font-size:19px;
-  font-weight:950;
+display:grid;
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
+grid-template-columns:1fr 1fr;
 
-  box-shadow:
-    0 10px 25px rgba(40,100,199,.12);
+gap:13px;
 
-  border:1px solid rgba(255,255,255,.65);
+margin-top:13px;
+
+padding-bottom:
+calc(
+18px +
+env(safe-area-inset-bottom)
+);
 }
 
-.game-btn:active{
-  transform:scale(.97);
+.control{
+
+min-height:70px;
+
+border-radius:28px;
+
+font-size:21px;
+
+font-weight:950;
+
+color:#fff;
+
+box-shadow:var(--shadow);
 }
 
-.bomb-btn{
-  color:white;
-
-  background:
-    linear-gradient(
-      145deg,
-      #f4b62f,
-      #df9d18
-    );
+.bomb{
+background:
+linear-gradient(
+145deg,
+#f4b942,
+#e3a319
+);
 }
 
-.exit-btn{
-  color:white;
-
-  background:
-    linear-gradient(
-      145deg,
-      #315f9d,
-      #214b85
-    );
+.quit{
+background:
+linear-gradient(
+145deg,
+#315f91,
+#234d7d
+);
 }
 
-/* =========================================================
-   OVERLAY / MODALS
-========================================================= */
+/* =========================
+   MODAL
+========================= */
 
-.overlay{
-  position:fixed;
-  inset:0;
+.modal-wrap{
 
-  z-index:5000;
+position:fixed;
 
-  display:flex;
-  align-items:center;
-  justify-content:center;
+inset:0;
 
-  padding:
-    calc(var(--safe-top) + 20px)
-    20px
-    calc(var(--safe-bottom) + 20px);
+background:
+rgba(16,31,54,.52);
 
-  background:rgba(15,29,53,.58);
+display:none;
 
-  backdrop-filter:blur(8px);
+align-items:center;
+justify-content:center;
+
+z-index:9999;
+
+padding:20px;
+}
+
+.modal-wrap.show{
+display:flex;
 }
 
 .modal{
-  width:min(100%,430px);
 
-  padding:28px 22px;
+width:min(560px,100%);
 
-  border-radius:32px;
+background:#fff;
 
-  background:white;
+border-radius:34px;
 
-  border:1px solid var(--border);
+padding:28px 20px;
 
-  box-shadow:
-    0 25px 70px rgba(20,50,100,.24);
+box-shadow:
+0 25px 70px rgba(0,0,0,.22);
 
-  text-align:center;
+text-align:center;
+
+max-height:88dvh;
+
+overflow:auto;
 }
 
-.modal-icon{
-  font-size:52px;
-  margin-bottom:8px;
+.modal h2{
+margin:0 0 12px;
+font-size:31px;
 }
 
-.modal-title{
-  margin:0 0 10px;
-
-  font-size:30px;
-  font-weight:950;
-
-  color:var(--text);
+.modal p{
+font-size:18px;
+font-weight:600;
+color:var(--muted);
+line-height:1.8;
 }
 
-.modal-text{
-  margin:0 0 22px;
+.modal-actions{
 
-  color:var(--muted);
+display:grid;
 
-  font-size:16px;
-  font-weight:700;
+grid-template-columns:1fr 1fr;
 
-  line-height:1.7;
-}
+gap:10px;
 
-.modal-buttons{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:10px;
+margin-top:18px;
 }
 
 .modal-btn{
-  min-height:56px;
 
-  border-radius:20px;
+min-height:58px;
 
-  font-size:17px;
-  font-weight:950;
+border-radius:22px;
+
+font-weight:900;
 }
 
-.modal-primary{
-  background:var(--blue);
-  color:white;
+.primary{
+background:var(--blue);
+color:#fff;
 }
 
-.modal-secondary{
-  background:#edf3fc;
-  color:var(--text);
+.secondary{
+background:#eef3fb;
+color:var(--text);
 }
 
-/* =========================================================
-   TOAST / FEEDBACK
-========================================================= */
+/* =========================
+   MOBILE
+========================= */
 
-#feedback{
-  position:fixed;
+@media(max-width:520px){
 
-  left:50%;
-  top:50%;
-
-  transform:
-    translate(-50%,-50%)
-    scale(.8);
-
-  opacity:0;
-
-  z-index:8000;
-
-  pointer-events:none;
-
-  padding:12px 22px;
-
-  border-radius:24px;
-
-  font-size:24px;
-  font-weight:950;
-
-  background:white;
-
-  box-shadow:
-    0 14px 40px rgba(20,50,100,.20);
-
-  transition:
-    opacity .16s ease,
-    transform .16s ease;
+#app{
+padding:
+10px
+12px
+calc(
+62px +
+env(safe-area-inset-bottom)
+);
 }
 
-#feedback.show{
-  opacity:1;
-  transform:
-    translate(-50%,-50%)
-    scale(1);
+.hero{
+padding:25px 13px 22px;
+border-radius:32px;
 }
 
-#feedback.good{
-  color:var(--green);
+.logo{
+width:110px;
+height:110px;
+border-radius:31px;
 }
 
-#feedback.bad{
-  color:var(--red);
+.brand{
+font-size:47px;
 }
 
-/* =========================================================
-   LANGUAGE
-========================================================= */
-
-.lang-list{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:10px;
+.tagline{
+font-size:19px;
 }
 
-.lang-option{
-  min-height:58px;
-
-  border-radius:20px;
-
-  background:#f4f7fd;
-  color:var(--text);
-
-  font-weight:900;
+.mathline{
+font-size:24px;
 }
 
-.lang-option.active{
-  background:var(--blue);
-  color:white;
+.stats{
+gap:7px;
 }
 
-/* =========================================================
-   HOW TO PLAY
-========================================================= */
-
-.rules{
-  text-align:right;
+.stat{
+border-radius:23px;
 }
 
-[dir="ltr"] .rules{
-  text-align:left;
+.stat b{
+font-size:31px;
 }
 
-.rule{
-  padding:13px 0;
-
-  border-bottom:1px solid #e8edf5;
-
-  font-size:15px;
-  font-weight:700;
-
-  line-height:1.7;
+.stat span{
+font-size:13px;
 }
 
-.rule:last-child{
-  border-bottom:0;
+.home-grid{
+gap:11px;
 }
 
-/* =========================================================
-   RESPONSIVE
-========================================================= */
+.menu-btn{
+min-height:130px;
+border-radius:27px;
+}
 
-@media(max-width:430px){
+.menu-btn strong{
+font-size:20px;
+}
 
-  #homeScreen{
-    padding-left:14px;
-    padding-right:14px;
-  }
+.menu-btn small{
+font-size:13px;
+}
 
-  .hero{
-    padding-top:28px;
-    border-radius:30px;
-  }
+.hud{
+gap:7px;
+}
 
-  .hero-logo{
-    width:105px;
-    height:105px;
-    border-radius:29px;
-  }
+.hud-card{
+min-height:102px;
+border-radius:24px;
+}
 
-  .logo-title{
-    font-size:43px;
-  }
+.hud-card b{
+font-size:33px;
+}
 
-  .logo-subtitle{
-    font-size:17px;
-  }
+.hud-card span{
+font-size:14px;
+}
 
-  .math-line{
-    font-size:23px;
-  }
+.hearts{
+font-size:28px;
+}
 
-  .stat-card{
-    min-height:92px;
-    border-radius:23px;
-  }
+.mission-title{
+font-size:24px;
+min-height:77px;
+border-radius:27px;
+}
 
-  .stat-value{
-    font-size:29px;
-  }
+.game-area{
+height:clamp(
+430px,
+56dvh,
+620px
+);
 
-  .stat-label{
-    font-size:13px;
-  }
+min-height:430px;
 
-  .mode-card{
-    min-height:170px;
-    border-radius:27px;
-  }
+border-radius:28px;
+}
 
-  .mode-icon{
-    font-size:37px;
-  }
+.target{
+width:68px;
+height:68px;
+font-size:24px;
+border-width:5px;
+}
 
-  .mode-title{
-    font-size:20px;
-  }
+.control{
+min-height:68px;
+font-size:20px;
+border-radius:25px;
+}
 
-  .mode-description{
-    font-size:12px;
-  }
-
-  .game-stats{
-    left:12px;
-    right:12px;
-    gap:7px;
-  }
-
-  .game-stat{
-    border-radius:23px;
-  }
-
-  .game-stat-value{
-    font-size:30px;
-  }
-
-  .hearts{
-    font-size:24px;
-  }
-
-  .game-stat-label{
-    font-size:12px;
-  }
-
-  .mission-box{
-    left:14px;
-    right:14px;
-    top:calc(var(--safe-top) + 112px);
-    min-height:74px;
-    font-size:20px;
-    border-radius:25px;
-  }
-
-  .game-info{
-    top:calc(var(--safe-top) + 196px);
-    left:20px;
-    right:20px;
-  }
-
-  .combo,
-  .timer{
-    min-width:92px;
-    padding:8px 11px;
-    font-size:16px;
-  }
-
-  #arena{
-    top:calc(var(--safe-top) + 245px);
-
-    left:12px;
-    right:12px;
-
-    bottom:
-      calc(
-        var(--safe-bottom) + 98px
-      );
-
-    border-radius:27px;
-  }
-
-  .game-controls{
-    left:14px;
-    right:14px;
-
-    bottom:
-      calc(
-        var(--safe-bottom) + 12px
-      );
-
-    height:66px;
-  }
-
-  .game-btn{
-    height:66px;
-    border-radius:24px;
-    font-size:17px;
-  }
 }
 
 @media(max-height:700px){
 
-  .game-stats{
-    height:80px;
-  }
-
-  .game-stat-value{
-    font-size:27px;
-  }
-
-  .mission-box{
-    top:calc(var(--safe-top) + 103px);
-    min-height:68px;
-  }
-
-  .game-info{
-    top:calc(var(--safe-top) + 180px);
-  }
-
-  #arena{
-    top:calc(var(--safe-top) + 225px);
-    bottom:
-      calc(
-        var(--safe-bottom) + 92px
-      );
-  }
-
-  .game-controls{
-    height:62px;
-    bottom:
-      calc(
-        var(--safe-bottom) + 10px
-      );
-  }
-
-  .game-btn{
-    height:62px;
-  }
+.game-area{
+height:430px;
 }
+
+.hud-card{
+min-height:88px;
+}
+
+}
+
 </style>
 </head>
 
@@ -1276,744 +974,2522 @@ button:focus{
 
 <div id="app">
 
-  <!-- =====================================================
-       HOME
-  ====================================================== -->
+<!-- ==================================================
+     HOME
+================================================== -->
 
-  <section id="homeScreen" class="screen">
+<section id="home" class="screen active">
 
-    <div class="home-wrap">
+<div class="hero">
 
-      <header class="topbar">
+<div class="logo">
+√N
+</div>
 
-        <div class="brand">
-          <div class="brand-mark">√N</div>
-          <div class="brand-name" id="brandName">
-            IA Math
-          </div>
-        </div>
+<h1 id="brand" class="brand">
+NUMBER<br>HUNTER
+</h1>
 
-        <div class="header-actions">
+<div id="tagline" class="tagline">
+رياضيات • سرعة • دقة
+</div>
 
-          <button
-            class="icon-btn"
-            id="languageBtn"
-            type="button"
-            aria-label="Language">
-            文
-          </button>
-
-          <button
-            class="icon-btn"
-            id="infoBtn"
-            type="button"
-            aria-label="Information">
-            ⓘ
-          </button>
-
-        </div>
-
-      </header>
-
-      <div class="hero">
-
-        <div class="hero-logo">√N</div>
-
-        <h1
-          id="homeTitle"
-          class="logo-title">
-          NUMBER<br>HUNTER
-        </h1>
-
-        <p
-          id="homeSubtitle"
-          class="logo-subtitle">
-          رياضيات • سرعة • دقة
-        </p>
-
-        <div class="math-line">
-          13 · 11 · 7 · 5 · 3 · 2
-        </div>
-
-      </div>
-
-      <div class="stats">
-
-        <div class="stat-card">
-          <div
-            id="bestScore"
-            class="stat-value">
-            0
-          </div>
-          <div
-            id="bestScoreLabel"
-            class="stat-label">
-            أفضل نتيجة
-          </div>
-        </div>
-
-        <div class="stat-card">
-          <div
-            id="gamesPlayed"
-            class="stat-value">
-            0
-          </div>
-          <div
-            id="gamesPlayedLabel"
-            class="stat-label">
-            المباريات
-          </div>
-        </div>
-
-        <div class="stat-card">
-          <div
-            id="bestCombo"
-            class="stat-value">
-            0
-          </div>
-          <div
-            id="bestComboLabel"
-            class="stat-label">
-            أفضل كومبو
-          </div>
-        </div>
-
-      </div>
-
-      <div class="mode-grid">
-
-        <button
-          class="mode-card mode-hunt"
-          id="huntBtn"
-          type="button">
-
-          <div class="mode-icon">🎯</div>
-
-          <div
-            class="mode-title"
-            id="huntTitle">
-            المطاردة
-          </div>
-
-          <div
-            class="mode-description"
-            id="huntDesc">
-            اختر المهمة الرياضية
-          </div>
-
-        </button>
-
-        <button
-          class="mode-card mode-quick"
-          id="quickBtn"
-          type="button">
-
-          <div class="mode-icon">⚡</div>
-
-          <div
-            class="mode-title"
-            id="quickTitle">
-            الصيد السريع
-          </div>
-
-          <div
-            class="mode-description"
-            id="quickDesc">
-            60 ثانية • احصد أكبر عدد
-          </div>
-
-        </button>
-
-        <button
-          class="mode-card mode-random"
-          id="randomBtn"
-          type="button">
-
-          <div class="mode-icon">🎲</div>
-
-          <div
-            class="mode-title"
-            id="randomTitle">
-            التحدي العشوائي
-          </div>
-
-          <div
-            class="mode-description"
-            id="randomDesc">
-            مهمة جديدة كل 20 ثانية
-          </div>
-
-        </button>
-
-        <button
-          class="mode-card mode-survival"
-          id="survivalBtn"
-          type="button">
-
-          <div class="mode-icon">❤️</div>
-
-          <div
-            class="mode-title"
-            id="survivalTitle">
-            البقاء
-          </div>
-
-          <div
-            class="mode-description"
-            id="survivalDesc">
-            3 قلوب • لا تخطئ
-          </div>
-
-        </button>
-
-      </div>
-
-      <div class="secondary-grid">
-
-        <button
-          class="secondary-btn"
-          id="rulesBtn"
-          type="button">
-          ℹ️ طريقة اللعب
-        </button>
-
-        <button
-          class="secondary-btn"
-          id="resetBtn"
-          type="button">
-          🔄 إعادة الإحصائيات
-        </button>
-
-      </div>
-
-      <div
-        id="resetNote"
-        class="reset-note">
-        أفضل نتيجة وكومبو يتم حفظهما على هذا الجهاز.
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- =====================================================
-       GAME
-  ====================================================== -->
-
-  <section
-    id="gameScreen"
-    class="screen hidden">
-
-    <div class="game-shell">
-
-      <div class="game-stats">
-
-        <div class="game-stat">
-
-          <div
-            id="gameLevel"
-            class="game-stat-value">
-            1
-          </div>
-
-          <div
-            id="levelLabel"
-            class="game-stat-label">
-            المستوى
-          </div>
-
-        </div>
-
-        <div class="game-stat">
-
-          <div
-            id="gameHearts"
-            class="hearts">
-            ❤️❤️❤️
-          </div>
-
-          <div
-            id="heartsLabel"
-            class="game-stat-label">
-            القلوب
-          </div>
-
-        </div>
-
-        <div class="game-stat">
-
-          <div
-            id="gameScore"
-            class="game-stat-value">
-            0
-          </div>
-
-          <div
-            id="scoreLabel"
-            class="game-stat-label">
-            النقاط
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div
-        id="missionBox"
-        class="mission-box">
-
-        <div class="mission-inner">
-
-          <span
-            class="mission-icon">
-            🎯
-          </span>
-
-          <span id="missionText">
-            الأعداد الأولية
-          </span>
-
-        </div>
-
-      </div>
-
-
-      <div class="game-info">
-
-        <div
-          id="comboDisplay"
-          class="combo">
-          🔥 0×
-        </div>
-
-        <div
-          id="timerDisplay"
-          class="timer">
-          ⏱ 60
-        </div>
-
-      </div>
-
-
-      <div id="arena"></div>
-
-
-      <div class="game-controls">
-
-        <button
-          id="bombBtn"
-          class="game-btn bomb-btn"
-          type="button">
-
-          💣
-          <span id="bombText">
-            القنبلة
-          </span>
-
-        </button>
-
-        <button
-          id="exitBtn"
-          class="game-btn exit-btn"
-          type="button">
-
-          ✕
-          <span id="exitText">
-            خروج
-          </span>
-
-        </button>
-
-      </div>
-
-    </div>
-
-  </section>
+<div class="mathline">
+13 • 11 • 7 • 5 • 3 • 2
+</div>
 
 </div>
 
 
-<!-- =======================================================
-     FEEDBACK
-======================================================= -->
+<div class="stats">
 
-<div id="feedback"></div>
+<div class="stat">
+<b id="bestScore">0</b>
+<span id="bestLabel">أفضل نتيجة</span>
+</div>
+
+<div class="stat">
+<b id="gamesPlayed">0</b>
+<span id="gamesLabel">المباريات</span>
+</div>
+
+<div class="stat">
+<b id="bestCombo">0</b>
+<span id="comboLabel">أفضل كومبو</span>
+</div>
+
+</div>
 
 
-<!-- =======================================================
-     MODAL
-======================================================= -->
+<div class="home-grid">
+
+<button
+id="missionBtn"
+class="menu-btn blue">
+
+<div class="ico">🎯</div>
+
+<strong id="missionBtnText">
+المطاردة
+</strong>
+
+<small id="missionBtnSub">
+اختر المهمة الرياضية
+</small>
+
+</button>
+
+
+<button
+id="quickBtn"
+class="menu-btn purple">
+
+<div class="ico">⚡</div>
+
+<strong id="quickBtnText">
+الصيد السريع
+</strong>
+
+<small id="quickBtnSub">
+60 ثانية • حطم رقمك
+</small>
+
+</button>
+
+
+<button
+id="randomBtn"
+class="menu-btn gold">
+
+<div class="ico">🎲</div>
+
+<strong id="randomBtnText">
+التحدي العشوائي
+</strong>
+
+<small id="randomBtnSub">
+مهمة جديدة كل 20 ثانية
+</small>
+
+</button>
+
+
+<button
+id="survivalBtn"
+class="menu-btn dark">
+
+<div class="ico">❤️</div>
+
+<strong id="survivalBtnText">
+البقاء
+</strong>
+
+<small id="survivalBtnSub">
+3 قلوب • لا تخطئ
+</small>
+
+</button>
+
+
+<button
+id="statsBtn"
+class="menu-btn white">
+
+<div class="ico">🔄</div>
+
+<strong id="statsBtnText">
+إعادة الإحصائيات
+</strong>
+
+<small id="statsBtnSub">
+مسح النتائج المحفوظة
+</small>
+
+</button>
+
+
+<button
+id="howBtn"
+class="menu-btn white">
+
+<div class="ico">ℹ️</div>
+
+<strong id="howBtnText">
+طريقة اللعب
+</strong>
+
+<small id="howBtnSub">
+القواعد وطريقة اللعب
+</small>
+
+</button>
+
+
+<button
+id="languageBtn"
+class="menu-btn white full">
+
+<div class="ico">🌐</div>
+
+<strong id="languageBtnText">
+اللغة
+</strong>
+
+<small id="languageBtnSub">
+العربية
+</small>
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ==================================================
+     MISSIONS
+================================================== -->
+
+<section id="missions" class="screen">
+
+<div class="back-row">
+
+<button
+class="back"
+data-back="home">
+←
+</button>
+
+</div>
+
+
+<h2
+id="missionsTitle"
+class="page-title">
+اختر المهمة
+</h2>
+
+
+<div class="choice-grid">
+
+<button
+class="choice"
+data-mission="prime">
+
+<b id="mPrime">
+🎯 الأعداد الأولية
+</b>
+
+<small id="mPrimeSub">
+اضغط الأعداد الأولية
+</small>
+
+</button>
+
+
+<button
+class="choice"
+data-mission="even">
+
+<b id="mEven">
+🔵 الأعداد الزوجية
+</b>
+
+<small id="mEvenSub">
+اضغط الأعداد الزوجية
+</small>
+
+</button>
+
+
+<button
+class="choice"
+data-mission="odd">
+
+<b id="mOdd">
+🟣 الأعداد الفردية
+</b>
+
+<small id="mOddSub">
+اضغط الأعداد الفردية
+</small>
+
+</button>
+
+
+<button
+class="choice"
+data-mission="nonPrime">
+
+<b id="mNonPrime">
+⭕ الأعداد غير الأولية
+</b>
+
+<small id="mNonPrimeSub">
+كل عدد ليس أولياً
+</small>
+
+</button>
+
+
+<button
+class="choice"
+data-mission="multiple">
+
+<b id="mMultiple">
+✖️ مضاعفات عدد
+</b>
+
+<small id="mMultipleSub">
+مضاعفات 3 أو 4 أو 5
+</small>
+
+</button>
+
+
+<button
+class="choice"
+data-mission="divisor">
+
+<b id="mDivisor">
+➗ قواسم عدد
+</b>
+
+<small id="mDivisorSub">
+قواسم العدد المعطى
+</small>
+
+</button>
+
+
+<button
+class="choice"
+data-mission="square">
+
+<b id="mSquare">
+⬜ المربعات الكاملة
+</b>
+
+<small id="mSquareSub">
+مثل 4، 9، 16...
+</small>
+
+</button>
+
+
+<button
+class="choice"
+data-mission="less">
+
+<b id="mLess">
+⬇️ أعداد أقل من عدد
+</b>
+
+<small id="mLessSub">
+الأعداد الأصغر من الهدف
+</small>
+
+</button>
+
+
+<button
+class="choice"
+data-mission="greater">
+
+<b id="mGreater">
+⬆️ أعداد أكبر من عدد
+</b>
+
+<small id="mGreaterSub">
+الأعداد الأكبر من الهدف
+</small>
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ==================================================
+     GAME
+================================================== -->
+
+<section
+id="game"
+class="screen">
+
+
+<div class="hud">
+
+<div class="hud-card">
+
+<b id="hudLevel">
+1
+</b>
+
+<span id="hudLevelLabel">
+المستوى
+</span>
+
+</div>
+
+
+<div class="hud-card">
 
 <div
-  id="modalOverlay"
-  class="overlay hidden">
+id="hudHearts"
+class="hearts">
+❤️❤️❤️
+</div>
 
-  <div class="modal">
+<span id="hudHeartsLabel">
+القلوب
+</span>
 
-    <div
-      id="modalIcon"
-      class="modal-icon">
-      🎯
-    </div>
+</div>
 
-    <h2
-      id="modalTitle"
-      class="modal-title">
-      اختيار المهمة
-    </h2>
 
-    <p
-      id="modalText"
-      class="modal-text">
-      اختر نوع التحدي الذي تريد لعبه.
-    </p>
+<div class="hud-card">
 
-    <div
-      id="modalContent">
-    </div>
+<b id="hudScore">
+0
+</b>
 
-    <div
-      id="modalButtons"
-      class="modal-buttons">
-    </div>
+<span id="hudScoreLabel">
+النقاط
+</span>
 
-  </div>
+</div>
+
+</div>
+
+
+<!-- لا يوجد شعار √N داخل اللعبة -->
+
+<div
+id="missionTitle"
+class="mission-title">
+🎯 الأعداد الأولية
+</div>
+
+
+<div class="game-info">
+
+<div
+id="comboPill"
+class="pill">
+🔥 ×0
+</div>
+
+
+<div
+id="timerPill"
+class="timer">
+⏱ 60
+</div>
+
+</div>
+
+
+<div
+id="gameArea"
+class="game-area">
+
+<div
+id="feedback"
+class="feedback">
+</div>
+
+</div>
+
+
+<div class="controls">
+
+<button
+id="bombBtn"
+class="control bomb">
+
+💣
+
+<span id="bombText">
+القنبلة
+</span>
+
+</button>
+
+
+<button
+id="quitBtn"
+class="control quit">
+
+✕
+
+<span id="quitText">
+خروج
+</span>
+
+</button>
+
+</div>
+
+</section>
+
+</div>
+
+
+<!-- ==================================================
+     MODAL
+================================================== -->
+
+<div
+id="modal"
+class="modal-wrap">
+
+<div class="modal">
+
+<h2 id="modalTitle"></h2>
+
+<p id="modalText"></p>
+
+<div
+id="modalActions"
+class="modal-actions">
+</div>
+
+</div>
 
 </div>
 
 
 <script>
-"use strict";
 
-/* =========================================================
-   HELPERS
-========================================================= */
-
-const $ = id => document.getElementById(id);
-
-function randomInt(min,max){
-  return Math.floor(
-    Math.random() * (max-min+1)
-  ) + min;
-}
-
-function shuffle(array){
-  for(let i=array.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [array[i],array[j]]=[array[j],array[i]];
-  }
-  return array;
-}
-
-/* =========================================================
+/* ==================================================
    LANGUAGE
-========================================================= */
+================================================== */
 
-let lang =
-  localStorage.getItem("nh_lang") || "ar";
+const T={
 
-const T = {
+ar:{
 
-  ar:{
-    title:"صائد الأرقام",
-    brand:"IA Math",
+brand:"NUMBER HUNTER",
+tagline:"رياضيات • سرعة • دقة",
 
-    subtitle:"رياضيات • سرعة • دقة",
+best:"أفضل نتيجة",
+games:"المباريات",
+combo:"أفضل كومبو",
 
-    best:"أفضل نتيجة",
-    games:"المباريات",
-    combo:"أفضل كومبو",
+hunt:"المطاردة",
+huntSub:"اختر المهمة الرياضية",
 
-    hunt:"المطاردة",
-    huntDesc:"اختر المهمة الرياضية",
+quick:"الصيد السريع",
+quickSub:"60 ثانية • حطم رقمك",
 
-    quick:"الصيد السريع",
-    quickDesc:"60 ثانية • احصد أكبر عدد",
+random:"التحدي العشوائي",
+randomSub:"مهمة جديدة كل 20 ثانية",
 
-    random:"التحدي العشوائي",
-    randomDesc:"مهمة جديدة كل 20 ثانية",
+survival:"البقاء",
+survivalSub:"3 قلوب • لا تخطئ",
 
-    survival:"البقاء",
-    survivalDesc:"3 قلوب • لا تخطئ",
+reset:"إعادة الإحصائيات",
+resetSub:"مسح النتائج المحفوظة",
 
-    rules:"ℹ️ طريقة اللعب",
-    reset:"🔄 إعادة الإحصائيات",
+how:"طريقة اللعب",
+howSub:"القواعد وطريقة اللعب",
 
-    resetNote:
-      "أفضل نتيجة وكومبو يتم حفظهما على هذا الجهاز.",
+language:"اللغة",
 
-    level:"المستوى",
-    hearts:"القلوب",
-    score:"النقاط",
+arabic:"العربية",
+french:"Français",
+english:"English",
 
-    bomb:"القنبلة",
-    exit:"خروج",
+choose:"اختر المهمة",
 
-    seconds:"ث",
-    second:"ث",
+prime:"الأعداد الأولية",
+even:"الأعداد الزوجية",
+odd:"الأعداد الفردية",
 
-    chooseMission:"اختيار المهمة",
-    chooseMissionText:
-      "اختر نوع التحدي الذي تريد لعبه.",
+nonPrime:"الأعداد غير الأولية",
 
-    start:"ابدأ",
-    cancel:"إلغاء",
-    back:"رجوع",
+multiple:"مضاعفات",
+divisor:"قواسم",
 
-    primes:"الأعداد الأولية",
-    nonPrimes:"الأعداد غير الأولية",
-    even:"الأعداد الزوجية",
-    odd:"الأعداد الفردية",
+square:"المربعات الكاملة",
 
-    multiple3:"مضاعفات 3",
-    multiple4:"مضاعفات 4",
-    multiple5:"مضاعفات 5",
+less:"أعداد أقل من",
+greater:"أعداد أكبر من",
 
-    divisors:"قواسم العدد",
-    squares:"المربعات الكاملة",
+primeSub:"اضغط الأعداد الأولية",
+evenSub:"اضغط الأعداد الزوجية",
+oddSub:"اضغط الأعداد الفردية",
 
-    less:"أعداد أقل من",
-    greater:"أعداد أكبر من",
+nonPrimeSub:"كل عدد ليس أولياً",
 
-    randomMission:"مهمة عشوائية",
+multipleSub:"مضاعفات 3 أو 4 أو 5",
 
-    correct:"صحيح!",
-    wrong:"خطأ!",
-    noBomb:"لا توجد قنبلة متاحة",
-    bombUsed:"💥 تم تفجير الأرقام!",
+divisorSub:"قواسم العدد المعطى",
 
-    gameOver:"انتهت اللعبة",
-    finalScore:"نتيجتك",
-    retry:"العب من جديد",
-    home:"العودة للرئيسية",
+squareSub:"مثل 4، 9، 16...",
 
-    timeUp:"انتهى الوقت!",
-    survivalOver:"انتهت القلوب!",
+lessSub:"الأعداد الأصغر من الهدف",
+greaterSub:"الأعداد الأكبر من الهدف",
 
-    howTitle:"طريقة اللعب",
+level:"المستوى",
+hearts:"القلوب",
+points:"النقاط",
 
-    rulesText:[
-      "🎯 اضغط فقط على الأعداد التي تحقق المهمة الظاهرة.",
-      "✅ الإجابة الصحيحة: الرقم يختفي وتحصل على نقاط ويزداد الكومبو.",
-      "❌ الإجابة الخاطئة: تخسر قلباً وينخفض الكومبو.",
-      "❤️ عندما تفقد القلوب الثلاثة تنتهي اللعبة.",
-      "💣 القنبلة تمسح الأعداد الموجودة في منطقة اللعب.",
-      "⚡ السرعة والكثافة ترتفعان تدريجياً مع تقدم اللعبة.",
-      "🎲 في التحدي العشوائي تتغير المهمة كل 20 ثانية.",
-      "📱 اضغط على الرقم مباشرة؛ السحب والتمرير لا يحسبان كإجابة."
-    ],
+bomb:"القنبلة",
+quit:"خروج",
 
-    resetTitle:"إعادة الإحصائيات",
-    resetText:
-      "هل تريد حذف أفضل نتيجة وأفضل كومبو وعدد المباريات؟",
+sec:"ث",
 
-    resetYes:"نعم، حذف الإحصائيات",
+correct:"صحيح! +",
+wrong:"خطأ! -❤️",
 
-    missionSelected:"المهمة المختارة",
+gameOver:"انتهت اللعبة",
+timeUp:"انتهى الوقت!",
 
-    bombReady:"💣 القنبلة",
+score:"النقاط",
+comboLabel:"الكومبو",
 
-    points:"+",
+playAgain:"العب مرة أخرى",
+home:"الرئيسية",
 
-    modeQuick:"الصيد السريع",
-    modeRandom:"التحدي العشوائي",
-    modeSurvival:"البقاء",
-    modeHunt:"المطاردة"
-  },
+howTitle:"طريقة اللعب",
 
-  fr:{
-    title:"CHASSEUR DE NOMBRES",
-    brand:"IA Math",
+howText:
+"اضغط فقط على الأعداد التي توافق المهمة. الإجابة الصحيحة تمنحك نقاطاً وتزيد الكومبو. الضغط على عدد خاطئ ينقص قلباً. إذا فقدت القلوب الثلاثة تنتهي اللعبة. القنبلة تمسح الأعداد الظاهرة. في التحدي العشوائي تتغير المهمة كل 20 ثانية.",
 
-    subtitle:"Maths • Vitesse • Précision",
+statsTitle:"إعادة الإحصائيات",
 
-    best:"Meilleur score",
-    games:"Parties",
-    combo:"Meilleur combo",
+statsText:
+"هل تريد حذف جميع الإحصائيات المحفوظة؟",
 
-    hunt:"CHASSE",
-    huntDesc:"Choisissez la mission",
+cancel:"إلغاء",
+confirm:"حذف",
 
-    quick:"CHASSE RAPIDE",
-    quickDesc:"60 secondes • Faites le maximum",
+statsDone:"تمت إعادة الإحصائيات",
 
-    random:"DÉFI ALÉATOIRE",
-    randomDesc:"Nouvelle mission toutes les 20 secondes",
+statsDoneText:
+"تم حذف أفضل نتيجة وعدد المباريات وأفضل كومبو.",
 
-    survival:"SURVIE",
-    survivalDesc:"3 cœurs • Ne faites pas d'erreur",
+randomNew:"مهمة جديدة",
 
-    rules:"ℹ️ Comment jouer",
-    reset:"🔄 Réinitialiser",
+continue:"متابعة",
 
-    resetNote:
-      "Les statistiques sont enregistrées sur cet appareil.",
+chooseLang:"اختر اللغة",
 
-    level:"Niveau",
-    hearts:"Cœurs",
-    score:"Points",
+multipleOf:n=>`مضاعفات ${n}`,
+divisorsOf:n=>`قواسم ${n}`,
+lessThan:n=>`أعداد أقل من ${n}`,
+greaterThan:n=>`أعداد أكبر من ${n}`
 
-    bomb:"Bombe",
-    exit:"Quitter",
+},
 
-    seconds:"s",
-    second:"s",
+fr:{
 
-    chooseMission:"Choisir une mission",
-    chooseMissionText:
-      "Choisissez le type de défi.",
+brand:"NUMBER HUNTER",
+tagline:"Maths • Vitesse • Précision",
 
-    start:"Commencer",
-    cancel:"Annuler",
-    back:"Retour",
+best:"Meilleur score",
+games:"Parties",
+combo:"Meilleur combo",
 
-    primes:"Nombres premiers",
-    nonPrimes:"Nombres non premiers",
-    even:"Nombres pairs",
-    odd:"Nombres impairs",
+hunt:"Chasse",
+huntSub:"Choisissez la mission",
 
-    multiple3:"Multiples de 3",
-    multiple4:"Multiples de 4",
-    multiple5:"Multiples de 5",
+quick:"Chasse rapide",
+quickSub:"60 secondes • battez votre record",
 
-    divisors:"Diviseurs de",
-    squares:"Carrés parfaits",
+random:"Défi aléatoire",
+randomSub:"Nouvelle mission toutes les 20 secondes",
 
-    less:"Nombres inférieurs à",
-    greater:"Nombres supérieurs à",
+survival:"Survie",
+survivalSub:"3 cœurs • aucune erreur",
 
-    randomMission:"Mission aléatoire",
+reset:"Réinitialiser les stats",
+resetSub:"Effacer les résultats",
 
-    correct:"Correct !",
-    wrong:"Erreur !",
-    noBomb:"Bombe indisponible",
-    bombUsed:"💥 Nombres éliminés !",
+how:"Comment jouer",
+howSub:"Règles du jeu",
 
-    gameOver:"Fin de partie",
-    finalScore:"Votre score",
-    retry:"Rejouer",
-    home:"Accueil",
+language:"Langue",
 
-    timeUp:"Temps écoulé !",
-    survivalOver:"Plus de cœurs !",
+arabic:"العربية",
+french:"Français",
+english:"English",
 
-    howTitle:"Comment jouer",
+choose:"Choisissez la mission",
 
-    rulesText:[
-      "🎯 Touchez uniquement les nombres qui correspondent à la mission.",
-      "✅ Bonne réponse : le nombre disparaît, vous gagnez des points et le combo augmente.",
-      "❌ Mauvaise réponse : vous perdez un cœur et le combo revient à zéro.",
-      "❤️ Quand les trois cœurs sont perdus, la partie est terminée.",
-      "💣 La bombe élimine les nombres présents dans la zone de jeu.",
-      "⚡ La vitesse et la densité augmentent progressivement.",
-      "🎲 En mode aléatoire, la mission change toutes les 20 secondes.",
-      "📱 Touchez directement un nombre ; le défilement ne valide aucune réponse."
-    ],
+prime:"Nombres premiers",
+even:"Nombres pairs",
+odd:"Nombres impairs",
 
-    resetTitle:"Réinitialiser les statistiques",
-    resetText:
-      "Voulez-vous supprimer le meilleur score, le meilleur combo et le nombre de parties ?",
+nonPrime:"Nombres non premiers",
 
-    resetYes:"Oui, supprimer",
+multiple:"Multiples",
+divisor:"Diviseurs",
 
-    missionSelected:"Mission choisie",
+square:"Carrés parfaits",
 
-    bombReady:"💣 Bombe",
+less:"Nombres inférieurs à",
+greater:"Nombres supérieurs à",
 
-    points:"+",
+primeSub:"Touchez les nombres premiers",
+evenSub:"Touchez les nombres pairs",
+oddSub:"Touchez les nombres impairs",
 
-    modeQuick:"Chasse rapide",
-    modeRandom:"Défi aléatoire",
-    modeSurvival:"Survie",
-    modeHunt:"Chasse"
-  },
+nonPrimeSub:"Tout nombre non premier",
 
-  en:{
-    title:"NUMBER HUNTER",
-    brand:"IA Math",
+multipleSub:"Multiples de 3, 4 ou 5",
 
-    subtitle:"Math • Speed • Accuracy",
+divisorSub:"Diviseurs du nombre donné",
 
-    best:"Best Score",
-    games:"Games",
-    combo:"Best Combo",
+squareSub:"Ex. 4, 9, 16...",
 
-    hunt:"HUNT",
-    huntDesc:"Choose the math mission",
+lessSub:"Nombres inférieurs à la cible",
+greaterSub:"Nombres supérieurs à la cible",
 
-    quick:"QUICK HUNT",
-    quickDesc:"60 seconds • Score as much as possible",
+level:"Niveau",
+hearts:"Cœurs",
+points:"Points",
 
-    random:"RANDOM CHALLENGE",
-    randomDesc:"New mission every 20 seconds",
+bomb:"Bombe",
+quit:"Quitter",
 
-    survival:"SURVIVAL",
-    survivalDesc:"3 hearts • Don't make mistakes",
+sec:"s",
 
-    rules:"ℹ️ How to Play",
-    reset:"🔄 Reset Statistics",
+correct:"Correct ! +",
+wrong:"Erreur ! -❤️",
 
-    resetNote:
-      "Statistics are saved on this device.",
+gameOver:"Partie terminée",
+timeUp:"Temps écoulé !",
 
-    level:"Level",
-    hearts:"Hearts",
-    score:"Points",
+score:"Score",
+comboLabel:"Combo",
 
-    bomb:"Bomb",
-    exit:"Quit",
+playAgain:"Rejouer",
+home:"Accueil",
 
-    seconds:"s",
-    second:"s",
+howTitle:"Comment jouer",
 
-    chooseMission:"Choose Mission",
-    chooseMissionText:
-      "Choose the type of challenge.",
+howText:
+"Touchez uniquement les nombres qui correspondent à la mission. Une bonne réponse donne des points et augmente le combo. Une mauvaise réponse retire un cœur. Les trois cœurs perdus mettent fin à la partie. La bombe efface les nombres visibles. Dans le défi aléatoire, la mission change toutes les 20 secondes.",
 
-    start:"Start",
-    cancel:"Cancel",
-    back:"Back",
+statsTitle:"Réinitialiser les statistiques",
 
-    primes:"Prime numbers",
-    nonPrimes:"Non-prime numbers",
-    even:"Even numbers",
-    odd:"Odd numbers",
+statsText:
+"Voulez-vous supprimer toutes les statistiques enregistrées ?",
 
-    multiple3:"Multiples of 3",
-    multiple4:"Multiples of 4",
-    multiple5:"Multiples of 5",
+cancel:"Annuler",
+confirm:"Supprimer",
 
-    divisors:"Divisors of",
-    squares:"Perfect squares",
+statsDone:"Statistiques réinitialisées",
 
-    less:"Numbers less than",
-    greater:"Numbers greater than",
+statsDoneText:
+"Le meilleur score, les parties et le meilleur combo ont été supprimés.",
 
-    randomMission:"Random Mission",
+randomNew:"Nouvelle mission",
 
-    correct:"Correct!",
-    wrong:"Wrong!",
-    noBomb:"No bomb available",
-    bombUsed:"💥 Numbers cleared!",
+continue:"Continuer",
 
-    gameOver:"Game Over",
-    finalScore:"Your Score",
-    retry:"Play Again",
-    home:"Home",
+chooseLang:"Choisir la langue",
 
-    timeUp:"Time's up!",
-    survivalOver:"No hearts left!",
+multipleOf:n=>`Multiples de ${n}`,
+divisorsOf:n=>`Diviseurs de ${n}`,
+lessThan:n=>`Nombres inférieurs à ${n}`,
+greaterThan:n=>`Nombres supérieurs à ${n}`
 
-    howTitle:"How to Play",
+},
 
-    rulesText:[
-      "🎯 Tap only numbers that match the displayed mission.",
-      "✅ Correct answer: the number disappears, you gain points and your combo increases.",
-      "❌ Wrong answer: you lose one heart and your combo resets.",
-      "❤️ Losing all three hearts ends the game.",
-      "💣 The bomb clears the numbers currently inside the game area.",
-      "⚡ Speed and number density increase gradually.",
-      "🎲 In Random Challenge mode, the mission changes every 20 seconds.",
-      "📱 Tap the number
+en:{
+
+brand:"NUMBER HUNTER",
+tagline:"Math • Speed • Accuracy",
+
+best:"Best score",
+games:"Games",
+combo:"Best combo",
+
+hunt:"Hunt",
+huntSub:"Choose the math mission",
+
+quick:"Quick Hunt",
+quickSub:"60 seconds • beat your record",
+
+random:"Random Challenge",
+randomSub:"New mission every 20 seconds",
+
+survival:"Survival",
+survivalSub:"3 hearts • no mistakes",
+
+reset:"Reset statistics",
+resetSub:"Clear saved results",
+
+how:"How to play",
+howSub:"Game rules",
+
+language:"Language",
+
+arabic:"العربية",
+french:"Français",
+english:"English",
+
+choose:"Choose a mission",
+
+prime:"Prime numbers",
+even:"Even numbers",
+odd:"Odd numbers",
+
+nonPrime:"Non-prime numbers",
+
+multiple:"Multiples",
+divisor:"Divisors",
+
+square:"Perfect squares",
+
+less:"Numbers less than",
+greater:"Numbers greater than",
+
+primeSub:"Tap prime numbers",
+evenSub:"Tap even numbers",
+oddSub:"Tap odd numbers",
+
+nonPrimeSub:"Every non-prime number",
+
+multipleSub:"Multiples of 3, 4 or 5",
+
+divisorSub:"Divisors of the given number",
+
+squareSub:"E.g. 4, 9, 16...",
+
+lessSub:"Numbers below the target",
+greaterSub:"Numbers above the target",
+
+level:"Level",
+hearts:"Hearts",
+points:"Points",
+
+bomb:"Bomb",
+quit:"Quit",
+
+sec:"s",
+
+correct:"Correct! +",
+wrong:"Wrong! -❤️",
+
+gameOver:"Game Over",
+timeUp:"Time's up!",
+
+score:"Score",
+comboLabel:"Combo",
+
+playAgain:"Play again",
+home:"Home",
+
+howTitle:"How to play",
+
+howText:
+"Tap only the numbers that match the mission. A correct answer gives points and increases your combo. A wrong answer removes one heart. Losing all three hearts ends the game. The bomb clears the visible numbers. In Random Challenge, the mission changes every 20 seconds.",
+
+statsTitle:"Reset statistics",
+
+statsText:
+"Do you want to delete all saved statistics?",
+
+cancel:"Cancel",
+confirm:"Delete",
+
+statsDone:"Statistics reset",
+
+statsDoneText:
+"Best score, games and best combo have been deleted.",
+
+randomNew:"New mission",
+
+continue:"Continue",
+
+chooseLang:"Choose language",
+
+multipleOf:n=>`Multiples of ${n}`,
+divisorsOf:n=>`Divisors of ${n}`,
+lessThan:n=>`Numbers less than ${n}`,
+greaterThan:n=>`Numbers greater than ${n}`
+
+}
+
+};
+
+
+/* ==================================================
+   STATE
+================================================== */
+
+let lang=
+localStorage.getItem("nh-language")||"ar";
+
+let currentMission=null;
+
+let mode="mission";
+
+let running=false;
+
+let score=0;
+let hearts=3;
+let combo=0;
+let level=1;
+
+let targets=new Map();
+
+let nextId=1;
+
+let raf=0;
+let lastTime=0;
+
+let spawnAcc=0;
+let elapsed=0;
+
+let timeLeft=60;
+
+let randomChangeAt=20;
+
+let audioCtx=null;
+
+
+/* ==================================================
+   HELPERS
+================================================== */
+
+const $=id=>document.getElementById(id);
+
+const L=()=>T[lang];
+
+function setText(id,text){
+
+const e=$(id);
+
+if(e)
+e.textContent=text;
+
+}
+
+
+/* ==================================================
+   STATS
+================================================== */
+
+function updateHomeStats(){
+
+setText(
+"bestScore",
+localStorage.getItem("nh-best-score")||0
+);
+
+setText(
+"gamesPlayed",
+localStorage.getItem("nh-games")||0
+);
+
+setText(
+"bestCombo",
+localStorage.getItem("nh-best-combo")||0
+);
+
+}
+
+function saveStats(){
+
+const oldBest=
+Number(localStorage.getItem("nh-best-score")||0);
+
+const oldCombo=
+Number(localStorage.getItem("nh-best-combo")||0);
+
+localStorage.setItem(
+"nh-best-score",
+Math.max(oldBest,score)
+);
+
+localStorage.setItem(
+"nh-best-combo",
+Math.max(oldCombo,combo)
+);
+
+localStorage.setItem(
+"nh-games",
+Number(localStorage.getItem("nh-games")||0)+1
+);
+
+}
+
+
+/* ==================================================
+   LANGUAGE UI
+================================================== */
+
+function applyLanguage(){
+
+const x=L();
+
+document.documentElement.lang=lang;
+
+document.documentElement.dir=
+lang==="ar"?"rtl":"ltr";
+
+document.title=x.brand;
+
+
+/* HOME */
+
+$("brand").innerHTML=
+"NUMBER<br>HUNTER";
+
+setText("tagline",x.tagline);
+
+setText("bestLabel",x.best);
+setText("gamesLabel",x.games);
+setText("comboLabel",x.combo);
+
+setText("missionBtnText",x.hunt);
+setText("missionBtnSub",x.huntSub);
+
+setText("quickBtnText",x.quick);
+setText("quickBtnSub",x.quickSub);
+
+setText("randomBtnText",x.random);
+setText("randomBtnSub",x.randomSub);
+
+setText("survivalBtnText",x.survival);
+setText("survivalBtnSub",x.survivalSub);
+
+setText("statsBtnText",x.reset);
+setText("statsBtnSub",x.resetSub);
+
+setText("howBtnText",x.how);
+setText("howBtnSub",x.howSub);
+
+setText("languageBtnText",x.language);
+
+setText(
+"languageBtnSub",
+lang==="ar"?x.arabic:
+lang==="fr"?x.french:
+x.english
+);
+
+
+/* MISSIONS */
+
+setText("missionsTitle",x.choose);
+
+setText("mPrime",`🎯 ${x.prime}`);
+setText("mPrimeSub",x.primeSub);
+
+setText("mEven",`🔵 ${x.even}`);
+setText("mEvenSub",x.evenSub);
+
+setText("mOdd",`🟣 ${x.odd}`);
+setText("mOddSub",x.oddSub);
+
+setText(
+"mNonPrime",
+`⭕ ${x.nonPrime}`
+);
+
+setText(
+"mNonPrimeSub",
+x.nonPrimeSub
+);
+
+setText(
+"mMultiple",
+`✖️ ${x.multiple}`
+);
+
+setText(
+"mMultipleSub",
+x.multipleSub
+);
+
+setText(
+"mDivisor",
+`➗ ${x.divisor}`
+);
+
+setText(
+"mDivisorSub",
+x.divisorSub
+);
+
+setText(
+"mSquare",
+`⬜ ${x.square}`
+);
+
+setText(
+"mSquareSub",
+x.squareSub
+);
+
+setText(
+"mLess",
+`⬇️ ${x.less}`
+);
+
+setText(
+"mLessSub",
+x.lessSub
+);
+
+setText(
+"mGreater",
+`⬆️ ${x.greater}`
+);
+
+setText(
+"mGreaterSub",
+x.greaterSub
+);
+
+
+/* GAME */
+
+setText(
+"hudLevelLabel",
+x.level
+);
+
+setText(
+"hudHeartsLabel",
+x.hearts
+);
+
+setText(
+"hudScoreLabel",
+x.points
+);
+
+setText(
+"bombText",
+x.bomb
+);
+
+setText(
+"quitText",
+x.quit
+);
+
+updateGameTitle();
+
+updateHUD();
+
+}
+
+
+/* ==================================================
+   SCREENS
+================================================== */
+
+function showScreen(id){
+
+document
+.querySelectorAll(".screen")
+.forEach(
+s=>s.classList.remove("active")
+);
+
+$(id).classList.add("active");
+
+window.scrollTo(0,0);
+
+}
+
+
+/* ==================================================
+   MODAL
+================================================== */
+
+function openModal(title,text,actions){
+
+$("modalTitle").textContent=title;
+
+$("modalText").textContent=text;
+
+const box=$("modalActions");
+
+box.innerHTML="";
+
+actions.forEach(a=>{
+
+const b=document.createElement("button");
+
+b.className=
+"modal-btn "+
+(a.primary?"primary":"secondary");
+
+b.textContent=a.text;
+
+b.addEventListener(
+"click",
+()=>{
+
+closeModal();
+
+if(a.fn)
+a.fn();
+
+}
+);
+
+box.appendChild(b);
+
+});
+
+$("modal").classList.add("show");
+
+}
+
+function closeModal(){
+
+$("modal")
+.classList.remove("show");
+
+}
+
+$("modal").addEventListener(
+"click",
+e=>{
+
+if(e.target===$("modal"))
+closeModal();
+
+}
+);
+
+
+/* ==================================================
+   LANGUAGE SELECT
+================================================== */
+
+function chooseLanguage(){
+
+const x=L();
+
+openModal(
+x.chooseLang,
+"",
+[
+{
+text:"العربية",
+primary:lang==="ar",
+fn:()=>setLanguage("ar")
+},
+{
+text:"Français",
+primary:lang==="fr",
+fn:()=>setLanguage("fr")
+},
+{
+text:"English",
+primary:lang==="en",
+fn:()=>setLanguage("en")
+}
+]
+);
+
+}
+
+function setLanguage(v){
+
+lang=v;
+
+localStorage.setItem(
+"nh-language",
+v
+);
+
+applyLanguage();
+
+}
+
+
+/* ==================================================
+   MATHEMATICS LOGIC
+================================================== */
+
+function isPrime(n){
+
+if(n<2)
+return false;
+
+if(n===2)
+return true;
+
+if(n%2===0)
+return false;
+
+for(
+let i=3;
+i*i<=n;
+i+=2
+){
+
+if(n%i===0)
+return false;
+
+}
+
+return true;
+
+}
+
+
+function isSquare(n){
+
+return Number.isInteger(
+Math.sqrt(n)
+);
+
+}
+
+
+function correctFor(n,m){
+
+if(!m)
+return false;
+
+switch(m.type){
+
+case "prime":
+return isPrime(n);
+
+case "even":
+return n%2===0;
+
+case "odd":
+return n%2!==0;
+
+case "nonPrime":
+return !isPrime(n);
+
+case "multiple":
+return n%m.value===0;
+
+case "divisor":
+return m.value%n===0;
+
+case "square":
+return isSquare(n);
+
+case "less":
+return n<m.value;
+
+case "greater":
+return n>m.value;
+
+default:
+return false;
+
+}
+
+}
+
+
+/* ==================================================
+   MISSION TITLE
+================================================== */
+
+function missionTitle(m){
+
+const x=L();
+
+if(!m)
+return "";
+
+switch(m.type){
+
+case "prime":
+return `🎯 ${x.prime}`;
+
+case "even":
+return `🎯 ${x.even}`;
+
+case "odd":
+return `🎯 ${x.odd}`;
+
+case "nonPrime":
+return `🎯 ${x.nonPrime}`;
+
+case "multiple":
+return `🎯 ${x.multipleOf(m.value)}`;
+
+case "divisor":
+return `🎯 ${x.divisorsOf(m.value)}`;
+
+case "square":
+return `🎯 ${x.square}`;
+
+case "less":
+return `🎯 ${x.lessThan(m.value)}`;
+
+case "greater":
+return `🎯 ${x.greaterThan(m.value)}`;
+
+default:
+return "";
+
+}
+
+}
+
+function updateGameTitle(){
+
+if(!currentMission)
+return;
+
+$("missionTitle").textContent=
+missionTitle(currentMission);
+
+}
+
+
+/* ==================================================
+   RANDOM MISSION
+================================================== */
+
+function randomMission(){
+
+const types=[
+"prime",
+"even",
+"odd",
+"nonPrime",
+"multiple",
+"divisor",
+"square",
+"less",
+"greater"
+];
+
+const type=
+types[
+Math.floor(
+Math.random()*types.length
+)
+];
+
+if(type==="multiple"){
+
+return{
+type,
+value:
+[3,4,5][
+Math.floor(Math.random()*3)
+]
+};
+
+}
+
+if(type==="divisor"){
+
+return{
+type,
+value:
+Math.floor(
+Math.random()*30
+)+6
+};
+
+}
+
+if(
+type==="less"||
+type==="greater"
+){
+
+return{
+type,
+value:
+Math.floor(
+Math.random()*45
+)+30
+};
+
+}
+
+return{type};
+
+}
+
+
+/* ==================================================
+   HUD
+================================================== */
+
+function updateHUD(){
+
+$("hudScore").textContent=score;
+
+$("hudLevel").textContent=level;
+
+$("hudHearts").textContent=
+"❤️".repeat(hearts)+
+"🖤".repeat(3-hearts);
+
+$("comboPill").textContent=
+`🔥 ×${combo}`;
+
+if(mode==="quick"){
+
+$("timerPill").textContent=
+`⏱ ${Math.max(
+0,
+Math.ceil(timeLeft)
+)} ${L().sec}`;
+
+}
+
+else if(mode==="random"){
+
+const remaining=
+20-
+Math.floor(elapsed%20);
+
+$("timerPill").textContent=
+`⏱ ${remaining} ${L().sec}`;
+
+}
+
+else if(mode==="survival"){
+
+$("timerPill").textContent=
+"❤️ ∞";
+
+}
+
+else{
+
+$("timerPill").textContent=
+`🎯 ${level}`;
+
+}
+
+}
+
+
+/* ==================================================
+   SOUND
+================================================== */
+
+function beep(ok=true){
+
+try{
+
+audioCtx=
+audioCtx||
+new(
+window.AudioContext||
+window.webkitAudioContext
+)();
+
+if(
+audioCtx.state==="suspended"
+)
+audioCtx.resume();
+
+const o=
+audioCtx.createOscillator();
+
+const g=
+audioCtx.createGain();
+
+o.type="sine";
+
+o.frequency.value=
+ok?620:180;
+
+g.gain.setValueAtTime(
+.0001,
+audioCtx.currentTime
+);
+
+g.gain.exponentialRampToValueAtTime(
+.07,
+audioCtx.currentTime+.01
+);
+
+g.gain.exponentialRampToValueAtTime(
+.0001,
+audioCtx.currentTime+
+(ok?.13:.18)
+);
+
+o.connect(g);
+
+g.connect(
+audioCtx.destination
+);
+
+o.start();
+
+o.stop(
+audioCtx.currentTime+
+(ok?.14:.19)
+);
+
+}
+catch(e){}
+
+}
+
+
+/* ==================================================
+   FEEDBACK
+================================================== */
+
+function showFeedback(text,good){
+
+const e=$("feedback");
+
+e.textContent=text;
+
+e.style.color=
+good?
+"var(--green)":
+"var(--red)";
+
+e.classList.remove("show");
+
+void e.offsetWidth;
+
+e.classList.add("show");
+
+}
+
+
+/* ==================================================
+   TARGETS
+================================================== */
+
+function clearTargets(){
+
+targets.forEach(
+t=>t.el.remove()
+);
+
+targets.clear();
+
+}
+
+
+function targetSize(){
+
+return window.innerWidth<520?
+68:
+70;
+
+}
+
+
+function spawnTarget(){
+
+if(!running)
+return;
+
+const area=$("gameArea");
+
+const rect=
+area.getBoundingClientRect();
+
+const size=
+targetSize();
+
+const n=
+Math.floor(
+Math.random()*99
+)+2;
+
+const el=
+document.createElement("div");
+
+el.className="target";
+
+el.textContent=n;
+
+const id=nextId++;
+
+el.dataset.id=id;
+
+const x=
+Math.random()*
+Math.max(
+1,
+rect.width-size
+);
+
+const y=
+-size-5;
+
+el.style.left=
+x+"px";
+
+el.style.top=
+"0px";
+
+area.appendChild(el);
+
+const t={
+id,
+n,
+x,
+y,
+el
+};
+
+targets.set(id,t);
+
+
+/*
+  pointerdown فقط:
+  لا click مزدوج،
+  لا scroll،
+  لا لمس عابر.
+*/
+
+el.addEventListener(
+"pointerdown",
+e=>{
+
+e.preventDefault();
+e.stopPropagation();
+
+const obj=
+targets.get(id);
+
+if(obj)
+hitTarget(obj);
+
+},
+{
+passive:false
+}
+);
+
+}
+
+
+/* ==================================================
+   HIT LOGIC
+================================================== */
+
+function hitTarget(t){
+
+if(
+!running||
+!t||
+!targets.has(t.id)
+)
+return;
+
+const good=
+correctFor(
+t.n,
+currentMission
+);
+
+targets.delete(t.id);
+
+t.el.classList.add("hit");
+
+setTimeout(
+()=>t.el.remove(),
+180
+);
+
+
+if(good){
+
+/*
+  صحيح:
+  نقاط + كومبو
+*/
+
+combo++;
+
+const points=
+10+
+Math.min(
+40,
+combo*2
+)+
+level*2;
+
+score+=points;
+
+if(
+combo%8===0
+)
+level++;
+
+showFeedback(
+L().correct+points,
+true
+);
+
+beep(true);
+
+}
+
+else{
+
+/*
+  خطأ:
+  قلب ينقص
+*/
+
+combo=0;
+
+hearts--;
+
+showFeedback(
+L().wrong,
+false
+);
+
+beep(false);
+
+if(hearts<=0){
+
+updateHUD();
+
+endGame("hearts");
+
+return;
+
+}
+
+}
+
+updateHUD();
+
+}
+
+
+/* ==================================================
+   BOMB
+================================================== */
+
+function bomb(){
+
+if(!running)
+return;
+
+const count=
+targets.size;
+
+if(!count)
+return;
+
+targets.forEach(
+t=>t.el.remove()
+);
+
+targets.clear();
+
+combo=0;
+
+/*
+  القنبلة لا تعتبر إجابة صحيحة
+  ولا تنقص قلباً.
+*/
+
+showFeedback(
+"💥",
+true
+);
+
+beep(true);
+
+updateHUD();
+
+}
+
+
+/* ==================================================
+   PROGRESSIVE SPEED
+================================================== */
+
+function speed(){
+
+const base=
+mode==="survival"
+?48
+:45;
+
+return(
+base+
+level*4+
+elapsed*1.5
+);
+
+}
+
+
+/* ==================================================
+   PROGRESSIVE DENSITY
+================================================== */
+
+function density(){
+
+const max=
+mode==="quick"
+?8
+:
+mode==="survival"
+?7
+:9;
+
+return Math.min(
+max,
+3+
+Math.floor(elapsed/18)+
+Math.floor(level/3)
+);
+
+}
+
+
+/* ==================================================
+   GAME LOOP
+================================================== */
+
+function loop(now){
+
+if(!running)
+return;
+
+const dt=
+Math.min(
+.05,
+(now-lastTime)/1000||0
+);
+
+lastTime=now;
+
+elapsed+=dt;
+
+spawnAcc+=dt;
+
+
+/*
+  السرعة تبدأ بطيئة
+  ثم تزيد تدريجياً.
+*/
+
+const interval=
+Math.max(
+.42,
+1.15-
+elapsed*.008-
+level*.018
+);
+
+
+if(
+spawnAcc>=interval &&
+targets.size<density()
+){
+
+spawnAcc=0;
+
+spawnTarget();
+
+}
+
+
+/*
+  تحريك الأرقام
+*/
+
+const area=$("gameArea");
+
+const rect=
+area.getBoundingClientRect();
+
+targets.forEach(t=>{
+
+t.y+=
+speed()*dt;
+
+if(
+t.y>
+rect.height+90
+){
+
+t.el.remove();
+
+targets.delete(t.id);
+
+return;
+
+}
+
+t.el.style.transform=
+`translate3d(0,${t.y}px,0)`;
+
+});
+
+
+/*
+  Quick Hunt
+*/
+
+if(mode==="quick"){
+
+timeLeft-=dt;
+
+if(timeLeft<=0){
+
+timeLeft=0;
+
+updateHUD();
+
+endGame("time");
+
+return;
+
+}
+
+}
+
+
+/*
+  Random Challenge
+  كل 20 ثانية بالضبط
+*/
+
+if(mode==="random"){
+
+if(
+elapsed>=randomChangeAt
+){
+
+randomChangeAt+=20;
+
+currentMission=
+randomMission();
+
+clearTargets();
+
+updateGameTitle();
+
+showFeedback(
+L().randomNew,
+true
+);
+
+beep(true);
+
+}
+
+}
+
+updateHUD();
+
+raf=
+requestAnimationFrame(loop);
+
+}
+
+
+/* ==================================================
+   START GAME
+================================================== */
+
+function startGame(
+newMode="mission",
+mission=null
+){
+
+cancelAnimationFrame(raf);
+
+clearTargets();
+
+mode=newMode;
+
+running=true;
+
+score=0;
+
+hearts=3;
+
+combo=0;
+
+level=1;
+
+elapsed=0;
+
+timeLeft=60;
+
+randomChangeAt=20;
+
+currentMission=
+mission||
+randomMission();
+
+showScreen("game");
+
+updateGameTitle();
+
+updateHUD();
+
+lastTime=
+performance.now();
+
+spawnAcc=0;
+
+
+/*
+  بداية اللعبة:
+  عدد قليل من الأرقام.
+*/
+
+for(
+let i=0;
+i<3;
+i++
+){
+
+setTimeout(
+()=>{
+if(running)
+spawnTarget();
+},
+i*220
+);
+
+}
+
+raf=
+requestAnimationFrame(loop);
+
+try{
+
+audioCtx=
+audioCtx||
+new(
+window.AudioContext||
+window.webkitAudioContext
+)();
+
+audioCtx.resume();
+
+}
+catch(e){}
+
+}
+
+
+/* ==================================================
+   END GAME
+================================================== */
+
+function endGame(reason){
+
+if(!running)
+return;
+
+running=false;
+
+cancelAnimationFrame(raf);
+
+clearTargets();
+
+saveStats();
+
+updateHomeStats();
+
+const title=
+reason==="hearts"
+?
+L().gameOver
+:
+L().timeUp;
+
+const text=
+`${L().score}: ${score} • ${L().comboLabel}: ${combo}`;
+
+openModal(
+title,
+text,
+[
+{
+text:L().playAgain,
+primary:true,
+fn:()=>{
+
+if(mode==="mission"){
+
+startGame(
+"mission",
+currentMission
+);
+
+}
+
+else if(mode==="random"){
+
+startGame(
+"random",
+null
+);
+
+}
+
+else{
+
+startGame(
+mode,
+currentMission
+);
+
+}
+
+}
+},
+
+{
+text:L().home,
+fn:()=>showScreen("home")
+}
+
+]
+);
+
+}
+
+
+/* ==================================================
+   QUIT
+================================================== */
+
+function quitGame(){
+
+if(!running)
+return;
+
+openModal(
+L().quit,
+L().home+"?",
+[
+{
+text:L().continue,
+primary:true
+},
+
+{
+text:L().home,
+
+fn:()=>{
+
+running=false;
+
+cancelAnimationFrame(raf);
+
+clearTargets();
+
+showScreen("home");
+
+}
+
+}
+
+]
+);
+
+}
+
+
+/* ==================================================
+   BUTTONS
+================================================== */
+
+$("missionBtn")
+.addEventListener(
+"click",
+()=>showScreen("missions")
+);
+
+
+$("quickBtn")
+.addEventListener(
+"click",
+()=>startGame(
+"quick",
+{type:"prime"}
+)
+);
+
+
+$("randomBtn")
+.addEventListener(
+"click",
+()=>startGame(
+"random",
+randomMission()
+)
+);
+
+
+$("survivalBtn")
+.addEventListener(
+"click",
+()=>startGame(
+"survival",
+{type:"even"}
+)
+);
+
+
+/*
+  إعادة الإحصائيات موجودة هنا فقط
+  خارج اللعب.
+*/
+
+$("statsBtn")
+.addEventListener(
+"click",
+()=>{
+
+const x=L();
+
+openModal(
+x.statsTitle,
+x.statsText,
+[
+{
+text:x.cancel
+},
+
+{
+text:x.confirm,
+primary:true,
+
+fn:()=>{
+
+localStorage.removeItem(
+"nh-best-score"
+);
+
+localStorage.removeItem(
+"nh-games"
+);
+
+localStorage.removeItem(
+"nh-best-combo"
+);
+
+updateHomeStats();
+
+openModal(
+x.statsDone,
+x.statsDoneText,
+[
+{
+text:x.home,
+primary:true
+}
+]
+);
+
+}
+
+}
+
+]
+);
+
+}
+);
+
+
+/* HOW TO PLAY */
+
+$("howBtn")
+.addEventListener(
+"click",
+()=>{
+
+const x=L();
+
+openModal(
+x.howTitle,
+x.howText,
+[
+{
+text:x.continue,
+primary:true
+}
+]
+);
+
+}
+);
+
+
+/* LANGUAGE */
+
+$("languageBtn")
+.addEventListener(
+"click",
+chooseLanguage
+);
+
+
+/* GAME BUTTONS */
+
+$("quitBtn")
+.addEventListener(
+"click",
+quitGame
+);
+
+$("bombBtn")
+.addEventListener(
+"click",
+bomb
+);
+
+
+/* BACK BUTTONS */
+
+document
+.querySelectorAll("[data-back]")
+.forEach(
+b=>
+b.addEventListener(
+"click",
+()=>{
+showScreen(
+b.dataset.back
+);
+}
+)
+);
+
+
+/* ==================================================
+   MISSION BUTTONS
+================================================== */
+
+document
+.querySelectorAll("[data-mission]")
+.forEach(
+b=>
+b.addEventListener(
+"click",
+()=>{
+
+const type=
+b.dataset.mission;
+
+let m={type};
+
+
+/*
+  مضاعفات:
+  نختار 3 أو 4 أو 5.
+*/
+
+if(type==="multiple"){
+
+m.value=
+[3,4,5][
+Math.floor(
+Math.random()*3
+)
+];
+
+}
+
+
+/*
+  القواسم:
+  عدد مناسب يمكن أن تكون له عدة قواسم.
+*/
+
+if(type==="divisor"){
+
+m.value=
+Math.floor(
+Math.random()*30
+)+6;
+
+}
+
+
+/*
+  أكبر / أصغر
+*/
+
+if(
+type==="less"||
+type==="greater"
+){
+
+m.value=
+Math.floor(
+Math.random()*45
+)+30;
+
+}
+
+
+startGame(
+"mission",
+m
+);
+
+}
+)
+);
+
+
+/* ==================================================
+   منع SCROLL داخل منطقة اللعب
+================================================== */
+
+$("gameArea")
+.addEventListener(
+"touchstart",
+e=>e.preventDefault(),
+{passive:false}
+);
+
+$("gameArea")
+.addEventListener(
+"touchmove",
+e=>e.preventDefault(),
+{passive:false}
+);
+
+$("gameArea")
+.addEventListener(
+"touchend",
+e=>e.preventDefault(),
+{passive:false}
+);
+
+
+/* ==================================================
+   INIT
+================================================== */
+
+applyLanguage();
+
+updateHomeStats();
+
+</script>
+
+</body>
+</html>
