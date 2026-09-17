@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width,
-initial-scale=1,
-maximum-scale=1,
-user-scalable=no,
-viewport-fit=cover">
+      content="width=device-width,
+      initial-scale=1,
+      maximum-scale=1,
+      user-scalable=no,
+      viewport-fit=cover">
 
 <title>صائد الأرقام</title>
 
@@ -16,11 +16,13 @@ viewport-fit=cover">
 :root{
   --blue:#2864c7;
   --blue2:#3d73dc;
+  --blue-dark:#214b8d;
   --purple:#8552df;
+  --purple2:#9a63ef;
   --cyan:#27c9d1;
+  --gold:#f4b942;
   --green:#21a66f;
   --red:#e5484d;
-  --gold:#f4b942;
 
   --bg:#f4f7fd;
   --card:#ffffff;
@@ -28,10 +30,11 @@ viewport-fit=cover">
   --muted:#71809a;
   --border:#dce5f2;
 
-  --shadow:0 12px 35px rgba(40,100,199,.12);
+  --shadow:
+    0 12px 35px rgba(40,100,199,.12);
 
-  --safe-bottom:env(safe-area-inset-bottom,0px);
   --safe-top:env(safe-area-inset-top,0px);
+  --safe-bottom:env(safe-area-inset-bottom,0px);
 }
 
 *{
@@ -41,216 +44,324 @@ viewport-fit=cover">
 
 html,
 body{
-  width:100%;
-  height:100%;
   margin:0;
   padding:0;
-  overflow:hidden;
-  background:var(--bg);
+  width:100%;
+  min-height:100%;
   font-family:
-    Arial,
-    "Noto Sans Arabic",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
     Tahoma,
+    Arial,
     sans-serif;
+
+  background:
+    radial-gradient(
+      circle at 10% 20%,
+      rgba(61,115,220,.10),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(133,82,223,.09),
+      transparent 28%
+    ),
+    var(--bg);
+
+  color:var(--text);
 }
 
 body{
-  touch-action:pan-y;
+  overflow-x:hidden;
 }
 
 button{
-  font-family:inherit;
+  font:inherit;
   border:0;
   cursor:pointer;
   touch-action:manipulation;
 }
 
+button:focus{
+  outline:none;
+}
+
+.hidden{
+  display:none !important;
+}
+
+/* =========================================================
+   APP
+========================================================= */
+
 #app{
-  position:fixed;
-  inset:0;
   width:100%;
-  height:100dvh;
   min-height:100dvh;
-  overflow:hidden;
-  background:
-    radial-gradient(circle at 15% 10%,
-      rgba(40,100,199,.09),
-      transparent 30%),
-    radial-gradient(circle at 90% 80%,
-      rgba(133,82,223,.08),
-      transparent 30%),
-    var(--bg);
+  position:relative;
 }
 
 .screen{
-  position:absolute;
-  inset:0;
   width:100%;
-  height:100%;
-  overflow:hidden;
-  display:none;
+  min-height:100dvh;
 }
 
-.screen.active{
-  display:block;
-}
-
-/* =========================
+/* =========================================================
    HOME
-========================= */
+========================================================= */
 
-.home-scroll{
-  position:absolute;
-  inset:0;
-  overflow-y:auto;
-  overflow-x:hidden;
-
+#homeScreen{
   padding:
-    calc(var(--safe-top) + 12px)
+    calc(var(--safe-top) + 18px)
     18px
-    calc(var(--safe-bottom) + 90px);
+    calc(var(--safe-bottom) + 34px);
 
-  -webkit-overflow-scrolling:touch;
+  overflow-y:auto;
 }
 
-.home{
-  width:min(680px,100%);
-  margin:auto;
+.home-wrap{
+  width:min(100%,680px);
+  margin:0 auto;
 }
 
-.logo-card{
-  position:relative;
-  overflow:hidden;
-
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
   margin-bottom:16px;
-  padding:42px 22px 34px;
-
-  border:1px solid var(--border);
-  border-radius:38px;
-
-  background:
-    radial-gradient(circle at 100% 0,
-      rgba(133,82,223,.13),
-      transparent 28%),
-    radial-gradient(circle at 0 100%,
-      rgba(40,100,199,.10),
-      transparent 32%),
-    rgba(255,255,255,.94);
-
-  box-shadow:var(--shadow);
-  text-align:center;
 }
 
-.logo-icon{
-  width:130px;
-  height:130px;
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
 
-  margin:0 auto 24px;
-
-  border-radius:34px;
+.brand-mark{
+  width:54px;
+  height:54px;
+  border-radius:18px;
 
   display:flex;
   align-items:center;
   justify-content:center;
 
   color:white;
-  font-size:42px;
+  font-size:23px;
   font-weight:900;
 
   background:
-    linear-gradient(145deg,
-      #3479df,
-      #2256b5);
+    linear-gradient(
+      145deg,
+      #3b7de4,
+      #2259b9
+    );
 
   box-shadow:
-    0 16px 35px rgba(40,100,199,.25);
+    0 10px 24px rgba(40,100,199,.24);
+}
+
+.brand-name{
+  font-size:21px;
+  font-weight:900;
+  color:var(--text);
+}
+
+.header-actions{
+  display:flex;
+  gap:8px;
+}
+
+.icon-btn{
+  width:50px;
+  height:50px;
+  border-radius:17px;
+
+  background:rgba(255,255,255,.92);
+  border:1px solid var(--border);
+  color:var(--text);
+
+  font-size:22px;
+
+  box-shadow:0 5px 18px rgba(40,100,199,.08);
+}
+
+.icon-btn:active{
+  transform:scale(.95);
+}
+
+/* HERO */
+
+.hero{
+  position:relative;
+  overflow:hidden;
+
+  padding:38px 22px 32px;
+  margin-bottom:18px;
+
+  text-align:center;
+
+  border-radius:34px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #ffffff 48%,
+      #faf7ff 100%
+    );
+
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+}
+
+.hero:before,
+.hero:after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  pointer-events:none;
+}
+
+.hero:before{
+  width:230px;
+  height:230px;
+  left:-125px;
+  bottom:-135px;
+  background:rgba(61,115,220,.09);
+}
+
+.hero:after{
+  width:190px;
+  height:190px;
+  right:-100px;
+  top:-110px;
+  background:rgba(133,82,223,.08);
+}
+
+.hero-logo{
+  position:relative;
+  z-index:1;
+
+  width:120px;
+  height:120px;
+  margin:0 auto 22px;
+
+  border-radius:32px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  color:white;
+  font-size:35px;
+  font-weight:900;
+
+  background:
+    linear-gradient(
+      145deg,
+      #3479df,
+      #2258b8
+    );
+
+  box-shadow:
+    0 18px 35px rgba(40,100,199,.24);
 }
 
 .logo-title{
+  position:relative;
+  z-index:1;
+
   margin:0;
 
-  color:var(--blue);
-
-  font-size:clamp(42px,11vw,68px);
-  line-height:.95;
-  font-weight:900;
+  font-size:clamp(38px,10vw,66px);
+  line-height:.98;
   letter-spacing:-2px;
 
-  direction:ltr;
+  color:var(--blue);
+  font-weight:950;
 }
 
-.logo-sub{
-  margin-top:24px;
+.logo-subtitle{
+  position:relative;
+  z-index:1;
 
-  color:var(--muted);
+  margin:20px 0 0;
+
   font-size:20px;
   font-weight:700;
+  color:var(--muted);
 }
 
-.logo-numbers{
-  margin-top:38px;
+.math-line{
+  position:relative;
+  z-index:1;
+
+  margin-top:25px;
 
   color:var(--purple);
 
-  font-size:30px;
+  font-size:28px;
   font-weight:900;
-  direction:ltr;
+  letter-spacing:4px;
 }
 
-/* stats */
+/* STATS */
 
 .stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:10px;
-  margin-bottom:16px;
+
+  margin-bottom:18px;
 }
 
-.stat{
-  min-height:108px;
+.stat-card{
+  min-height:105px;
 
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
 
-  padding:12px 5px;
-
-  background:rgba(255,255,255,.94);
+  background:rgba(255,255,255,.96);
 
   border:1px solid var(--border);
-  border-radius:28px;
+  border-radius:27px;
 
-  box-shadow:var(--shadow);
+  box-shadow:0 7px 22px rgba(40,100,199,.08);
 }
 
 .stat-value{
+  font-size:34px;
+  font-weight:950;
   color:var(--blue);
-  font-size:36px;
-  font-weight:900;
+  line-height:1;
 }
 
 .stat-label{
-  margin-top:4px;
+  margin-top:9px;
   color:var(--muted);
-  font-size:16px;
-  font-weight:700;
+  font-size:15px;
+  font-weight:800;
 }
 
-/* menu */
+/* MODES */
 
-.menu-grid{
+.mode-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:14px;
+  gap:12px;
 }
 
-.menu-btn{
-  min-height:180px;
+.mode-card{
+  min-height:190px;
 
-  padding:20px;
+  padding:20px 16px;
 
-  border-radius:32px;
+  border-radius:31px;
 
   display:flex;
   flex-direction:column;
@@ -259,126 +370,179 @@ button{
 
   text-align:center;
 
-  box-shadow:var(--shadow);
+  border:1px solid rgba(255,255,255,.7);
+
+  box-shadow:
+    0 14px 32px rgba(40,100,199,.12);
 
   transition:
-    transform .12s ease,
-    filter .12s ease;
+    transform .15s ease,
+    box-shadow .15s ease;
 }
 
-.menu-btn:active{
+.mode-card:active{
   transform:scale(.97);
 }
 
-.menu-btn.blue{
-  color:white;
-  background:
-    linear-gradient(145deg,#3478dd,#225bbf);
+.mode-icon{
+  font-size:42px;
+  margin-bottom:10px;
 }
 
-.menu-btn.purple{
-  color:white;
-  background:
-    linear-gradient(145deg,#9557e7,#7540cf);
+.mode-title{
+  font-size:23px;
+  font-weight:950;
+  margin-bottom:7px;
 }
 
-.menu-btn.gold{
-  color:white;
-  background:
-    linear-gradient(145deg,#f1b52e,#dc9815);
-}
-
-.menu-btn.navy{
-  color:white;
-  background:
-    linear-gradient(145deg,#294f83,#193b68);
-}
-
-.menu-btn.white{
-  color:var(--text);
-  background:white;
-  border:1px solid var(--border);
-}
-
-.menu-icon{
-  font-size:44px;
-  margin-bottom:12px;
-}
-
-.menu-title{
-  font-size:24px;
-  font-weight:900;
-}
-
-.menu-desc{
-  margin-top:8px;
+.mode-description{
   font-size:14px;
-  opacity:.8;
+  font-weight:700;
+  opacity:.82;
 }
 
-.language-row{
-  display:flex;
-  justify-content:center;
-  gap:8px;
-
-  margin-top:18px;
+.mode-hunt{
+  color:white;
+  background:
+    linear-gradient(
+      145deg,
+      #3479df,
+      #2864c7
+    );
 }
 
-.lang-btn{
-  min-width:74px;
-  padding:12px 16px;
+.mode-quick{
+  color:white;
+  background:
+    linear-gradient(
+      145deg,
+      #9b55e8,
+      #7950d7
+    );
+}
 
-  border-radius:18px;
+.mode-random{
+  color:white;
+  background:
+    linear-gradient(
+      145deg,
+      #efb52e,
+      #df9c19
+    );
+}
 
-  color:var(--text);
+.mode-survival{
+  color:white;
+  background:
+    linear-gradient(
+      145deg,
+      #315e9b,
+      #21497f
+    );
+}
+
+/* HOME SECONDARY */
+
+.secondary-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin-top:12px;
+}
+
+.secondary-btn{
+  min-height:85px;
+
+  padding:15px;
+
+  border-radius:26px;
+
   background:white;
+  color:var(--text);
+
   border:1px solid var(--border);
 
-  font-size:15px;
-  font-weight:800;
+  font-size:18px;
+  font-weight:900;
+
+  box-shadow:
+    0 8px 24px rgba(40,100,199,.08);
 }
 
-.lang-btn.active{
-  color:white;
-  background:var(--blue);
+.secondary-btn:active{
+  transform:scale(.97);
 }
 
-/* =========================
+.reset-note{
+  margin-top:14px;
+  padding:16px 18px;
+
+  border-radius:22px;
+
+  background:rgba(255,255,255,.75);
+  border:1px solid var(--border);
+
+  text-align:center;
+
+  color:var(--muted);
+  font-size:13px;
+  font-weight:700;
+}
+
+/* =========================================================
    GAME
-========================= */
+========================================================= */
 
-.game-screen{
+#gameScreen{
+  position:fixed;
+  inset:0;
+
+  width:100vw;
+  height:100dvh;
+
+  overflow:hidden;
+
   background:
-    radial-gradient(circle at 50% 30%,
-      rgba(40,100,199,.08),
-      transparent 38%),
+    radial-gradient(
+      circle at 15% 25%,
+      rgba(61,115,220,.13),
+      transparent 27%
+    ),
+    radial-gradient(
+      circle at 85% 75%,
+      rgba(133,82,223,.10),
+      transparent 28%
+    ),
     var(--bg);
+
+  z-index:1000;
 }
 
-/*
-  IMPORTANT:
-  لا نستخدم 100vh لمنطقة اللعبة.
-  اللعبة نفسها fixed.
-  arena لها top/bottom ثابتان حتى لا تختفي خلف
-  شريط Chrome السفلي.
-*/
+.game-shell{
+  position:relative;
 
-.game-top{
+  width:100%;
+  height:100%;
+
+  overflow:hidden;
+}
+
+/* GAME TOP STATS */
+
+.game-stats{
   position:absolute;
 
-  left:14px;
-  right:14px;
+  top:calc(var(--safe-top) + 14px);
+  left:18px;
+  right:18px;
 
-  top:
-    calc(var(--safe-top) + 10px);
-
-  height:110px;
+  height:92px;
 
   display:grid;
-  grid-template-columns:1fr 1.2fr 1fr;
-  gap:8px;
+  grid-template-columns:1fr 1.25fr 1fr;
+  gap:10px;
 
-  z-index:30;
+  z-index:50;
 }
 
 .game-stat{
@@ -386,87 +550,51 @@ button{
 
   border-radius:28px;
 
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-
   background:rgba(255,255,255,.96);
   border:1px solid var(--border);
 
   box-shadow:
-    0 8px 25px rgba(40,100,199,.10);
+    0 8px 25px rgba(40,100,199,.09);
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
 }
 
 .game-stat-value{
+  font-size:34px;
+  font-weight:950;
+  line-height:1;
   color:var(--blue);
-  font-size:30px;
-  font-weight:900;
 }
 
 .game-stat-label{
-  margin-top:2px;
-  color:var(--muted);
-  font-size:15px;
+  margin-top:7px;
+  font-size:14px;
   font-weight:800;
+  color:var(--muted);
 }
 
 .hearts{
-  direction:ltr;
-  white-space:nowrap;
-  font-size:34px;
+  font-size:29px;
   line-height:1;
+  white-space:nowrap;
+  letter-spacing:-2px;
 }
 
-.heart-lost{
-  opacity:.18;
-  filter:grayscale(1);
-}
-
-/* logo */
-
-.game-logo{
-  position:absolute;
-
-  top:calc(var(--safe-top) + 128px);
-
-  left:50%;
-  transform:translateX(-50%);
-
-  width:130px;
-  height:130px;
-
-  border-radius:34px;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  color:white;
-
-  font-size:38px;
-  font-weight:900;
-
-  background:
-    linear-gradient(145deg,#3479df,#2256b5);
-
-  box-shadow:
-    0 14px 35px rgba(40,100,199,.22);
-
-  z-index:25;
-}
+/* MISSION */
 
 .mission-box{
   position:absolute;
 
-  left:22px;
-  right:22px;
+  top:calc(var(--safe-top) + 118px);
+  left:20px;
+  right:20px;
 
-  top:calc(var(--safe-top) + 268px);
+  min-height:78px;
 
-  min-height:80px;
-
-  padding:18px 16px;
+  padding:15px 16px;
 
   display:flex;
   align-items:center;
@@ -474,755 +602,672 @@ button{
 
   text-align:center;
 
-  color:var(--text);
-
-  background:rgba(255,255,255,.96);
+  background:rgba(255,255,255,.97);
 
   border:1px solid var(--border);
-  border-radius:28px;
+  border-radius:27px;
 
-  box-shadow:var(--shadow);
+  box-shadow:
+    0 9px 28px rgba(40,100,199,.10);
 
-  z-index:25;
+  color:var(--text);
+
+  font-size:24px;
+  font-weight:950;
+
+  z-index:50;
 }
 
-.mission-text{
-  font-size:25px;
-  font-weight:900;
+.mission-inner{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  flex-wrap:wrap;
 }
 
-/* combo + timer */
+.mission-icon{
+  font-size:27px;
+}
+
+/* GAME INFO */
 
 .game-info{
   position:absolute;
 
-  left:34px;
-  right:34px;
-
-  top:calc(var(--safe-top) + 350px);
-
-  height:55px;
+  top:calc(var(--safe-top) + 207px);
+  left:25px;
+  right:25px;
 
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:space-between;
 
-  z-index:35;
+  z-index:50;
 
   pointer-events:none;
 }
 
-.info-pill{
-  padding:11px 17px;
+.combo{
+  min-width:108px;
 
-  border-radius:22px;
+  padding:9px 15px;
+
+  border-radius:24px;
+
+  background:rgba(255,255,255,.95);
+  border:1px solid var(--border);
 
   color:var(--blue);
 
-  background:white;
+  font-size:18px;
+  font-weight:950;
 
-  border:1px solid var(--border);
+  text-align:center;
+}
 
-  box-shadow:0 6px 18px rgba(40,100,199,.10);
+.timer{
+  min-width:108px;
+
+  padding:10px 16px;
+
+  border-radius:25px;
+
+  background:var(--purple);
+
+  color:white;
 
   font-size:18px;
-  font-weight:900;
+  font-weight:950;
+
+  text-align:center;
+
+  box-shadow:
+    0 8px 20px rgba(133,82,223,.22);
 }
 
-.timer-pill{
-  color:white;
-  background:var(--purple);
-}
-
-/*
-  منطقة اللعب:
-  top بعد رأس اللعبة.
-  bottom 140px ثابت.
-  هذا يضمن ظهور المنطقة السفلية والأزرار.
-*/
+/* ARENA */
 
 #arena{
   position:absolute;
 
-  left:12px;
-  right:12px;
-
-  top:
-    calc(var(--safe-top) + 410px);
-
-  bottom:
-    calc(var(--safe-bottom) + 138px);
-
-  min-height:180px;
-
-  overflow:hidden;
-
-  border:
-    1px solid rgba(40,100,199,.13);
-
-  border-radius:30px;
-
-  background:
-    radial-gradient(circle at 20% 20%,
-      rgba(40,100,199,.035),
-      transparent 35%),
-    rgba(255,255,255,.48);
-
-  box-shadow:
-    inset 0 0 50px
-    rgba(40,100,199,.035);
-
-  touch-action:none;
-
-  user-select:none;
-  -webkit-user-select:none;
-
-  z-index:10;
-}
-
-/* falling number */
-
-.number{
-  position:absolute;
-
-  width:70px;
-  height:70px;
-
-  border-radius:50%;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  color:var(--text);
-
-  background:
-    rgba(255,255,255,.97);
-
-  border:
-    5px solid var(--blue);
-
-  box-shadow:
-    0 8px 20px rgba(40,100,199,.13);
-
-  font-size:25px;
-  font-weight:900;
-
-  transform:translate3d(0,0,0);
-
-  will-change:transform;
-
-  cursor:pointer;
-
-  touch-action:none;
-
-  user-select:none;
-  -webkit-user-select:none;
-
-  z-index:12;
-}
-
-.number.correct-hit{
-  animation:
-    correctHit .25s ease forwards;
-}
-
-.number.wrong-hit{
-  animation:
-    wrongHit .25s ease forwards;
-}
-
-@keyframes correctHit{
-  to{
-    transform:scale(1.45);
-    opacity:0;
-  }
-}
-
-@keyframes wrongHit{
-  30%{transform:translateX(-8px);}
-  60%{transform:translateX(8px);}
-  100%{
-    transform:scale(.4);
-    opacity:0;
-  }
-}
-
-/* particles */
-
-.particle{
-  position:absolute;
-
-  width:8px;
-  height:8px;
-
-  border-radius:50%;
-
-  pointer-events:none;
-
-  background:var(--cyan);
-
-  animation:
-    particleFly .55s ease-out forwards;
-
-  z-index:20;
-}
-
-@keyframes particleFly{
-  to{
-    transform:
-      translate(
-        var(--dx),
-        var(--dy)
-      )
-      scale(0);
-    opacity:0;
-  }
-}
-
-/* bottom controls */
-
-.controls{
-  position:absolute;
+  top:calc(var(--safe-top) + 260px);
 
   left:18px;
   right:18px;
 
   bottom:
-    calc(var(--safe-bottom) + 50px);
+    calc(
+      var(--safe-bottom) + 104px
+    );
 
-  height:68px;
+  overflow:hidden;
+
+  border-radius:31px;
+
+  background:
+    radial-gradient(
+      circle at 20% 25%,
+      rgba(61,115,220,.045),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 80% 75%,
+      rgba(133,82,223,.045),
+      transparent 35%
+    ),
+    rgba(255,255,255,.38);
+
+  border:2px solid rgba(220,229,242,.85);
+
+  box-shadow:
+    inset 0 0 40px rgba(40,100,199,.035);
+
+  z-index:10;
+}
+
+/* TARGET */
+
+.target{
+  position:absolute;
+
+  width:clamp(58px,16vw,76px);
+  height:clamp(58px,16vw,76px);
+
+  border-radius:50%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #ffffff,
+      #f9fbff 62%,
+      #edf3fc 100%
+    );
+
+  border:
+    6px solid var(--blue);
+
+  color:var(--text);
+
+  font-size:clamp(20px,5.7vw,30px);
+  font-weight:950;
+
+  box-shadow:
+    0 8px 24px rgba(40,100,199,.12);
+
+  user-select:none;
+  -webkit-user-select:none;
+
+  will-change:transform;
+
+  z-index:20;
+
+  cursor:pointer;
+
+  touch-action:manipulation;
+
+  animation:
+    targetAppear .18s ease-out;
+}
+
+.target.correct-hint{
+  border-color:var(--green);
+}
+
+.target:active{
+  transform:scale(.90);
+}
+
+@keyframes targetAppear{
+  from{
+    opacity:0;
+    transform:scale(.55);
+  }
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+.target.hit-good{
+  animation:goodHit .22s ease-out forwards;
+}
+
+.target.hit-bad{
+  animation:badHit .22s ease-out forwards;
+}
+
+@keyframes goodHit{
+  to{
+    opacity:0;
+    transform:scale(1.5);
+  }
+}
+
+@keyframes badHit{
+  30%{
+    transform:translateX(-7px);
+  }
+  60%{
+    transform:translateX(7px);
+  }
+  100%{
+    opacity:0;
+    transform:scale(.65);
+  }
+}
+
+/* FALLING TARGET */
+.target.falling{
+  transition:none;
+}
+
+/* POWER / EXIT */
+
+.game-controls{
+  position:absolute;
+
+  left:22px;
+  right:22px;
+
+  bottom:
+    calc(
+      var(--safe-bottom) + 17px
+    );
+
+  height:70px;
 
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
 
-  z-index:50;
+  z-index:60;
 }
 
-.control-btn{
-  min-width:0;
+.game-btn{
+  height:70px;
 
-  border-radius:24px;
-
-  color:white;
+  border-radius:27px;
 
   font-size:19px;
-  font-weight:900;
+  font-weight:950;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
 
   box-shadow:
-    0 8px 22px rgba(40,100,199,.18);
+    0 10px 25px rgba(40,100,199,.12);
 
-  transition:transform .12s ease;
+  border:1px solid rgba(255,255,255,.65);
 }
 
-.control-btn:active{
-  transform:scale(.96);
-}
-
-.exit-btn{
-  background:
-    linear-gradient(145deg,#315f98,#234776);
+.game-btn:active{
+  transform:scale(.97);
 }
 
 .bomb-btn{
+  color:white;
+
   background:
-    linear-gradient(145deg,#edb229,#d9900f);
+    linear-gradient(
+      145deg,
+      #f4b62f,
+      #df9d18
+    );
 }
 
-/* =========================
-   GAME OVER
-========================= */
+.exit-btn{
+  color:white;
+
+  background:
+    linear-gradient(
+      145deg,
+      #315f9d,
+      #214b85
+    );
+}
+
+/* =========================================================
+   OVERLAY / MODALS
+========================================================= */
 
 .overlay{
-  position:absolute;
+  position:fixed;
   inset:0;
 
-  display:none;
+  z-index:5000;
+
+  display:flex;
   align-items:center;
   justify-content:center;
 
   padding:
     calc(var(--safe-top) + 20px)
-    22px
-    calc(var(--safe-bottom) + 100px);
+    20px
+    calc(var(--safe-bottom) + 20px);
 
-  background:
-    rgba(18,38,69,.56);
+  background:rgba(15,29,53,.58);
 
-  backdrop-filter:blur(7px);
-
-  z-index:100;
+  backdrop-filter:blur(8px);
 }
-
-.overlay.show{
-  display:flex;
-}
-
-.gameover-card{
-  width:min(440px,100%);
-
-  padding:32px 22px;
-
-  text-align:center;
-
-  border-radius:34px;
-
-  background:white;
-
-  box-shadow:
-    0 25px 70px rgba(0,0,0,.24);
-}
-
-.gameover-icon{
-  font-size:62px;
-}
-
-.gameover-title{
-  margin-top:10px;
-
-  color:var(--blue);
-
-  font-size:34px;
-  font-weight:900;
-}
-
-.final-score{
-  margin:16px 0;
-
-  color:var(--purple);
-
-  font-size:42px;
-  font-weight:900;
-}
-
-.overlay-buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.overlay-btn{
-  padding:16px 10px;
-
-  border-radius:20px;
-
-  color:white;
-
-  background:var(--blue);
-
-  font-size:17px;
-  font-weight:900;
-}
-
-.overlay-btn.secondary{
-  color:var(--text);
-  background:#eef3fb;
-}
-
-/* =========================
-   MISSION SELECT
-========================= */
 
 .modal{
-  position:absolute;
-  inset:0;
+  width:min(100%,430px);
 
-  display:none;
-
-  padding:
-    calc(var(--safe-top) + 18px)
-    18px
-    calc(var(--safe-bottom) + 90px);
-
-  overflow-y:auto;
-
-  background:
-    rgba(12,32,60,.48);
-
-  backdrop-filter:blur(8px);
-
-  z-index:200;
-}
-
-.modal.show{
-  display:block;
-}
-
-.modal-card{
-  width:min(600px,100%);
-
-  margin:0 auto;
-
-  padding:24px;
-
-  border-radius:34px;
-
-  background:white;
-
-  box-shadow:
-    0 25px 70px rgba(0,0,0,.22);
-}
-
-.modal-title{
-  color:var(--blue);
-  text-align:center;
-
-  font-size:29px;
-  font-weight:900;
-
-  margin-bottom:18px;
-}
-
-.mission-list{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.mission-choice{
-  min-height:75px;
-
-  padding:12px;
-
-  border-radius:20px;
-
-  color:var(--text);
-
-  background:#f5f8fd;
-
-  border:1px solid var(--border);
-
-  font-size:17px;
-  font-weight:800;
-}
-
-.mission-choice:active{
-  transform:scale(.97);
-}
-
-.close-modal{
-  width:100%;
-  margin-top:14px;
-
-  padding:15px;
-
-  border-radius:20px;
-
-  color:white;
-  background:var(--blue);
-
-  font-size:18px;
-  font-weight:900;
-}
-
-/* =========================
-   INFO
-========================= */
-
-.info-screen{
-  overflow-y:auto;
-
-  padding:
-    calc(var(--safe-top) + 18px)
-    18px
-    calc(var(--safe-bottom) + 100px);
-}
-
-.info-card{
-  width:min(600px,100%);
-  margin:auto;
-
-  padding:30px 24px;
-
-  border-radius:34px;
-
-  background:white;
-
-  border:1px solid var(--border);
-
-  box-shadow:var(--shadow);
-
-  color:var(--text);
-}
-
-.info-title{
-  color:var(--cyan);
-
-  font-size:39px;
-  font-weight:900;
-
-  text-align:center;
-
-  margin-bottom:30px;
-}
-
-.info-section{
-  margin-bottom:25px;
-}
-
-.info-section h3{
-  margin:0 0 8px;
-
-  color:var(--cyan);
-
-  font-size:24px;
-}
-
-.info-section p{
-  margin:0;
-
-  color:#53647d;
-
-  font-size:18px;
-  line-height:1.9;
-}
-
-.back-btn{
-  width:100%;
-
-  margin-top:10px;
-
-  padding:16px;
-
-  border-radius:24px;
-
-  color:white;
-  background:var(--blue);
-
-  font-size:19px;
-  font-weight:900;
-}
-
-/* reset screen */
-
-.reset-screen{
-  position:absolute;
-  inset:0;
-
-  display:none;
-  align-items:center;
-  justify-content:center;
-
-  padding:22px;
-
-  background:
-    rgba(15,35,65,.48);
-
-  backdrop-filter:blur(8px);
-
-  z-index:300;
-}
-
-.reset-screen.show{
-  display:flex;
-}
-
-.reset-card{
-  width:min(420px,100%);
-
-  padding:30px 22px;
+  padding:28px 22px;
 
   border-radius:32px;
 
   background:white;
 
-  text-align:center;
+  border:1px solid var(--border);
 
   box-shadow:
-    0 25px 70px rgba(0,0,0,.22);
+    0 25px 70px rgba(20,50,100,.24);
+
+  text-align:center;
 }
 
-.reset-icon{
-  font-size:55px;
+.modal-icon{
+  font-size:52px;
+  margin-bottom:8px;
 }
 
-.reset-title{
-  margin:10px 0;
+.modal-title{
+  margin:0 0 10px;
 
-  color:var(--blue);
+  font-size:30px;
+  font-weight:950;
 
-  font-size:28px;
-  font-weight:900;
+  color:var(--text);
 }
 
-.reset-text{
+.modal-text{
+  margin:0 0 22px;
+
   color:var(--muted);
-  font-size:17px;
+
+  font-size:16px;
+  font-weight:700;
+
   line-height:1.7;
 }
 
-.reset-actions{
+.modal-buttons{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:1fr;
   gap:10px;
-
-  margin-top:20px;
 }
 
-.reset-actions button{
-  padding:15px;
+.modal-btn{
+  min-height:56px;
 
   border-radius:20px;
 
   font-size:17px;
-  font-weight:900;
+  font-weight:950;
 }
 
-.reset-confirm{
+.modal-primary{
+  background:var(--blue);
   color:white;
-  background:var(--red);
 }
 
-.reset-cancel{
+.modal-secondary{
+  background:#edf3fc;
   color:var(--text);
-  background:#edf2f9;
 }
 
-/* toast */
+/* =========================================================
+   TOAST / FEEDBACK
+========================================================= */
 
-.toast{
-  position:absolute;
+#feedback{
+  position:fixed;
 
   left:50%;
-
-  bottom:
-    calc(var(--safe-bottom) + 130px);
+  top:50%;
 
   transform:
-    translate(-50%,20px);
+    translate(-50%,-50%)
+    scale(.8);
 
-  padding:13px 20px;
+  opacity:0;
+
+  z-index:8000;
+
+  pointer-events:none;
+
+  padding:12px 22px;
+
+  border-radius:24px;
+
+  font-size:24px;
+  font-weight:950;
+
+  background:white;
+
+  box-shadow:
+    0 14px 40px rgba(20,50,100,.20);
+
+  transition:
+    opacity .16s ease,
+    transform .16s ease;
+}
+
+#feedback.show{
+  opacity:1;
+  transform:
+    translate(-50%,-50%)
+    scale(1);
+}
+
+#feedback.good{
+  color:var(--green);
+}
+
+#feedback.bad{
+  color:var(--red);
+}
+
+/* =========================================================
+   LANGUAGE
+========================================================= */
+
+.lang-list{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+}
+
+.lang-option{
+  min-height:58px;
 
   border-radius:20px;
 
+  background:#f4f7fd;
+  color:var(--text);
+
+  font-weight:900;
+}
+
+.lang-option.active{
+  background:var(--blue);
   color:white;
-
-  background:rgba(23,51,95,.94);
-
-  font-size:16px;
-  font-weight:800;
-
-  opacity:0;
-  pointer-events:none;
-
-  transition:.2s;
-
-  z-index:500;
-
-  white-space:nowrap;
 }
 
-.toast.show{
-  opacity:1;
-  transform:translate(-50%,0);
+/* =========================================================
+   HOW TO PLAY
+========================================================= */
+
+.rules{
+  text-align:right;
 }
 
-/* responsive */
+[dir="ltr"] .rules{
+  text-align:left;
+}
+
+.rule{
+  padding:13px 0;
+
+  border-bottom:1px solid #e8edf5;
+
+  font-size:15px;
+  font-weight:700;
+
+  line-height:1.7;
+}
+
+.rule:last-child{
+  border-bottom:0;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
 @media(max-width:430px){
 
-  .logo-card{
-    padding-top:34px;
+  #homeScreen{
+    padding-left:14px;
+    padding-right:14px;
   }
 
-  .logo-icon{
-    width:112px;
-    height:112px;
+  .hero{
+    padding-top:28px;
+    border-radius:30px;
+  }
+
+  .hero-logo{
+    width:105px;
+    height:105px;
+    border-radius:29px;
   }
 
   .logo-title{
-    font-size:45px;
+    font-size:43px;
   }
 
-  .logo-numbers{
-    font-size:25px;
+  .logo-subtitle{
+    font-size:17px;
   }
 
-  .menu-btn{
-    min-height:165px;
+  .math-line{
+    font-size:23px;
   }
 
-  .menu-title{
-    font-size:21px;
+  .stat-card{
+    min-height:92px;
+    border-radius:23px;
   }
 
-  .game-top{
-    height:102px;
-  }
-
-  .game-stat-value{
-    font-size:28px;
-  }
-
-  .hearts{
+  .stat-value{
     font-size:29px;
   }
 
-  .game-logo{
-    width:116px;
-    height:116px;
-
-    top:calc(var(--safe-top) + 120px);
+  .stat-label{
+    font-size:13px;
   }
 
-  .mission-box{
-    top:calc(var(--safe-top) + 250px);
+  .mode-card{
+    min-height:170px;
+    border-radius:27px;
   }
 
-  .mission-text{
-    font-size:22px;
+  .mode-icon{
+    font-size:37px;
   }
 
-  .game-info{
-    top:calc(var(--safe-top) + 330px);
+  .mode-title{
+    font-size:20px;
   }
 
-  #arena{
-    top:calc(var(--safe-top) + 385px);
-    bottom:calc(var(--safe-bottom) + 132px);
+  .mode-description{
+    font-size:12px;
   }
 
-  .number{
-    width:68px;
-    height:68px;
+  .game-stats{
+    left:12px;
+    right:12px;
+    gap:7px;
+  }
+
+  .game-stat{
+    border-radius:23px;
+  }
+
+  .game-stat-value{
+    font-size:30px;
+  }
+
+  .hearts{
     font-size:24px;
   }
 
-  .controls{
-    bottom:calc(var(--safe-bottom) + 43px);
-    height:64px;
-  }
-
-}
-
-@media(max-height:720px){
-
-  .game-logo{
-    width:92px;
-    height:92px;
-
-    top:calc(var(--safe-top) + 112px);
+  .game-stat-label{
+    font-size:12px;
   }
 
   .mission-box{
-    top:calc(var(--safe-top) + 214px);
-    min-height:65px;
+    left:14px;
+    right:14px;
+    top:calc(var(--safe-top) + 112px);
+    min-height:74px;
+    font-size:20px;
+    border-radius:25px;
   }
 
   .game-info{
-    top:calc(var(--safe-top) + 286px);
+    top:calc(var(--safe-top) + 196px);
+    left:20px;
+    right:20px;
+  }
+
+  .combo,
+  .timer{
+    min-width:92px;
+    padding:8px 11px;
+    font-size:16px;
   }
 
   #arena{
-    top:calc(var(--safe-top) + 338px);
-    bottom:calc(var(--safe-bottom) + 125px);
+    top:calc(var(--safe-top) + 245px);
+
+    left:12px;
+    right:12px;
+
+    bottom:
+      calc(
+        var(--safe-bottom) + 98px
+      );
+
+    border-radius:27px;
   }
 
-  .controls{
-    bottom:calc(var(--safe-bottom) + 38px);
+  .game-controls{
+    left:14px;
+    right:14px;
+
+    bottom:
+      calc(
+        var(--safe-bottom) + 12px
+      );
+
+    height:66px;
   }
 
+  .game-btn{
+    height:66px;
+    border-radius:24px;
+    font-size:17px;
+  }
+}
+
+@media(max-height:700px){
+
+  .game-stats{
+    height:80px;
+  }
+
+  .game-stat-value{
+    font-size:27px;
+  }
+
+  .mission-box{
+    top:calc(var(--safe-top) + 103px);
+    min-height:68px;
+  }
+
+  .game-info{
+    top:calc(var(--safe-top) + 180px);
+  }
+
+  #arena{
+    top:calc(var(--safe-top) + 225px);
+    bottom:
+      calc(
+        var(--safe-bottom) + 92px
+      );
+  }
+
+  .game-controls{
+    height:62px;
+    bottom:
+      calc(
+        var(--safe-bottom) + 10px
+      );
+  }
+
+  .game-btn{
+    height:62px;
+  }
 }
 </style>
 </head>
@@ -1231,29 +1276,62 @@ button{
 
 <div id="app">
 
-<!-- ================= HOME ================= -->
+  <!-- =====================================================
+       HOME
+  ====================================================== -->
 
-<section id="homeScreen" class="screen active">
+  <section id="homeScreen" class="screen">
 
-  <div class="home-scroll">
+    <div class="home-wrap">
 
-    <div class="home">
+      <header class="topbar">
 
-      <div class="logo-card">
+        <div class="brand">
+          <div class="brand-mark">√N</div>
+          <div class="brand-name" id="brandName">
+            IA Math
+          </div>
+        </div>
 
-        <div class="logo-icon">√N</div>
+        <div class="header-actions">
 
-        <h1 id="homeTitle"
-            class="logo-title">
+          <button
+            class="icon-btn"
+            id="languageBtn"
+            type="button"
+            aria-label="Language">
+            文
+          </button>
+
+          <button
+            class="icon-btn"
+            id="infoBtn"
+            type="button"
+            aria-label="Information">
+            ⓘ
+          </button>
+
+        </div>
+
+      </header>
+
+      <div class="hero">
+
+        <div class="hero-logo">√N</div>
+
+        <h1
+          id="homeTitle"
+          class="logo-title">
           NUMBER<br>HUNTER
         </h1>
 
-        <div id="homeSub"
-             class="logo-sub">
+        <p
+          id="homeSubtitle"
+          class="logo-subtitle">
           رياضيات • سرعة • دقة
-        </div>
+        </p>
 
-        <div class="logo-numbers">
+        <div class="math-line">
           13 · 11 · 7 · 5 · 3 · 2
         </div>
 
@@ -1261,439 +1339,347 @@ button{
 
       <div class="stats">
 
-        <div class="stat">
-          <div id="bestScore"
-               class="stat-value">0</div>
-          <div id="bestScoreLabel"
-               class="stat-label">
+        <div class="stat-card">
+          <div
+            id="bestScore"
+            class="stat-value">
+            0
+          </div>
+          <div
+            id="bestScoreLabel"
+            class="stat-label">
             أفضل نتيجة
           </div>
         </div>
 
-        <div class="stat">
-          <div id="gamesPlayed"
-               class="stat-value">0</div>
-          <div id="gamesLabel"
-               class="stat-label">
+        <div class="stat-card">
+          <div
+            id="gamesPlayed"
+            class="stat-value">
+            0
+          </div>
+          <div
+            id="gamesPlayedLabel"
+            class="stat-label">
             المباريات
           </div>
         </div>
 
-        <div class="stat">
-          <div id="bestCombo"
-               class="stat-value">0</div>
-          <div id="comboLabel"
-               class="stat-label">
+        <div class="stat-card">
+          <div
+            id="bestCombo"
+            class="stat-value">
+            0
+          </div>
+          <div
+            id="bestComboLabel"
+            class="stat-label">
             أفضل كومبو
           </div>
         </div>
 
       </div>
 
-      <div class="menu-grid">
+      <div class="mode-grid">
 
-        <button id="quickBtn"
-                class="menu-btn purple">
-          <div class="menu-icon">⚡</div>
-          <div id="quickTitle"
-               class="menu-title">
-            الصيد السريع
-          </div>
-          <div id="quickDesc"
-               class="menu-desc">
-            60 ثانية • حطم رقمك
-          </div>
-        </button>
+        <button
+          class="mode-card mode-hunt"
+          id="huntBtn"
+          type="button">
 
-        <button id="missionBtn"
-                class="menu-btn blue">
-          <div class="menu-icon">🎯</div>
-          <div id="missionTitle"
-               class="menu-title">
+          <div class="mode-icon">🎯</div>
+
+          <div
+            class="mode-title"
+            id="huntTitle">
             المطاردة
           </div>
-          <div id="missionDesc"
-               class="menu-desc">
+
+          <div
+            class="mode-description"
+            id="huntDesc">
             اختر المهمة الرياضية
           </div>
+
         </button>
 
-        <button id="randomBtn"
-                class="menu-btn gold">
-          <div class="menu-icon">🎲</div>
-          <div id="randomTitle"
-               class="menu-title">
+        <button
+          class="mode-card mode-quick"
+          id="quickBtn"
+          type="button">
+
+          <div class="mode-icon">⚡</div>
+
+          <div
+            class="mode-title"
+            id="quickTitle">
+            الصيد السريع
+          </div>
+
+          <div
+            class="mode-description"
+            id="quickDesc">
+            60 ثانية • احصد أكبر عدد
+          </div>
+
+        </button>
+
+        <button
+          class="mode-card mode-random"
+          id="randomBtn"
+          type="button">
+
+          <div class="mode-icon">🎲</div>
+
+          <div
+            class="mode-title"
+            id="randomTitle">
             التحدي العشوائي
           </div>
-          <div id="randomDesc"
-               class="menu-desc">
+
+          <div
+            class="mode-description"
+            id="randomDesc">
             مهمة جديدة كل 20 ثانية
           </div>
+
         </button>
 
-        <button id="survivalBtn"
-                class="menu-btn navy">
-          <div class="menu-icon">❤️</div>
-          <div id="survivalTitle"
-               class="menu-title">
+        <button
+          class="mode-card mode-survival"
+          id="survivalBtn"
+          type="button">
+
+          <div class="mode-icon">❤️</div>
+
+          <div
+            class="mode-title"
+            id="survivalTitle">
             البقاء
           </div>
-          <div id="survivalDesc"
-               class="menu-desc">
+
+          <div
+            class="mode-description"
+            id="survivalDesc">
             3 قلوب • لا تخطئ
           </div>
+
         </button>
 
-        <button id="infoBtn"
-                class="menu-btn white">
-          <div class="menu-icon">ℹ️</div>
-          <div id="infoTitleMenu"
-               class="menu-title">
-            طريقة اللعب
+      </div>
+
+      <div class="secondary-grid">
+
+        <button
+          class="secondary-btn"
+          id="rulesBtn"
+          type="button">
+          ℹ️ طريقة اللعب
+        </button>
+
+        <button
+          class="secondary-btn"
+          id="resetBtn"
+          type="button">
+          🔄 إعادة الإحصائيات
+        </button>
+
+      </div>
+
+      <div
+        id="resetNote"
+        class="reset-note">
+        أفضل نتيجة وكومبو يتم حفظهما على هذا الجهاز.
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       GAME
+  ====================================================== -->
+
+  <section
+    id="gameScreen"
+    class="screen hidden">
+
+    <div class="game-shell">
+
+      <div class="game-stats">
+
+        <div class="game-stat">
+
+          <div
+            id="gameLevel"
+            class="game-stat-value">
+            1
           </div>
-          <div id="infoDesc"
-               class="menu-desc">
-            القواعد والقلب والقنبلة
+
+          <div
+            id="levelLabel"
+            class="game-stat-label">
+            المستوى
           </div>
-        </button>
 
-        <button id="resetBtn"
-                class="menu-btn white">
-          <div class="menu-icon">🔄</div>
-          <div id="resetTitleMenu"
-               class="menu-title">
-            إعادة الإحصائيات
+        </div>
+
+        <div class="game-stat">
+
+          <div
+            id="gameHearts"
+            class="hearts">
+            ❤️❤️❤️
           </div>
-          <div id="resetDesc"
-               class="menu-desc">
-            حذف النتائج المحفوظة
+
+          <div
+            id="heartsLabel"
+            class="game-stat-label">
+            القلوب
           </div>
+
+        </div>
+
+        <div class="game-stat">
+
+          <div
+            id="gameScore"
+            class="game-stat-value">
+            0
+          </div>
+
+          <div
+            id="scoreLabel"
+            class="game-stat-label">
+            النقاط
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div
+        id="missionBox"
+        class="mission-box">
+
+        <div class="mission-inner">
+
+          <span
+            class="mission-icon">
+            🎯
+          </span>
+
+          <span id="missionText">
+            الأعداد الأولية
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="game-info">
+
+        <div
+          id="comboDisplay"
+          class="combo">
+          🔥 0×
+        </div>
+
+        <div
+          id="timerDisplay"
+          class="timer">
+          ⏱ 60
+        </div>
+
+      </div>
+
+
+      <div id="arena"></div>
+
+
+      <div class="game-controls">
+
+        <button
+          id="bombBtn"
+          class="game-btn bomb-btn"
+          type="button">
+
+          💣
+          <span id="bombText">
+            القنبلة
+          </span>
+
         </button>
 
-      </div>
+        <button
+          id="exitBtn"
+          class="game-btn exit-btn"
+          type="button">
 
-      <div class="language-row">
+          ✕
+          <span id="exitText">
+            خروج
+          </span>
 
-        <button class="lang-btn active"
-                data-lang="ar">
-          العربية
-        </button>
-
-        <button class="lang-btn"
-                data-lang="fr">
-          Français
-        </button>
-
-        <button class="lang-btn"
-                data-lang="en">
-          English
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= GAME ================= -->
-
-<section id="gameScreen"
-         class="screen game-screen">
-
-  <div class="game-top">
-
-    <div class="game-stat">
-
-      <div id="gameLevel"
-           class="game-stat-value">
-        1
-      </div>
-
-      <div id="levelLabel"
-           class="game-stat-label">
-        المستوى
-      </div>
-
-    </div>
-
-    <div class="game-stat">
-
-      <div id="gameHearts"
-           class="hearts">
-        ❤️❤️❤️
-      </div>
-
-      <div id="heartsLabel"
-           class="game-stat-label">
-        القلوب
-      </div>
-
-    </div>
-
-    <div class="game-stat">
-
-      <div id="gameScore"
-           class="game-stat-value">
-        0
-      </div>
-
-      <div id="scoreLabel"
-           class="game-stat-label">
-        النقاط
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <div class="game-logo">
-    √N
-  </div>
-
-
-  <div class="mission-box">
-
-    <div id="missionText"
-         class="mission-text">
-      🎯 الأعداد الأولية
-    </div>
-
-  </div>
-
-
-  <div class="game-info">
-
-    <div id="comboText"
-         class="info-pill">
-      🔥 0×
-    </div>
-
-    <div id="timerText"
-         class="info-pill timer-pill">
-      ⏱ 60
-    </div>
-
-  </div>
-
-
-  <div id="arena"></div>
-
-
-  <div class="controls">
-
-    <button id="bombBtn"
-            class="control-btn bomb-btn">
-      💣 <span id="bombText">القنبلة</span>
-    </button>
-
-    <button id="exitBtn"
-            class="control-btn exit-btn">
-      ✕ <span id="exitText">خروج</span>
-    </button>
-
-  </div>
-
-
-  <div id="gameOver"
-       class="overlay">
-
-    <div class="gameover-card">
-
-      <div class="gameover-icon">
-        💥
-      </div>
-
-      <div id="gameOverTitle"
-           class="gameover-title">
-        انتهت اللعبة
-      </div>
-
-      <div id="finalScore"
-           class="final-score">
-        0
-      </div>
-
-      <div class="overlay-buttons">
-
-        <button id="againBtn"
-                class="overlay-btn">
-          🔄 العب مرة أخرى
-        </button>
-
-        <button id="homeFromOver"
-                class="overlay-btn secondary">
-          🏠 الرئيسية
         </button>
 
       </div>
 
     </div>
 
-  </div>
-
-</section>
-
-
-<!-- ================= INFO ================= -->
-
-<section id="infoScreen"
-         class="screen info-screen">
-
-  <div class="info-card">
-
-    <div id="infoMainTitle"
-         class="info-title">
-      طريقة اللعب
-    </div>
-
-    <div class="info-section">
-
-      <h3 id="infoGoalTitle">
-        🎯 الهدف
-      </h3>
-
-      <p id="infoGoalText">
-        اضغط على الأعداد التي توافق المهمة
-        وتجنب الأعداد الخاطئة.
-      </p>
-
-    </div>
-
-    <div class="info-section">
-
-      <h3 id="infoSpeedTitle">
-        ⚡ السرعة
-      </h3>
-
-      <p id="infoSpeedText">
-        تبدأ الأرقام ببطء ثم تزداد سرعتها
-        تدريجياً مع تقدم اللعبة.
-      </p>
-
-    </div>
-
-    <div class="info-section">
-
-      <h3 id="infoComboTitle">
-        🔥 الكومبو
-      </h3>
-
-      <p id="infoComboText">
-        الإجابات الصحيحة المتتالية ترفع
-        الكومبو والنقاط.
-      </p>
-
-    </div>
-
-    <div class="info-section">
-
-      <h3 id="infoHeartTitle">
-        ❤️ القلوب
-      </h3>
-
-      <p id="infoHeartText">
-        عند الضغط على عدد خاطئ تفقد قلباً.
-        عند فقدان القلوب الثلاثة تنتهي اللعبة.
-      </p>
-
-    </div>
-
-    <div class="info-section">
-
-      <h3 id="infoBombTitle">
-        💣 القنبلة
-      </h3>
-
-      <p id="infoBombText">
-        القنبلة تمسح جميع الأعداد الظاهرة
-        وتمنحك لحظة لإعادة التركيز.
-      </p>
-
-    </div>
-
-    <button id="backHomeBtn"
-            class="back-btn">
-      ← العودة
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- ================= MISSION SELECT ================= -->
-
-<div id="missionModal"
-     class="modal">
-
-  <div class="modal-card">
-
-    <div id="chooseMissionTitle"
-         class="modal-title">
-      🎯 اختر المهمة
-    </div>
-
-    <div id="missionList"
-         class="mission-list">
-    </div>
-
-    <button id="closeMission"
-            class="close-modal">
-      ← العودة
-    </button>
-
-  </div>
+  </section>
 
 </div>
 
 
-<!-- ================= RESET ================= -->
+<!-- =======================================================
+     FEEDBACK
+======================================================= -->
 
-<div id="resetScreen"
-     class="reset-screen">
+<div id="feedback"></div>
 
-  <div class="reset-card">
 
-    <div class="reset-icon">
-      🔄
+<!-- =======================================================
+     MODAL
+======================================================= -->
+
+<div
+  id="modalOverlay"
+  class="overlay hidden">
+
+  <div class="modal">
+
+    <div
+      id="modalIcon"
+      class="modal-icon">
+      🎯
     </div>
 
-    <div id="resetConfirmTitle"
-         class="reset-title">
-      إعادة الإحصائيات
+    <h2
+      id="modalTitle"
+      class="modal-title">
+      اختيار المهمة
+    </h2>
+
+    <p
+      id="modalText"
+      class="modal-text">
+      اختر نوع التحدي الذي تريد لعبه.
+    </p>
+
+    <div
+      id="modalContent">
     </div>
 
-    <div id="resetConfirmText"
-         class="reset-text">
-      هل تريد حذف جميع الإحصائيات المحفوظة؟
-    </div>
-
-    <div class="reset-actions">
-
-      <button id="resetConfirm"
-              class="reset-confirm">
-        نعم، احذف
-      </button>
-
-      <button id="resetCancel"
-              class="reset-cancel">
-        إلغاء
-      </button>
-
+    <div
+      id="modalButtons"
+      class="modal-buttons">
     </div>
 
   </div>
-
-</div>
-
-
-<div id="toast"
-     class="toast">
-</div>
 
 </div>
 
@@ -1702,2169 +1688,332 @@ button{
 "use strict";
 
 /* =========================================================
-   LANGUAGE
-========================================================= */
-
-const LANGS = {
-
-ar:{
-  title:"صائد الأرقام",
-  browserTitle:"صائد الأرقام — NUMBER HUNTER",
-
-  sub:"رياضيات • سرعة • دقة",
-
-  best:"أفضل نتيجة",
-  games:"المباريات",
-  combo:"أفضل كومبو",
-
-  quick:"الصيد السريع",
-  quickDesc:"60 ثانية • حطم رقمك",
-
-  mission:"المطاردة",
-  missionDesc:"اختر المهمة الرياضية",
-
-  random:"التحدي العشوائي",
-  randomDesc:"مهمة جديدة كل 20 ثانية",
-
-  survival:"البقاء",
-  survivalDesc:"3 قلوب • لا تخطئ",
-
-  info:"طريقة اللعب",
-  infoDesc:"القواعد والقلوب والقنبلة",
-
-  reset:"إعادة الإحصائيات",
-  resetDesc:"حذف النتائج المحفوظة",
-
-  level:"المستوى",
-  hearts:"القلوب",
-  score:"النقاط",
-
-  bomb:"القنبلة",
-  exit:"خروج",
-
-  gameOver:"انتهت اللعبة",
-  again:"العب مرة أخرى",
-  home:"الرئيسية",
-
-  back:"← العودة",
-
-  choose:"🎯 اختر المهمة",
-
-  resetConfirm:"إعادة الإحصائيات",
-  resetText:"هل تريد حذف جميع الإحصائيات المحفوظة؟",
-  yesDelete:"نعم، احذف",
-  cancel:"إلغاء",
-
-  infoTitle:"طريقة اللعب",
-
-  goalTitle:"🎯 الهدف",
-  goalText:"اضغط على الأعداد التي توافق المهمة وتجنب الأعداد الخاطئة.",
-
-  speedTitle:"⚡ السرعة",
-  speedText:"تبدأ الأرقام ببطء ثم تزداد سرعتها تدريجياً مع تقدم اللعبة.",
-
-  comboTitle:"🔥 الكومبو",
-  comboText:"الإجابات الصحيحة المتتالية ترفع الكومبو والنقاط.",
-
-  heartTitle:"❤️ القلوب",
-  heartText:"عند الضغط على عدد خاطئ تفقد قلباً. عند فقدان القلوب الثلاثة تنتهي اللعبة.",
-
-  bombTitle:"💣 القنبلة",
-  bombText:"القنبلة تمسح جميع الأعداد الظاهرة وتمنحك لحظة لإعادة التركيز.",
-
-  primary:"الأعداد الأولية",
-  even:"الأعداد الزوجية",
-  odd:"الأعداد الفردية",
-  nonPrime:"الأعداد غير الأولية",
-  multiple3:"مضاعفات 3",
-  multiple4:"مضاعفات 4",
-  multiple5:"مضاعفات 5",
-  divisors:"قواسم العدد",
-  square:"المربعات الكاملة",
-  greater:"أعداد أكبر من 50",
-  less:"أعداد أقل من 50",
-
-  correct:"+ نقاط ✓",
-  wrong:"خطأ! ❤️ -1",
-
-  bombUsed:"💥 تم تفجير الأعداد!",
-  noBomb:"القنبلة استُخدمت",
-
-  newMission:"🎲 مهمة جديدة!",
-  timeUp:"⏱ انتهى الوقت!",
-
-  missionPrefix:"🎯 "
-},
-
-fr:{
-  title:"Chasseur de nombres",
-  browserTitle:"Chasseur de nombres — NUMBER HUNTER",
-
-  sub:"Maths • Vitesse • Précision",
-
-  best:"Meilleur score",
-  games:"Parties",
-  combo:"Meilleur combo",
-
-  quick:"Chasse rapide",
-  quickDesc:"60 secondes • bats ton record",
-
-  mission:"Poursuite",
-  missionDesc:"Choisis la mission",
-
-  random:"Défi aléatoire",
-  randomDesc:"Nouvelle mission toutes les 20 secondes",
-
-  survival:"Survie",
-  survivalDesc:"3 cœurs • aucune erreur",
-
-  info:"Comment jouer",
-  infoDesc:"Règles, cœurs et bombe",
-
-  reset:"Réinitialiser",
-  resetDesc:"Supprimer les statistiques",
-
-  level:"Niveau",
-  hearts:"Cœurs",
-  score:"Points",
-
-  bomb:"Bombe",
-  exit:"Quitter",
-
-  gameOver:"Partie terminée",
-  again:"Rejouer",
-  home:"Accueil",
-
-  back:"← Retour",
-
-  choose:"🎯 Choisis la mission",
-
-  resetConfirm:"Réinitialiser les statistiques",
-  resetText:"Voulez-vous supprimer toutes les statistiques enregistrées ?",
-  yesDelete:"Oui, supprimer",
-  cancel:"Annuler",
-
-  infoTitle:"Comment jouer",
-
-  goalTitle:"🎯 Objectif",
-  goalText:"Touchez les nombres qui correspondent à la mission et évitez les mauvais nombres.",
-
-  speedTitle:"⚡ Vitesse",
-  speedText:"Les nombres commencent lentement puis accélèrent progressivement.",
-
-  comboTitle:"🔥 Combo",
-  comboText:"Les bonnes réponses consécutives augmentent le combo et les points.",
-
-  heartTitle:"❤️ Cœurs",
-  heartText:"Une mauvaise réponse fait perdre un cœur. Les trois cœurs perdus terminent la partie.",
-
-  bombTitle:"💣 Bombe",
-  bombText:"La bombe supprime tous les nombres visibles et vous donne un moment pour vous reconcentrer.",
-
-  primary:"Nombres premiers",
-  even:"Nombres pairs",
-  odd:"Nombres impairs",
-  nonPrime:"Nombres non premiers",
-  multiple3:"Multiples de 3",
-  multiple4:"Multiples de 4",
-  multiple5:"Multiples de 5",
-  divisors:"Diviseurs",
-  square:"Carrés parfaits",
-  greater:"Nombres supérieurs à 50",
-  less:"Nombres inférieurs à 50",
-
-  correct:"+ points ✓",
-  wrong:"Erreur ! ❤️ -1",
-
-  bombUsed:"💥 Nombres éliminés !",
-  noBomb:"Bombe utilisée",
-
-  newMission:"🎲 Nouvelle mission !",
-  timeUp:"⏱ Temps écoulé !",
-
-  missionPrefix:"🎯 "
-},
-
-en:{
-  title:"Number Hunter",
-  browserTitle:"Number Hunter",
-
-  sub:"Math • Speed • Accuracy",
-
-  best:"Best score",
-  games:"Games",
-  combo:"Best combo",
-
-  quick:"Quick Hunt",
-  quickDesc:"60 seconds • beat your record",
-
-  mission:"Hunt",
-  missionDesc:"Choose a math mission",
-
-  random:"Random Challenge",
-  randomDesc:"New mission every 20 seconds",
-
-  survival:"Survival",
-  survivalDesc:"3 hearts • no mistakes",
-
-  info:"How to Play",
-  infoDesc:"Rules, hearts and bomb",
-
-  reset:"Reset Statistics",
-  resetDesc:"Delete saved results",
-
-  level:"Level",
-  hearts:"Hearts",
-  score:"Points",
-
-  bomb:"Bomb",
-  exit:"Exit",
-
-  gameOver:"Game Over",
-  again:"Play Again",
-  home:"Home",
-
-  back:"← Back",
-
-  choose:"🎯 Choose a mission",
-
-  resetConfirm:"Reset Statistics",
-  resetText:"Do you want to delete all saved statistics?",
-  yesDelete:"Yes, delete",
-  cancel:"Cancel",
-
-  infoTitle:"How to Play",
-
-  goalTitle:"🎯 Goal",
-  goalText:"Tap the numbers that match the mission and avoid incorrect numbers.",
-
-  speedTitle:"⚡ Speed",
-  speedText:"Numbers start slowly and progressively become faster.",
-
-  comboTitle:"🔥 Combo",
-  comboText:"Consecutive correct answers increase your combo and score.",
-
-  heartTitle:"❤️ Hearts",
-  heartText:"A wrong answer costs one heart. Losing all three hearts ends the game.",
-
-  bombTitle:"💣 Bomb",
-  bombText:"The bomb clears all visible numbers and gives you a moment to refocus.",
-
-  primary:"Prime numbers",
-  even:"Even numbers",
-  odd:"Odd numbers",
-  nonPrime:"Non-prime numbers",
-  multiple3:"Multiples of 3",
-  multiple4:"Multiples of 4",
-  multiple5:"Multiples of 5",
-  divisors:"Divisors",
-  square:"Perfect squares",
-  greater:"Numbers greater than 50",
-  less:"Numbers less than 50",
-
-  correct:"+ points ✓",
-  wrong:"Wrong! ❤️ -1",
-
-  bombUsed:"💥 Numbers cleared!",
-  noBomb:"Bomb used",
-
-  newMission:"🎲 New mission!",
-  timeUp:"⏱ Time's up!",
-
-  missionPrefix:"🎯 "
-}
-
-};
-
-
-/* =========================================================
-   DATA
-========================================================= */
-
-const MISSIONS = [
-  "primary",
-  "even",
-  "odd",
-  "nonPrime",
-  "multiple3",
-  "multiple4",
-  "multiple5",
-  "divisors",
-  "square",
-  "greater",
-  "less"
-];
-
-let lang =
-  localStorage.getItem("nh_lang") || "ar";
-
-
-/* =========================================================
-   GAME STATE
-========================================================= */
-
-const state = {
-
-  mode:null,
-
-  running:false,
-
-  score:0,
-
-  hearts:3,
-
-  level:1,
-
-  combo:0,
-
-  bestCombo:0,
-
-  timeLeft:60,
-
-  mission:null,
-
-  targetBase:30,
-
-  speed:1,
-
-  density:1,
-
-  lastSpawn:0,
-
-  spawnInterval:1150,
-
-  missionStarted:0,
-
-  randomMissionInterval:20000,
-
-  bombAvailable:true,
-
-  targets:new Map(),
-
-  nextId:1,
-
-  animationId:null,
-
-  timerId:null,
-
-  lastFrame:0,
-
-  gameCounted:false
-};
-
-
-/* =========================================================
-   DOM
+   HELPERS
 ========================================================= */
 
 const $ = id => document.getElementById(id);
 
-const homeScreen=$("homeScreen");
-const gameScreen=$("gameScreen");
-const infoScreen=$("infoScreen");
-
-const arena=$("arena");
-
-const gameScore=$("gameScore");
-const gameLevel=$("gameLevel");
-const gameHearts=$("gameHearts");
-
-const missionText=$("missionText");
-const comboText=$("comboText");
-const timerText=$("timerText");
-
-const gameOver=$("gameOver");
-const finalScore=$("finalScore");
-
-const missionModal=$("missionModal");
-const missionList=$("missionList");
-
-const resetScreen=$("resetScreen");
-const toast=$("toast");
-
-
-/* =========================================================
-   TRANSLATION
-========================================================= */
-
-function T(key){
-  return LANGS[lang][key] || key;
-}
-
-function applyLanguage(){
-
-  document.documentElement.lang=lang;
-
-  document.documentElement.dir =
-    lang==="ar" ? "rtl" : "ltr";
-
-  document.title=T("browserTitle");
-
-  $("homeTitle").innerHTML =
-    lang==="ar"
-      ? "NUMBER<br>HUNTER"
-      : "NUMBER<br>HUNTER";
-
-  $("homeSub").textContent=T("sub");
-
-  $("bestScoreLabel").textContent=T("best");
-  $("gamesLabel").textContent=T("games");
-  $("comboLabel").textContent=T("combo");
-
-  $("quickTitle").textContent=T("quick");
-  $("quickDesc").textContent=T("quickDesc");
-
-  $("missionTitle").textContent=T("mission");
-  $("missionDesc").textContent=T("missionDesc");
-
-  $("randomTitle").textContent=T("random");
-  $("randomDesc").textContent=T("randomDesc");
-
-  $("survivalTitle").textContent=T("survival");
-  $("survivalDesc").textContent=T("survivalDesc");
-
-  $("infoTitleMenu").textContent=T("info");
-  $("infoDesc").textContent=T("infoDesc");
-
-  $("resetTitleMenu").textContent=T("reset");
-  $("resetDesc").textContent=T("resetDesc");
-
-  $("levelLabel").textContent=T("level");
-  $("heartsLabel").textContent=T("hearts");
-  $("scoreLabel").textContent=T("score");
-
-  $("bombText").textContent=T("bomb");
-  $("exitText").textContent=T("exit");
-
-  $("gameOverTitle").textContent=T("gameOver");
-  $("againBtn").textContent="🔄 "+T("again");
-  $("homeFromOver").textContent="🏠 "+T("home");
-
-  $("infoMainTitle").textContent=T("infoTitle");
-
-  $("infoGoalTitle").textContent=T("goalTitle");
-  $("infoGoalText").textContent=T("goalText");
-
-  $("infoSpeedTitle").textContent=T("speedTitle");
-  $("infoSpeedText").textContent=T("speedText");
-
-  $("infoComboTitle").textContent=T("comboTitle");
-  $("infoComboText").textContent=T("comboText");
-
-  $("infoHeartTitle").textContent=T("heartTitle");
-  $("infoHeartText").textContent=T("heartText");
-
-  $("infoBombTitle").textContent=T("bombTitle");
-  $("infoBombText").textContent=T("bombText");
-
-  $("backHomeBtn").textContent=T("back");
-
-  $("chooseMissionTitle").textContent=T("choose");
-
-  $("closeMission").textContent=T("back");
-
-  $("resetConfirmTitle").textContent=T("resetConfirm");
-  $("resetConfirmText").textContent=T("resetText");
-  $("resetConfirm").textContent=T("yesDelete");
-  $("resetCancel").textContent=T("cancel");
-
-  document.querySelectorAll(".lang-btn")
-    .forEach(btn=>{
-      btn.classList.toggle(
-        "active",
-        btn.dataset.lang===lang
-      );
-    });
-
-  updateHomeStats();
-
-  if(state.running){
-    updateMissionUI();
-    updateTimerUI();
-    updateHUD();
-  }
-
-}
-
-
-/* =========================================================
-   SCREEN
-========================================================= */
-
-function showScreen(screen){
-
-  homeScreen.classList.remove("active");
-  gameScreen.classList.remove("active");
-  infoScreen.classList.remove("active");
-
-  screen.classList.add("active");
-}
-
-
-/* =========================================================
-   LOCAL STORAGE
-========================================================= */
-
-function getStats(){
-
-  return {
-    bestScore:
-      Number(localStorage.getItem("nh_bestScore")||0),
-
-    games:
-      Number(localStorage.getItem("nh_games")||0),
-
-    bestCombo:
-      Number(localStorage.getItem("nh_bestCombo")||0)
-  };
-
-}
-
-function saveStats(){
-
-  const stats=getStats();
-
-  if(state.score>stats.bestScore){
-
-    localStorage.setItem(
-      "nh_bestScore",
-      state.score
-    );
-
-  }
-
-  if(state.bestCombo>stats.bestCombo){
-
-    localStorage.setItem(
-      "nh_bestCombo",
-      state.bestCombo
-    );
-
-  }
-
-  if(!state.gameCounted){
-
-    localStorage.setItem(
-      "nh_games",
-      stats.games+1
-    );
-
-    state.gameCounted=true;
-
-  }
-
-}
-
-function updateHomeStats(){
-
-  const s=getStats();
-
-  $("bestScore").textContent=s.bestScore;
-  $("gamesPlayed").textContent=s.games;
-  $("bestCombo").textContent=s.bestCombo;
-
-}
-
-
-/* =========================================================
-   AUDIO
-========================================================= */
-
-let audioCtx=null;
-
-function audio(){
-
-  if(!audioCtx){
-
-    try{
-      audioCtx=
-        new (window.AudioContext||
-        window.webkitAudioContext)();
-    }catch(e){
-      return null;
-    }
-
-  }
-
-  if(audioCtx.state==="suspended"){
-    audioCtx.resume().catch(()=>{});
-  }
-
-  return audioCtx;
-}
-
-function beep(freq,duration,type="sine",volume=.045){
-
-  const ctx=audio();
-
-  if(!ctx)return;
-
-  try{
-
-    const osc=ctx.createOscillator();
-    const gain=ctx.createGain();
-
-    osc.type=type;
-    osc.frequency.value=freq;
-
-    gain.gain.setValueAtTime(
-      volume,
-      ctx.currentTime
-    );
-
-    gain.gain.exponentialRampToValueAtTime(
-      .001,
-      ctx.currentTime+duration
-    );
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-
-    osc.start();
-
-    osc.stop(
-      ctx.currentTime+duration
-    );
-
-  }catch(e){}
-
-}
-
-function correctSound(){
-
-  beep(660,.07,"sine",.055);
-
-  setTimeout(()=>{
-    beep(880,.09,"sine",.045);
-  },55);
-
-}
-
-function wrongSound(){
-
-  beep(170,.13,"sawtooth",.055);
-
-}
-
-function bombSound(){
-
-  beep(90,.25,"square",.07);
-
-  setTimeout(()=>{
-    beep(55,.3,"sawtooth",.05);
-  },80);
-
-}
-
-
-/* =========================================================
-   MATH LOGIC
-========================================================= */
-
-function isPrime(n){
-
-  n=Math.floor(n);
-
-  if(n<2)return false;
-
-  if(n===2)return true;
-
-  if(n%2===0)return false;
-
-  for(
-    let i=3;
-    i*i<=n;
-    i+=2
-  ){
-
-    if(n%i===0)return false;
-
-  }
-
-  return true;
-}
-
-function isPerfectSquare(n){
-
-  const r=Math.sqrt(n);
-
-  return Number.isInteger(r);
-
-}
-
-function isDivisor(n,base){
-
-  return base % n === 0;
-
-}
-
-function missionCorrect(n){
-
-  if(!state.mission)return false;
-
-  switch(state.mission){
-
-    case "primary":
-      return isPrime(n);
-
-    case "even":
-      return n%2===0;
-
-    case "odd":
-      return n%2!==0;
-
-    case "nonPrime":
-      return !isPrime(n);
-
-    case "multiple3":
-      return n%3===0;
-
-    case "multiple4":
-      return n%4===0;
-
-    case "multiple5":
-      return n%5===0;
-
-    case "divisors":
-      return isDivisor(n,state.targetBase);
-
-    case "square":
-      return isPerfectSquare(n);
-
-    case "greater":
-      return n>50;
-
-    case "less":
-      return n<50;
-
-    default:
-      return false;
-  }
-
-}
-
-
-/* =========================================================
-   RANDOM NUMBER GENERATION
-========================================================= */
-
 function randomInt(min,max){
-
   return Math.floor(
-    Math.random()*(max-min+1)
-  )+min;
-
+    Math.random() * (max-min+1)
+  ) + min;
 }
 
-function getNumber(){
-
-  /*
-    نُبقي الأعداد في نطاق مناسب للهاتف
-    حتى لا تصبح الدائرة كبيرة جدًا.
-  */
-
-  return randomInt(2,99);
-
+function shuffle(array){
+  for(let i=array.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [array[i],array[j]]=[array[j],array[i]];
+  }
+  return array;
 }
-
 
 /* =========================================================
-   MISSION
+   LANGUAGE
 ========================================================= */
 
-function chooseRandomMission(){
+let lang =
+  localStorage.getItem("nh_lang") || "ar";
 
-  return MISSIONS[
-    randomInt(0,MISSIONS.length-1)
-  ];
+const T = {
 
-}
+  ar:{
+    title:"صائد الأرقام",
+    brand:"IA Math",
 
-function generateTargetBase(){
+    subtitle:"رياضيات • سرعة • دقة",
 
-  const values=[12,15,18,20,24,30,36,40,42,48,50,60];
+    best:"أفضل نتيجة",
+    games:"المباريات",
+    combo:"أفضل كومبو",
 
-  return values[
-    randomInt(0,values.length-1)
-  ];
+    hunt:"المطاردة",
+    huntDesc:"اختر المهمة الرياضية",
 
-}
+    quick:"الصيد السريع",
+    quickDesc:"60 ثانية • احصد أكبر عدد",
 
-function setMission(mission){
+    random:"التحدي العشوائي",
+    randomDesc:"مهمة جديدة كل 20 ثانية",
 
-  state.mission=mission;
+    survival:"البقاء",
+    survivalDesc:"3 قلوب • لا تخطئ",
 
-  if(mission==="divisors"){
+    rules:"ℹ️ طريقة اللعب",
+    reset:"🔄 إعادة الإحصائيات",
 
-    state.targetBase=
-      generateTargetBase();
+    resetNote:
+      "أفضل نتيجة وكومبو يتم حفظهما على هذا الجهاز.",
 
-  }
+    level:"المستوى",
+    hearts:"القلوب",
+    score:"النقاط",
 
-  state.missionStarted=
-    performance.now();
+    bomb:"القنبلة",
+    exit:"خروج",
 
-  updateMissionUI();
+    seconds:"ث",
+    second:"ث",
 
-}
+    chooseMission:"اختيار المهمة",
+    chooseMissionText:
+      "اختر نوع التحدي الذي تريد لعبه.",
 
-function updateMissionUI(){
+    start:"ابدأ",
+    cancel:"إلغاء",
+    back:"رجوع",
 
-  if(!state.mission)return;
+    primes:"الأعداد الأولية",
+    nonPrimes:"الأعداد غير الأولية",
+    even:"الأعداد الزوجية",
+    odd:"الأعداد الفردية",
 
-  let text="";
+    multiple3:"مضاعفات 3",
+    multiple4:"مضاعفات 4",
+    multiple5:"مضاعفات 5",
 
-  switch(state.mission){
+    divisors:"قواسم العدد",
+    squares:"المربعات الكاملة",
 
-    case "divisors":
+    less:"أعداد أقل من",
+    greater:"أعداد أكبر من",
 
-      text=
-        T("missionPrefix")+
-        T("divisors")+
-        " "+
-        state.targetBase;
+    randomMission:"مهمة عشوائية",
 
-      break;
+    correct:"صحيح!",
+    wrong:"خطأ!",
+    noBomb:"لا توجد قنبلة متاحة",
+    bombUsed:"💥 تم تفجير الأرقام!",
 
-    default:
+    gameOver:"انتهت اللعبة",
+    finalScore:"نتيجتك",
+    retry:"العب من جديد",
+    home:"العودة للرئيسية",
 
-      text=
-        T("missionPrefix")+
-        T(state.mission);
+    timeUp:"انتهى الوقت!",
+    survivalOver:"انتهت القلوب!",
 
-  }
+    howTitle:"طريقة اللعب",
 
-  missionText.textContent=text;
+    rulesText:[
+      "🎯 اضغط فقط على الأعداد التي تحقق المهمة الظاهرة.",
+      "✅ الإجابة الصحيحة: الرقم يختفي وتحصل على نقاط ويزداد الكومبو.",
+      "❌ الإجابة الخاطئة: تخسر قلباً وينخفض الكومبو.",
+      "❤️ عندما تفقد القلوب الثلاثة تنتهي اللعبة.",
+      "💣 القنبلة تمسح الأعداد الموجودة في منطقة اللعب.",
+      "⚡ السرعة والكثافة ترتفعان تدريجياً مع تقدم اللعبة.",
+      "🎲 في التحدي العشوائي تتغير المهمة كل 20 ثانية.",
+      "📱 اضغط على الرقم مباشرة؛ السحب والتمرير لا يحسبان كإجابة."
+    ],
 
-}
+    resetTitle:"إعادة الإحصائيات",
+    resetText:
+      "هل تريد حذف أفضل نتيجة وأفضل كومبو وعدد المباريات؟",
 
+    resetYes:"نعم، حذف الإحصائيات",
 
-/* =========================================================
-   MISSION SELECT
-========================================================= */
+    missionSelected:"المهمة المختارة",
 
-function buildMissionList(){
+    bombReady:"💣 القنبلة",
 
-  missionList.innerHTML="";
+    points:"+",
 
-  MISSIONS.forEach(m=>{
-
-    const b=
-      document.createElement("button");
-
-    b.className="mission-choice";
-
-    b.textContent=
-      T(m);
-
-    b.addEventListener(
-      "click",
-      ()=>{
-        missionModal.classList.remove("show");
-        startGame("mission",m);
-      }
-    );
-
-    missionList.appendChild(b);
-
-  });
-
-}
-
-
-/* =========================================================
-   HUD
-========================================================= */
-
-function updateHUD(){
-
-  gameScore.textContent=state.score;
-
-  gameLevel.textContent=state.level;
-
-  let hearts="";
-
-  for(let i=0;i<3;i++){
-
-    hearts +=
-      i<state.hearts
-      ? "❤️"
-      : "🖤";
-
-  }
-
-  gameHearts.textContent=hearts;
-
-  comboText.textContent=
-    "🔥 "+state.combo+"×";
-
-}
-
-function updateTimerUI(){
-
-  if(state.mode==="quick"){
-
-    timerText.textContent=
-      "⏱ "+state.timeLeft;
-
-  }else{
-
-    timerText.textContent="";
-
-  }
-
-}
-
-
-/* =========================================================
-   DIFFICULTY
-========================================================= */
-
-function updateDifficulty(){
-
-  /*
-    السرعة ترتفع تدريجياً.
-    لا تقفز مباشرة.
-  */
-
-  state.speed =
-    0.75 +
-    (state.level-1)*0.055;
-
-  state.density =
-    1 +
-    (state.level-1)*0.045;
-
-  state.spawnInterval =
-    Math.max(
-      520,
-      1250-(state.level-1)*28
-    );
-
-}
-
-
-/* =========================================================
-   SPAWN
-========================================================= */
-
-function spawnNumber(){
-
-  if(!state.running)return;
-
-  const rect=
-    arena.getBoundingClientRect();
-
-  const size=
-    window.innerWidth<=430
-      ?68
-      :70;
-
-  const maxX=
-    Math.max(
-      4,
-      rect.width-size-4
-    );
-
-  const x=
-    randomInt(
-      4,
-      Math.floor(maxX)
-    );
-
-  const y=-size-8;
-
-  const value=getNumber();
-
-  const el=
-    document.createElement("div");
-
-  const id=state.nextId++;
-
-  el.className="number";
-
-  el.textContent=value;
-
-  el.dataset.id=id;
-
-  el.style.left=x+"px";
-  el.style.top=y+"px";
-
-  /*
-    pointerdown وليس click:
-    اللمسة الفعلية فقط تُعتبر ضغطة.
-  */
-
-  el.addEventListener(
-    "pointerdown",
-    e=>{
-      e.preventDefault();
-      e.stopPropagation();
-
-      hitNumber(id);
-    },
-    {passive:false}
-  );
-
-  /*
-    منع drag / scroll
-  */
-
-  el.addEventListener(
-    "dragstart",
-    e=>e.preventDefault()
-  );
-
-  arena.appendChild(el);
-
-  state.targets.set(
-    id,
-    {
-      id,
-      value,
-      el,
-      x,
-      y,
-      size,
-      speed:
-        (0.035+
-        state.level*.0025+
-        Math.random()*.015)
-        *
-        state.speed
-    }
-  );
-
-}
-
-
-/* =========================================================
-   ENSURE CORRECT TARGET
-========================================================= */
-
-function spawnCorrectTarget(){
-
-  const rect=
-    arena.getBoundingClientRect();
-
-  const size=
-    window.innerWidth<=430
-      ?68
-      :70;
-
-  let value;
-
-  let attempts=0;
-
-  do{
-
-    if(state.mission==="primary"){
-
-      const primes=[
-        2,3,5,7,11,13,17,19,23,
-        29,31,37,41,43,47,53,59,
-        61,67,71,73,79,83,89,97
-      ];
-
-      value=
-        primes[
-          randomInt(0,primes.length-1)
-        ];
-
-    }else if(state.mission==="even"){
-
-      value=randomInt(1,49)*2;
-
-    }else if(state.mission==="odd"){
-
-      value=randomInt(1,49)*2-1;
-
-    }else if(state.mission==="multiple3"){
-
-      value=randomInt(1,33)*3;
-
-    }else if(state.mission==="multiple4"){
-
-      value=randomInt(1,24)*4;
-
-    }else if(state.mission==="multiple5"){
-
-      value=randomInt(1,19)*5;
-
-    }else if(state.mission==="square"){
-
-      const r=
-        randomInt(2,9);
-
-      value=r*r;
-
-    }else if(state.mission==="greater"){
-
-      value=randomInt(51,99);
-
-    }else if(state.mission==="less"){
-
-      value=randomInt(2,49);
-
-    }else if(state.mission==="nonPrime"){
-
-      do{
-        value=randomInt(2,99);
-      }while(isPrime(value));
-
-    }else if(state.mission==="divisors"){
-
-      const divisors=[];
-
-      for(
-        let i=1;
-        i<=state.targetBase;
-        i++
-      ){
-
-        if(state.targetBase%i===0){
-          divisors.push(i);
-        }
-
-      }
-
-      value=
-        divisors[
-          randomInt(
-            0,
-            divisors.length-1
-          )
-        ];
-
-    }
-
-    attempts++;
-
-  }while(
-    !missionCorrect(value)
-    && attempts<20
-  );
-
-  const x=
-    randomInt(
-      4,
-      Math.max(
-        4,
-        Math.floor(rect.width-size-4)
-      )
-    );
-
-  const el=
-    document.createElement("div");
-
-  const id=state.nextId++;
-
-  el.className="number";
-
-  el.textContent=value;
-
-  el.dataset.id=id;
-
-  el.style.left=x+"px";
-  el.style.top="-78px";
-
-  el.addEventListener(
-    "pointerdown",
-    e=>{
-      e.preventDefault();
-      e.stopPropagation();
-
-      hitNumber(id);
-    },
-    {passive:false}
-  );
-
-  arena.appendChild(el);
-
-  state.targets.set(
-    id,
-    {
-      id,
-      value,
-      el,
-      x,
-      y:-78,
-      size,
-      speed:
-        (0.035+
-        state.level*.0025+
-        Math.random()*.015)
-        *
-        state.speed
-    }
-  );
-
-}
-
-
-/* =========================================================
-   HIT NUMBER
-========================================================= */
-
-function hitNumber(id){
-
-  if(
-    !state.running ||
-    !state.targets.has(id)
-  ){
-    return;
-  }
-
-  const t=
-    state.targets.get(id);
-
-  if(!t)return;
-
-  const correct=
-    missionCorrect(t.value);
-
-  /*
-    نزيله فوراً من الخريطة حتى لا يمكن
-    الضغط عليه مرتين.
-  */
-
-  state.targets.delete(id);
-
-  if(correct){
-
-    t.el.classList.add("correct-hit");
-
-    state.combo++;
-
-    state.bestCombo=
-      Math.max(
-        state.bestCombo,
-        state.combo
-      );
-
-    /*
-      النقاط ترتفع مع الكومبو.
-    */
-
-    const points=
-      1+
-      Math.min(
-        4,
-        Math.floor(state.combo/5)
-      );
-
-    state.score+=points;
-
-    correctSound();
-
-    particles(t.el);
-
-    showToast(
-      "+"+points+" "+
-      T("correct")
-    );
-
-    /*
-      كل 10 نقاط / إجابات تقريباً
-      نرفع المستوى تدريجياً.
-    */
-
-    const newLevel=
-      1+
-      Math.floor(state.score/10);
-
-    if(newLevel!==state.level){
-
-      state.level=newLevel;
-
-      updateDifficulty();
-
-    }
-
-  }else{
-
-    t.el.classList.add("wrong-hit");
-
-    state.combo=0;
-
-    state.hearts--;
-
-    wrongSound();
-
-    showToast(T("wrong"));
-
-    if(state.hearts<=0){
-
-      /*
-        لا ننتظر انتهاء animation.
-        Game Over مباشرة.
-      */
-
-      setTimeout(
-        endGame,
-        180
-      );
-
-    }
-
-  }
-
-  updateHUD();
-
-}
-
-
-/* =========================================================
-   PARTICLES
-========================================================= */
-
-function particles(el){
-
-  const rect=
-    el.getBoundingClientRect();
-
-  const arenaRect=
-    arena.getBoundingClientRect();
-
-  const cx=
-    rect.left-
-    arenaRect.left+
-    rect.width/2;
-
-  const cy=
-    rect.top-
-    arenaRect.top+
-    rect.height/2;
-
-  for(let i=0;i<10;i++){
-
-    const p=
-      document.createElement("div");
-
-    p.className="particle";
-
-    p.style.left=cx+"px";
-    p.style.top=cy+"px";
-
-    const angle=
-      Math.random()*
-      Math.PI*2;
-
-    const distance=
-      25+
-      Math.random()*45;
-
-    p.style.setProperty(
-      "--dx",
-      Math.cos(angle)*distance+"px"
-    );
-
-    p.style.setProperty(
-      "--dy",
-      Math.sin(angle)*distance+"px"
-    );
-
-    arena.appendChild(p);
-
-    setTimeout(
-      ()=>p.remove(),
-      600
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   ANIMATION
-========================================================= */
-
-function animate(now){
-
-  if(!state.running)return;
-
-  if(!state.lastFrame){
-    state.lastFrame=now;
-  }
-
-  const dt=
-    Math.min(
-      40,
-      now-state.lastFrame
-    );
-
-  state.lastFrame=now;
-
-  const rect=
-    arena.getBoundingClientRect();
-
-  const bottom=
-    rect.height;
-
-  state.targets.forEach(
-    (t,id)=>{
-
-      t.y +=
-        t.speed*dt;
-
-      t.el.style.transform=
-        `translate3d(0,${t.y}px,0)`;
-
-      if(
-        t.y >
-        bottom+90
-      ){
-
-        t.el.remove();
-
-        state.targets.delete(id);
-
-      }
-
-    }
-  );
-
-  /*
-    الكثافة ترتفع تدريجياً.
-  */
-
-  const dynamicInterval=
-    Math.max(
-      480,
-      state.spawnInterval /
-      state.density
-    );
-
-  if(
-    now-state.lastSpawn >=
-    dynamicInterval
-  ){
-
-    spawnNumber();
-
-    /*
-      في بداية اللعبة نضمن وجود
-      إجابة صحيحة.
-    */
-
-    if(
-      state.targets.size===0 ||
-      Math.random()<.18
-    ){
-
-      spawnCorrectTarget();
-
-    }
-
-    state.lastSpawn=now;
-
-  }
-
-  state.animationId=
-    requestAnimationFrame(animate);
-
-}
-
-
-/* =========================================================
-   RANDOM MODE
-========================================================= */
-
-function randomMissionTick(){
-
-  if(
-    !state.running ||
-    state.mode!=="random"
-  ){
-    return;
-  }
-
-  /*
-    كل 20 ثانية بالضبط.
-  */
-
-  setMission(
-    chooseRandomMission()
-  );
-
-  /*
-    نحذف الأرقام القديمة حتى لا تبقى
-    أرقام من المهمة السابقة.
-  */
-
-  clearTargets();
-
-  spawnCorrectTarget();
-
-  showToast(T("newMission"));
-
-}
-
-
-/* =========================================================
-   TIMER
-========================================================= */
-
-function startTimer(){
-
-  clearInterval(state.timerId);
-
-  if(state.mode!=="quick"){
-    return;
-  }
-
-  state.timeLeft=60;
-
-  updateTimerUI();
-
-  state.timerId=
-    setInterval(
-      ()=>{
-
-        if(!state.running)return;
-
-        state.timeLeft--;
-
-        updateTimerUI();
-
-        if(state.timeLeft<=0){
-
-          showToast(T("timeUp"));
-
-          endGame();
-
-        }
-
-      },
-      1000
-    );
-
-}
-
-
-/* =========================================================
-   START GAME
-========================================================= */
-
-function startGame(mode,mission=null){
-
-  stopGame(false);
-
-  state.mode=mode;
-
-  state.running=true;
-
-  state.score=0;
-
-  state.hearts=3;
-
-  state.level=1;
-
-  state.combo=0;
-
-  state.bestCombo=0;
-
-  state.timeLeft=60;
-
-  state.bombAvailable=true;
-
-  state.nextId=1;
-
-  state.gameCounted=false;
-
-  state.lastSpawn=0;
-
-  state.lastFrame=0;
-
-  state.targets.clear();
-
-  arena.innerHTML="";
-
-  if(mission){
-
-    setMission(mission);
-
-  }else{
-
-    setMission(
-      chooseRandomMission()
-    );
-
-  }
-
-  updateDifficulty();
-
-  updateHUD();
-
-  updateTimerUI();
-
-  gameOver.classList.remove("show");
-
-  showScreen(gameScreen);
-
-  /*
-    تشغيل الصوت بعد ضغط المستخدم.
-  */
-
-  audio();
-
-  /*
-    بداية مضمونة: نضع أرقاماً
-    بينها إجابة صحيحة.
-  */
-
-  for(let i=0;i<4;i++){
-
-    setTimeout(
-      ()=>{
-        if(state.running){
-          spawnNumber();
-        }
-      },
-      i*130
-    );
-
-  }
-
-  setTimeout(
-    ()=>{
-      if(state.running){
-        spawnCorrectTarget();
-      }
-    },
-    180
-  );
-
-  startTimer();
-
-  state.animationId=
-    requestAnimationFrame(animate);
-
-  if(mode==="random"){
-
-    state.randomMissionInterval=
-      setInterval(
-        randomMissionTick,
-        20000
-      );
-
-  }
-
-}
-
-
-/* =========================================================
-   CLEAR
-========================================================= */
-
-function clearTargets(){
-
-  state.targets.forEach(
-    t=>{
-      if(t.el)t.el.remove();
-    }
-  );
-
-  state.targets.clear();
-
-}
-
-
-/* =========================================================
-   STOP GAME
-========================================================= */
-
-function stopGame(showHome=true){
-
-  state.running=false;
-
-  if(state.animationId){
-
-    cancelAnimationFrame(
-      state.animationId
-    );
-
-    state.animationId=null;
-
-  }
-
-  clearInterval(state.timerId);
-  state.timerId=null;
-
-  clearInterval(
-    state.randomMissionInterval
-  );
-
-  state.randomMissionInterval=null;
-
-  clearTargets();
-
-  if(showHome){
-
-    saveStats();
-
-    updateHomeStats();
-
-    showScreen(homeScreen);
-
-  }
-
-}
-
-
-/* =========================================================
-   END GAME
-========================================================= */
-
-function endGame(){
-
-  if(!state.running)return;
-
-  state.running=false;
-
-  clearInterval(state.timerId);
-
-  clearInterval(
-    state.randomMissionInterval
-  );
-
-  if(state.animationId){
-
-    cancelAnimationFrame(
-      state.animationId
-    );
-
-    state.animationId=null;
-
-  }
-
-  saveStats();
-
-  finalScore.textContent=
-    state.score;
-
-  gameOver.classList.add("show");
-
-  updateHomeStats();
-
-  beep(110,.22,"sawtooth",.05);
-
-}
-
-
-/* =========================================================
-   BOMB
-========================================================= */
-
-function useBomb(){
-
-  if(!state.running)return;
-
-  if(!state.bombAvailable){
-
-    showToast(T("noBomb"));
-
-    return;
-
-  }
-
-  state.bombAvailable=false;
-
-  /*
-    القنبلة تمسح كل الأرقام الموجودة.
-  */
-
-  state.targets.forEach(
-    t=>{
-
-      if(t.el){
-
-        particles(t.el);
-
-        t.el.remove();
-
-      }
-
-    }
-  );
-
-  state.targets.clear();
-
-  bombSound();
-
-  showToast(T("bombUsed"));
-
-  /*
-    نعطي إجابة صحيحة جديدة فوراً.
-  */
-
-  setTimeout(
-    ()=>{
-      if(state.running){
-        spawnCorrectTarget();
-      }
-    },
-    150
-  );
-
-}
-
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-let toastTimer=null;
-
-function showToast(text){
-
-  toast.textContent=text;
-
-  toast.classList.add("show");
-
-  clearTimeout(toastTimer);
-
-  toastTimer=
-    setTimeout(
-      ()=>{
-        toast.classList.remove("show");
-      },
-      900
-    );
-
-}
-
-
-/* =========================================================
-   RESET
-========================================================= */
-
-function openReset(){
-
-  if(state.running)return;
-
-  resetScreen.classList.add("show");
-
-}
-
-function resetStats(){
-
-  localStorage.removeItem("nh_bestScore");
-  localStorage.removeItem("nh_games");
-  localStorage.removeItem("nh_bestCombo");
-
-  updateHomeStats();
-
-  resetScreen.classList.remove("show");
-
-  showToast(
-    lang==="ar"
-      ? "تم حذف الإحصائيات ✓"
-      : lang==="fr"
-        ? "Statistiques supprimées ✓"
-        : "Statistics deleted ✓"
-  );
-
-}
-
-
-/* =========================================================
-   EVENTS
-========================================================= */
-
-/*
-  منع النقرات العرضية.
-  كل الأزرار تعتمد pointerup الحقيقي.
-*/
-
-function addButton(id,fn){
-
-  const el=$(id);
-
-  el.addEventListener(
-    "pointerup",
-    e=>{
-      e.preventDefault();
-      e.stopPropagation();
-
-      fn();
-    },
-    {passive:false}
-  );
-
-}
-
-
-/* quick */
-
-addButton(
-  "quickBtn",
-  ()=>{
-    startGame("quick");
-  }
-);
-
-
-/* mission */
-
-addButton(
-  "missionBtn",
-  ()=>{
-    buildMissionList();
-    missionModal.classList.add("show");
-  }
-);
-
-
-/* random */
-
-addButton(
-  "randomBtn",
-  ()=>{
-    startGame("random");
-  }
-);
-
-
-/* survival */
-
-addButton(
-  "survivalBtn",
-  ()=>{
-    startGame("survival");
-  }
-);
-
-
-/* info */
-
-addButton(
-  "infoBtn",
-  ()=>{
-    showScreen(infoScreen);
-  }
-);
-
-
-/* reset */
-
-addButton(
-  "resetBtn",
-  openReset
-);
-
-
-/* close mission */
-
-addButton(
-  "closeMission",
-  ()=>{
-    missionModal.classList.remove("show");
-  }
-);
-
-
-/* back */
-
-addButton(
-  "backHomeBtn",
-  ()=>{
-    showScreen(homeScreen);
-  }
-);
-
-
-/* exit */
-
-addButton(
-  "exitBtn",
-  ()=>{
-    stopGame(true);
-  }
-);
-
-
-/* bomb */
-
-addButton(
-  "bombBtn",
-  useBomb
-);
-
-
-/* again */
-
-addButton(
-  "againBtn",
-  ()=>{
-    const mode=state.mode;
-    const mission=state.mode==="mission"
-      ?state.mission
-      :null;
-
-    gameOver.classList.remove("show");
-
-    startGame(mode,mission);
-
-  }
-);
-
-
-/* home */
-
-addButton(
-  "homeFromOver",
-  ()=>{
-    gameOver.classList.remove("show");
-    stopGame(true);
-  }
-);
-
-
-/* reset confirm */
-
-addButton(
-  "resetConfirm",
-  resetStats
-);
-
-
-/* reset cancel */
-
-addButton(
-  "resetCancel",
-  ()=>{
-    resetScreen.classList.remove("show");
-  }
-);
-
-
-/* languages */
-
-document.querySelectorAll(".lang-btn")
-.forEach(
-  btn=>{
-
-    btn.addEventListener(
-      "pointerup",
-      e=>{
-
-        e.preventDefault();
-        e.stopPropagation();
-
-        lang=btn.dataset.lang;
-
-        localStorage.setItem(
-          "nh_lang",
-          lang
-        );
-
-        applyLanguage();
-
-      },
-      {passive:false}
-    );
-
-  }
-);
-
-
-/* =========================================================
-   PREVENT LONG PRESS / CONTEXT MENU
-========================================================= */
-
-document.addEventListener(
-  "contextmenu",
-  e=>{
-    if(e.target.closest(".number")){
-      e.preventDefault();
-    }
-  }
-);
-
-
-/* =========================================================
-   INITIALIZATION
-========================================================= */
-
-applyLanguage();
-
-updateHomeStats();
-
-
-/*
-  عند العودة من الخلفية لا نعيد تشغيل
-  اللعبة بسرعة أو نغير أبعادها.
-*/
-
-document.addEventListener(
-  "visibilitychange",
-  ()=>{
-    if(document.hidden){
-
-      /*
-        لا نوقف اللعبة.
-        requestAnimationFrame سيتوقف تلقائياً.
-      */
-
-    }else if(
-      state.running &&
-      !state.animationId
-    ){
-
-      state.lastFrame=
-        performance.now();
-
-      state.animationId=
-        requestAnimationFrame(
-          animate
-        );
-
-    }
-  }
-);
-
-
-/*
-  إذا تغير حجم الهاتف، نعيد تموضع الأرقام
-  داخل arena فقط.
-*/
-
-window.addEventListener(
-  "resize",
-  ()=>{
-    if(!state.running)return;
-
-    const rect=
-      arena.getBoundingClientRect();
-
-    state.targets.forEach(
-      t=>{
-
-        const maxX=
-          Math.max(
-            4,
-            rect.width-t.size-4
-          );
-
-        if(t.x>maxX){
-
-          t.x=maxX;
-
-          t.el.style.left=
-            t.x+"px";
-
-        }
-
-      }
-    );
-
+    modeQuick:"الصيد السريع",
+    modeRandom:"التحدي العشوائي",
+    modeSurvival:"البقاء",
+    modeHunt:"المطاردة"
   },
-  {passive:true}
-);
 
-</script>
+  fr:{
+    title:"CHASSEUR DE NOMBRES",
+    brand:"IA Math",
 
-</body>
-</html>
+    subtitle:"Maths • Vitesse • Précision",
+
+    best:"Meilleur score",
+    games:"Parties",
+    combo:"Meilleur combo",
+
+    hunt:"CHASSE",
+    huntDesc:"Choisissez la mission",
+
+    quick:"CHASSE RAPIDE",
+    quickDesc:"60 secondes • Faites le maximum",
+
+    random:"DÉFI ALÉATOIRE",
+    randomDesc:"Nouvelle mission toutes les 20 secondes",
+
+    survival:"SURVIE",
+    survivalDesc:"3 cœurs • Ne faites pas d'erreur",
+
+    rules:"ℹ️ Comment jouer",
+    reset:"🔄 Réinitialiser",
+
+    resetNote:
+      "Les statistiques sont enregistrées sur cet appareil.",
+
+    level:"Niveau",
+    hearts:"Cœurs",
+    score:"Points",
+
+    bomb:"Bombe",
+    exit:"Quitter",
+
+    seconds:"s",
+    second:"s",
+
+    chooseMission:"Choisir une mission",
+    chooseMissionText:
+      "Choisissez le type de défi.",
+
+    start:"Commencer",
+    cancel:"Annuler",
+    back:"Retour",
+
+    primes:"Nombres premiers",
+    nonPrimes:"Nombres non premiers",
+    even:"Nombres pairs",
+    odd:"Nombres impairs",
+
+    multiple3:"Multiples de 3",
+    multiple4:"Multiples de 4",
+    multiple5:"Multiples de 5",
+
+    divisors:"Diviseurs de",
+    squares:"Carrés parfaits",
+
+    less:"Nombres inférieurs à",
+    greater:"Nombres supérieurs à",
+
+    randomMission:"Mission aléatoire",
+
+    correct:"Correct !",
+    wrong:"Erreur !",
+    noBomb:"Bombe indisponible",
+    bombUsed:"💥 Nombres éliminés !",
+
+    gameOver:"Fin de partie",
+    finalScore:"Votre score",
+    retry:"Rejouer",
+    home:"Accueil",
+
+    timeUp:"Temps écoulé !",
+    survivalOver:"Plus de cœurs !",
+
+    howTitle:"Comment jouer",
+
+    rulesText:[
+      "🎯 Touchez uniquement les nombres qui correspondent à la mission.",
+      "✅ Bonne réponse : le nombre disparaît, vous gagnez des points et le combo augmente.",
+      "❌ Mauvaise réponse : vous perdez un cœur et le combo revient à zéro.",
+      "❤️ Quand les trois cœurs sont perdus, la partie est terminée.",
+      "💣 La bombe élimine les nombres présents dans la zone de jeu.",
+      "⚡ La vitesse et la densité augmentent progressivement.",
+      "🎲 En mode aléatoire, la mission change toutes les 20 secondes.",
+      "📱 Touchez directement un nombre ; le défilement ne valide aucune réponse."
+    ],
+
+    resetTitle:"Réinitialiser les statistiques",
+    resetText:
+      "Voulez-vous supprimer le meilleur score, le meilleur combo et le nombre de parties ?",
+
+    resetYes:"Oui, supprimer",
+
+    missionSelected:"Mission choisie",
+
+    bombReady:"💣 Bombe",
+
+    points:"+",
+
+    modeQuick:"Chasse rapide",
+    modeRandom:"Défi aléatoire",
+    modeSurvival:"Survie",
+    modeHunt:"Chasse"
+  },
+
+  en:{
+    title:"NUMBER HUNTER",
+    brand:"IA Math",
+
+    subtitle:"Math • Speed • Accuracy",
+
+    best:"Best Score",
+    games:"Games",
+    combo:"Best Combo",
+
+    hunt:"HUNT",
+    huntDesc:"Choose the math mission",
+
+    quick:"QUICK HUNT",
+    quickDesc:"60 seconds • Score as much as possible",
+
+    random:"RANDOM CHALLENGE",
+    randomDesc:"New mission every 20 seconds",
+
+    survival:"SURVIVAL",
+    survivalDesc:"3 hearts • Don't make mistakes",
+
+    rules:"ℹ️ How to Play",
+    reset:"🔄 Reset Statistics",
+
+    resetNote:
+      "Statistics are saved on this device.",
+
+    level:"Level",
+    hearts:"Hearts",
+    score:"Points",
+
+    bomb:"Bomb",
+    exit:"Quit",
+
+    seconds:"s",
+    second:"s",
+
+    chooseMission:"Choose Mission",
+    chooseMissionText:
+      "Choose the type of challenge.",
+
+    start:"Start",
+    cancel:"Cancel",
+    back:"Back",
+
+    primes:"Prime numbers",
+    nonPrimes:"Non-prime numbers",
+    even:"Even numbers",
+    odd:"Odd numbers",
+
+    multiple3:"Multiples of 3",
+    multiple4:"Multiples of 4",
+    multiple5:"Multiples of 5",
+
+    divisors:"Divisors of",
+    squares:"Perfect squares",
+
+    less:"Numbers less than",
+    greater:"Numbers greater than",
+
+    randomMission:"Random Mission",
+
+    correct:"Correct!",
+    wrong:"Wrong!",
+    noBomb:"No bomb available",
+    bombUsed:"💥 Numbers cleared!",
+
+    gameOver:"Game Over",
+    finalScore:"Your Score",
+    retry:"Play Again",
+    home:"Home",
+
+    timeUp:"Time's up!",
+    survivalOver:"No hearts left!",
+
+    howTitle:"How to Play",
+
+    rulesText:[
+      "🎯 Tap only numbers that match the displayed mission.",
+      "✅ Correct answer: the number disappears, you gain points and your combo increases.",
+      "❌ Wrong answer: you lose one heart and your combo resets.",
+      "❤️ Losing all three hearts ends the game.",
+      "💣 The bomb clears the numbers currently inside the game area.",
+      "⚡ Speed and number density increase gradually.",
+      "🎲 In Random Challenge mode, the mission changes every 20 seconds.",
+      "📱 Tap the number
