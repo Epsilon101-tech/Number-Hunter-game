@@ -2,31 +2,23 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-
 <meta name="viewport"
-content="width=device-width,
-initial-scale=1,
-maximum-scale=1,
-user-scalable=no,
-viewport-fit=cover">
-
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>NUMBER HUNTER</title>
 
 <style>
-
 :root{
 --blue:#2864c7;
 --blue2:#3d73dc;
 --purple:#8552df;
 --gold:#e8a51a;
---green:#21a66f;
+--navy:#234d80;
 --red:#e5484d;
 --bg:#f4f7fd;
---card:#ffffff;
+--card:#fff;
 --text:#17335f;
 --muted:#71809a;
 --border:#dce5f2;
---shadow:0 12px 35px rgba(40,100,199,.12);
 }
 
 *{
@@ -40,81 +32,67 @@ width:100%;
 height:100%;
 overflow:hidden;
 background:var(--bg);
-font-family:
-system-ui,
--apple-system,
-"Segoe UI",
-Arial,sans-serif;
+font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
 color:var(--text);
 }
 
 button{
 font:inherit;
-}
-
-button:focus{
-outline:none;
+touch-action:manipulation;
+-webkit-user-select:none;
+user-select:none;
 }
 
 #app{
 position:fixed;
-inset:0;
+left:0;
+top:0;
 width:100%;
-height:100%;
-height:100dvh;
+height:var(--vh,100dvh);
 overflow:hidden;
 }
-
-/* =========================
-   SCREENS
-========================= */
 
 .screen{
 position:absolute;
 inset:0;
 display:none;
-
-overflow-y:auto;
-overflow-x:hidden;
-
+overflow:auto;
+overscroll-behavior:contain;
 padding:
 calc(env(safe-area-inset-top,0px) + 18px)
 18px
-calc(env(safe-area-inset-bottom,0px) + 115px);
+calc(env(safe-area-inset-bottom,0px) + 110px);
 }
 
 .screen.active{
 display:block;
 }
 
+
 /* =========================
    HOME
 ========================= */
 
-.home-wrap{
-width:min(720px,100%);
+.home-wrap,
+.choice-wrap{
+width:min(700px,100%);
 margin:auto;
 }
 
 .hero{
 position:relative;
 overflow:hidden;
+text-align:center;
 
-background:
-linear-gradient(
-145deg,
-#ffffff,
-#f7f3ff
-);
+background:linear-gradient(145deg,#fff,#f7f3ff);
 
 border:1px solid var(--border);
 border-radius:36px;
 
 padding:30px 22px;
 
-text-align:center;
-
-box-shadow:var(--shadow);
+box-shadow:
+0 12px 35px rgba(40,100,199,.12);
 
 margin-bottom:18px;
 }
@@ -146,14 +124,11 @@ background:rgba(133,82,223,.08);
 .logo{
 width:118px;
 height:118px;
-
-margin:auto;
-margin-bottom:18px;
+margin:0 auto 18px;
 
 border-radius:32px;
 
-background:
-linear-gradient(
+background:linear-gradient(
 145deg,
 #3175dc,
 #1f58bd
@@ -162,13 +137,12 @@ linear-gradient(
 display:grid;
 place-items:center;
 
-color:#fff;
-
+color:white;
 font-size:34px;
 font-weight:950;
 
 box-shadow:
-0 18px 38px rgba(40,100,199,.28);
+0 18px 38px rgba(40,100,199,.25);
 
 position:relative;
 z-index:2;
@@ -177,8 +151,7 @@ z-index:2;
 .hero h1{
 margin:0;
 
-font-size:
-clamp(42px,11vw,66px);
+font-size:clamp(42px,11vw,66px);
 
 line-height:.98;
 
@@ -214,10 +187,6 @@ position:relative;
 z-index:2;
 }
 
-/* =========================
-   HOME STATS
-========================= */
-
 .stats-grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
@@ -228,14 +197,10 @@ margin-bottom:18px;
 .stat{
 background:#fff;
 border:1px solid var(--border);
-
 border-radius:25px;
-
 padding:15px 8px;
-
 text-align:center;
-
-box-shadow:var(--shadow);
+box-shadow:0 12px 35px rgba(40,100,199,.12);
 }
 
 .stat b{
@@ -253,10 +218,6 @@ color:var(--muted);
 font-weight:800;
 }
 
-/* =========================
-   MODES
-========================= */
-
 .modes{
 display:grid;
 grid-template-columns:repeat(2,1fr);
@@ -265,63 +226,36 @@ gap:14px;
 
 .mode{
 border:0;
-
 border-radius:30px;
-
 padding:22px 18px;
-
 min-height:150px;
 
 text-align:right;
-
 color:#fff;
 
-box-shadow:
-0 15px 30px rgba(40,100,199,.18);
+box-shadow:0 15px 30px rgba(40,100,199,.18);
 
 cursor:pointer;
-
-touch-action:manipulation;
 }
 
 .mode:active{
-transform:scale(.98);
+transform:scale(.985);
 }
 
 .mode.blue{
-background:
-linear-gradient(
-145deg,
-#3475dc,
-#2860c4
-);
+background:linear-gradient(145deg,#3475dc,#2860c4);
 }
 
 .mode.purple{
-background:
-linear-gradient(
-145deg,
-#9657e8,
-#7843d4
-);
+background:linear-gradient(145deg,#9657e8,#7843d4);
 }
 
 .mode.gold{
-background:
-linear-gradient(
-145deg,
-#f0b331,
-#d99513
-);
+background:linear-gradient(145deg,#f0b331,#d99513);
 }
 
 .mode.navy{
-background:
-linear-gradient(
-145deg,
-#315b91,
-#183e70
-);
+background:linear-gradient(145deg,#315b91,#183e70);
 }
 
 .mode .ico{
@@ -341,10 +275,6 @@ font-size:14px;
 opacity:.92;
 }
 
-/* =========================
-   SECONDARY
-========================= */
-
 .secondary{
 display:grid;
 grid-template-columns:1fr 1fr;
@@ -356,7 +286,6 @@ margin-top:14px;
 min-height:82px;
 
 border:1px solid var(--border);
-
 background:#fff;
 
 border-radius:26px;
@@ -366,39 +295,27 @@ color:var(--text);
 font-size:18px;
 font-weight:900;
 
-box-shadow:var(--shadow);
+box-shadow:0 12px 35px rgba(40,100,199,.12);
 
 cursor:pointer;
-
-touch-action:manipulation;
 }
 
 .lang-row{
 display:flex;
 justify-content:center;
 gap:8px;
-
 margin-top:16px;
-
 flex-wrap:wrap;
 }
 
 .lang{
 border:1px solid var(--border);
-
 background:#fff;
-
 border-radius:16px;
-
 padding:9px 14px;
-
 color:var(--text);
-
 font-weight:900;
-
 cursor:pointer;
-
-touch-action:manipulation;
 }
 
 .lang.active{
@@ -406,8 +323,9 @@ background:var(--blue);
 color:#fff;
 }
 
+
 /* =========================
-   CHOICE SCREEN
+   CHOICE
 ========================= */
 
 .choice-screen{
@@ -415,26 +333,14 @@ padding-top:
 calc(env(safe-area-inset-top,0px) + 22px);
 }
 
-.choice-wrap{
-width:min(680px,100%);
-margin:auto;
-}
-
 .back{
 border:1px solid var(--border);
 background:#fff;
-
 color:var(--text);
-
 padding:11px 18px;
-
 border-radius:17px;
-
 font-weight:950;
-
 cursor:pointer;
-
-touch-action:manipulation;
 }
 
 .choice-title{
@@ -458,24 +364,12 @@ gap:12px;
 
 .mission-card{
 border:1px solid var(--border);
-
 background:#fff;
-
 border-radius:23px;
-
 padding:18px;
-
 text-align:right;
-
-box-shadow:var(--shadow);
-
+box-shadow:0 12px 35px rgba(40,100,199,.12);
 cursor:pointer;
-
-touch-action:manipulation;
-}
-
-.mission-card:active{
-transform:scale(.98);
 }
 
 .mission-card b{
@@ -486,17 +380,19 @@ font-size:20px;
 .mission-card span{
 display:block;
 margin-top:6px;
-
 font-size:13px;
-
 color:var(--muted);
 }
+
 
 /* =========================
    GAME
 ========================= */
 
 #gameScreen{
+padding:0;
+overflow:hidden;
+
 background:
 radial-gradient(
 circle at 15% 20%,
@@ -514,35 +410,25 @@ transparent 30%
 .game-shell{
 position:absolute;
 inset:0;
-
 width:100%;
 height:100%;
-height:100dvh;
-
 overflow:hidden;
 }
 
-/* =========================
-   TOP STATS
-========================= */
+
+/* TOP */
 
 .topbar{
 position:absolute;
-
 z-index:30;
 
-top:
-max(
-8px,
-calc(env(safe-area-inset-top,0px) + 5px)
-);
+top:calc(env(safe-area-inset-top,0px) + 8px);
 
 left:10px;
 right:10px;
 
 display:grid;
-grid-template-columns:
-1fr 1.15fr 1fr;
+grid-template-columns:1fr 1.15fr 1fr;
 
 gap:8px;
 }
@@ -554,14 +440,11 @@ border:1px solid var(--border);
 
 border-radius:25px;
 
-min-height:74px;
+min-height:70px;
 
 display:flex;
-
 flex-direction:column;
-
 justify-content:center;
-
 align-items:center;
 
 box-shadow:
@@ -580,32 +463,24 @@ font-size:14px;
 color:var(--muted);
 }
 
-/* =========================
-   GAME LOGO
-========================= */
+
+/* LOGO */
 
 .game-logo{
 position:absolute;
-
 z-index:20;
 
-top:
-max(
-91px,
-calc(env(safe-area-inset-top,0px) + 82px)
-);
+top:calc(env(safe-area-inset-top,0px) + 88px);
 
 left:50%;
-
 transform:translateX(-50%);
 
-width:86px;
-height:86px;
+width:82px;
+height:82px;
 
-border-radius:26px;
+border-radius:25px;
 
-background:
-linear-gradient(
+background:linear-gradient(
 145deg,
 #3175dc,
 #1f58bd
@@ -616,32 +491,26 @@ place-items:center;
 
 color:#fff;
 
-font-size:26px;
+font-size:27px;
 font-weight:950;
 
 box-shadow:
-0 12px 30px rgba(40,100,199,.22);
+0 15px 35px rgba(40,100,199,.25);
 }
 
-/* =========================
-   MISSION
-========================= */
+
+/* MISSION */
 
 .mission-display{
 position:absolute;
-
 z-index:18;
 
 left:14px;
 right:14px;
 
-top:
-max(
-181px,
-calc(env(safe-area-inset-top,0px) + 171px)
-);
+top:calc(env(safe-area-inset-top,0px) + 178px);
 
-min-height:70px;
+min-height:68px;
 
 background:rgba(255,255,255,.97);
 
@@ -650,9 +519,7 @@ border:1px solid var(--border);
 border-radius:25px;
 
 display:flex;
-
 align-items:center;
-
 justify-content:center;
 
 text-align:center;
@@ -665,113 +532,12 @@ font-weight:950;
 
 color:var(--text);
 
-box-shadow:var(--shadow);
-}
-
-/* =========================
-   ARENA
-========================= */
-
-#arena{
-position:absolute;
-
-left:9px;
-right:9px;
-
-top:
-max(
-260px,
-calc(env(safe-area-inset-top,0px) + 250px)
-);
-
-bottom:
-max(
-92px,
-calc(env(safe-area-inset-bottom,0px) + 84px)
-);
-
-overflow:hidden;
-
-border:
-1px solid rgba(40,100,199,.14);
-
-border-radius:30px;
-
-background:
-rgba(255,255,255,.58);
-
 box-shadow:
-inset 0 0 50px
-rgba(40,100,199,.04);
-
-touch-action:none;
-
-user-select:none;
--webkit-user-select:none;
+0 12px 35px rgba(40,100,199,.12);
 }
 
-/* =========================
-   NUMBERS
-========================= */
 
-.number{
-position:absolute;
-
-width:68px;
-height:68px;
-
-border-radius:50%;
-
-border:6px solid #4d82d6;
-
-background:
-rgba(255,255,255,.98);
-
-display:grid;
-
-place-items:center;
-
-color:#234f8f;
-
-font-size:22px;
-
-font-weight:950;
-
-box-shadow:
-0 10px 25px
-rgba(40,100,199,.13);
-
-cursor:pointer;
-
-touch-action:none;
-
-transform:
-translate(-50%,-50%);
-
-will-change:transform;
-
-z-index:3;
-}
-
-.number:active{
-transform:
-translate(-50%,-50%)
-scale(.90);
-}
-
-.number.hit{
-animation:hit .15s ease;
-}
-
-@keyframes hit{
-0%{transform:translate(-50%,-50%) scale(1)}
-50%{transform:translate(-50%,-50%) scale(1.18)}
-100%{transform:translate(-50%,-50%) scale(.2);opacity:0}
-}
-
-/* =========================
-   TIMER / COMBO
-========================= */
+/* TIMER + COMBO */
 
 .timer,
 .combo{
@@ -779,13 +545,7 @@ position:absolute;
 
 z-index:25;
 
-top:
-max(
-260px,
-calc(env(safe-area-inset-top,0px) + 250px)
-);
-
-transform:translateY(-6px);
+top:calc(env(safe-area-inset-top,0px) + 254px);
 
 border-radius:17px;
 
@@ -800,7 +560,7 @@ box-shadow:
 .timer{
 right:18px;
 background:var(--purple);
-color:#fff;
+color:white;
 }
 
 .combo{
@@ -810,9 +570,124 @@ color:var(--blue);
 border:1px solid var(--border);
 }
 
-/* =========================
-   CONTROLS
-========================= */
+
+/* =====================================================
+   IMPORTANT:
+   ARENA HAS ITS OWN SPACE.
+   CONTROLS HAVE ANOTHER SPACE.
+===================================================== */
+
+#arena{
+position:absolute;
+
+left:10px;
+right:10px;
+
+/*
+لا تجعل arena يصل إلى أسفل الشاشة.
+هناك 84px محجوزة للأزرار.
+*/
+
+top:calc(env(safe-area-inset-top,0px) + 266px);
+
+bottom:
+calc(env(safe-area-inset-bottom,0px) + 84px);
+
+overflow:hidden;
+
+border:
+1px solid rgba(40,100,199,.14);
+
+border-radius:30px;
+
+background:
+rgba(255,255,255,.62);
+
+box-shadow:
+inset 0 0 50px
+rgba(40,100,199,.04);
+
+touch-action:none;
+
+user-select:none;
+-webkit-user-select:none;
+}
+
+
+/* NUMBERS */
+
+.number{
+position:absolute;
+
+width:64px;
+height:64px;
+
+border-radius:50%;
+
+border:5px solid #4d82d6;
+
+background:#fff;
+
+display:grid;
+place-items:center;
+
+color:#234f8f;
+
+font-size:21px;
+
+font-weight:950;
+
+cursor:pointer;
+
+touch-action:none;
+
+user-select:none;
+-webkit-user-select:none;
+
+transform:
+translate(-50%,0);
+
+will-change:transform;
+
+z-index:3;
+}
+
+.number:active{
+transform:
+translate(-50%,0)
+scale(.90);
+}
+
+.number.hit{
+animation:hit .14s ease;
+}
+
+@keyframes hit{
+
+0%{
+transform:
+translate(-50%,0)
+scale(1);
+}
+
+50%{
+transform:
+translate(-50%,0)
+scale(1.18);
+}
+
+100%{
+transform:
+translate(-50%,0)
+scale(.2);
+
+opacity:0;
+}
+
+}
+
+
+/* CONTROLS */
 
 .controls{
 position:absolute;
@@ -823,10 +698,9 @@ left:12px;
 right:12px;
 
 bottom:
-max(
-17px,
-calc(env(safe-area-inset-bottom,0px) + 15px)
-);
+calc(env(safe-area-inset-bottom,0px) + 15px);
+
+height:54px;
 
 display:flex;
 
@@ -852,8 +726,6 @@ box-shadow:
 font-weight:950;
 
 cursor:pointer;
-
-touch-action:manipulation;
 }
 
 .exit-btn{
@@ -866,7 +738,7 @@ linear-gradient(
 #183e70
 );
 
-color:#fff;
+color:white;
 
 font-size:23px;
 }
@@ -887,16 +759,15 @@ font-size:16px;
 opacity:.45;
 }
 
-/* =========================
-   GAME OVER
-========================= */
 
-.overlay{
-position:absolute;
+/* OVERLAY */
 
+.overlay,
+.modal{
+position:fixed;
 inset:0;
 
-z-index:100;
+z-index:500;
 
 background:
 rgba(13,26,47,.52);
@@ -906,14 +777,16 @@ display:none;
 align-items:center;
 justify-content:center;
 
-padding:25px;
+padding:24px;
 }
 
-.overlay.show{
+.overlay.show,
+.modal.show{
 display:flex;
 }
 
-.dialog{
+.dialog,
+.modal-card{
 width:min(430px,100%);
 
 background:#fff;
@@ -925,156 +798,61 @@ padding:28px 22px;
 text-align:center;
 
 box-shadow:
-0 25px 60px
-rgba(10,25,50,.3);
+0 25px 60px rgba(10,25,50,.3);
 }
 
-.dialog .big{
+.dialog .big,
+.modal-icon{
 font-size:55px;
 }
 
-.dialog h2{
+.dialog h2,
+.modal-title{
 margin:8px 0;
 font-size:30px;
 }
 
-.dialog p{
+.dialog p,
+.modal-text{
 color:var(--muted);
-
 font-weight:700;
-
 line-height:1.7;
 }
 
-.dialog-actions{
-display:flex;
-gap:10px;
-}
-
-.dialog button{
-flex:1;
-
-border:0;
-
-border-radius:18px;
-
-padding:14px;
-
-font-weight:950;
-
-cursor:pointer;
-
-touch-action:manipulation;
-}
-
-.primary{
-background:var(--blue);
-color:#fff;
-}
-
-.secondary-btn{
-background:#edf2fa;
-color:var(--text);
-}
-
-/* =========================
-   MODALS
-========================= */
-
-.modal{
-position:fixed;
-
-inset:0;
-
-z-index:500;
-
-background:
-rgba(13,26,47,.50);
-
-display:none;
-
-align-items:center;
-justify-content:center;
-
-padding:24px;
-}
-
-.modal.show{
-display:flex;
-}
-
-.modal-card{
-width:min(430px,100%);
-
-background:#fff;
-
-border-radius:30px;
-
-padding:27px 22px;
-
-text-align:center;
-
-box-shadow:
-0 25px 65px
-rgba(10,25,50,.3);
-}
-
-.modal-icon{
-font-size:50px;
-}
-
-.modal-title{
-font-size:28px;
-
-margin:7px 0;
-
-color:var(--text);
-}
-
-.modal-text{
-color:var(--muted);
-
-font-weight:700;
-
-line-height:1.8;
-
-margin-bottom:18px;
-}
-
+.dialog-actions,
 .modal-actions{
 display:flex;
 gap:10px;
 }
 
+.dialog button,
 .modal-btn{
 flex:1;
-
 border:0;
-
 border-radius:18px;
-
 padding:14px;
-
 font-weight:950;
-
 cursor:pointer;
-
-touch-action:manipulation;
 }
 
-.primary-modal{
-background:var(--red);
-color:#fff;
+.primary{
+background:var(--blue);
+color:white;
 }
 
+.secondary-btn,
 .secondary-modal{
 background:#edf2fa;
 color:var(--text);
 }
 
-/* =========================
-   TOAST
-========================= */
+.primary-modal{
+background:var(--red);
+color:white;
+}
+
+
+/* TOAST */
 
 .toast{
 position:fixed;
@@ -1084,10 +862,7 @@ z-index:600;
 left:50%;
 
 bottom:
-max(
-90px,
-calc(env(safe-area-inset-bottom,0px) + 90px)
-);
+calc(env(safe-area-inset-bottom,0px) + 86px);
 
 transform:
 translate(-50%,15px);
@@ -1103,7 +878,7 @@ border-radius:20px;
 
 background:var(--blue);
 
-color:#fff;
+color:white;
 
 text-align:center;
 
@@ -1123,15 +898,10 @@ transform:
 translate(-50%,0);
 }
 
-/* =========================
-   MOBILE
-========================= */
+
+/* MOBILE */
 
 @media(max-width:500px){
-
-.modes{
-gap:11px;
-}
 
 .mode{
 min-height:145px;
@@ -1150,15 +920,6 @@ gap:8px;
 border-radius:22px;
 }
 
-.number{
-width:62px;
-height:62px;
-
-font-size:20px;
-
-border-width:5px;
-}
-
 .mission-display{
 font-size:18px;
 }
@@ -1167,8 +928,14 @@ font-size:18px;
 grid-template-columns:1fr;
 }
 
+.number{
+width:60px;
+height:60px;
+font-size:20px;
+}
+
 .game-stat{
-min-height:70px;
+min-height:68px;
 }
 
 .game-stat b{
@@ -1177,13 +944,17 @@ font-size:25px;
 
 }
 
+
+/*
+الشاشات القصيرة جدًا:
+نرفع منطقة اللعب كلها.
+*/
+
 @media(max-height:700px){
 
 .game-logo{
-top:
-max(
-78px,
-calc(env(safe-area-inset-top,0px) + 70px)
+top:calc(
+env(safe-area-inset-top,0px) + 78px
 );
 
 width:72px;
@@ -1192,10 +963,8 @@ border-radius:22px;
 }
 
 .mission-display{
-top:
-max(
-155px,
-calc(env(safe-area-inset-top,0px) + 147px)
+top:calc(
+env(safe-area-inset-top,0px) + 150px
 );
 
 min-height:60px;
@@ -1203,18 +972,19 @@ min-height:60px;
 
 .timer,
 .combo{
-top:
-max(
-228px,
-calc(env(safe-area-inset-top,0px) + 220px)
+top:calc(
+env(safe-area-inset-top,0px) + 220px
 );
 }
 
 #arena{
-top:
-max(
-230px,
-calc(env(safe-area-inset-top,0px) + 222px)
+top:calc(
+env(safe-area-inset-top,0px) + 232px
+);
+
+bottom:
+calc(
+env(safe-area-inset-bottom,0px) + 84px
 );
 }
 
@@ -1227,30 +997,22 @@ calc(env(safe-area-inset-top,0px) + 222px)
 
 <div id="app">
 
-<!-- =====================================================
-     HOME
-===================================================== -->
+<!-- ================= HOME ================= -->
 
-<section
-id="homeScreen"
-class="screen active">
+<section id="homeScreen" class="screen active">
 
 <div class="home-wrap">
 
 <div class="hero">
 
-<div class="logo">
-√N
-</div>
+<div class="logo">√N</div>
 
 <h1>
 NUMBER<br>
 HUNTER
 </h1>
 
-<p id="heroTag">
-رياضيات • سرعة • دقة
-</p>
+<p id="heroTag"></p>
 
 <div class="primes">
 13 · 11 · 7 · 5 · 3 · 2
@@ -1263,23 +1025,17 @@ HUNTER
 
 <div class="stat">
 <b id="bestScore">0</b>
-<span id="bestScoreLabel">
-أفضل نتيجة
-</span>
+<span id="bestScoreLabel"></span>
 </div>
 
 <div class="stat">
 <b id="games">0</b>
-<span id="gamesLabel">
-المباريات
-</span>
+<span id="gamesLabel"></span>
 </div>
 
 <div class="stat">
 <b id="bestCombo">0</b>
-<span id="bestComboLabel">
-أفضل كومبو
-</span>
+<span id="bestComboLabel"></span>
 </div>
 
 </div>
@@ -1294,13 +1050,9 @@ type="button">
 
 <span class="ico">🎯</span>
 
-<h3 id="missionModeTitle">
-المطاردة
-</h3>
+<h3 id="missionModeTitle"></h3>
 
-<p id="missionModeDesc">
-اختر المهمة الرياضية
-</p>
+<p id="missionModeDesc"></p>
 
 </button>
 
@@ -1312,13 +1064,9 @@ type="button">
 
 <span class="ico">⚡</span>
 
-<h3 id="quickModeTitle">
-الصيد السريع
-</h3>
+<h3 id="quickModeTitle"></h3>
 
-<p id="quickModeDesc">
-60 ثانية • احصد أكبر عدد
-</p>
+<p id="quickModeDesc"></p>
 
 </button>
 
@@ -1330,13 +1078,9 @@ type="button">
 
 <span class="ico">🎲</span>
 
-<h3 id="randomModeTitle">
-التحدي العشوائي
-</h3>
+<h3 id="randomModeTitle"></h3>
 
-<p id="randomModeDesc">
-مهمة جديدة كل 20 ثانية
-</p>
+<p id="randomModeDesc"></p>
 
 </button>
 
@@ -1348,13 +1092,9 @@ type="button">
 
 <span class="ico">❤️</span>
 
-<h3 id="survivalModeTitle">
-البقاء
-</h3>
+<h3 id="survivalModeTitle"></h3>
 
-<p id="survivalModeDesc">
-3 قلوب • لا تخطئ
-</p>
+<p id="survivalModeDesc"></p>
 
 </button>
 
@@ -1366,24 +1106,13 @@ type="button">
 <button
 id="howBtn"
 type="button">
-
-ℹ️
-<span id="howText">
-طريقة اللعب
-</span>
-
+ℹ️ <span id="howText"></span>
 </button>
-
 
 <button
 id="resetBtn"
 type="button">
-
-🔄
-<span id="resetText">
-إعادة الإحصائيات
-</span>
-
+🔄 <span id="resetText"></span>
 </button>
 
 </div>
@@ -1419,9 +1148,7 @@ English
 </section>
 
 
-<!-- =====================================================
-     MISSION CHOICE
-===================================================== -->
+<!-- ================= CHOICE ================= -->
 
 <section
 id="choiceScreen"
@@ -1433,24 +1160,17 @@ class="screen choice-screen">
 class="back"
 id="choiceBack"
 type="button">
-
-←
-<span id="choiceBackText">
-رجوع
-</span>
-
+← <span id="choiceBackText"></span>
 </button>
 
 <h2
 class="choice-title"
 id="choiceTitle">
-اختر المهمة
 </h2>
 
 <p
 class="choice-sub"
 id="choiceSub">
-اختر نوع التحدي الرياضي ثم ابدأ اللعب
 </p>
 
 <div
@@ -1463,9 +1183,7 @@ id="missionGrid">
 </section>
 
 
-<!-- =====================================================
-     GAME
-===================================================== -->
+<!-- ================= GAME ================= -->
 
 <section
 id="gameScreen"
@@ -1478,13 +1196,9 @@ class="screen">
 
 <div class="game-stat">
 
-<b id="score">
-0
-</b>
+<b id="score">0</b>
 
-<span id="scoreLabel">
-النقاط
-</span>
+<span id="scoreLabel"></span>
 
 </div>
 
@@ -1495,22 +1209,16 @@ class="screen">
 ❤️ ❤️ ❤️
 </b>
 
-<span id="heartsLabel">
-القلوب
-</span>
+<span id="heartsLabel"></span>
 
 </div>
 
 
 <div class="game-stat">
 
-<b id="level">
-1
-</b>
+<b id="level">1</b>
 
-<span id="levelLabel">
-المستوى
-</span>
+<span id="levelLabel"></span>
 
 </div>
 
@@ -1523,29 +1231,31 @@ class="screen">
 
 
 <div
-class="mission-display"
-id="missionDisplay">
-🎯 المهمة
+id="missionDisplay"
+class="mission-display">
 </div>
 
 
 <div
-class="timer"
 id="timer"
+class="timer"
 style="display:none">
 </div>
 
 
 <div
-class="combo"
-id="combo">
+id="combo"
+class="combo">
 🔥 ×0
 </div>
 
 
-<div id="arena">
-</div>
+<!-- منطقة الأرقام -->
 
+<div id="arena"></div>
+
+
+<!-- منطقة التحكم مستقلة -->
 
 <div class="controls">
 
@@ -1564,9 +1274,7 @@ type="button">
 
 💣
 
-<span id="bombText">
-قنبلة
-</span>
+<span id="bombText"></span>
 
 </button>
 
@@ -1587,14 +1295,9 @@ id="overIcon">
 💔
 </div>
 
-<h2
-id="overTitle">
-انتهت اللعبة
-</h2>
+<h2 id="overTitle"></h2>
 
-<p
-id="overText">
-</p>
+<p id="overText"></p>
 
 <div class="dialog-actions">
 
@@ -1602,14 +1305,12 @@ id="overText">
 class="primary"
 id="againBtn"
 type="button">
-العب من جديد
 </button>
 
 <button
 class="secondary-btn"
 id="homeBtn"
 type="button">
-الرئيسية
 </button>
 
 </div>
@@ -1621,10 +1322,7 @@ type="button">
 </section>
 
 
-<!-- =====================================================
-     RESET MODAL
-     خارج اللعبة
-===================================================== -->
+<!-- ================= RESET ================= -->
 
 <div
 class="modal"
@@ -1639,13 +1337,11 @@ id="resetModal">
 <h2
 class="modal-title"
 id="resetTitle">
-إعادة الإحصائيات
 </h2>
 
 <div
 class="modal-text"
 id="resetQuestion">
-هل تريد حذف جميع الإحصائيات؟
 </div>
 
 <div class="modal-actions">
@@ -1654,14 +1350,12 @@ id="resetQuestion">
 class="modal-btn primary-modal"
 id="confirmResetBtn"
 type="button">
-نعم
 </button>
 
 <button
 class="modal-btn secondary-modal"
 id="cancelResetBtn"
 type="button">
-إلغاء
 </button>
 
 </div>
@@ -1671,9 +1365,7 @@ type="button">
 </div>
 
 
-<!-- =====================================================
-     HOW TO PLAY
-===================================================== -->
+<!-- ================= HOW ================= -->
 
 <div
 class="modal"
@@ -1688,7 +1380,6 @@ id="howModal">
 <h2
 class="modal-title"
 id="howTitle">
-طريقة اللعب
 </h2>
 
 <div
@@ -1700,7 +1391,6 @@ id="howContent">
 class="modal-btn secondary-modal"
 id="closeHowBtn"
 type="button">
-حسنًا
 </button>
 
 </div>
@@ -1725,7 +1415,6 @@ id="toast">
 const I18N={
 
 ar:{
-
 heroTag:"رياضيات • سرعة • دقة",
 
 bestScore:"أفضل نتيجة",
@@ -1748,9 +1437,7 @@ how:"طريقة اللعب",
 reset:"إعادة الإحصائيات",
 
 choiceTitle:"اختر المهمة",
-
-choiceSub:
-"اختر نوع التحدي الرياضي ثم ابدأ اللعب",
+choiceSub:"اختر نوع التحدي الرياضي ثم ابدأ اللعب",
 
 back:"رجوع",
 
@@ -1766,140 +1453,78 @@ home:"الرئيسية",
 gameOver:"انتهت اللعبة",
 timeUp:"انتهى الوقت!",
 
-wrong:"خطأ! -قلب",
+wrong:"خطأ! - قلب",
 
-resetQuestion:
-"هل تريد حذف جميع الإحصائيات؟",
+resetTitle:"إعادة الإحصائيات",
+resetQuestion:"هل تريد حذف جميع الإحصائيات؟",
 
 yes:"نعم",
 cancel:"إلغاء",
 
-resetTitle:
-"إعادة الإحصائيات",
+resetDone:"✨ تمت إعادة جميع الإحصائيات بنجاح",
 
-resetDone:
-"✨ تمت إعادة جميع الإحصائيات بنجاح",
-
-howTitle:
-"طريقة اللعب",
+howTitle:"طريقة اللعب",
 
 howContent:
-"اضغط فقط على الأعداد التي توافق المهمة. الإجابة الصحيحة تزيد النقاط والكومبو. الضغط على عدد خاطئ ينقص قلبًا ويعيد الكومبو إلى الصفر. عند فقدان القلوب الثلاثة تنتهي اللعبة. القنبلة تمسح الأعداد الظاهرة وتحرر مساحة جديدة، ثم تحتاج إلى الانتظار حتى تعاد شحنها.",
+"اضغط فقط على الأعداد التي توافق المهمة. الإجابة الصحيحة تزيد النقاط والكومبو. الضغط على عدد خاطئ ينقص قلبًا ويعيد الكومبو إلى الصفر. عند فقدان القلوب الثلاثة تنتهي اللعبة. القنبلة تمسح الأعداد الظاهرة ولا تخصم قلبًا، ثم تعاد شحنها.",
 
-prime:
-"الأعداد الأولية",
+prime:"الأعداد الأولية",
+primeDesc:"اختر الأعداد الأولية فقط",
 
-primeDesc:
-"اختر الأعداد الأولية فقط",
+nonprime:"الأعداد غير الأولية",
+nonprimeDesc:"اختر كل عدد ليس أوليًا",
 
-nonprime:
-"الأعداد غير الأولية",
+even:"الأعداد الزوجية",
+evenDesc:"الأعداد القابلة للقسمة على 2",
 
-nonprimeDesc:
-"اختر كل عدد ليس أوليًا",
+odd:"الأعداد الفردية",
+oddDesc:"الأعداد غير القابلة للقسمة على 2",
 
-even:
-"الأعداد الزوجية",
+multiple3:"مضاعفات 3",
+multiple3Desc:"اختر مضاعفات العدد 3",
 
-evenDesc:
-"الأعداد القابلة للقسمة على 2",
+multiple4:"مضاعفات 4",
+multiple4Desc:"اختر مضاعفات العدد 4",
 
-odd:
-"الأعداد الفردية",
+multiple5:"مضاعفات 5",
+multiple5Desc:"اختر مضاعفات العدد 5",
 
-oddDesc:
-"الأعداد غير القابلة للقسمة على 2",
+square:"المربعات الكاملة",
+squareDesc:"مثل 1، 4، 9، 16…",
 
-multiple3:
-"مضاعفات 3",
+divisor:"قواسم العدد",
+divisorDesc:"اختر القواسم الصحيحة للعدد",
 
-multiple3Desc:
-"اختر مضاعفات العدد 3",
+greater:"أكبر من",
+greaterDesc:"اختر الأعداد الأكبر من الحد",
 
-multiple4:
-"مضاعفات 4",
+less:"أصغر من",
+lessDesc:"اختر الأعداد الأصغر من الحد",
 
-multiple4Desc:
-"اختر مضاعفات العدد 4",
+targetPrime:"الأعداد الأولية",
+targetNonprime:"الأعداد غير الأولية",
+targetEven:"الأعداد الزوجية",
+targetOdd:"الأعداد الفردية",
+targetMultiple:"مضاعفات",
+targetSquare:"المربعات الكاملة",
+targetDivisor:"قواسم العدد",
+targetGreater:"أعداد أكبر من",
+targetLess:"أعداد أصغر من",
 
-multiple5:
-"مضاعفات 5",
+challengeNew:"مهمة جديدة",
 
-multiple5Desc:
-"اختر مضاعفات العدد 5",
-
-square:
-"المربعات الكاملة",
-
-squareDesc:
-"مثل 1، 4، 9، 16…",
-
-divisor:
-"قواسم العدد",
-
-divisorDesc:
-"اختر القواسم الصحيحة للعدد",
-
-greater:
-"أكبر من",
-
-greaterDesc:
-"اختر الأعداد الأكبر من الحد",
-
-less:
-"أصغر من",
-
-lessDesc:
-"اختر الأعداد الأصغر من الحد",
-
-targetPrime:
-"الأعداد الأولية",
-
-targetNonprime:
-"الأعداد غير الأولية",
-
-targetEven:
-"الأعداد الزوجية",
-
-targetOdd:
-"الأعداد الفردية",
-
-targetMultiple:
-"مضاعفات",
-
-targetSquare:
-"المربعات الكاملة",
-
-targetDivisor:
-"قواسم العدد",
-
-targetGreater:
-"أعداد أكبر من",
-
-targetLess:
-"أعداد أصغر من",
-
-challengeNew:
-"مهمة جديدة",
-
-bombWait:
-"جاهزة بعد",
+bombWait:"جاهزة بعد",
 
 seconds:"ث",
 
-finalScore:
-"نتيجتك",
+finalScore:"نتيجتك",
+finalCombo:"أفضل كومبو",
 
-finalCombo:
-"أفضل كومبو",
-
-levelUp:
-"🔥 كومبو رائع!"
-
+levelUp:"🔥 كومبو رائع!"
 },
 
-fr:{
 
+fr:{
 heroTag:"Maths • Vitesse • Précision",
 
 bestScore:"Meilleur score",
@@ -1922,9 +1547,7 @@ how:"Comment jouer",
 reset:"Réinitialiser",
 
 choiceTitle:"Choisir une mission",
-
-choiceSub:
-"Choisissez le défi puis commencez",
+choiceSub:"Choisissez le défi puis commencez",
 
 back:"Retour",
 
@@ -1942,138 +1565,76 @@ timeUp:"Temps écoulé !",
 
 wrong:"Erreur ! -1 cœur",
 
-resetQuestion:
-"Supprimer toutes les statistiques ?",
+resetTitle:"Réinitialiser",
+resetQuestion:"Supprimer toutes les statistiques ?",
 
 yes:"Oui",
 cancel:"Annuler",
 
-resetTitle:
-"Réinitialiser",
+resetDone:"✨ Statistiques réinitialisées",
 
-resetDone:
-"✨ Statistiques réinitialisées",
-
-howTitle:
-"Comment jouer",
+howTitle:"Comment jouer",
 
 howContent:
-"Touchez uniquement les nombres qui correspondent à la mission. Une bonne réponse ajoute des points et augmente le combo. Une mauvaise réponse retire un cœur et remet le combo à zéro. À zéro cœur, la partie est terminée. La bombe efface les nombres visibles et libère de l'espace, puis se recharge.",
+"Touchez uniquement les nombres qui correspondent à la mission. Une bonne réponse ajoute des points et augmente le combo. Une mauvaise réponse retire un cœur et remet le combo à zéro. À zéro cœur, la partie est terminée. La bombe efface les nombres visibles sans retirer de cœur, puis se recharge.",
 
-prime:
-"Nombres premiers",
+prime:"Nombres premiers",
+primeDesc:"Touchez uniquement les nombres premiers",
 
-primeDesc:
-"Touchez uniquement les nombres premiers",
+nonprime:"Nombres non premiers",
+nonprimeDesc:"Touchez les nombres qui ne sont pas premiers",
 
-nonprime:
-"Nombres non premiers",
+even:"Nombres pairs",
+evenDesc:"Divisibles par 2",
 
-nonprimeDesc:
-"Touchez les nombres qui ne sont pas premiers",
+odd:"Nombres impairs",
+oddDesc:"Non divisibles par 2",
 
-even:
-"Nombres pairs",
+multiple3:"Multiples de 3",
+multiple3Desc:"Touchez les multiples de 3",
 
-evenDesc:
-"Divisibles par 2",
+multiple4:"Multiples de 4",
+multiple4Desc:"Touchez les multiples de 4",
 
-odd:
-"Nombres impairs",
+multiple5:"Multiples de 5",
+multiple5Desc:"Touchez les multiples de 5",
 
-oddDesc:
-"Non divisibles par 2",
+square:"Carrés parfaits",
+squareDesc:"1, 4, 9, 16…",
 
-multiple3:
-"Multiples de 3",
+divisor:"Diviseurs",
+divisorDesc:"Touchez les diviseurs du nombre",
 
-multiple3Desc:
-"Touchez les multiples de 3",
+greater:"Supérieurs à",
+greaterDesc:"Touchez les nombres supérieurs à la limite",
 
-multiple4:
-"Multiples de 4",
+less:"Inférieurs à",
+lessDesc:"Touchez les nombres inférieurs à la limite",
 
-multiple4Desc:
-"Touchez les multiples de 4",
+targetPrime:"Nombres premiers",
+targetNonprime:"Nombres non premiers",
+targetEven:"Nombres pairs",
+targetOdd:"Nombres impairs",
+targetMultiple:"Multiples de",
+targetSquare:"Carrés parfaits",
+targetDivisor:"Diviseurs de",
+targetGreater:"Nombres supérieurs à",
+targetLess:"Nombres inférieurs à",
 
-multiple5:
-"Multiples de 5",
+challengeNew:"Nouvelle mission",
 
-multiple5Desc:
-"Touchez les multiples de 5",
-
-square:
-"Carrés parfaits",
-
-squareDesc:
-"1, 4, 9, 16…",
-
-divisor:
-"Diviseurs",
-
-divisorDesc:
-"Touchez les diviseurs du nombre",
-
-greater:
-"Supérieurs à",
-
-greaterDesc:
-"Touchez les nombres supérieurs à la limite",
-
-less:
-"Inférieurs à",
-
-lessDesc:
-"Touchez les nombres inférieurs à la limite",
-
-targetPrime:
-"Nombres premiers",
-
-targetNonprime:
-"Nombres non premiers",
-
-targetEven:
-"Nombres pairs",
-
-targetOdd:
-"Nombres impairs",
-
-targetMultiple:
-"Multiples de",
-
-targetSquare:
-"Carrés parfaits",
-
-targetDivisor:
-"Diviseurs de",
-
-targetGreater:
-"Nombres supérieurs à",
-
-targetLess:
-"Nombres inférieurs à",
-
-challengeNew:
-"Nouvelle mission",
-
-bombWait:
-"Prête dans",
+bombWait:"Prête dans",
 
 seconds:"s",
 
-finalScore:
-"Votre score",
+finalScore:"Votre score",
+finalCombo:"Meilleur combo",
 
-finalCombo:
-"Meilleur combo",
-
-levelUp:
-"🔥 Super combo !"
-
+levelUp:"🔥 Super combo !"
 },
 
-en:{
 
+en:{
 heroTag:"Math • Speed • Accuracy",
 
 bestScore:"Best score",
@@ -2096,9 +1657,7 @@ how:"How to play",
 reset:"Reset statistics",
 
 choiceTitle:"Choose a mission",
-
-choiceSub:
-"Choose a math challenge and start",
+choiceSub:"Choose a math challenge and start",
 
 back:"Back",
 
@@ -2116,149 +1675,84 @@ timeUp:"Time's up!",
 
 wrong:"Wrong! -1 heart",
 
-resetQuestion:
-"Delete all statistics?",
+resetTitle:"Reset statistics",
+resetQuestion:"Delete all statistics?",
 
 yes:"Yes",
 cancel:"Cancel",
 
-resetTitle:
-"Reset statistics",
+resetDone:"✨ Statistics reset successfully",
 
-resetDone:
-"✨ Statistics reset successfully",
-
-howTitle:
-"How to play",
+howTitle:"How to play",
 
 howContent:
-"Tap only numbers that match the mission. A correct answer adds points and increases the combo. A wrong answer removes one heart and resets the combo. When all three hearts are lost, the game ends. The bomb clears visible numbers and creates space, then recharges.",
+"Tap only numbers that match the mission. A correct answer adds points and increases the combo. A wrong answer removes one heart and resets the combo. When all three hearts are lost, the game ends. The bomb clears visible numbers without removing a heart, then recharges.",
 
-prime:
-"Prime numbers",
+prime:"Prime numbers",
+primeDesc:"Tap prime numbers only",
 
-primeDesc:
-"Tap prime numbers only",
+nonprime:"Non-prime numbers",
+nonprimeDesc:"Tap every number that is not prime",
 
-nonprime:
-"Non-prime numbers",
+even:"Even numbers",
+evenDesc:"Divisible by 2",
 
-nonprimeDesc:
-"Tap every number that is not prime",
+odd:"Odd numbers",
+oddDesc:"Not divisible by 2",
 
-even:
-"Even numbers",
+multiple3:"Multiples of 3",
+multiple3Desc:"Tap multiples of 3",
 
-evenDesc:
-"Divisible by 2",
+multiple4:"Multiples of 4",
+multiple4Desc:"Tap multiples of 4",
 
-odd:
-"Odd numbers",
+multiple5:"Multiples of 5",
+multiple5Desc:"Tap multiples of 5",
 
-oddDesc:
-"Not divisible by 2",
+square:"Perfect squares",
+squareDesc:"1, 4, 9, 16…",
 
-multiple3:
-"Multiples of 3",
+divisor:"Divisors",
+divisorDesc:"Tap divisors of the target",
 
-multiple3Desc:
-"Tap multiples of 3",
+greater:"Greater than",
+greaterDesc:"Tap numbers above the limit",
 
-multiple4:
-"Multiples of 4",
+less:"Less than",
+lessDesc:"Tap numbers below the limit",
 
-multiple4Desc:
-"Tap multiples of 4",
+targetPrime:"Prime numbers",
+targetNonprime:"Non-prime numbers",
+targetEven:"Even numbers",
+targetOdd:"Odd numbers",
+targetMultiple:"Multiples of",
+targetSquare:"Perfect squares",
+targetDivisor:"Divisors of",
+targetGreater:"Numbers greater than",
+targetLess:"Numbers less than",
 
-multiple5:
-"Multiples of 5",
+challengeNew:"New mission",
 
-multiple5Desc:
-"Tap multiples of 5",
-
-square:
-"Perfect squares",
-
-squareDesc:
-"1, 4, 9, 16…",
-
-divisor:
-"Divisors",
-
-divisorDesc:
-"Tap divisors of the target",
-
-greater:
-"Greater than",
-
-greaterDesc:
-"Tap numbers above the limit",
-
-less:
-"Less than",
-
-lessDesc:
-"Tap numbers below the limit",
-
-targetPrime:
-"Prime numbers",
-
-targetNonprime:
-"Non-prime numbers",
-
-targetEven:
-"Even numbers",
-
-targetOdd:
-"Odd numbers",
-
-targetMultiple:
-"Multiples of",
-
-targetSquare:
-"Perfect squares",
-
-targetDivisor:
-"Divisors of",
-
-targetGreater:
-"Numbers greater than",
-
-targetLess:
-"Numbers less than",
-
-challengeNew:
-"New mission",
-
-bombWait:
-"Ready in",
+bombWait:"Ready in",
 
 seconds:"s",
 
-finalScore:
-"Your score",
+finalScore:"Your score",
+finalCombo:"Best combo",
 
-finalCombo:
-"Best combo",
-
-levelUp:
-"🔥 Great combo!"
-
+levelUp:"🔥 Great combo!"
 }
-
 };
 
 
 /* =====================================================
-   HELPERS
+   STATE
 ===================================================== */
 
-const $=id=>
-document.getElementById(id);
+const $=id=>document.getElementById(id);
 
 let lang=
-localStorage.getItem("nh_lang")
-||"ar";
+localStorage.getItem("nh_lang")||"ar";
 
 let stats=
 JSON.parse(
@@ -2269,10 +1763,6 @@ localStorage.getItem("nh_stats")
 
 let choiceMode="mission";
 
-
-/* =====================================================
-   GAME STATE
-===================================================== */
 
 let state={
 
@@ -2296,7 +1786,7 @@ startTime:0,
 
 elapsed:0,
 
-timer:null,
+lastFrame:0,
 
 spawnTimer:null,
 
@@ -2399,7 +1889,63 @@ desc:"lessDesc"
 
 function t(key){
 
-return I18N[lang][key] ?? key;
+return I18N[lang][key]||key;
+
+}
+
+
+/* =====================================================
+   VISUAL VIEWPORT
+===================================================== */
+
+/*
+هذا هو الإصلاح الأساسي للمشكلة التي ظهرت في الصورة.
+
+Chrome قد يغيّر المساحة المرئية بسبب شريط
+العنوان السفلي.
+
+نأخذ الارتفاع الحقيقي من visualViewport.
+*/
+
+function updateViewport(){
+
+const vv=window.visualViewport;
+
+const h=
+vv
+?vv.height
+:window.innerHeight;
+
+document.documentElement
+.style
+.setProperty(
+"--vh",
+h+"px"
+);
+
+}
+
+updateViewport();
+
+window.addEventListener(
+"resize",
+updateViewport,
+{passive:true}
+);
+
+if(window.visualViewport){
+
+window.visualViewport.addEventListener(
+"resize",
+updateViewport,
+{passive:true}
+);
+
+window.visualViewport.addEventListener(
+"scroll",
+updateViewport,
+{passive:true}
+);
 
 }
 
@@ -2419,15 +1965,49 @@ JSON.stringify(stats)
 
 
 /* =====================================================
-   APPLY LANGUAGE
+   UI
+===================================================== */
+
+function updateStatsUI(){
+
+$("bestScore").textContent=
+stats.bestScore;
+
+$("games").textContent=
+stats.games;
+
+$("bestCombo").textContent=
+stats.bestCombo;
+
+}
+
+
+function showScreen(id){
+
+document
+.querySelectorAll(".screen")
+.forEach(
+s=>s.classList.remove("active")
+);
+
+$(id).classList.add("active");
+
+}
+
+
+/* =====================================================
+   LANGUAGE
 ===================================================== */
 
 function applyLanguage(){
 
-document.documentElement.lang=lang;
+document.documentElement.lang=
+lang;
 
 document.documentElement.dir=
-lang==="ar"?"rtl":"ltr";
+lang==="ar"
+?"rtl"
+:"ltr";
 
 
 const map={
@@ -2435,61 +2015,46 @@ const map={
 heroTag:"heroTag",
 
 bestScoreLabel:"bestScore",
-
 gamesLabel:"games",
-
 bestComboLabel:"bestCombo",
 
 missionModeTitle:"mission",
-
 missionModeDesc:"missionDesc",
 
 quickModeTitle:"quick",
-
 quickModeDesc:"quickDesc",
 
 randomModeTitle:"random",
-
 randomModeDesc:"randomDesc",
 
 survivalModeTitle:"survival",
-
 survivalModeDesc:"survivalDesc",
 
 howText:"how",
-
 resetText:"reset",
 
 choiceTitle:"choiceTitle",
-
 choiceSub:"choiceSub",
-
 choiceBackText:"back",
 
 scoreLabel:"points",
-
 heartsLabel:"hearts",
-
 levelLabel:"level",
 
 bombText:"bomb",
 
 againBtn:"again",
-
 homeBtn:"home",
 
 overTitle:"gameOver",
 
 resetTitle:"resetTitle",
-
 resetQuestion:"resetQuestion",
 
 confirmResetBtn:"yes",
-
 cancelResetBtn:"cancel",
 
 howTitle:"howTitle",
-
 closeHowBtn:"cancel"
 
 };
@@ -2497,7 +2062,8 @@ closeHowBtn:"cancel"
 
 for(const id in map){
 
-$(id).textContent=t(map[id]);
+$(id).textContent=
+t(map[id]);
 
 }
 
@@ -2519,49 +2085,13 @@ updateCombo();
 
 document
 .querySelectorAll(".lang")
-.forEach(btn=>{
-
-btn.classList.toggle(
+.forEach(
+b=>
+b.classList.toggle(
 "active",
-btn.dataset.lang===lang
+b.dataset.lang===lang
+)
 );
-
-});
-
-}
-
-
-/* =====================================================
-   STATS UI
-===================================================== */
-
-function updateStatsUI(){
-
-$("bestScore").textContent=
-stats.bestScore;
-
-$("games").textContent=
-stats.games;
-
-$("bestCombo").textContent=
-stats.bestCombo;
-
-}
-
-
-/* =====================================================
-   SCREEN
-===================================================== */
-
-function showScreen(id){
-
-document
-.querySelectorAll(".screen")
-.forEach(s=>
-s.classList.remove("active")
-);
-
-$(id).classList.add("active");
 
 }
 
@@ -2573,7 +2103,8 @@ $(id).classList.add("active");
 function randomInt(min,max){
 
 return Math.floor(
-Math.random()*(max-min+1)
+Math.random()*
+(max-min+1)
 )+min;
 
 }
@@ -2585,11 +2116,14 @@ Math.random()*(max-min+1)
 
 function isPrime(n){
 
-if(n<2)return false;
+if(n<2)
+return false;
 
-if(n===2)return true;
+if(n===2)
+return true;
 
-if(n%2===0)return false;
+if(n%2===0)
+return false;
 
 for(
 let i=3;
@@ -2608,56 +2142,58 @@ return true;
 
 
 /* =====================================================
-   MAKE MISSION
+   MISSION
 ===================================================== */
 
 function makeMission(id){
 
-if(!id){
+let source;
 
-return makeMission(
+if(id){
+
+source=
+missions.find(
+m=>m.id===id
+);
+
+}else{
+
+source=
 missions[
 randomInt(
 0,
 missions.length-1
 )
-].id
-);
+];
 
 }
 
 
-const base=
-missions.find(
-m=>m.id===id
-);
-
-
-const mission={
-...base
+const m={
+...source
 };
 
 
-if(id==="divisor"){
+if(m.id==="divisor"){
 
-mission.target=
+m.target=
 randomInt(12,36);
 
 }
 
 
 if(
-id==="greater" ||
-id==="less"
+m.id==="greater" ||
+m.id==="less"
 ){
 
-mission.target=
+m.target=
 randomInt(25,55);
 
 }
 
 
-return mission;
+return m;
 
 }
 
@@ -2668,7 +2204,8 @@ return mission;
 
 function missionLabel(m){
 
-if(!m)return "";
+if(!m)
+return "";
 
 if(m.id==="prime")
 return "🎯 "+t("targetPrime");
@@ -2683,8 +2220,8 @@ if(m.id==="odd")
 return "🎯 "+t("targetOdd");
 
 if(
-m.id==="multiple3" ||
-m.id==="multiple4" ||
+m.id==="multiple3"||
+m.id==="multiple4"||
 m.id==="multiple5"
 ){
 
@@ -2721,34 +2258,31 @@ return "";
 }
 
 
-/* =====================================================
-   MISSION DISPLAY
-===================================================== */
-
 function updateMissionDisplay(){
 
-$("missionDisplay").textContent=
-missionLabel(state.mission);
+$("missionDisplay")
+.textContent=
+missionLabel(
+state.mission
+);
 
 }
 
 
 /* =====================================================
-   CHOICE SCREEN
+   CHOICE
 ===================================================== */
 
 function openMissionChoice(mode){
 
 choiceMode=mode;
 
-showScreen("choiceScreen");
+showScreen(
+"choiceScreen"
+);
 
 }
 
-
-/* =====================================================
-   RENDER CHOICES
-===================================================== */
 
 function renderMissionChoices(){
 
@@ -2760,23 +2294,21 @@ grid.innerHTML="";
 
 missions.forEach(m=>{
 
-const button=
+const b=
 document.createElement("button");
 
-button.type="button";
+b.type="button";
 
-button.className=
+b.className=
 "mission-card";
 
-
-button.innerHTML=
+b.innerHTML=
 `
 <b>${t(m.title)}</b>
 <span>${t(m.desc)}</span>
 `;
 
-
-button.addEventListener(
+b.addEventListener(
 "click",
 ()=>{
 
@@ -2788,8 +2320,7 @@ makeMission(m.id)
 }
 );
 
-
-grid.appendChild(button);
+grid.appendChild(b);
 
 });
 
@@ -2797,7 +2328,7 @@ grid.appendChild(button);
 
 
 /* =====================================================
-   CORRECT LOGIC
+   MATHEMATICAL LOGIC
 ===================================================== */
 
 function correctFor(n,m){
@@ -2816,8 +2347,7 @@ return isPrime(n);
 case"nonprime":
 
 /*
-1 ليس عددًا أوليًا
-لذلك هو غير أولي
+1 ليس أوليًا، لذلك هو غير أولي.
 */
 
 return !isPrime(n);
@@ -2915,7 +2445,7 @@ state.combo;
 
 
 /* =====================================================
-   SPAWN CONFIG
+   SPEED + DENSITY
 ===================================================== */
 
 function getSpawnConfig(){
@@ -2925,47 +2455,42 @@ state.elapsed/1000;
 
 
 /*
-السرعة:
-
-تبدأ تقريبًا 34px/s
-ثم ترتفع تدريجيًا
+البداية بطيئة.
+ثم تزداد السرعة تدريجيًا.
 */
 
 const speed=
 Math.min(
-125,
+118,
+
 34+
-seconds*1.45+
-(state.level-1)*4
+seconds*1.25+
+(state.level-1)*3.5
 );
 
 
 /*
-الفاصل بين الموجات
-يقل تدريجيًا
+الكثافة تزيد تدريجيًا.
 */
 
 const interval=
 Math.max(
-430,
-1000-
-seconds*8-
-(state.level-1)*30
+520,
+
+1050-
+seconds*7-
+(state.level-1)*25
 );
 
-
-/*
-الكثافة:
-
-2 → 3 → 4 → 5
-بشكل تدريجي
-*/
 
 const count=
 Math.min(
 5,
+
 2+
-Math.floor(seconds/22)
+Math.floor(
+seconds/25
+)
 );
 
 
@@ -2979,7 +2504,7 @@ count
 
 
 /* =====================================================
-   SPAWN TARGET
+   SPAWN
 ===================================================== */
 
 function spawnTarget(){
@@ -2991,14 +2516,18 @@ return;
 const arena=
 $("arena");
 
-const rect=
-arena.getBoundingClientRect();
+const w=
+arena.clientWidth;
+
+const h=
+arena.clientHeight;
 
 
 if(
-rect.width<100 ||
-rect.height<100
-)return;
+w<120||
+h<120
+)
+return;
 
 
 const cfg=
@@ -3010,6 +2539,24 @@ randomInt(1,99);
 
 const id=
 ++state.id;
+
+const radius=32;
+
+const x=
+randomInt(
+radius+2,
+Math.max(
+radius+3,
+w-radius-2
+)
+);
+
+
+/*
+الأرقام تبدأ فوق منطقة اللعب
+*/
+
+const y=-70;
 
 
 const el=
@@ -3024,31 +2571,11 @@ id;
 el.textContent=
 number;
 
-
-const pad=38;
-
-const x=
-randomInt(
-pad,
-Math.max(
-pad+1,
-Math.floor(rect.width-pad)
-)
-);
-
-
-/*
-كل الأرقام تبدأ من أعلى
-ثم تسقط.
-*/
-
-const y=-40;
-
 el.style.left=
 x+"px";
 
 el.style.top=
-y+"px";
+"0px";
 
 
 arena.appendChild(el);
@@ -3096,13 +2623,15 @@ if(state.running)
 spawnTarget();
 
 },
-i*100
+i*110
 );
 
 }
 
 
-scheduleSpawn(
+state.spawnTimer=
+setTimeout(
+spawnWave,
 cfg.interval
 );
 
@@ -3110,32 +2639,32 @@ cfg.interval
 
 
 /* =====================================================
-   SCHEDULE
-===================================================== */
-
-function scheduleSpawn(ms){
-
-clearTimeout(
-state.spawnTimer
-);
-
-state.spawnTimer=
-setTimeout(
-spawnWave,
-ms
-);
-
-}
-
-
-/* =====================================================
-   ANIMATION
+   GAME LOOP
 ===================================================== */
 
 function animate(now){
 
 if(!state.running)
 return;
+
+
+if(!state.lastFrame)
+state.lastFrame=now;
+
+
+const dt=
+Math.min(
+0.04,
+(now-state.lastFrame)/1000
+);
+
+
+state.lastFrame=
+now;
+
+
+state.elapsed=
+(now-state.startTime)/1000;
 
 
 const arena=
@@ -3145,12 +2674,8 @@ const height=
 arena.clientHeight;
 
 
-state.elapsed=
-(now-state.startTime)/1000;
-
-
 /*
-المستوى يرتفع كل 8 ثوان
+المستوى يرتفع كل 8 ثوان.
 */
 
 const newLevel=
@@ -3173,37 +2698,39 @@ state.level;
 
 
 /*
-تحريك الأرقام
+تحريك كل رقم.
 */
 
 for(
-const [id,obj]
+const [id,o]
 of state.targets
 ){
 
-obj.y+=
-obj.speed/60;
+o.y+=
+o.speed*dt;
 
 
-obj.el.style.transform=
+/*
+نستعمل translate فقط.
+*/
+
+o.el.style.transform=
 `
-translate(-50%,-50%)
-translateY(${obj.y}px)
+translate(-50%,${o.y}px)
 `;
 
 
 /*
-إذا خرج الرقم من منطقة اللعب
-يختفي فقط.
-لا يعتبر خطأ.
+خارج منطقة اللعب = إزالة فقط.
+لا خسارة قلب.
 */
 
 if(
-obj.y>
-height+60
+o.y>
+height+75
 ){
 
-obj.el.remove();
+o.el.remove();
 
 state.targets.delete(id);
 
@@ -3212,11 +2739,11 @@ state.targets.delete(id);
 }
 
 
-/*
-QUICK HUNT
-*/
+/* QUICK */
 
-if(state.mode==="quick"){
+if(
+state.mode==="quick"
+){
 
 const left=
 Math.max(
@@ -3233,9 +2760,7 @@ t("seconds");
 
 if(left<=0){
 
-endGame(
-"TIME_UP"
-);
+endGame("TIME_UP");
 
 return;
 
@@ -3244,19 +2769,11 @@ return;
 }
 
 
-/*
-RANDOM CHALLENGE
+/* RANDOM */
 
-المهمة تتغير كل 20 ثانية
-*/
-
-if(state.mode==="random"){
-
-const bucket=
-Math.floor(
-state.elapsed/20
-);
-
+if(
+state.mode==="random"
+){
 
 const remaining=
 20-
@@ -3270,12 +2787,19 @@ Math.ceil(remaining)+
 t("seconds");
 
 
+const bucket=
+Math.floor(
+state.elapsed/20
+);
+
+
 if(
 bucket!==state.randomBucket
 ){
 
 state.randomBucket=
 bucket;
+
 
 if(bucket>0){
 
@@ -3302,16 +2826,36 @@ animate
 
 function nextRandomMission(){
 
+const old=
+state.mission?.id;
+
+let newId;
+
+do{
+
+newId=
+missions[
+randomInt(
+0,
+missions.length-1
+)
+].id;
+
+}
+while(
+missions.length>1 &&
+newId===old
+);
+
+
 state.mission=
-makeMission();
+makeMission(newId);
 
 updateMissionDisplay();
 
 toast(
 "🎲 "+
-t("challengeNew")+
-" — "+
-missionLabel(state.mission)
+t("challengeNew")
 );
 
 }
@@ -3324,31 +2868,41 @@ missionLabel(state.mission)
 function hitTarget(el){
 
 if(
-!state.running ||
+!state.running||
 !el
-)return;
+)
+return;
 
 
 const id=
-Number(el.dataset.id);
+Number(
+el.dataset.id
+);
 
 
 const obj=
 state.targets.get(id);
 
 
+/*
+مهم:
+إذا تم الضغط مرتين بسرعة
+لن تتم معالجة الرقم مرتين.
+*/
+
 if(!obj)
 return;
 
 
-/*
-نحذف الهدف مباشرة
-حتى لا يمكن الضغط عليه مرتين.
-*/
-
 state.targets.delete(id);
 
-el.remove();
+el.classList.add("hit");
+
+
+setTimeout(
+()=>el.remove(),
+150
+);
 
 
 const correct=
@@ -3361,8 +2915,8 @@ state.mission
 if(correct){
 
 /*
-الإجابة الصحيحة:
-نقاط + كومبو
+صحيح:
+نقاط
 */
 
 state.combo++;
@@ -3374,10 +2928,6 @@ state.combo
 );
 
 
-/*
-النقاط تزداد مع الكومبو
-*/
-
 const points=
 10+
 Math.min(
@@ -3385,7 +2935,10 @@ Math.min(
 (state.combo-1)*2
 );
 
-state.score+=points;
+
+state.score+=
+points;
+
 
 $("score").textContent=
 state.score;
@@ -3394,10 +2947,6 @@ updateCombo();
 
 sound("correct");
 
-
-/*
-رسالة صغيرة عند الكومبو
-*/
 
 if(
 state.combo>0 &&
@@ -3410,13 +2959,12 @@ t("levelUp")
 
 }
 
-
 }else{
 
 /*
-الإجابة الخاطئة:
-قلب ناقص
-كومبو = صفر
+خطأ:
+قلب واحد
+كومبو صفر
 */
 
 state.hearts--;
@@ -3434,11 +2982,9 @@ t("wrong")
 );
 
 
-/*
-ثلاثة أخطاء = Game Over
-*/
-
-if(state.hearts<=0){
+if(
+state.hearts<=0
+){
 
 endGame(
 "GAME_OVER"
@@ -3455,17 +3001,34 @@ endGame(
    BOMB
 ===================================================== */
 
+function clearTargets(){
+
+for(
+const obj
+of state.targets.values()
+){
+
+obj.el.remove();
+
+}
+
+state.targets.clear();
+
+}
+
+
 function useBomb(){
 
 if(
-!state.running ||
+!state.running||
 !state.bombReady
-)return;
+)
+return;
 
 
 /*
-القنبلة تمسح جميع الأرقام الظاهرة.
-لا تعطي نقاطًا ولا تخصم قلبًا.
+القنبلة لا تعطي نقاطًا
+ولا تخصم قلبًا.
 */
 
 clearTargets();
@@ -3474,11 +3037,11 @@ sound("bomb");
 
 state.bombReady=false;
 
-$("bombBtn").disabled=true;
+$("bombBtn").disabled=
+true;
 
 
 let seconds=8;
-
 
 $("bombText").textContent=
 t("bombWait")+
@@ -3504,9 +3067,11 @@ clearInterval(
 state.bombCooldown
 );
 
-state.bombReady=true;
+state.bombReady=
+true;
 
-$("bombBtn").disabled=false;
+$("bombBtn").disabled=
+false;
 
 $("bombText").textContent=
 t("bomb");
@@ -3528,27 +3093,7 @@ seconds;
 
 
 /* =====================================================
-   CLEAR TARGETS
-===================================================== */
-
-function clearTargets(){
-
-for(
-const obj
-of state.targets.values()
-){
-
-obj.el.remove();
-
-}
-
-state.targets.clear();
-
-}
-
-
-/* =====================================================
-   AUDIO
+   SOUND
 ===================================================== */
 
 function sound(type){
@@ -3556,7 +3101,7 @@ function sound(type){
 try{
 
 const AudioContext=
-window.AudioContext ||
+window.AudioContext||
 window.webkitAudioContext;
 
 if(!AudioContext)
@@ -3575,6 +3120,15 @@ const ctx=
 window.nhAudio;
 
 
+if(
+ctx.state==="suspended"
+){
+
+ctx.resume();
+
+}
+
+
 const oscillator=
 ctx.createOscillator();
 
@@ -3588,26 +3142,12 @@ type==="wrong"
 :"sine";
 
 
-if(type==="correct"){
-
 oscillator.frequency.value=
-620;
-
-}
-
-else if(type==="bomb"){
-
-oscillator.frequency.value=
-180;
-
-}
-
-else{
-
-oscillator.frequency.value=
-150;
-
-}
+type==="correct"
+?620
+:type==="bomb"
+?180
+:150;
 
 
 gain.gain.setValueAtTime(
@@ -3615,10 +3155,12 @@ gain.gain.setValueAtTime(
 ctx.currentTime
 );
 
+
 gain.gain.exponentialRampToValueAtTime(
 .08,
 ctx.currentTime+.01
 );
+
 
 gain.gain.exponentialRampToValueAtTime(
 .0001,
@@ -3648,7 +3190,10 @@ ctx.currentTime+.14
    START GAME
 ===================================================== */
 
-function startGame(mode,mission){
+function startGame(
+mode,
+mission
+){
 
 stopGame(false);
 
@@ -3657,7 +3202,7 @@ state.mode=
 mode;
 
 state.mission=
-mission ||
+mission||
 makeMission();
 
 
@@ -3678,6 +3223,8 @@ performance.now();
 
 state.elapsed=0;
 
+state.lastFrame=0;
+
 state.id=0;
 
 state.randomBucket=-1;
@@ -3685,11 +3232,15 @@ state.randomBucket=-1;
 state.bombReady=true;
 
 
-$("score").textContent="0";
+$("score").textContent=
+"0";
 
-$("level").textContent="1";
+$("level").textContent=
+"1";
 
-$("bombBtn").disabled=false;
+
+$("bombBtn").disabled=
+false;
 
 $("bombText").textContent=
 t("bomb");
@@ -3703,12 +3254,14 @@ updateMissionDisplay();
 
 
 $("gameOverOverlay")
-.classList.remove("show");
+.classList.remove(
+"show"
+);
 
 
 $("timer").style.display=
 (
-mode==="quick" ||
+mode==="quick"||
 mode==="random"
 )
 ?"block"
@@ -3722,6 +3275,7 @@ $("timer").textContent=
 t("seconds");
 
 }
+
 
 if(mode==="random"){
 
@@ -3741,8 +3295,14 @@ showScreen(
 
 
 /*
-البداية خفيفة:
-رقمان فقط.
+تحديث مساحة الهاتف قبل بدء اللعبة.
+*/
+
+updateViewport();
+
+
+/*
+بداية هادئة.
 */
 
 spawnTarget();
@@ -3750,7 +3310,11 @@ spawnTarget();
 spawnTarget();
 
 
-scheduleSpawn(1000);
+state.spawnTimer=
+setTimeout(
+spawnWave,
+950
+);
 
 
 state.raf=
@@ -3762,10 +3326,12 @@ animate
 
 
 /* =====================================================
-   STOP GAME
+   STOP
 ===================================================== */
 
-function stopGame(count){
+function stopGame(
+count
+){
 
 state.running=false;
 
@@ -3783,6 +3349,9 @@ state.raf
 clearInterval(
 state.bombCooldown
 );
+
+
+state.lastFrame=0;
 
 
 clearTargets();
@@ -3817,7 +3386,7 @@ updateStatsUI();
 
 
 /* =====================================================
-   END GAME
+   GAME OVER
 ===================================================== */
 
 function endGame(reason){
@@ -3831,14 +3400,16 @@ stopGame(true);
 
 if(reason==="TIME_UP"){
 
-$("overIcon").textContent="⏱️";
+$("overIcon").textContent=
+"⏱️";
 
 $("overTitle").textContent=
 t("timeUp");
 
 }else{
 
-$("overIcon").textContent="💔";
+$("overIcon").textContent=
+"💔";
 
 $("overTitle").textContent=
 t("gameOver");
@@ -3857,13 +3428,15 @@ state.bestComboRun;
 
 
 $("gameOverOverlay")
-.classList.add("show");
+.classList.add(
+"show"
+);
 
 }
 
 
 /* =====================================================
-   EXIT GAME
+   EXIT
 ===================================================== */
 
 function exitGame(){
@@ -3871,7 +3444,9 @@ function exitGame(){
 stopGame(true);
 
 $("gameOverOverlay")
-.classList.remove("show");
+.classList.remove(
+"show"
+);
 
 showScreen(
 "homeScreen"
@@ -3894,7 +3469,9 @@ $("toast");
 el.textContent=
 message;
 
-el.classList.add("show");
+el.classList.add(
+"show"
+);
 
 
 clearTimeout(
@@ -3905,9 +3482,9 @@ window.nhToastTimer
 window.nhToastTimer=
 setTimeout(
 ()=>{
-
-el.classList.remove("show");
-
+el.classList.remove(
+"show"
+);
 },
 1700
 );
@@ -3916,19 +3493,15 @@ el.classList.remove("show");
 
 
 /* =====================================================
-   REAL TOUCH / POINTER
+   NUMBER TOUCH
 ===================================================== */
 
 /*
 مهم جدًا:
 
-نستعمل pointerdown للأرقام فقط.
+pointerdown على الرقم فقط.
 
-لا نستعمل click للأرقام.
-
-وبالتالي:
-Scroll ≠ ضغط على الرقم.
-Touch/ضغط حقيقي = إصابة.
+أي Scroll خارج الرقم لا يفعل شيئًا.
 */
 
 $("arena")
@@ -3961,183 +3534,127 @@ passive:false
 
 
 /* =====================================================
-   UI BUTTONS
+   BUTTONS
 ===================================================== */
-
-/*
-المطاردة:
-اختيار المهمة
-*/
 
 $("missionMode")
 .addEventListener(
 "click",
-function(){
-
+()=>{
 openMissionChoice(
 "mission"
 );
-
 }
 );
 
-
-/*
-الصيد السريع:
-اختيار المهمة أولًا
-*/
 
 $("quickMode")
 .addEventListener(
 "click",
-function(){
-
+()=>{
 openMissionChoice(
 "quick"
 );
-
 }
 );
 
-
-/*
-البقاء:
-اختيار المهمة أولًا
-*/
 
 $("survivalMode")
 .addEventListener(
 "click",
-function(){
-
+()=>{
 openMissionChoice(
 "survival"
 );
-
 }
 );
 
 
 /*
-التحدي العشوائي:
-لا يختار المستخدم مهمة ثابتة.
-اللعبة تختارها وتتغير كل 20 ثانية.
+العشوائي فقط يبدأ مباشرة
+ويغير المهمة كل 20 ثانية.
 */
 
 $("randomMode")
 .addEventListener(
 "click",
-function(){
-
+()=>{
 startGame(
 "random",
 makeMission()
 );
-
 }
 );
 
-
-/*
-رجوع من اختيار المهمة
-*/
 
 $("choiceBack")
 .addEventListener(
 "click",
-function(){
-
+()=>{
 showScreen(
 "homeScreen"
 );
-
 }
 );
 
-
-/*
-الخروج من اللعبة
-*/
 
 $("exitBtn")
 .addEventListener(
 "click",
-function(){
-
-exitGame();
-
-}
+exitGame
 );
 
-
-/*
-القنبلة
-*/
 
 $("bombBtn")
 .addEventListener(
 "click",
-function(){
-
-useBomb();
-
-}
+useBomb
 );
 
-
-/*
-إعادة اللعب بنفس المهمة
-*/
 
 $("againBtn")
 .addEventListener(
 "click",
-function(){
-
+()=>{
 startGame(
 state.mode,
 state.mission
 );
-
 }
 );
 
 
-/*
-الرئيسية بعد Game Over
-*/
-
 $("homeBtn")
 .addEventListener(
 "click",
-function(){
-
+()=>{
 stopGame(false);
 
 $("gameOverOverlay")
-.classList.remove("show");
+.classList.remove(
+"show"
+);
 
 showScreen(
 "homeScreen"
 );
 
+applyLanguage();
 }
 );
 
 
 /* =====================================================
-   RESET STATISTICS
-   موجود فقط خارج اللعبة
+   RESET
+   خارج اللعبة فقط
 ===================================================== */
 
 $("resetBtn")
 .addEventListener(
 "click",
-function(){
-
+()=>{
 $("resetModal")
 .classList.add("show");
-
 }
 );
 
@@ -4145,11 +3662,9 @@ $("resetModal")
 $("cancelResetBtn")
 .addEventListener(
 "click",
-function(){
-
+()=>{
 $("resetModal")
 .classList.remove("show");
-
 }
 );
 
@@ -4157,7 +3672,7 @@ $("resetModal")
 $("confirmResetBtn")
 .addEventListener(
 "click",
-function(){
+()=>{
 
 stats={
 bestScore:0,
@@ -4172,7 +3687,9 @@ updateStatsUI();
 
 
 $("resetModal")
-.classList.remove("show");
+.classList.remove(
+"show"
+);
 
 
 toast(
@@ -4184,17 +3701,15 @@ t("resetDone")
 
 
 /* =====================================================
-   HOW TO PLAY
+   HOW
 ===================================================== */
 
 $("howBtn")
 .addEventListener(
 "click",
-function(){
-
+()=>{
 $("howModal")
 .classList.add("show");
-
 }
 );
 
@@ -4202,11 +3717,9 @@ $("howModal")
 $("closeHowBtn")
 .addEventListener(
 "click",
-function(){
-
+()=>{
 $("howModal")
 .classList.remove("show");
-
 }
 );
 
@@ -4222,7 +3735,7 @@ button=>{
 
 button.addEventListener(
 "click",
-function(){
+()=>{
 
 lang=
 button.dataset.lang;
@@ -4244,34 +3757,12 @@ applyLanguage();
 
 
 /* =====================================================
-   BLOCK SCROLL INSIDE ARENA
-===================================================== */
-
-document.addEventListener(
-"touchmove",
-function(event){
-
-if(
-state.running &&
-event.target.closest("#arena")
-){
-
-event.preventDefault();
-
-}
-
-},
-{
-passive:false
-}
-);
-
-
-/* =====================================================
    INITIALIZE
 ===================================================== */
 
 applyLanguage();
+
+updateViewport();
 
 </script>
 
