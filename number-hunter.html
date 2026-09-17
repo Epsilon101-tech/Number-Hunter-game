@@ -1,1073 +1,3242 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
+
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="theme-color" content="#f7f9fd">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+
+<meta
+  name="theme-color"
+  content="#f7f9fd">
+
 <title>NUMBER HUNTER — IA Math</title>
 
 <style>
+
+/* =========================================================
+   ROOT
+========================================================= */
+
 :root{
-  --bg:#f6f8fd;
-  --surface:#fff;
-  --surface2:#f1f5ff;
-  --primary:#2864d7;
-  --primary2:#3b82f6;
-  --purple:#8554e8;
-  --purple2:#a06bea;
-  --text:#18243a;
-  --muted:#718096;
-  --border:#dfe7f5;
-  --success:#17a673;
-  --danger:#e34d5b;
-  --gold:#f2b632;
-  --shadow:0 14px 40px rgba(42,76,130,.12)
+
+  --bg:#f4f7fd;
+
+  --surface:#ffffff;
+
+  --surface-soft:#f7faff;
+
+  --blue:#2459b7;
+
+  --blue-2:#2f72e5;
+
+  --blue-3:#4e8df0;
+
+  --purple:#8650e5;
+
+  --purple-2:#a16bed;
+
+  --text:#17243a;
+
+  --muted:#748196;
+
+  --border:#dce5f3;
+
+  --green:#19a873;
+
+  --red:#dc5361;
+
+  --gold:#f5b938;
+
+  --shadow:
+    0 14px 38px rgba(44,76,130,.11);
+
+  --shadow-small:
+    0 8px 22px rgba(44,76,130,.10);
+
 }
 
-*{box-sizing:border-box}
 
-html,body{
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,
+body{
+
   margin:0;
+
   width:100%;
   height:100%;
+
+  min-height:100dvh;
+
   overflow:hidden;
+
   background:var(--bg);
+
   color:var(--text);
-  font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;
-  touch-action:none
+
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Tahoma,
+    Arial,
+    sans-serif;
+
+  touch-action:none;
+
 }
+
+
+body{
+  overscroll-behavior:none;
+}
+
 
 button{
+
   font:inherit;
+
   border:0;
+
+  outline:none;
+
   cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
-  touch-action:manipulation
+
+  touch-action:manipulation;
+
 }
+
+
+/* =========================================================
+   APP
+========================================================= */
 
 #app{
+
   width:100%;
-  height:100%;
+
+  height:100dvh;
+
+  min-height:100dvh;
+
   position:relative;
-  overflow:hidden
+
+  overflow:hidden;
+
 }
+
+
+/* =========================================================
+   SCREENS
+========================================================= */
 
 .screen{
+
   position:absolute;
+
   inset:0;
+
+  width:100%;
+
+  height:100dvh;
+
+  min-height:100dvh;
+
   display:none;
-  overflow:auto;
-  padding:env(safe-area-inset-top) 16px env(safe-area-inset-bottom)
+
+  overflow-y:auto;
+
+  overflow-x:hidden;
+
+  padding:
+
+    env(safe-area-inset-top)
+
+    14px
+
+    calc(env(safe-area-inset-bottom) + 18px);
+
 }
+
 
 .screen.active{
+
   display:flex;
-  flex-direction:column
+
+  flex-direction:column;
+
 }
+
 
 .shell{
+
   width:min(100%,760px);
+
   margin:auto;
-  padding:18px 0 24px
+
+  padding:10px 0 18px;
+
 }
 
-.brand{
-  display:flex;
+
+/* =========================================================
+   HOME HEADER
+========================================================= */
+
+.home-header{
+
+  display:grid;
+
+  grid-template-columns:auto 1fr auto;
+
   align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  margin-bottom:18px
+
+  gap:10px;
+
+  margin-bottom:10px;
+
 }
+
+
+.header-left{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:8px;
+
+}
+
+
+.header-right{
+
+  text-align:right;
+
+}
+
 
 .brand-title{
-  font-weight:900;
-  font-size:clamp(24px,7vw,38px);
-  letter-spacing:.5px;
-  color:#234e9e
+
+  margin:0;
+
+  font-size:28px;
+
+  line-height:1;
+
+  font-weight:1000;
+
+  color:var(--blue);
+
+  letter-spacing:-.5px;
+
 }
+
 
 .brand-sub{
-  font-size:12px;
+
+  margin-top:5px;
+
+  font-size:11px;
+
   color:var(--muted);
-  margin-top:2px
+
+  font-weight:700;
+
 }
 
-.logo{
-  width:54px;
-  height:54px;
-  border-radius:17px;
-  background:linear-gradient(135deg,#1970e9,#1745bd);
-  display:grid;
-  place-items:center;
-  color:white;
-  font-weight:1000;
-  font-size:20px;
-  box-shadow:0 8px 20px rgba(40,100,215,.24)
-}
 
 .icon-btn{
-  width:48px;
-  height:48px;
-  border-radius:16px;
+
+  width:52px;
+
+  height:52px;
+
+  border-radius:18px;
+
   background:#fff;
+
   border:1px solid var(--border);
+
   color:var(--text);
-  box-shadow:0 7px 20px rgba(42,76,130,.08);
-  font-size:21px
+
+  box-shadow:var(--shadow-small);
+
+  display:grid;
+
+  place-items:center;
+
+  font-size:20px;
+
 }
 
-.top-actions{
+
+.lang-btn{
+
+  min-width:74px;
+
+  padding:0 12px;
+
   display:flex;
-  gap:8px;
-  align-items:center
+
+  justify-content:center;
+
+  align-items:center;
+
+  gap:5px;
+
+  font-weight:900;
+
+  font-size:17px;
+
 }
+
+
+/* =========================================================
+   HERO
+========================================================= */
 
 .hero{
-  background:linear-gradient(135deg,#fff 0%,#f4f8ff 62%,#f7f1ff 100%);
-  border:1px solid var(--border);
-  border-radius:30px;
-  padding:25px 20px;
-  text-align:center;
-  box-shadow:var(--shadow);
+
   position:relative;
-  overflow:hidden
+
+  min-height:265px;
+
+  overflow:hidden;
+
+  border-radius:31px;
+
+  border:1px solid var(--border);
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff 0%,
+      #f2f8ff 58%,
+      #f8f1ff 100%
+    );
+
+  box-shadow:var(--shadow);
+
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  align-items:center;
+
+  padding:22px;
+
 }
 
-.hero:after{
+
+.hero:before{
+
   content:"";
+
   position:absolute;
-  width:180px;
-  height:180px;
+
+  width:210px;
+
+  height:210px;
+
   border-radius:50%;
-  background:#dceaff;
-  opacity:.45;
-  left:-80px;
-  bottom:-100px
+
+  background:#dcecff;
+
+  opacity:.55;
+
+  left:-100px;
+
+  bottom:-120px;
+
 }
+
+
+.hero-content{
+
+  position:relative;
+
+  z-index:2;
+
+  text-align:center;
+
+}
+
+
+.logo{
+
+  width:58px;
+
+  height:58px;
+
+  border-radius:18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2074e9,
+      #174abd
+    );
+
+  display:grid;
+
+  place-items:center;
+
+  margin:0 auto 10px;
+
+  color:#fff;
+
+  font-weight:1000;
+
+  font-size:21px;
+
+  direction:ltr;
+
+  unicode-bidi:isolate;
+
+  box-shadow:
+    0 10px 25px
+    rgba(40,100,215,.25);
+
+}
+
 
 .hero h1{
+
   margin:0;
-  font-size:clamp(32px,11vw,62px);
+
+  color:var(--blue);
+
   font-weight:1000;
-  color:#2459b7;
-  letter-spacing:1px
+
+  font-size:
+    clamp(
+      38px,
+      10vw,
+      62px
+    );
+
+  line-height:.96;
+
+  letter-spacing:-1px;
+
 }
 
-.hero p{
-  margin:8px 0 0;
-  color:#6a7890;
-  font-weight:700
+
+.hero-tag{
+
+  margin:12px 0 0;
+
+  color:#66758c;
+
+  font-size:15px;
+
+  font-weight:800;
+
 }
 
-.mini-equation{
-  font-size:clamp(18px,6vw,30px);
-  color:#8c67e8;
-  font-weight:900;
-  margin:14px 0 0
+
+.hero-numbers{
+
+  margin-top:11px;
+
+  color:#8860df;
+
+  font-size:21px;
+
+  font-weight:1000;
+
+  direction:ltr;
+
 }
 
-.menu-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-top:16px
-}
 
-.menu-card{
-  min-height:112px;
-  border-radius:24px;
-  background:#fff;
-  border:1px solid var(--border);
-  box-shadow:var(--shadow);
-  padding:17px;
-  text-align:right;
+.hero-visual{
+
   position:relative;
-  overflow:hidden
+
+  height:210px;
+
+  display:grid;
+
+  place-items:center;
+
 }
 
-.menu-card.primary{
-  background:linear-gradient(135deg,#2e6cdf,#2456c7);
+
+.number-orbit{
+
+  position:absolute;
+
+  width:190px;
+
+  height:150px;
+
+  border:3px solid rgba(74,130,230,.25);
+
+  border-left-color:transparent;
+
+  border-right-color:rgba(137,91,227,.28);
+
+  border-radius:50%;
+
+  transform:rotate(-14deg);
+
+}
+
+
+.number-cube{
+
+  width:96px;
+
+  height:96px;
+
+  border-radius:26px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #4c91f4,
+      #2259d0
+    );
+
   color:#fff;
-  border:0
+
+  display:grid;
+
+  place-items:center;
+
+  font-size:55px;
+
+  font-weight:1000;
+
+  box-shadow:
+    0 20px 32px
+    rgba(38,96,204,.25);
+
+  transform:rotate(7deg);
+
+  position:relative;
+
+  z-index:3;
+
 }
 
-.menu-card.purple{
-  background:linear-gradient(135deg,#9561ec,#7542db);
-  color:#fff;
-  border:0
+
+.float-number{
+
+  position:absolute;
+
+  width:48px;
+
+  height:48px;
+
+  border-radius:14px;
+
+  display:grid;
+
+  place-items:center;
+
+  font-size:22px;
+
+  font-weight:1000;
+
+  box-shadow:var(--shadow-small);
+
 }
 
-.menu-card .emoji{
-  font-size:25px
+
+.float-number.one{
+
+  top:15px;
+
+  right:26px;
+
+  background:#efe5ff;
+
+  color:#8053d9;
+
+  transform:rotate(-9deg);
+
 }
 
-.menu-card h3{
-  margin:8px 0 3px;
-  font-size:18px
-}
 
-.menu-card p{
-  margin:0;
-  font-size:12px;
-  opacity:.8
-}
+.float-number.two{
 
-.big-action{
-  width:100%;
-  min-height:58px;
-  border-radius:20px;
-  background:linear-gradient(135deg,#2f6fe1,#2456c7);
-  color:#fff;
-  font-weight:900;
-  font-size:19px;
-  box-shadow:0 12px 24px rgba(40,100,215,.22);
-  margin-top:14px
-}
+  bottom:13px;
 
-.secondary{
+  left:20px;
+
   background:#fff;
-  color:#2459b7;
-  border:1px solid var(--border);
-  box-shadow:0 8px 20px rgba(42,76,130,.08)
+
+  color:#2d65c5;
+
+  transform:rotate(-10deg);
+
 }
 
-.danger-btn{
-  color:var(--danger);
-  background:#fff;
-  border-color:#f0d5d8
+
+.float-number.three{
+
+  top:30px;
+
+  left:10px;
+
+  background:#dfeeff;
+
+  color:#2865cf;
+
+  transform:rotate(8deg);
+
 }
+
+
+/* =========================================================
+   STATS
+========================================================= */
 
 .stats{
+
   display:grid;
-  grid-template-columns:1fr 1fr 1fr;
+
+  grid-template-columns:
+    repeat(3,1fr);
+
   gap:9px;
-  margin-top:14px
+
+  margin-top:12px;
+
 }
+
 
 .stat{
-  background:#fff;
+
+  min-height:78px;
+
+  background:
+    rgba(255,255,255,.96);
+
   border:1px solid var(--border);
-  border-radius:19px;
-  padding:11px 8px;
-  text-align:center
+
+  border-radius:21px;
+
+  box-shadow:var(--shadow-small);
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  justify-content:center;
+
+  text-align:center;
+
 }
+
+
+.stat-icon{
+
+  font-size:17px;
+
+  line-height:1;
+
+  margin-bottom:3px;
+
+}
+
 
 .stat b{
+
   display:block;
-  font-size:20px;
-  color:#2459b7
+
+  color:var(--blue);
+
+  font-size:23px;
+
+  line-height:1.05;
+
+  font-weight:1000;
+
 }
+
 
 .stat span{
-  font-size:11px;
+
+  margin-top:3px;
+
   color:var(--muted);
-  font-weight:700
+
+  font-size:10px;
+
+  font-weight:800;
+
 }
+
+
+/* =========================================================
+   MAIN MODES
+========================================================= */
+
+.mode-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:11px;
+
+  margin-top:12px;
+
+}
+
+
+.mode-card{
+
+  min-height:108px;
+
+  border-radius:25px;
+
+  padding:15px;
+
+  border:1px solid var(--border);
+
+  background:#fff;
+
+  box-shadow:var(--shadow);
+
+  text-align:right;
+
+  position:relative;
+
+  overflow:hidden;
+
+  color:var(--text);
+
+}
+
+
+.mode-card.primary{
+
+  color:#fff;
+
+  border:0;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2f78e8,
+      #2556c9
+    );
+
+}
+
+
+.mode-card.purple{
+
+  color:#fff;
+
+  border:0;
+
+  background:
+    linear-gradient(
+      135deg,
+      #9b5ced,
+      #7540d7
+    );
+
+}
+
+
+.mode-icon{
+
+  width:43px;
+
+  height:43px;
+
+  border-radius:15px;
+
+  display:grid;
+
+  place-items:center;
+
+  background:
+    rgba(255,255,255,.18);
+
+  font-size:23px;
+
+}
+
+
+.mode-card:not(.primary):not(.purple)
+.mode-icon{
+
+  background:#edf4ff;
+
+}
+
+
+.mode-card h3{
+
+  margin:8px 0 3px;
+
+  font-size:18px;
+
+  font-weight:950;
+
+}
+
+
+.mode-card p{
+
+  margin:0;
+
+  font-size:11px;
+
+  font-weight:700;
+
+  opacity:.78;
+
+}
+
+
+.mode-arrow{
+
+  position:absolute;
+
+  bottom:14px;
+
+  left:15px;
+
+  font-size:21px;
+
+  opacity:.7;
+
+}
+
+
+/* =========================================================
+   SURVIVAL
+========================================================= */
+
+.survival-card{
+
+  width:100%;
+
+  min-height:66px;
+
+  margin-top:11px;
+
+  border-radius:22px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #effffb,
+      #e6fbf5
+    );
+
+  border:1px solid #8be0ca;
+
+  color:#126e5c;
+
+  box-shadow:var(--shadow-small);
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  padding:9px 14px;
+
+  text-align:right;
+
+}
+
+
+.survival-icon{
+
+  width:47px;
+
+  height:47px;
+
+  border-radius:16px;
+
+  display:grid;
+
+  place-items:center;
+
+  background:rgba(255,255,255,.7);
+
+  font-size:25px;
+
+  flex:none;
+
+}
+
+
+.survival-text{
+
+  flex:1;
+
+}
+
+
+.survival-text strong{
+
+  display:block;
+
+  font-size:17px;
+
+  color:var(--blue);
+
+}
+
+
+.survival-text small{
+
+  display:block;
+
+  margin-top:2px;
+
+  color:#20806d;
+
+  font-size:10px;
+
+  font-weight:800;
+
+}
+
+
+.action-arrow{
+
+  font-size:22px;
+
+  color:#137a68;
+
+}
+
+
+/* =========================================================
+   SECONDARY ACTIONS
+========================================================= */
+
+.secondary-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:10px;
+
+  margin-top:10px;
+
+}
+
+
+.secondary-card{
+
+  min-height:69px;
+
+  border-radius:21px;
+
+  background:#fff;
+
+  border:1px solid var(--border);
+
+  box-shadow:var(--shadow-small);
+
+  color:var(--blue);
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+  padding:10px 13px;
+
+  text-align:right;
+
+}
+
+
+.secondary-card.reset{
+
+  color:var(--red);
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff,
+      #fff5f6
+    );
+
+  border-color:#f1cbd0;
+
+}
+
+
+.secondary-icon{
+
+  width:42px;
+
+  height:42px;
+
+  border-radius:14px;
+
+  display:grid;
+
+  place-items:center;
+
+  background:#edf4ff;
+
+  font-size:21px;
+
+  flex:none;
+
+}
+
+
+.secondary-card.reset
+.secondary-icon{
+
+  background:#fff0f2;
+
+}
+
+
+.secondary-text strong{
+
+  display:block;
+
+  font-size:15px;
+
+  font-weight:950;
+
+}
+
+
+.secondary-text small{
+
+  display:block;
+
+  color:var(--muted);
+
+  font-size:9px;
+
+  margin-top:2px;
+
+}
+
+
+.footer-note{
+
+  text-align:center;
+
+  color:#71809a;
+
+  font-size:10px;
+
+  margin-top:11px;
+
+  padding-bottom:2px;
+
+}
+
+
+/* =========================================================
+   MISSIONS SCREEN
+========================================================= */
+
+#missions{
+
+  background:
+    linear-gradient(
+      180deg,
+      #f7f9fd,
+      #edf4ff
+    );
+
+}
+
+
+.inner-header{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  margin-bottom:12px;
+
+}
+
+
+.inner-header-info{
+
+  flex:1;
+
+  text-align:right;
+
+}
+
+
+.inner-title{
+
+  color:var(--blue);
+
+  font-size:25px;
+
+  font-weight:1000;
+
+}
+
+
+.inner-sub{
+
+  color:var(--muted);
+
+  font-size:11px;
+
+  margin-top:3px;
+
+}
+
 
 .card{
+
   background:#fff;
+
   border:1px solid var(--border);
-  border-radius:26px;
+
+  border-radius:27px;
+
   box-shadow:var(--shadow);
-  padding:18px
+
+  padding:16px;
+
 }
+
 
 .section-title{
-  font-size:25px;
-  font-weight:950;
-  color:#2459b7;
-  margin:0 0 14px
+
+  margin:0 0 5px;
+
+  color:var(--blue);
+
+  font-size:21px;
+
+  font-weight:1000;
+
 }
 
-.mission-list{
-  display:grid;
-  gap:10px
-}
-
-.mission-choice{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  background:#f8faff;
-  border:1px solid var(--border);
-  border-radius:19px;
-  padding:14px;
-  text-align:right;
-  color:var(--text)
-}
-
-.mission-choice.selected{
-  border-color:#6c9ff0;
-  background:#eef5ff;
-  box-shadow:0 6px 18px rgba(40,100,215,.10)
-}
-
-.mission-choice .mi{
-  width:42px;
-  height:42px;
-  border-radius:14px;
-  background:#e7efff;
-  display:grid;
-  place-items:center;
-  font-size:20px;
-  flex:none
-}
-
-.mission-choice.p .mi{
-  background:#f0e8ff
-}
-
-.mission-choice strong{
-  display:block
-}
-
-.mission-choice small{
-  color:var(--muted)
-}
 
 .choice-note{
+
   color:var(--muted);
-  font-size:12px;
+
+  font-size:11px;
+
   font-weight:700;
-  margin:-5px 0 12px
+
+  margin-bottom:12px;
+
 }
+
+
+.mission-list{
+
+  display:grid;
+
+  gap:8px;
+
+}
+
+
+.mission-choice{
+
+  width:100%;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:11px;
+
+  padding:10px;
+
+  border-radius:18px;
+
+  background:#f8faff;
+
+  border:1px solid var(--border);
+
+  text-align:right;
+
+  color:var(--text);
+
+}
+
+
+.mission-choice.selected{
+
+  background:#edf5ff;
+
+  border-color:#83acef;
+
+  box-shadow:
+    0 6px 18px
+    rgba(40,100,215,.10);
+
+}
+
+
+.mission-choice .mi{
+
+  width:42px;
+
+  height:42px;
+
+  border-radius:14px;
+
+  background:#e7f0ff;
+
+  display:grid;
+
+  place-items:center;
+
+  font-size:20px;
+
+  flex:none;
+
+}
+
+
+.mission-choice strong{
+
+  display:block;
+
+  font-size:14px;
+
+  font-weight:950;
+
+}
+
+
+.mission-choice small{
+
+  display:block;
+
+  margin-top:2px;
+
+  color:var(--muted);
+
+  font-size:9px;
+
+}
+
+
+.big-action{
+
+  width:100%;
+
+  min-height:55px;
+
+  border-radius:19px;
+
+  margin-top:12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #3279e8,
+      #2457c9
+    );
+
+  color:#fff;
+
+  font-weight:950;
+
+  font-size:17px;
+
+  box-shadow:
+    0 10px 22px
+    rgba(40,100,215,.20);
+
+}
+
+
+.big-action.secondary{
+
+  background:#fff;
+
+  color:var(--blue);
+
+  border:1px solid var(--border);
+
+  box-shadow:var(--shadow-small);
+
+}
+
+
+/* =========================================================
+   HOW SCREEN
+========================================================= */
 
 .how{
-  line-height:1.8;
-  color:#536276
+
+  line-height:1.7;
+
+  color:#526176;
+
 }
 
-.how strong{
-  color:#2459b7
-}
 
-.how .rule{
+.rule{
+
   background:#f7f9fe;
+
   border:1px solid var(--border);
+
   border-radius:17px;
-  padding:10px;
-  margin:8px 0
+
+  padding:11px;
+
+  margin:8px 0;
+
+  font-size:12px;
+
 }
 
-/* ================= GAME ================= */
+
+.rule strong{
+
+  color:var(--blue);
+
+}
+
+
+/* =========================================================
+   GAME
+========================================================= */
 
 #game{
+
   padding:0;
+
   overflow:hidden;
-  background:linear-gradient(180deg,#f7f9fd,#edf3ff)
+
+  background:
+    linear-gradient(
+      180deg,
+      #f7f9fd,
+      #edf3ff
+    );
+
 }
+
 
 .game-top{
+
   position:absolute;
-  top:calc(env(safe-area-inset-top) + 10px);
+
+  top:
+    calc(
+      env(safe-area-inset-top) + 8px
+    );
+
   left:10px;
+
   right:10px;
-  z-index:20
+
+  z-index:20;
+
 }
+
 
 .hud{
+
   display:grid;
-  grid-template-columns:1fr 1.3fr 1fr;
-  gap:7px
+
+  grid-template-columns:
+    1fr 1.25fr 1fr;
+
+  gap:7px;
+
 }
+
 
 .hud-box{
-  background:rgba(255,255,255,.94);
+
+  min-height:57px;
+
+  background:
+    rgba(255,255,255,.95);
+
   border:1px solid var(--border);
-  box-shadow:0 8px 24px rgba(42,76,130,.12);
+
+  box-shadow:
+    0 8px 24px
+    rgba(42,76,130,.12);
+
   border-radius:16px;
-  padding:8px;
+
+  padding:7px;
+
   text-align:center;
-  backdrop-filter:blur(8px)
+
+  backdrop-filter:blur(8px);
+
 }
+
 
 .hud-box b{
+
   display:block;
-  color:#2459b7;
-  font-size:17px
+
+  color:var(--blue);
+
+  font-size:17px;
+
+  line-height:1.2;
+
 }
+
 
 .hud-box small{
-  font-size:10px;
+
+  font-size:9px;
+
   color:var(--muted);
-  font-weight:800
+
+  font-weight:800;
+
 }
+
 
 .hearts{
-  font-size:15px;
-  letter-spacing:0
+
+  font-size:15px !important;
+
+  letter-spacing:0;
+
 }
+
 
 .mission-bar{
-  margin-top:8px;
-  background:rgba(255,255,255,.95);
+
+  margin-top:7px;
+
+  min-height:42px;
+
+  background:
+    rgba(255,255,255,.96);
+
   border:1px solid var(--border);
-  border-radius:18px;
-  padding:10px 14px;
-  text-align:center;
-  box-shadow:0 8px 24px rgba(42,76,130,.10);
-  font-weight:900;
-  color:#2459b7;
-  min-height:44px;
+
+  border-radius:17px;
+
+  padding:8px 12px;
+
   display:flex;
+
   align-items:center;
-  justify-content:center
+
+  justify-content:center;
+
+  text-align:center;
+
+  box-shadow:
+    0 8px 24px
+    rgba(42,76,130,.10);
+
+  font-size:12px;
+
+  font-weight:950;
+
+  color:var(--blue);
+
 }
+
 
 /*
-  مساحة اللعب تبدأ أسفل الـ HUD
-  وتنتهي فوق الأزرار السفلية.
+  IMPORTANT:
+  The arena stays below the HUD
+  and above the bottom controls.
 */
+
 .arena{
+
   position:absolute;
-  left:10px;
-  right:10px;
-  top:calc(env(safe-area-inset-top) + 112px);
-  bottom:calc(env(safe-area-inset-bottom) + 78px);
+
+  left:9px;
+
+  right:9px;
+
+  top:
+    calc(
+      env(safe-area-inset-top) + 105px
+    );
+
+  bottom:
+    calc(
+      env(safe-area-inset-bottom) + 75px
+    );
+
   overflow:hidden;
-  border:1px solid rgba(40,100,199,.12);
-  border-radius:30px;
-  background:rgba(255,255,255,.48);
+
+  border:
+    1px solid
+    rgba(40,100,199,.12);
+
+  border-radius:29px;
+
+  background:
+    rgba(255,255,255,.52);
+
   touch-action:none;
-  user-select:none
+
+  user-select:none;
+
+  -webkit-user-select:none;
+
 }
+
+
+/* =========================================================
+   TARGET
+========================================================= */
 
 .target{
+
   position:absolute;
-  width:clamp(58px,16vw,78px);
-  height:clamp(58px,16vw,78px);
+
+  width:
+    clamp(
+      58px,
+      16vw,
+      78px
+    );
+
+  height:
+    clamp(
+      58px,
+      16vw,
+      78px
+    );
+
   border-radius:50%;
-  background:linear-gradient(145deg,#fff,#edf3ff);
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #edf3ff
+    );
+
   border:3px solid #4d82df;
-  box-shadow:0 10px 24px rgba(44,93,174,.18);
+
+  box-shadow:
+    0 10px 24px
+    rgba(44,93,174,.18);
+
   display:grid;
+
   place-items:center;
+
   font-weight:950;
-  font-size:clamp(19px,5.5vw,26px);
+
+  font-size:
+    clamp(
+      19px,
+      5.5vw,
+      26px
+    );
+
   color:#204f9f;
-  transform:translate(-50%,-50%);
-  will-change:transform;
+
+  transform:
+    translate(-50%,-50%);
+
+  will-change:
+    top;
+
   z-index:5;
+
   padding:0;
+
   user-select:none;
-  -webkit-user-select:none
+
+  -webkit-user-select:none;
+
 }
+
 
 .target:active{
-  transform:translate(-50%,-50%) scale(.9)
+
+  transform:
+    translate(-50%,-50%)
+    scale(.9);
+
 }
+
 
 .target.wrong{
+
   border-color:#d9a0a5;
+
   background:#fff3f4;
-  color:#c83f4c
+
+  color:#c83f4c;
+
 }
+
 
 .target.correct-hit{
-  animation:pop .16s ease-out forwards
+
+  animation:
+    pop .16s ease-out
+    forwards;
+
 }
+
 
 .target.wrong-hit{
-  animation:shake .35s ease
+
+  animation:
+    shake .35s ease;
+
 }
+
 
 @keyframes pop{
+
   to{
-    transform:translate(-50%,-50%) scale(1.5);
-    opacity:0
+
+    transform:
+      translate(-50%,-50%)
+      scale(1.5);
+
+    opacity:0;
+
   }
+
 }
+
 
 @keyframes shake{
+
   0%,100%{
-    transform:translate(-50%,-50%)
+
+    transform:
+      translate(-50%,-50%);
+
   }
+
   25%{
-    transform:translate(calc(-50% - 6px),-50%)
+
+    transform:
+      translate(
+        calc(-50% - 6px),
+        -50%
+      );
+
   }
+
   75%{
-    transform:translate(calc(-50% + 6px),-50%)
+
+    transform:
+      translate(
+        calc(-50% + 6px),
+        -50%
+      );
+
   }
+
 }
+
+
+/* =========================================================
+   FEEDBACK
+========================================================= */
 
 .feedback{
+
   position:absolute;
+
   top:34%;
+
   left:50%;
-  transform:translateX(-50%);
+
+  transform:
+    translateX(-50%);
+
   z-index:30;
+
   pointer-events:none;
+
   padding:9px 15px;
+
   border-radius:15px;
-  background:rgba(255,255,255,.96);
+
+  background:
+    rgba(255,255,255,.97);
+
   box-shadow:var(--shadow);
-  font-weight:900;
-  opacity:0
+
+  font-weight:950;
+
+  opacity:0;
+
 }
+
 
 .feedback.show{
-  animation:feed .75s ease
+
+  animation:
+    feed .75s ease;
+
 }
+
 
 .feedback.good{
-  color:var(--success)
+
+  color:var(--green);
+
 }
+
 
 .feedback.bad{
-  color:var(--danger)
+
+  color:var(--red);
+
 }
+
 
 @keyframes feed{
+
   0%{
+
     opacity:0;
-    transform:translate(-50%,8px)
+
+    transform:
+      translate(-50%,8px);
+
   }
+
   15%,75%{
+
     opacity:1;
-    transform:translate(-50%,0)
+
+    transform:
+      translate(-50%,0);
+
   }
+
   100%{
+
     opacity:0;
-    transform:translate(-50%,-8px)
+
+    transform:
+      translate(-50%,-8px);
+
   }
+
 }
+
+
+/* =========================================================
+   GAME CONTROLS
+========================================================= */
 
 .bottom-tools{
+
   position:absolute;
-  bottom:calc(env(safe-area-inset-bottom) + 12px);
-  left:12px;
-  right:12px;
+
+  bottom:
+    calc(
+      env(safe-area-inset-bottom) + 10px
+    );
+
+  left:10px;
+
+  right:10px;
+
   z-index:40;
+
   display:flex;
+
   justify-content:space-between;
+
   align-items:center;
-  pointer-events:none
+
+  pointer-events:none;
+
 }
+
 
 .game-tool{
+
   pointer-events:auto;
+
   height:52px;
+
   border-radius:18px;
+
   background:#fff;
+
   border:1px solid var(--border);
-  box-shadow:0 10px 25px rgba(42,76,130,.14)
+
+  box-shadow:
+    0 10px 25px
+    rgba(42,76,130,.14);
+
 }
+
 
 .exit-game{
+
   width:58px;
+
   font-size:23px;
-  color:#667085
+
+  color:#667085;
+
 }
+
 
 .bomb{
-  min-width:88px;
+
+  min-width:90px;
+
   padding:0 13px;
-  font-size:24px
+
+  font-size:23px;
+
 }
+
 
 .bomb small{
+
   display:block;
+
   font-size:9px;
+
   color:var(--muted);
+
   font-weight:800;
-  margin-top:-3px
+
+  margin-top:-3px;
+
 }
+
 
 .bomb.cool{
+
   opacity:.42;
-  filter:grayscale(.7)
+
+  filter:grayscale(.7);
+
 }
+
+
+/* =========================================================
+   GAME OVER
+========================================================= */
 
 .overlay{
+
   position:absolute;
+
   inset:0;
+
   z-index:60;
+
   display:none;
+
   place-items:center;
-  background:rgba(245,248,253,.82);
+
+  background:
+    rgba(245,248,253,.82);
+
   backdrop-filter:blur(9px);
-  padding:20px
+
+  padding:20px;
+
 }
+
 
 .overlay.show{
-  display:grid
+
+  display:grid;
+
 }
+
 
 .result{
+
   width:min(100%,420px);
+
   background:#fff;
+
   border:1px solid var(--border);
+
   border-radius:30px;
-  padding:26px;
+
+  padding:25px;
+
   text-align:center;
-  box-shadow:var(--shadow)
+
+  box-shadow:var(--shadow);
+
 }
+
 
 .result h2{
+
   margin:0;
-  color:#2459b7;
-  font-size:34px
+
+  color:var(--blue);
+
+  font-size:30px;
+
 }
 
-.result .final-score{
+
+.final-score{
+
   font-size:45px;
+
   font-weight:1000;
-  color:#8554e8;
-  margin:8px 0
+
+  color:var(--purple);
+
+  margin:8px 0;
+
 }
+
+
+/* =========================================================
+   TOAST
+========================================================= */
 
 .toast{
+
   position:absolute;
-  top:calc(env(safe-area-inset-top) + 12px);
+
+  top:
+    calc(
+      env(safe-area-inset-top) + 12px
+    );
+
   right:12px;
+
   left:12px;
+
   z-index:100;
+
   background:#fff;
+
   border:1px solid var(--border);
+
   border-radius:16px;
+
   padding:11px;
+
   text-align:center;
+
   box-shadow:var(--shadow);
+
   display:none;
-  font-weight:800
+
+  font-size:12px;
+
+  font-weight:900;
+
 }
 
-/* ================= MODAL ================= */
+
+/* =========================================================
+   RESET MODAL
+========================================================= */
 
 .modal{
+
   position:absolute;
+
   inset:0;
+
   z-index:200;
+
   display:none;
+
   place-items:center;
+
   padding:20px;
-  background:rgba(245,248,253,.78);
-  backdrop-filter:blur(8px)
+
+  background:
+    rgba(245,248,253,.80);
+
+  backdrop-filter:blur(8px);
+
 }
+
 
 .modal.show{
-  display:grid
+
+  display:grid;
+
 }
+
 
 .modal-card{
+
   width:min(100%,390px);
+
   background:#fff;
+
   border:1px solid var(--border);
+
   border-radius:28px;
-  padding:24px;
+
+  padding:23px;
+
   box-shadow:var(--shadow);
-  text-align:center
+
+  text-align:center;
+
 }
+
 
 .modal-card h2{
-  margin:0 0 8px;
-  color:#2459b7
+
+  margin:0 0 7px;
+
+  color:var(--blue);
+
 }
+
 
 .modal-card p{
+
   margin:0;
+
   color:var(--muted);
+
   line-height:1.7;
-  font-size:14px
+
+  font-size:13px;
+
 }
+
 
 .modal-actions{
+
   display:grid;
+
   grid-template-columns:1fr 1fr;
+
   gap:9px;
-  margin-top:18px
+
+  margin-top:18px;
+
 }
+
 
 .modal-actions button{
-  min-height:52px;
+
+  min-height:51px;
+
   border-radius:17px;
-  font-weight:900
+
+  font-weight:900;
+
 }
 
-@media(max-width:480px){
 
-  .menu-grid{
-    grid-template-columns:1fr 1fr
-  }
+.danger-btn{
 
-  .shell{
-    padding-top:12px
-  }
+  color:var(--red);
+
+  background:#fff3f4;
+
+  border:1px solid #f0cbd0;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:600px){
 
   .hero{
-    padding:22px 15px
+
+    grid-template-columns:
+      1.05fr .95fr;
+
+    min-height:245px;
+
+    padding:17px 12px;
+
   }
 
-  .menu-card{
-    min-height:105px;
-    padding:14px
+
+  .hero-visual{
+
+    height:190px;
+
   }
 
-  .arena{
-    top:calc(env(safe-area-inset-top) + 108px);
-    bottom:calc(env(safe-area-inset-bottom) + 76px)
+
+  .number-cube{
+
+    width:82px;
+
+    height:82px;
+
+    font-size:47px;
+
+  }
+
+
+  .number-orbit{
+
+    width:160px;
+
+    height:125px;
+
+  }
+
+
+  .float-number{
+
+    width:40px;
+
+    height:40px;
+
+    font-size:18px;
+
+  }
+
+
+  .brand-title{
+
+    font-size:25px;
+
   }
 
 }
 
-@media(max-height:700px){
 
-  .game-top{
-    top:calc(env(safe-area-inset-top) + 6px)
+@media(max-width:430px){
+
+  .shell{
+
+    padding-top:7px;
+
   }
 
-  .hud-box{
-    padding:6px
+
+  .home-header{
+
+    margin-bottom:7px;
+
   }
 
-  .mission-bar{
-    margin-top:5px;
-    padding:7px 10px;
-    min-height:38px
+
+  .icon-btn{
+
+    width:48px;
+
+    height:48px;
+
   }
 
-  .arena{
-    top:calc(env(safe-area-inset-top) + 92px);
-    bottom:calc(env(safe-area-inset-bottom) + 70px)
+
+  .lang-btn{
+
+    min-width:68px;
+
   }
 
-  .bottom-tools{
-    bottom:calc(env(safe-area-inset-bottom) + 8px)
+
+  .hero{
+
+    min-height:225px;
+
+    border-radius:27px;
+
+    padding:13px 8px;
+
+  }
+
+
+  .logo{
+
+    width:50px;
+
+    height:50px;
+
+    font-size:19px;
+
+  }
+
+
+  .hero h1{
+
+    font-size:
+      clamp(
+        34px,
+        10vw,
+        48px
+      );
+
+  }
+
+
+  .hero-tag{
+
+    font-size:13px;
+
+  }
+
+
+  .hero-numbers{
+
+    font-size:17px;
+
+  }
+
+
+  .hero-visual{
+
+    height:175px;
+
+  }
+
+
+  .number-cube{
+
+    width:74px;
+
+    height:74px;
+
+    font-size:43px;
+
+    border-radius:21px;
+
+  }
+
+
+  .number-orbit{
+
+    width:145px;
+
+    height:112px;
+
+  }
+
+
+  .float-number{
+
+    width:37px;
+
+    height:37px;
+
+    border-radius:11px;
+
+    font-size:17px;
+
+  }
+
+
+  .stats{
+
+    margin-top:9px;
+
+  }
+
+
+  .stat{
+
+    min-height:67px;
+
+    border-radius:18px;
+
+  }
+
+
+  .stat-icon{
+
+    display:none;
+
+  }
+
+
+  .stat b{
+
+    font-size:21px;
+
+  }
+
+
+  .mode-grid{
+
+    margin-top:9px;
+
+    gap:9px;
+
+  }
+
+
+  .mode-card{
+
+    min-height:100px;
+
+    border-radius:22px;
+
+    padding:12px;
+
+  }
+
+
+  .mode-icon{
+
+    width:38px;
+
+    height:38px;
+
+    font-size:20px;
+
+  }
+
+
+  .mode-card h3{
+
+    margin-top:6px;
+
+    font-size:16px;
+
+  }
+
+
+  .mode-card p{
+
+    font-size:10px;
+
+  }
+
+
+  .survival-card{
+
+    margin-top:9px;
+
+    min-height:60px;
+
+  }
+
+
+  .secondary-grid{
+
+    margin-top:8px;
+
+    gap:8px;
+
+  }
+
+
+  .secondary-card{
+
+    min-height:62px;
+
+    border-radius:19px;
+
+    padding:8px;
+
+  }
+
+
+  .secondary-icon{
+
+    width:37px;
+
+    height:37px;
+
+    border-radius:12px;
+
+  }
+
+
+  .secondary-text strong{
+
+    font-size:13px;
+
+  }
+
+
+  .secondary-text small{
+
+    font-size:8px;
+
+  }
+
+
+  .footer-note{
+
+    margin-top:7px;
+
   }
 
 }
+
+
+@media(max-height:720px){
+
+  .hero{
+
+    min-height:205px;
+
+  }
+
+
+  .hero-visual{
+
+    height:160px;
+
+  }
+
+
+  .number-cube{
+
+    width:68px;
+
+    height:68px;
+
+    font-size:39px;
+
+  }
+
+
+  .number-orbit{
+
+    width:130px;
+
+    height:100px;
+
+  }
+
+
+  .mode-card{
+
+    min-height:91px;
+
+  }
+
+
+  .survival-card{
+
+    min-height:56px;
+
+  }
+
+
+  .secondary-card{
+
+    min-height:57px;
+
+  }
+
+}
+
+
+@media(max-height:650px){
+
+  .hero{
+
+    min-height:185px;
+
+    padding:9px;
+
+  }
+
+
+  .logo{
+
+    width:43px;
+
+    height:43px;
+
+    font-size:17px;
+
+    margin-bottom:5px;
+
+  }
+
+
+  .hero h1{
+
+    font-size:34px;
+
+  }
+
+
+  .hero-tag{
+
+    margin-top:7px;
+
+  }
+
+
+  .hero-numbers{
+
+    margin-top:6px;
+
+    font-size:15px;
+
+  }
+
+
+  .hero-visual{
+
+    height:145px;
+
+  }
+
+
+  .number-cube{
+
+    width:62px;
+
+    height:62px;
+
+    font-size:36px;
+
+  }
+
+
+  .mode-card{
+
+    min-height:83px;
+
+    padding:9px;
+
+  }
+
+
+  .mode-icon{
+
+    width:34px;
+
+    height:34px;
+
+  }
+
+
+  .survival-card{
+
+    min-height:51px;
+
+  }
+
+
+  .secondary-card{
+
+    min-height:51px;
+
+  }
+
+}
+
+
 </style>
+
 </head>
+
 
 <body>
 
 <div id="app">
 
-<!-- ================= HOME ================= -->
 
-<section id="home" class="screen active">
+<!-- =====================================================
+     HOME
+===================================================== -->
+
+<section
+  id="home"
+  class="screen active"
+>
 
 <div class="shell">
 
-<header class="brand">
 
-<div>
-<div class="brand-title" id="brandTitle">IA Math</div>
-<div class="brand-sub" id="brandSub">
-Mathématiques • NUMBER HUNTER
-</div>
-</div>
+<header class="home-header">
 
-<div class="top-actions">
 
-<button class="icon-btn" id="langBtn">
-FR
-</button>
+<div class="header-left">
 
-<button class="icon-btn" id="soundBtn">
+<button
+  class="icon-btn"
+  id="soundBtn"
+  type="button">
 🔊
 </button>
 
+
+<button
+  class="icon-btn lang-btn"
+  id="langBtn"
+  type="button">
+FR
+</button>
+
 </div>
+
+
+<div></div>
+
+
+<div class="header-right">
+
+<div class="brand-title">
+IA Math
+</div>
+
+<div
+  class="brand-sub"
+  id="brandSub">
+رياضيات • صائد الأعداد
+</div>
+
+</div>
+
 
 </header>
 
 
+<!-- HERO -->
+
 <div class="hero">
 
-<div class="logo" style="margin:0 auto 10px">
+
+<div class="hero-content">
+
+
+<div
+  class="logo">
 √N
 </div>
 
-<h1 id="homeTitle">
-NUMBER HUNTER
+
+<h1
+  id="homeTitle">
+NUMBER<br>HUNTER
 </h1>
 
-<p id="tagline">
+
+<p
+  class="hero-tag"
+  id="tagline">
 رياضيات • سرعة • دقة
 </p>
 
-<div class="mini-equation">
+
+<div
+  class="hero-numbers">
 2 · 3 · 5 · 7 · 11 · 13
 </div>
 
+
 </div>
 
+
+<div class="hero-visual">
+
+
+<div class="number-orbit"></div>
+
+
+<div class="float-number one">
+11
+</div>
+
+
+<div class="float-number two">
+5
+</div>
+
+
+<div class="float-number three">
+2
+</div>
+
+
+<div class="number-cube">
+7
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<!-- STATS -->
 
 <div class="stats">
 
-<div class="stat">
-<b id="best">0</b>
-<span id="bestLabel">أفضل نتيجة</span>
-</div>
 
 <div class="stat">
-<b id="games">0</b>
-<span id="gamesLabel">المباريات</span>
+
+<div class="stat-icon">
+🏆
 </div>
+
+<b id="best">
+0
+</b>
+
+<span id="bestLabel">
+أفضل نتيجة
+</span>
+
+</div>
+
 
 <div class="stat">
-<b id="streak">0</b>
-<span id="comboLabel">أفضل كومبو</span>
+
+<div class="stat-icon">
+🎮
 </div>
 
+<b id="games">
+0
+</b>
+
+<span id="gamesLabel">
+المباريات
+</span>
+
 </div>
 
 
-<div class="menu-grid">
+<div class="stat">
 
-<button class="menu-card primary" id="playBtn">
+<div class="stat-icon">
+🔥
+</div>
 
-<div class="emoji">▶️</div>
+<b id="streak">
+0
+</b>
+
+<span id="comboLabel">
+أفضل كومبو
+</span>
+
+</div>
+
+
+</div>
+
+
+<!-- MODES -->
+
+<div class="mode-grid">
+
+
+<button
+  class="mode-card primary"
+  id="playBtn"
+  type="button">
+
+
+<div class="mode-icon">
+▶️
+</div>
+
 
 <h3 id="playT">
 ابدأ اللعب
 </h3>
 
+
 <p id="playP">
 مهمات رياضية متنوعة
 </p>
 
+
+<div class="mode-arrow">
+‹
+</div>
+
+
 </button>
 
 
-<button class="menu-card purple" id="quickBtn">
+<button
+  class="mode-card purple"
+  id="quickBtn"
+  type="button">
 
-<div class="emoji">⚡</div>
+
+<div class="mode-icon">
+⚡
+</div>
+
 
 <h3 id="quickT">
-صيد سريع
+الصيد السريع
 </h3>
 
+
 <p id="quickP">
-60 ثانية من التركيز
+60 ثانية • حطم رقمك
 </p>
+
+
+<div class="mode-arrow">
+‹
+</div>
+
 
 </button>
 
 
-<button class="menu-card" id="missionsBtn">
+<button
+  class="mode-card"
+  id="missionsBtn"
+  type="button">
 
-<div class="emoji">🎯</div>
+
+<div class="mode-icon">
+🎯
+</div>
+
 
 <h3 id="missionsT">
 اختيار المهمة
 </h3>
 
+
 <p id="missionsP">
 اختر نوع التحدي
 </p>
 
+
+<div class="mode-arrow">
+‹
+</div>
+
+
 </button>
 
 
-<button class="menu-card" id="randomBtn">
+<button
+  class="mode-card"
+  id="randomBtn"
+  type="button">
 
-<div class="emoji">🎲</div>
+
+<div class="mode-icon">
+🎲
+</div>
+
 
 <h3 id="randomT">
 التحدي العشوائي
 </h3>
 
+
 <p id="randomP">
 مهمة جديدة كل 20 ثانية
 </p>
 
+
+<div class="mode-arrow">
+‹
+</div>
+
+
 </button>
+
 
 </div>
 
 
-<button
-class="big-action secondary"
-id="survivalBtn">
+<!-- SURVIVAL -->
 
-❤️ وضع البقاء — 3 قلوب
+<button
+  class="survival-card"
+  id="survivalBtn"
+  type="button">
+
+
+<div class="survival-icon">
+❤️
+</div>
+
+
+<div class="survival-text">
+
+<strong id="survivalTitle">
+وضع البقاء — 3 قلوب
+</strong>
+
+<small id="survivalSub">
+اختبر مهاراتك وقدرتك على الاستمرار
+</small>
+
+</div>
+
+
+<div class="action-arrow">
+‹
+</div>
+
+
+</button>
+
+
+<!-- SECONDARY -->
+
+<div class="secondary-grid">
+
+
+<button
+  class="secondary-card"
+  id="howBtn"
+  type="button">
+
+
+<div class="secondary-icon">
+ℹ️
+</div>
+
+
+<div class="secondary-text">
+
+<strong id="howT">
+طريقة اللعب
+</strong>
+
+<small id="howP">
+القواعد والنصائح
+</small>
+
+</div>
+
+
+<div class="action-arrow">
+‹
+</div>
+
 
 </button>
 
 
 <button
-class="big-action secondary"
-id="howBtn">
-
-ℹ️ طريقة اللعب
-
-</button>
+  class="secondary-card reset"
+  id="resetBtn"
+  type="button">
 
 
-<button
-class="big-action secondary danger-btn"
-id="resetBtn">
+<div class="secondary-icon">
+📊
+</div>
 
+
+<div class="secondary-text">
+
+<strong id="resetT">
 إعادة الإحصائيات
+</strong>
+
+<small id="resetP">
+مسح جميع البيانات
+</small>
+
+</div>
+
+
+<div class="action-arrow">
+‹
+</div>
+
 
 </button>
+
+
+</div>
+
+
+<div
+  class="footer-note"
+  id="footerNote">
+صائد الأعداد ❤️ IA Math • تدرب اليوم لعقل أقوى غدًا
+</div>
+
 
 </div>
 
 </section>
 
 
-<!-- ================= MISSIONS ================= -->
+<!-- =====================================================
+     MISSIONS
+===================================================== -->
 
-<section id="missions" class="screen">
+<section
+  id="missions"
+  class="screen">
 
 <div class="shell">
 
-<div class="brand">
 
-<button class="icon-btn" id="missionsBack">
+<div class="inner-header">
+
+
+<button
+  class="icon-btn"
+  id="missionsBack"
+  type="button">
 ←
 </button>
 
-<div style="text-align:right">
 
-<div class="brand-title" id="chooseTitle">
+<div class="inner-header-info">
+
+<div
+  class="inner-title"
+  id="chooseTitle">
 اختيار المهمة
 </div>
 
-<div class="brand-sub" id="chooseSub">
+
+<div
+  class="inner-sub"
+  id="chooseSub">
 اختر التحدي ثم ابدأ اللعب
 </div>
 
 </div>
+
 
 </div>
 
 
 <div class="card">
 
-<h2 class="section-title" id="missionHeading">
+
+<h2
+  class="section-title"
+  id="missionHeading">
 🎯 اختر نوع الأعداد
 </h2>
 
-<div
-id="choiceNote"
-class="choice-note">
-</div>
 
 <div
-id="missionList"
-class="mission-list">
+  id="choiceNote"
+  class="choice-note">
 </div>
+
+
+<div
+  id="missionList"
+  class="mission-list">
+</div>
+
 
 <button
-class="big-action"
-id="startSelected">
+  class="big-action"
+  id="startSelected"
+  type="button">
 ابدأ بهذه المهمة
 </button>
 
+
 </div>
+
 
 </div>
 
 </section>
 
 
-<!-- ================= HOW ================= -->
+<!-- =====================================================
+     HOW
+===================================================== -->
 
-<section id="how" class="screen">
+<section
+  id="how"
+  class="screen">
 
 <div class="shell">
 
-<div class="brand">
 
-<button class="icon-btn" id="howBack">
+<div class="inner-header">
+
+
+<button
+  class="icon-btn"
+  id="howBack"
+  type="button">
 ←
 </button>
 
-<div style="text-align:right">
+
+<div class="inner-header-info">
 
 <div
-class="brand-title"
-id="howTitle">
+  class="inner-title"
+  id="howTitle">
 طريقة اللعب
 </div>
 
+
 <div
-class="brand-sub"
-id="howSub">
+  class="inner-sub"
+  id="howSub">
 NUMBER HUNTER
 </div>
 
 </div>
+
 
 </div>
 
 
 <div class="card how">
 
+
 <div class="rule">
-<strong id="howGoalTitle">🎯 الهدف:</strong>
+
+<strong id="howGoalTitle">
+🎯 الهدف:
+</strong>
+
 <span id="howGoal">
-اضغط فقط على الأعداد التي تحقق المهمة المكتوبة أعلى الشاشة.
+اضغط فقط على الأعداد التي تحقق المهمة.
 </span>
+
 </div>
 
 
 <div class="rule">
-<strong id="howLivesTitle">❤️ القلوب:</strong>
+
+<strong id="howLivesTitle">
+❤️ القلوب:
+</strong>
+
 <span id="howLives">
-لديك 3 قلوب. كل اختيار خاطئ يفقد قلبًا. عند وصول القلوب إلى صفر تنتهي اللعبة.
+لديك 3 قلوب. كل اختيار خاطئ يفقد قلبًا.
 </span>
+
 </div>
 
 
 <div class="rule">
-<strong id="howComboTitle">🔥 الكومبو:</strong>
+
+<strong id="howComboTitle">
+🔥 الكومبو:
+</strong>
+
 <span id="howCombo">
-كل إجابة صحيحة متتالية ترفع الكومبو وتزيد النقاط. الخطأ يصفر الكومبو.
+كل إجابة صحيحة متتالية ترفع الكومبو والنقاط.
 </span>
+
 </div>
 
 
 <div class="rule">
-<strong id="howBombTitle">💣 القنبلة:</strong>
+
+<strong id="howBombTitle">
+💣 القنبلة:
+</strong>
+
 <span id="howBomb">
-تمسح الأعداد الظاهرة فورًا، ولا تمنح نقاطًا ولا تخصم قلبًا. تعود بعد 6 ثوانٍ.
+تمسح الأعداد الظاهرة دون نقاط أو خصم قلب.
 </span>
+
 </div>
 
 
 <div class="rule">
-<strong id="howSpeedTitle">⚡ السرعة:</strong>
+
+<strong id="howSpeedTitle">
+⚡ السرعة:
+</strong>
+
 <span id="howSpeed">
-مع ارتفاع المستوى تزداد سرعة الأعداد تدريجيًا.
+تزداد سرعة الأعداد مع ارتفاع المستوى.
 </span>
+
 </div>
 
 
 <div class="rule">
-<strong id="howAccuracyTitle">📐 الدقة الرياضية:</strong>
+
+<strong id="howAccuracyTitle">
+📐 الدقة الرياضية:
+</strong>
+
 <span id="howAccuracy">
-اللعبة تتحقق حسابيًا من الأولية، الزوجية، الفردية، المضاعفات، القواسم، المربعات، والمقارنات.
+يتم التحقق رياضيًا من نوع كل عدد.
 </span>
+
 </div>
 
 
 <button
-class="big-action"
-id="howPlay">
-
+  class="big-action"
+  id="howPlay"
+  type="button">
 ▶ ابدأ اللعب
-
 </button>
 
+
 </div>
+
 
 </div>
 
 </section>
 
 
-<!-- ================= GAME ================= -->
+<!-- =====================================================
+     GAME
+===================================================== -->
 
-<section id="game" class="screen">
+<section
+  id="game"
+  class="screen">
+
 
 <div class="game-top">
 
+
 <div class="hud">
+
 
 <div class="hud-box">
 
@@ -1097,57 +3266,60 @@ id="howPlay">
 
 <div class="hud-box">
 
-<b id="heartHud" class="hearts">
+<b
+  id="heartHud"
+  class="hearts">
 ❤️❤️❤️
 </b>
 
-<small id="timeHud">
+<small
+  id="timeHud">
 القلوب
 </small>
 
 </div>
 
-</div>
-
-
-<div
-class="mission-bar"
-id="missionBar">
-
-اضغط على الأعداد الأولية
-
-</div>
 
 </div>
 
 
 <div
-id="arena"
-class="arena">
+  class="mission-bar"
+  id="missionBar">
+🎯 اضغط على الأعداد الأولية
+</div>
+
+
 </div>
 
 
 <div
-id="feedback"
-class="feedback">
+  id="arena"
+  class="arena">
+</div>
+
+
+<div
+  id="feedback"
+  class="feedback">
 </div>
 
 
 <div class="bottom-tools">
 
+
 <button
-id="exitGame"
-class="game-tool exit-game"
-aria-label="Exit">
-
+  id="exitGame"
+  class="game-tool exit-game"
+  type="button">
 ✕
-
 </button>
 
 
 <button
-id="bomb"
-class="game-tool bomb">
+  id="bomb"
+  class="game-tool bomb"
+  type="button">
 
 💣
 
@@ -1157,93 +3329,124 @@ class="game-tool bomb">
 
 </button>
 
+
 </div>
 
 
+<!-- GAME OVER -->
+
 <div
-id="gameOverlay"
-class="overlay">
+  id="gameOverlay"
+  class="overlay">
+
 
 <div class="result">
 
-<h2 id="resultTitle">
+
+<h2
+  id="resultTitle">
 انتهت اللعبة
 </h2>
 
+
 <div
-class="final-score"
-id="finalScore">
+  class="final-score"
+  id="finalScore">
 0
 </div>
 
+
 <div
-id="resultInfo"
-style="color:#718096;font-weight:700">
+  id="resultInfo"
+  style="
+    color:#718096;
+    font-weight:700">
 النقاط
 </div>
 
 
 <button
-class="big-action"
-id="againBtn">
+  class="big-action"
+  id="againBtn"
+  type="button">
 ↻ إعادة اللعب
 </button>
 
 
 <button
-class="big-action secondary"
-id="menuBtn">
+  class="big-action secondary"
+  id="menuBtn"
+  type="button">
 ⌂ القائمة
 </button>
 
-</div>
 
 </div>
+
+
+</div>
+
 
 </section>
 
 
-<!-- ================= RESET MODAL ================= -->
+<!-- =====================================================
+     RESET MODAL
+===================================================== -->
 
 <div
-id="resetModal"
-class="modal">
+  id="resetModal"
+  class="modal">
+
 
 <div class="modal-card">
 
-<h2 id="resetTitle">
+
+<h2
+  id="resetTitle">
 إعادة الإحصائيات؟
 </h2>
 
-<p id="resetMessage">
+
+<p
+  id="resetMessage">
 سيتم حذف أفضل نتيجة وعدد المباريات وأفضل كومبو. هذا الإجراء لا يمكن التراجع عنه.
 </p>
 
+
 <div class="modal-actions">
 
+
 <button
-id="resetCancel"
-class="secondary">
+  id="resetCancel"
+  class="big-action secondary"
+  type="button">
 إلغاء
 </button>
 
+
 <button
-id="resetConfirm"
-class="big-action danger-btn">
+  id="resetConfirm"
+  class="danger-btn"
+  type="button">
 إعادة الضبط
 </button>
 
-</div>
 
 </div>
+
+
+</div>
+
 
 </div>
 
 
 <div
-id="toast"
-class="toast">
+  id="toast"
+  class="toast">
 </div>
+
 
 </div>
 
@@ -1255,823 +3458,1386 @@ class="toast">
 "use strict";
 
 
-/* =====================================================
-   BASIC
-===================================================== */
+/* =========================================================
+   HELPERS
+========================================================= */
 
-const $ = id =>
-document.getElementById(id);
+const $ =
+  id =>
+  document.getElementById(id);
 
 
 const screens = [
-"home",
-"missions",
-"how",
-"game"
+  "home",
+  "missions",
+  "how",
+  "game"
 ];
 
 
+/* =========================================================
+   STATE
+========================================================= */
+
 const state = {
 
-lang:
-localStorage.getItem("nh_lang") || "ar",
+  lang:
+    localStorage.getItem("nh_lang")
+    || "ar",
 
-sound:
-localStorage.getItem("nh_sound") !== "off",
+  sound:
+    localStorage.getItem("nh_sound")
+    !== "off",
 
-best:
-+(localStorage.getItem("nh_best") || 0),
+  best:
+    +(localStorage.getItem("nh_best") || 0),
 
-games:
-+(localStorage.getItem("nh_games") || 0),
+  games:
+    +(localStorage.getItem("nh_games") || 0),
 
-bestCombo:
-+(localStorage.getItem("nh_combo") || 0),
+  bestCombo:
+    +(localStorage.getItem("nh_combo") || 0),
 
-score:0,
+  score:0,
 
-combo:0,
+  combo:0,
 
-level:1,
+  level:1,
 
-lives:3,
+  lives:3,
 
-running:false,
+  running:false,
 
-quick:false,
+  quick:false,
 
-survival:false,
+  survival:false,
 
-random:false,
+  random:false,
 
-timeLeft:60,
+  timeLeft:60,
 
-elapsed:0,
+  elapsed:0,
 
-startTime:0,
+  startTime:0,
 
-mission:null,
+  mission:null,
 
-targets:new Map(),
+  targets:new Map(),
 
-nextId:1,
+  nextId:1,
 
-spawnTimer:null,
+  spawnTimer:null,
 
-timer:null,
+  timer:null,
 
-raf:null,
+  raf:null,
 
-lastFrame:0,
+  lastFrame:0,
 
-bombReady:true,
+  bombReady:true,
 
-bombCooldown:null,
+  bombCooldown:null,
 
-selected:0,
+  selected:0,
 
-choiceMode:"normal",
+  choiceMode:"normal",
 
-randomBucket:-1
+  randomBucket:-1
 
 };
 
 
-/* =====================================================
+/* =========================================================
    MISSIONS
-===================================================== */
+========================================================= */
 
 const missions = [
 
 {
-id:"prime",
-icon:"🔵",
-ar:"الأعداد الأولية",
-fr:"Nombres premiers",
-en:"Prime numbers",
-desc:{
-ar:"اختر الأعداد الأولية فقط",
-fr:"Choisissez uniquement les nombres premiers",
-en:"Choose prime numbers only"
-},
-test:n=>isPrime(n),
-make:()=>pick([
-2,3,5,7,11,13,17,19,23,29,
-31,37,41,43,47,53,59,61,67,
-71,73,79,83,89,97
-])
+
+  id:"prime",
+
+  icon:"🔵",
+
+  ar:"الأعداد الأولية",
+
+  fr:"Nombres premiers",
+
+  en:"Prime numbers",
+
+  desc:{
+
+    ar:"اختر الأعداد الأولية فقط",
+
+    fr:"Choisissez uniquement les nombres premiers",
+
+    en:"Choose prime numbers only"
+
+  },
+
+  test:
+    n =>
+    isPrime(n),
+
+  make:
+    () =>
+    pick([
+      2,3,5,7,11,13,17,19,
+      23,29,31,37,41,43,47,
+      53,59,61,67,71,73,79,
+      83,89,97
+    ])
+
 },
 
 
 {
-id:"nonprime",
-icon:"⚪",
-ar:"الأعداد غير الأولية",
-fr:"Nombres non premiers",
-en:"Non-prime numbers",
-desc:{
-ar:"اختر الأعداد غير الأولية",
-fr:"Choisissez les nombres non premiers",
-en:"Choose non-prime numbers"
-},
-test:n=>n>=2&&!isPrime(n),
-make:()=>pick([
-4,6,8,9,10,12,14,15,16,
-18,20,21,22,24,25,26,27,
-28,30,32,33,34,35,36,38,
-39,40,42,44,45,46,48,49,50
-])
+
+  id:"nonprime",
+
+  icon:"⚪",
+
+  ar:"الأعداد غير الأولية",
+
+  fr:"Nombres non premiers",
+
+  en:"Non-prime numbers",
+
+  desc:{
+
+    ar:"اختر الأعداد غير الأولية",
+
+    fr:"Choisissez les nombres non premiers",
+
+    en:"Choose non-prime numbers"
+
+  },
+
+  test:
+    n =>
+    n >= 2 && !isPrime(n),
+
+  make:
+    () =>
+    pick([
+      4,6,8,9,10,12,14,15,
+      16,18,20,21,22,24,25,
+      26,27,28,30,32,33,34,
+      35,36,38,39,40,42,44,
+      45,46,48,49,50
+    ])
+
 },
 
 
 {
-id:"even",
-icon:"🟦",
-ar:"الأعداد الزوجية",
-fr:"Nombres pairs",
-en:"Even numbers",
-desc:{
-ar:"اختر الأعداد القابلة للقسمة على 2",
-fr:"Choisissez les nombres divisibles par 2",
-en:"Choose numbers divisible by 2"
-},
-test:n=>n%2===0,
-make:()=>randEven()
+
+  id:"even",
+
+  icon:"🟦",
+
+  ar:"الأعداد الزوجية",
+
+  fr:"Nombres pairs",
+
+  en:"Even numbers",
+
+  desc:{
+
+    ar:"اختر الأعداد القابلة للقسمة على 2",
+
+    fr:"Choisissez les nombres divisibles par 2",
+
+    en:"Choose numbers divisible by 2"
+
+  },
+
+  test:
+    n =>
+    n % 2 === 0,
+
+  make:
+    () =>
+    randEven()
+
 },
 
 
 {
-id:"odd",
-icon:"🟪",
-ar:"الأعداد الفردية",
-fr:"Nombres impairs",
-en:"Odd numbers",
-desc:{
-ar:"اختر الأعداد الفردية",
-fr:"Choisissez les nombres impairs",
-en:"Choose odd numbers"
-},
-test:n=>n%2!==0,
-make:()=>randOdd()
+
+  id:"odd",
+
+  icon:"🟪",
+
+  ar:"الأعداد الفردية",
+
+  fr:"Nombres impairs",
+
+  en:"Odd numbers",
+
+  desc:{
+
+    ar:"اختر الأعداد الفردية",
+
+    fr:"Choisissez les nombres impairs",
+
+    en:"Choose odd numbers"
+
+  },
+
+  test:
+    n =>
+    n % 2 !== 0,
+
+  make:
+    () =>
+    randOdd()
+
 },
 
 
 {
-id:"m3",
-icon:"3️⃣",
-ar:"مضاعفات 3",
-fr:"Multiples de 3",
-en:"Multiples of 3",
-desc:{
-ar:"اختر مضاعفات العدد 3",
-fr:"Choisissez les multiples de 3",
-en:"Choose multiples of 3"
-},
-test:n=>n%3===0,
-make:()=>3*rand(1,33)
+
+  id:"m3",
+
+  icon:"3️⃣",
+
+  ar:"مضاعفات 3",
+
+  fr:"Multiples de 3",
+
+  en:"Multiples of 3",
+
+  desc:{
+
+    ar:"اختر مضاعفات العدد 3",
+
+    fr:"Choisissez les multiples de 3",
+
+    en:"Choose multiples of 3"
+
+  },
+
+  test:
+    n =>
+    n % 3 === 0,
+
+  make:
+    () =>
+    3 * rand(1,33)
+
 },
 
 
 {
-id:"m4",
-icon:"4️⃣",
-ar:"مضاعفات 4",
-fr:"Multiples de 4",
-en:"Multiples of 4",
-desc:{
-ar:"اختر مضاعفات العدد 4",
-fr:"Choisissez les multiples de 4",
-en:"Choose multiples of 4"
-},
-test:n=>n%4===0,
-make:()=>4*rand(1,24)
+
+  id:"m4",
+
+  icon:"4️⃣",
+
+  ar:"مضاعفات 4",
+
+  fr:"Multiples de 4",
+
+  en:"Multiples of 4",
+
+  desc:{
+
+    ar:"اختر مضاعفات العدد 4",
+
+    fr:"Choisissez les multiples de 4",
+
+    en:"Choose multiples of 4"
+
+  },
+
+  test:
+    n =>
+    n % 4 === 0,
+
+  make:
+    () =>
+    4 * rand(1,24)
+
 },
 
 
 {
-id:"m5",
-icon:"5️⃣",
-ar:"مضاعفات 5",
-fr:"Multiples de 5",
-en:"Multiples of 5",
-desc:{
-ar:"اختر مضاعفات العدد 5",
-fr:"Choisissez les multiples de 5",
-en:"Choose multiples of 5"
-},
-test:n=>n%5===0,
-make:()=>5*rand(1,19)
+
+  id:"m5",
+
+  icon:"5️⃣",
+
+  ar:"مضاعفات 5",
+
+  fr:"Multiples de 5",
+
+  en:"Multiples of 5",
+
+  desc:{
+
+    ar:"اختر مضاعفات العدد 5",
+
+    fr:"Choisissez les multiples de 5",
+
+    en:"Choose multiples of 5"
+
+  },
+
+  test:
+    n =>
+    n % 5 === 0,
+
+  make:
+    () =>
+    5 * rand(1,19)
+
 },
 
 
 {
-id:"d24",
-icon:"➗",
-ar:"قواسم 24",
-fr:"Diviseurs de 24",
-en:"Divisors of 24",
-desc:{
-ar:"اختر القواسم الصحيحة للعدد 24",
-fr:"Choisissez les diviseurs de 24",
-en:"Choose the divisors of 24"
-},
-test:n=>n>0&&24%n===0,
-make:()=>pick([1,2,3,4,6,8,12,24])
+
+  id:"d24",
+
+  icon:"➗",
+
+  ar:"قواسم 24",
+
+  fr:"Diviseurs de 24",
+
+  en:"Divisors of 24",
+
+  desc:{
+
+    ar:"اختر القواسم الصحيحة للعدد 24",
+
+    fr:"Choisissez les diviseurs de 24",
+
+    en:"Choose the divisors of 24"
+
+  },
+
+  test:
+    n =>
+    n > 0 && 24 % n === 0,
+
+  make:
+    () =>
+    pick([
+      1,2,3,4,6,8,12,24
+    ])
+
 },
 
 
 {
-id:"d36",
-icon:"➗",
-ar:"قواسم 36",
-fr:"Diviseurs de 36",
-en:"Divisors of 36",
-desc:{
-ar:"اختر القواسم الصحيحة للعدد 36",
-fr:"Choisissez les diviseurs de 36",
-en:"Choose the divisors of 36"
-},
-test:n=>n>0&&36%n===0,
-make:()=>pick([1,2,3,4,6,9,12,18,36])
+
+  id:"d36",
+
+  icon:"➗",
+
+  ar:"قواسم 36",
+
+  fr:"Diviseurs de 36",
+
+  en:"Divisors of 36",
+
+  desc:{
+
+    ar:"اختر القواسم الصحيحة للعدد 36",
+
+    fr:"Choisissez les diviseurs de 36",
+
+    en:"Choose the divisors of 36"
+
+  },
+
+  test:
+    n =>
+    n > 0 && 36 % n === 0,
+
+  make:
+    () =>
+    pick([
+      1,2,3,4,6,9,12,18,36
+    ])
+
 },
 
 
 {
-id:"square",
-icon:"²",
-ar:"المربعات الكاملة",
-fr:"Carrés parfaits",
-en:"Perfect squares",
-desc:{
-ar:"مثل 1، 4، 9، 16…",
-fr:"Comme 1, 4, 9, 16…",
-en:"Such as 1, 4, 9, 16…"
-},
-test:n=>Number.isInteger(Math.sqrt(n)),
-make:()=>pick([1,4,9,16,25,36,49,64,81])
+
+  id:"square",
+
+  icon:"²",
+
+  ar:"المربعات الكاملة",
+
+  fr:"Carrés parfaits",
+
+  en:"Perfect squares",
+
+  desc:{
+
+    ar:"مثل 1، 4، 9، 16…",
+
+    fr:"Comme 1, 4, 9, 16…",
+
+    en:"Such as 1, 4, 9, 16…"
+
+  },
+
+  test:
+    n =>
+    Number.isInteger(
+      Math.sqrt(n)
+    ),
+
+  make:
+    () =>
+    pick([
+      1,4,9,16,25,
+      36,49,64,81
+    ])
+
 },
 
 
 {
-id:"gt50",
-icon:">",
-ar:"أعداد أكبر من 50",
-fr:"Nombres supérieurs à 50",
-en:"Numbers greater than 50",
-desc:{
-ar:"اختر الأعداد الأكبر من 50",
-fr:"Choisissez les nombres supérieurs à 50",
-en:"Choose numbers greater than 50"
-},
-test:n=>n>50,
-make:()=>rand(51,99)
+
+  id:"gt50",
+
+  icon:">",
+
+  ar:"أعداد أكبر من 50",
+
+  fr:"Nombres supérieurs à 50",
+
+  en:"Numbers greater than 50",
+
+  desc:{
+
+    ar:"اختر الأعداد الأكبر من 50",
+
+    fr:"Choisissez les nombres supérieurs à 50",
+
+    en:"Choose numbers greater than 50"
+
+  },
+
+  test:
+    n =>
+    n > 50,
+
+  make:
+    () =>
+    rand(51,99)
+
 },
 
 
 {
-id:"lt25",
-icon:"<",
-ar:"أعداد أصغر من 25",
-fr:"Nombres inférieurs à 25",
-en:"Numbers less than 25",
-desc:{
-ar:"اختر الأعداد الأصغر من 25",
-fr:"Choisissez les nombres inférieurs à 25",
-en:"Choose numbers less than 25"
-},
-test:n=>n<25,
-make:()=>rand(1,24)
+
+  id:"lt25",
+
+  icon:"<",
+
+  ar:"أعداد أصغر من 25",
+
+  fr:"Nombres inférieurs à 25",
+
+  en:"Numbers less than 25",
+
+  desc:{
+
+    ar:"اختر الأعداد الأصغر من 25",
+
+    fr:"Choisissez les nombres inférieurs à 25",
+
+    en:"Choose numbers less than 25"
+
+  },
+
+  test:
+    n =>
+    n < 25,
+
+  make:
+    () =>
+    rand(1,24)
+
 }
 
 ];
 
 
-/* =====================================================
+/* =========================================================
    TRANSLATIONS
-===================================================== */
+========================================================= */
 
-const T={
+const T = {
+
 
 ar:{
 
-brandSub:"رياضيات • صائد الأعداد",
+  tag:
+    "رياضيات • سرعة • دقة",
 
-title:"صائد الأعداد",
+  title:
+    "صائد الأعداد",
 
-tag:"رياضيات • سرعة • دقة",
+  brandSub:
+    "رياضيات • صائد الأعداد",
 
-play:"ابدأ اللعب",
+  play:
+    "ابدأ اللعب",
 
-playP:"مهمات رياضية متنوعة",
+  playP:
+    "مهمات رياضية متنوعة",
 
-quick:"الصيد السريع",
+  quick:
+    "الصيد السريع",
 
-quickP:"60 ثانية • حطم رقمك",
+  quickP:
+    "60 ثانية • حطم رقمك",
 
-missions:"اختيار المهمة",
+  missions:
+    "اختيار المهمة",
 
-missionsP:"اختر نوع التحدي",
+  missionsP:
+    "اختر نوع التحدي",
 
-random:"التحدي العشوائي",
+  random:
+    "التحدي العشوائي",
 
-randomP:"مهمة جديدة كل 20 ثانية",
+  randomP:
+    "مهمة جديدة كل 20 ثانية",
 
-survival:"❤️ وضع البقاء — 3 قلوب",
+  survival:
+    "وضع البقاء — 3 قلوب",
 
-how:"طريقة اللعب",
+  survivalSub:
+    "اختبر مهاراتك وقدرتك على الاستمرار",
 
-reset:"إعادة الإحصائيات",
+  how:
+    "طريقة اللعب",
 
-best:"أفضل نتيجة",
+  howP:
+    "القواعد والنصائح",
 
-games:"المباريات",
+  reset:
+    "إعادة الإحصائيات",
 
-bestCombo:"أفضل كومبو",
+  resetP:
+    "مسح جميع البيانات",
 
-choose:"اختيار المهمة",
+  footer:
+    "صائد الأعداد ❤️ IA Math • تدرب اليوم لعقل أقوى غدًا",
 
-chooseSub:"اختر التحدي ثم ابدأ اللعب",
+  best:
+    "أفضل نتيجة",
 
-missionHeading:"🎯 اختر نوع الأعداد",
+  games:
+    "المباريات",
 
-normalNote:"اختر المهمة التي تريد اللعب بها.",
+  bestCombo:
+    "أفضل كومبو",
 
-quickNote:"اختر المهمة أولًا، ثم ستبدأ مطاردة مدتها 60 ثانية.",
+  choose:
+    "اختيار المهمة",
 
-survivalNote:"اختر المهمة أولًا، وستبدأ بثلاثة قلوب.",
+  chooseSub:
+    "اختر التحدي ثم ابدأ اللعب",
 
-start:"ابدأ بهذه المهمة",
+  missionHeading:
+    "🎯 اختر نوع الأعداد",
 
-score:"النقاط",
+  normalNote:
+    "اختر المهمة التي تريد اللعب بها.",
 
-level:"المستوى",
+  quickNote:
+    "اختر المهمة أولًا، ثم تبدأ مطاردة مدتها 60 ثانية.",
 
-hearts:"القلوب",
+  survivalNote:
+    "اختر المهمة أولًا، وستبدأ بثلاثة قلوب.",
 
-time:"الوقت",
+  start:
+    "ابدأ بهذه المهمة",
 
-correct:"✓ صحيح!",
+  score:
+    "النقاط",
 
-wrong:"✕ خطأ — فقدت قلبًا",
+  level:
+    "المستوى",
 
-bomb:"قنبلة",
+  hearts:
+    "القلوب",
 
-bombMsg:"💣 تم مسح الأعداد الظاهرة",
+  time:
+    "الوقت",
 
-cool:"قيد الشحن",
+  correct:
+    "✓ صحيح!",
 
-exit:"خروج",
+  wrong:
+    "✕ خطأ — فقدت قلبًا",
 
-gameOver:"انتهت اللعبة",
+  bomb:
+    "قنبلة",
 
-timeOver:"انتهى الوقت",
+  bombMsg:
+    "💣 تم مسح الأعداد الظاهرة",
 
-again:"↻ إعادة اللعب",
+  cool:
+    "قيد الشحن",
 
-menu:"⌂ القائمة",
+  gameOver:
+    "انتهت اللعبة",
 
-randomMission:"🎲 مهمة جديدة",
+  timeOver:
+    "انتهى الوقت",
 
-seconds:"ث",
+  again:
+    "↻ إعادة اللعب",
 
-howGoalTitle:"🎯 الهدف:",
+  menu:
+    "⌂ القائمة",
 
-howGoal:"اضغط فقط على الأعداد التي تحقق المهمة المكتوبة أعلى الشاشة.",
+  randomMission:
+    "🎲 مهمة جديدة",
 
-howLivesTitle:"❤️ القلوب:",
+  seconds:
+    "ث",
 
-howLives:"لديك 3 قلوب. كل اختيار خاطئ يفقد قلبًا. عند وصول القلوب إلى صفر تنتهي اللعبة.",
+  exit:
+    "خروج",
 
-howComboTitle:"🔥 الكومبو:",
+  howGoalTitle:
+    "🎯 الهدف:",
 
-howCombo:"كل إجابة صحيحة متتالية ترفع الكومبو وتزيد النقاط. الخطأ يصفر الكومبو.",
+  howGoal:
+    "اضغط فقط على الأعداد التي تحقق المهمة المكتوبة أعلى الشاشة.",
 
-howBombTitle:"💣 القنبلة:",
+  howLivesTitle:
+    "❤️ القلوب:",
 
-howBomb:"تمسح الأعداد الظاهرة فورًا، ولا تمنح نقاطًا ولا تخصم قلبًا. تعود بعد 6 ثوانٍ.",
+  howLives:
+    "لديك 3 قلوب. كل اختيار خاطئ يفقد قلبًا. عند وصول القلوب إلى صفر تنتهي اللعبة.",
 
-howSpeedTitle:"⚡ السرعة:",
+  howComboTitle:
+    "🔥 الكومبو:",
 
-howSpeed:"مع ارتفاع المستوى تزداد سرعة الأعداد تدريجيًا.",
+  howCombo:
+    "كل إجابة صحيحة متتالية ترفع الكومبو وتزيد النقاط. الخطأ يصفر الكومبو.",
 
-howAccuracyTitle:"📐 الدقة الرياضية:",
+  howBombTitle:
+    "💣 القنبلة:",
 
-howAccuracy:"اللعبة تتحقق حسابيًا من الأولية، الزوجية، الفردية، المضاعفات، القواسم، المربعات، والمقارنات.",
+  howBomb:
+    "تمسح الأعداد الظاهرة فورًا، ولا تمنح نقاطًا ولا تخصم قلبًا. تعود بعد 6 ثوانٍ.",
 
-howPlay:"▶ ابدأ اللعب",
+  howSpeedTitle:
+    "⚡ السرعة:",
 
-resetTitle:"إعادة الإحصائيات؟",
+  howSpeed:
+    "مع ارتفاع المستوى تزداد سرعة الأعداد تدريجيًا.",
 
-resetMessage:"سيتم حذف أفضل نتيجة وعدد المباريات وأفضل كومبو. هذا الإجراء لا يمكن التراجع عنه.",
+  howAccuracyTitle:
+    "📐 الدقة الرياضية:",
 
-cancel:"إلغاء",
+  howAccuracy:
+    "اللعبة تتحقق حسابيًا من الأولية، الزوجية، الفردية، المضاعفات، القواسم، المربعات والمقارنات.",
 
-resetConfirm:"إعادة الضبط",
+  howPlay:
+    "▶ ابدأ اللعب",
 
-resetDone:"تمت إعادة الإحصائيات"
+  resetTitle:
+    "إعادة الإحصائيات؟",
+
+  resetMessage:
+    "سيتم حذف أفضل نتيجة وعدد المباريات وأفضل كومبو. هذا الإجراء لا يمكن التراجع عنه.",
+
+  cancel:
+    "إلغاء",
+
+  resetConfirm:
+    "إعادة الضبط",
+
+  resetDone:
+    "تمت إعادة الإحصائيات"
 
 },
 
 
 fr:{
 
-brandSub:"Mathématiques • CHASSE AUX NOMBRES",
+  tag:
+    "Mathématiques • Vitesse • Précision",
 
-title:"CHASSE AUX NOMBRES",
+  title:
+    "CHASSE AUX NOMBRES",
 
-tag:"Mathématiques • Vitesse • Précision",
+  brandSub:
+    "Mathématiques • CHASSE AUX NOMBRES",
 
-play:"JOUER",
+  play:
+    "JOUER",
 
-playP:"Défis mathématiques",
+  playP:
+    "Défis mathématiques",
 
-quick:"CHASSE RAPIDE",
+  quick:
+    "CHASSE RAPIDE",
 
-quickP:"60 secondes • battez votre record",
+  quickP:
+    "60 secondes • battez votre record",
 
-missions:"CHOIX DE LA MISSION",
+  missions:
+    "CHOIX DE LA MISSION",
 
-missionsP:"Choisissez le défi",
+  missionsP:
+    "Choisissez le défi",
 
-random:"DÉFI ALÉATOIRE",
+  random:
+    "DÉFI ALÉATOIRE",
 
-randomP:"Nouvelle mission toutes les 20 secondes",
+  randomP:
+    "Nouvelle mission toutes les 20 secondes",
 
-survival:"❤️ MODE SURVIE — 3 VIES",
+  survival:
+    "MODE SURVIE — 3 VIES",
 
-how:"COMMENT JOUER",
+  survivalSub:
+    "Testez vos compétences et votre endurance",
 
-reset:"RÉINITIALISER",
+  how:
+    "COMMENT JOUER",
 
-best:"MEILLEUR SCORE",
+  howP:
+    "Règles et conseils",
 
-games:"PARTIES",
+  reset:
+    "RÉINITIALISER",
 
-bestCombo:"MEILLEUR COMBO",
+  resetP:
+    "Effacer les statistiques",
 
-choose:"CHOIX DE LA MISSION",
+  footer:
+    "CHASSE AUX NOMBRES ❤️ IA Math • Entraînez votre esprit chaque jour",
 
-chooseSub:"Choisissez le défi puis commencez",
+  best:
+    "MEILLEUR SCORE",
 
-missionHeading:"🎯 Choisissez le type de nombres",
+  games:
+    "PARTIES",
 
-normalNote:"Choisissez la mission que vous voulez jouer.",
+  bestCombo:
+    "MEILLEUR COMBO",
 
-quickNote:"Choisissez d'abord la mission. La partie dure 60 secondes.",
+  choose:
+    "CHOIX DE LA MISSION",
 
-survivalNote:"Choisissez d'abord la mission. Vous commencez avec 3 vies.",
+  chooseSub:
+    "Choisissez le défi puis commencez",
 
-start:"COMMENCER",
+  missionHeading:
+    "🎯 Choisissez le type de nombres",
 
-score:"SCORE",
+  normalNote:
+    "Choisissez la mission que vous voulez jouer.",
 
-level:"NIVEAU",
+  quickNote:
+    "Choisissez d'abord la mission. La partie dure 60 secondes.",
 
-hearts:"VIES",
+  survivalNote:
+    "Choisissez d'abord la mission. Vous commencez avec 3 vies.",
 
-time:"TEMPS",
+  start:
+    "COMMENCER",
 
-correct:"✓ Correct !",
+  score:
+    "SCORE",
 
-wrong:"✕ Erreur — une vie perdue",
+  level:
+    "NIVEAU",
 
-bomb:"Bombe",
+  hearts:
+    "VIES",
 
-bombMsg:"💣 Nombres visibles effacés",
+  time:
+    "TEMPS",
 
-cool:"RECHARGE",
+  correct:
+    "✓ Correct !",
 
-exit:"Sortie",
+  wrong:
+    "✕ Erreur — une vie perdue",
 
-gameOver:"PARTIE TERMINÉE",
+  bomb:
+    "Bombe",
 
-timeOver:"TEMPS ÉCOULÉ",
+  bombMsg:
+    "💣 Nombres visibles effacés",
 
-again:"↻ REJOUER",
+  cool:
+    "RECHARGE",
 
-menu:"⌂ MENU",
+  gameOver:
+    "PARTIE TERMINÉE",
 
-randomMission:"🎲 Nouvelle mission",
+  timeOver:
+    "TEMPS ÉCOULÉ",
 
-seconds:"s",
+  again:
+    "↻ REJOUER",
 
-howGoalTitle:"🎯 Objectif :",
+  menu:
+    "⌂ MENU",
 
-howGoal:"Appuyez uniquement sur les nombres qui correspondent à la mission affichée.",
+  randomMission:
+    "🎲 Nouvelle mission",
 
-howLivesTitle:"❤️ Vies :",
+  seconds:
+    "s",
 
-howLives:"Vous avez 3 vies. Chaque erreur fait perdre une vie. À zéro, la partie est terminée.",
+  exit:
+    "Sortie",
 
-howComboTitle:"🔥 Combo :",
+  howGoalTitle:
+    "🎯 Objectif :",
 
-howCombo:"Chaque bonne réponse consécutive augmente le combo et le score. Une erreur remet le combo à zéro.",
+  howGoal:
+    "Appuyez uniquement sur les nombres qui correspondent à la mission affichée.",
 
-howBombTitle:"💣 Bombe :",
+  howLivesTitle:
+    "❤️ Vies :",
 
-howBomb:"Elle efface immédiatement les nombres visibles sans donner de points ni retirer de vie. Recharge en 6 secondes.",
+  howLives:
+    "Vous avez 3 vies. Chaque erreur fait perdre une vie. À zéro, la partie est terminée.",
 
-howSpeedTitle:"⚡ Vitesse :",
+  howComboTitle:
+    "🔥 Combo :",
 
-howSpeed:"La vitesse des nombres augmente progressivement avec le niveau.",
+  howCombo:
+    "Chaque bonne réponse consécutive augmente le combo et le score. Une erreur remet le combo à zéro.",
 
-howAccuracyTitle:"📐 Précision mathématique :",
+  howBombTitle:
+    "💣 Bombe :",
 
-howAccuracy:"Le jeu vérifie mathématiquement les nombres premiers, pairs, impairs, multiples, diviseurs, carrés et comparaisons.",
+  howBomb:
+    "Elle efface immédiatement les nombres visibles sans donner de points ni retirer de vie. Recharge en 6 secondes.",
 
-howPlay:"▶ COMMENCER",
+  howSpeedTitle:
+    "⚡ Vitesse :",
 
-resetTitle:"Réinitialiser les statistiques ?",
+  howSpeed:
+    "La vitesse des nombres augmente progressivement avec le niveau.",
 
-resetMessage:"Le meilleur score, le nombre de parties et le meilleur combo seront supprimés. Cette action est irréversible.",
+  howAccuracyTitle:
+    "📐 Précision mathématique :",
 
-cancel:"ANNULER",
+  howAccuracy:
+    "Le jeu vérifie mathématiquement les nombres premiers, pairs, impairs, multiples, diviseurs, carrés et comparaisons.",
 
-resetConfirm:"RÉINITIALISER",
+  howPlay:
+    "▶ COMMENCER",
 
-resetDone:"Statistiques réinitialisées"
+  resetTitle:
+    "Réinitialiser les statistiques ?",
+
+  resetMessage:
+    "Le meilleur score, le nombre de parties et le meilleur combo seront supprimés. Cette action est irréversible.",
+
+  cancel:
+    "ANNULER",
+
+  resetConfirm:
+    "RÉINITIALISER",
+
+  resetDone:
+    "Statistiques réinitialisées"
 
 },
 
 
 en:{
 
-brandSub:"Mathematics • NUMBER HUNTER",
+  tag:
+    "Mathematics • Speed • Precision",
 
-title:"NUMBER HUNTER",
+  title:
+    "NUMBER HUNTER",
 
-tag:"Mathematics • Speed • Precision",
+  brandSub:
+    "Mathematics • NUMBER HUNTER",
 
-play:"PLAY",
+  play:
+    "PLAY",
 
-playP:"Mathematics challenges",
+  playP:
+    "Mathematics challenges",
 
-quick:"QUICK HUNT",
+  quick:
+    "QUICK HUNT",
 
-quickP:"60 seconds • beat your record",
+  quickP:
+    "60 seconds • beat your record",
 
-missions:"MISSION SELECT",
+  missions:
+    "MISSION SELECT",
 
-missionsP:"Choose a challenge",
+  missionsP:
+    "Choose a challenge",
 
-random:"RANDOM CHALLENGE",
+  random:
+    "RANDOM CHALLENGE",
 
-randomP:"New mission every 20 seconds",
+  randomP:
+    "New mission every 20 seconds",
 
-survival:"❤️ SURVIVAL MODE — 3 LIVES",
+  survival:
+    "SURVIVAL MODE — 3 LIVES",
 
-how:"HOW TO PLAY",
+  survivalSub:
+    "Test your skills and endurance",
 
-reset:"RESET STATS",
+  how:
+    "HOW TO PLAY",
 
-best:"HIGH SCORE",
+  howP:
+    "Rules and tips",
 
-games:"GAMES",
+  reset:
+    "RESET STATS",
 
-bestCombo:"BEST COMBO",
+  resetP:
+    "Clear all statistics",
 
-choose:"MISSION SELECT",
+  footer:
+    "NUMBER HUNTER ❤️ IA Math • Train today for a stronger mind",
 
-chooseSub:"Choose a challenge and start",
+  best:
+    "HIGH SCORE",
 
-missionHeading:"🎯 Choose the number type",
+  games:
+    "GAMES",
 
-normalNote:"Choose the mission you want to play.",
+  bestCombo:
+    "BEST COMBO",
 
-quickNote:"Choose the mission first. The hunt lasts 60 seconds.",
+  choose:
+    "MISSION SELECT",
 
-survivalNote:"Choose the mission first. You start with 3 lives.",
+  chooseSub:
+    "Choose a challenge and start",
 
-start:"START MISSION",
+  missionHeading:
+    "🎯 Choose the number type",
 
-score:"SCORE",
+  normalNote:
+    "Choose the mission you want to play.",
 
-level:"LEVEL",
+  quickNote:
+    "Choose the mission first. The hunt lasts 60 seconds.",
 
-hearts:"LIVES",
+  survivalNote:
+    "Choose the mission first. You start with 3 lives.",
 
-time:"TIME",
+  start:
+    "START MISSION",
 
-correct:"✓ Correct!",
+  score:
+    "SCORE",
 
-wrong:"✕ Wrong — life lost",
+  level:
+    "LEVEL",
 
-bomb:"Bomb",
+  hearts:
+    "LIVES",
 
-bombMsg:"💣 Visible numbers cleared",
+  time:
+    "TIME",
 
-cool:"RECHARGING",
+  correct:
+    "✓ Correct!",
 
-exit:"Exit",
+  wrong:
+    "✕ Wrong — life lost",
 
-gameOver:"GAME OVER",
+  bomb:
+    "Bomb",
 
-timeOver:"TIME'S UP",
+  bombMsg:
+    "💣 Visible numbers cleared",
 
-again:"↻ PLAY AGAIN",
+  cool:
+    "RECHARGING",
 
-menu:"⌂ MENU",
+  gameOver:
+    "GAME OVER",
 
-randomMission:"🎲 New mission",
+  timeOver:
+    "TIME'S UP",
 
-seconds:"s",
+  again:
+    "↻ PLAY AGAIN",
 
-howGoalTitle:"🎯 Goal:",
+  menu:
+    "⌂ MENU",
 
-howGoal:"Tap only the numbers that match the mission displayed above.",
+  randomMission:
+    "🎲 New mission",
 
-howLivesTitle:"❤️ Lives:",
+  seconds:
+    "s",
 
-howLives:"You have 3 lives. Every wrong choice removes one life. At zero, the game ends.",
+  exit:
+    "Exit",
 
-howComboTitle:"🔥 Combo:",
+  howGoalTitle:
+    "🎯 Goal:",
 
-howCombo:"Every consecutive correct answer increases the combo and score. A mistake resets the combo.",
+  howGoal:
+    "Tap only the numbers that match the mission displayed above.",
 
-howBombTitle:"💣 Bomb:",
+  howLivesTitle:
+    "❤️ Lives:",
 
-howBomb:"It instantly clears visible numbers without scoring or losing a life. It recharges in 6 seconds.",
+  howLives:
+    "You have 3 lives. Every wrong choice removes one life. At zero, the game ends.",
 
-howSpeedTitle:"⚡ Speed:",
+  howComboTitle:
+    "🔥 Combo:",
 
-howSpeed:"Numbers gradually move faster as the level increases.",
+  howCombo:
+    "Every consecutive correct answer increases the combo and score. A mistake resets the combo.",
 
-howAccuracyTitle:"📐 Mathematical accuracy:",
+  howBombTitle:
+    "💣 Bomb:",
 
-howAccuracy:"The game mathematically checks primes, even, odd, multiples, divisors, squares and comparisons.",
+  howBomb:
+    "It instantly clears visible numbers without scoring or losing a life. It recharges in 6 seconds.",
 
-howPlay:"▶ START GAME",
+  howSpeedTitle:
+    "⚡ Speed:",
 
-resetTitle:"Reset statistics?",
+  howSpeed:
+    "Numbers gradually move faster as the level increases.",
 
-resetMessage:"Your high score, number of games and best combo will be deleted. This cannot be undone.",
+  howAccuracyTitle:
+    "📐 Mathematical accuracy:",
 
-cancel:"CANCEL",
+  howAccuracy:
+    "The game mathematically checks primes, even, odd, multiples, divisors, squares and comparisons.",
 
-resetConfirm:"RESET",
+  howPlay:
+    "▶ START GAME",
 
-resetDone:"Statistics reset"
+  resetTitle:
+    "Reset statistics?",
+
+  resetMessage:
+    "Your high score, number of games and best combo will be deleted. This cannot be undone.",
+
+  cancel:
+    "CANCEL",
+
+  resetConfirm:
+    "RESET",
+
+  resetDone:
+    "Statistics reset"
 
 }
 
 };
 
 
+/* =========================================================
+   HELPERS
+========================================================= */
+
 function text(key){
-  return T[state.lang][key] || T.en[key] || key;
+
+  return T[state.lang][key]
+    || T.en[key]
+    || key;
+
 }
 
 
 function missionName(m){
-  return m[state.lang] || m.en;
+
+  return m[state.lang]
+    || m.en;
+
 }
 
 
-function missionDesc(m){
-  return m.desc[state.lang] || m.desc.en;
+function missionDescription(m){
+
+  return m.desc[state.lang]
+    || m.desc.en;
+
 }
 
 
 function rand(a,b){
-  return Math.floor(Math.random()*(b-a+1))+a;
+
+  return Math.floor(
+    Math.random() *
+    (b-a+1)
+  ) + a;
+
 }
 
 
 function pick(a){
-  return a[Math.floor(Math.random()*a.length)];
+
+  return a[
+    Math.floor(
+      Math.random()*a.length
+    )
+  ];
+
 }
 
 
 function randEven(){
+
   return rand(1,49)*2;
+
 }
 
 
 function randOdd(){
+
   return rand(1,50)*2-1;
+
 }
 
 
 function isPrime(n){
 
-  if(n<2)return false;
+  if(n<2)
+    return false;
 
-  if(n===2)return true;
+  if(n===2)
+    return true;
 
-  if(n%2===0)return false;
+  if(n%2===0)
+    return false;
 
-  for(let i=3;i*i<=n;i+=2){
+  for(
+    let i=3;
+    i*i<=n;
+    i+=2
+  ){
 
-    if(n%i===0)return false;
+    if(n%i===0)
+      return false;
 
   }
 
   return true;
+
 }
 
 
 function shuffle(a){
 
-  for(let i=a.length-1;i>0;i--){
+  for(
+    let i=a.length-1;
+    i>0;
+    i--
+  ){
 
-    const j=rand(0,i);
+    const j=
+      rand(0,i);
 
-    [a[i],a[j]]=
-    [a[j],a[i]];
+    [
+      a[i],
+      a[j]
+    ]=[
+      a[j],
+      a[i]
+    ];
 
   }
 
   return a;
+
 }
 
 
-/* =====================================================
+/* =========================================================
    SCREEN
-===================================================== */
+========================================================= */
 
 function show(id){
 
   screens.forEach(
-    s=>$(s).classList.toggle(
-      "active",
-      s===id
-    )
+    s =>
+      $(s).classList.toggle(
+        "active",
+        s===id
+      )
   );
-
-  if(id==="home")
-    updateHome();
 
 }
 
 
-/* =====================================================
-   HOME LANGUAGE
-===================================================== */
+/* =========================================================
+   HOME UPDATE
+========================================================= */
 
 function updateHome(){
 
-  $("best").textContent=state.best;
-  $("games").textContent=state.games;
-  $("streak").textContent=state.bestCombo;
+  $("best").textContent=
+    state.best;
 
-  $("bestLabel").textContent=text("best");
-  $("gamesLabel").textContent=text("games");
-  $("comboLabel").textContent=text("bestCombo");
+  $("games").textContent=
+    state.games;
 
-  $("brandSub").textContent=text("brandSub");
+  $("streak").textContent=
+    state.bestCombo;
+
+
+  $("brandSub").textContent=
+    text("brandSub");
+
+  $("tagline").textContent=
+    text("tag");
+
+
+  $("playT").textContent=
+    text("play");
+
+  $("playP").textContent=
+    text("playP");
+
+
+  $("quickT").textContent=
+    text("quick");
+
+  $("quickP").textContent=
+    text("quickP");
+
+
+  $("missionsT").textContent=
+    text("missions");
+
+  $("missionsP").textContent=
+    text("missionsP");
+
+
+  $("randomT").textContent=
+    text("random");
+
+  $("randomP").textContent=
+    text("randomP");
+
+
+  $("survivalTitle").textContent=
+    text("survival");
+
+  $("survivalSub").textContent=
+    text("survivalSub");
+
+
+  $("howT").textContent=
+    text("how");
+
+  $("howP").textContent=
+    text("howP");
+
+
+  $("resetT").textContent=
+    text("reset");
+
+  $("resetP").textContent=
+    text("resetP");
+
+
+  $("bestLabel").textContent=
+    text("best");
+
+  $("gamesLabel").textContent=
+    text("games");
+
+  $("comboLabel").textContent=
+    text("bestCombo");
+
+
+  $("footerNote").textContent=
+    text("footer");
+
 
   $("homeTitle").innerHTML=
+
     state.lang==="ar"
-    ?"صائد<br>الأعداد"
-    :
+
+      ? "صائد<br>الأعداد"
+
+      :
+
     state.lang==="fr"
-    ?"CHASSE AUX<br>NOMBRES"
-    :
-    "NUMBER<br>HUNTER";
 
-  $("tagline").textContent=text("tag");
+      ? "CHASSE<br>AUX NOMBRES"
 
-  $("playT").textContent=text("play");
-  $("playP").textContent=text("playP");
+      :
 
-  $("quickT").textContent=text("quick");
-  $("quickP").textContent=text("quickP");
+        "NUMBER<br>HUNTER";
 
-  $("missionsT").textContent=text("missions");
-  $("missionsP").textContent=text("missionsP");
 
-  $("randomT").textContent=text("random");
-  $("randomP").textContent=text("randomP");
+  $("soundBtn").textContent=
+    state.sound
+      ? "🔊"
+      : "🔇";
 
-  $("survivalBtn").textContent=text("survival");
 
-  $("howBtn").textContent=
-    "ℹ️ "+text("how");
+  $("langBtn").textContent=
 
-  $("resetBtn").textContent=
-    text("reset");
+    state.lang==="ar"
+
+      ? "🇫🇷 FR"
+
+      :
+
+    state.lang==="fr"
+
+      ? "🇬🇧 EN"
+
+      :
+
+        "🇲🇦 AR";
+
 
   document.documentElement.lang=
     state.lang;
 
   document.documentElement.dir=
     state.lang==="ar"
-    ?"rtl"
-    :"ltr";
+      ? "rtl"
+      : "ltr";
+
 
   document.title=
-    text("title")+" — IA Math";
+    text("title")
+    +
+    " — IA Math";
 
 }
 
 
-/* =====================================================
-   MISSIONS SCREEN
-===================================================== */
+/* =========================================================
+   MISSION SCREEN
+========================================================= */
 
 function openMissionChoice(mode){
 
-  state.choiceMode=mode;
+  state.choiceMode=
+    mode;
 
   buildMissions();
 
@@ -2082,24 +4848,34 @@ function openMissionChoice(mode){
 
 function buildMissions(){
 
-  $("missionList").innerHTML="";
+  $("missionList").innerHTML=
+    "";
+
 
   missions.forEach(
     (m,i)=>{
 
-      const b=
-        document.createElement("button");
+      const button=
+        document.createElement(
+          "button"
+        );
 
-      b.className=
+
+      button.type=
+        "button";
+
+
+      button.className=
         "mission-choice"
-        +(i===state.selected
-          ?" selected"
-          :"")
-        +(i%4===1
-          ?" p"
-          :"");
+        +
+        (
+          i===state.selected
+            ? " selected"
+            : ""
+        );
 
-      b.innerHTML=`
+
+      button.innerHTML=`
 
         <span class="mi">
           ${m.icon}
@@ -2112,23 +4888,29 @@ function buildMissions(){
           </strong>
 
           <small>
-            ${missionDesc(m)}
+            ${missionDescription(m)}
           </small>
 
         </span>
 
       `;
 
-      b.onclick=()=>{
 
-        state.selected=i;
+      button.onclick=
+        () => {
 
-        buildMissions();
+          state.selected=
+            i;
 
-      };
+          buildMissions();
+
+        };
+
 
       $("missionList")
-        .appendChild(b);
+        .appendChild(
+          button
+        );
 
     }
   );
@@ -2144,18 +4926,22 @@ function buildMissions(){
     text("missionHeading");
 
 
-  let note="";
+  $("choiceNote").textContent=
 
-  if(state.choiceMode==="quick")
-    note=text("quickNote");
+    state.choiceMode==="quick"
 
-  else if(state.choiceMode==="survival")
-    note=text("survivalNote");
+      ? text("quickNote")
 
-  else
-    note=text("normalNote");
+      :
 
-  $("choiceNote").textContent=note;
+    state.choiceMode==="survival"
+
+      ? text("survivalNote")
+
+      :
+
+        text("normalNote");
+
 
   $("startSelected").textContent=
     text("start");
@@ -2163,9 +4949,9 @@ function buildMissions(){
 }
 
 
-/* =====================================================
+/* =========================================================
    HOW SCREEN
-===================================================== */
+========================================================= */
 
 function updateHow(){
 
@@ -2175,11 +4961,13 @@ function updateHow(){
   $("howSub").textContent=
     text("brandSub");
 
+
   $("howGoalTitle").textContent=
     text("howGoalTitle");
 
   $("howGoal").textContent=
     text("howGoal");
+
 
   $("howLivesTitle").textContent=
     text("howLivesTitle");
@@ -2187,11 +4975,13 @@ function updateHow(){
   $("howLives").textContent=
     text("howLives");
 
+
   $("howComboTitle").textContent=
     text("howComboTitle");
 
   $("howCombo").textContent=
     text("howCombo");
+
 
   $("howBombTitle").textContent=
     text("howBombTitle");
@@ -2199,11 +4989,13 @@ function updateHow(){
   $("howBomb").textContent=
     text("howBomb");
 
+
   $("howSpeedTitle").textContent=
     text("howSpeedTitle");
 
   $("howSpeed").textContent=
     text("howSpeed");
+
 
   $("howAccuracyTitle").textContent=
     text("howAccuracyTitle");
@@ -2211,15 +5003,16 @@ function updateHow(){
   $("howAccuracy").textContent=
     text("howAccuracy");
 
+
   $("howPlay").textContent=
     text("howPlay");
 
 }
 
 
-/* =====================================================
+/* =========================================================
    HUD
-===================================================== */
+========================================================= */
 
 function updateHud(){
 
@@ -2228,6 +5021,7 @@ function updateHud(){
 
   $("level").textContent=
     state.level;
+
 
   $("scoreLabel").textContent=
     text("score");
@@ -2239,7 +5033,8 @@ function updateHud(){
   if(state.quick){
 
     $("heartHud").textContent=
-      state.timeLeft+
+      state.timeLeft
+      +
       text("seconds");
 
     $("timeHud").textContent=
@@ -2248,7 +5043,9 @@ function updateHud(){
   }else{
 
     $("heartHud").textContent=
-      "❤️".repeat(state.lives)
+      "❤️".repeat(
+        state.lives
+      )
       +
       "🖤".repeat(
         3-state.lives
@@ -2265,31 +5062,57 @@ function updateHud(){
     $("missionBar").textContent=
       "🎯 "
       +
-      missionName(state.mission);
+      missionName(
+        state.mission
+      )
+      +
+      (
+        state.random
+          ? " • "+text("random")
+          : ""
+      );
 
   }
+
+
+  $("bombText").textContent=
+    state.bombReady
+      ? text("bomb")
+      : text("cool");
 
 }
 
 
-/* =====================================================
+/* =========================================================
    TOAST
-===================================================== */
+========================================================= */
 
 function toast(msg){
 
-  const el=$("toast");
+  const el=
+    $("toast");
 
-  el.textContent=msg;
 
-  el.style.display="block";
+  el.textContent=
+    msg;
 
-  clearTimeout(toast.t);
 
-  toast.t=
+  el.style.display=
+    "block";
+
+
+  clearTimeout(
+    toast.timer
+  );
+
+
+  toast.timer=
     setTimeout(
-      ()=>{
-        el.style.display="none";
+      () => {
+
+        el.style.display=
+          "none";
+
       },
       1100
     );
@@ -2297,126 +5120,202 @@ function toast(msg){
 }
 
 
-/* =====================================================
+/* =========================================================
    FEEDBACK
-===================================================== */
+========================================================= */
 
 function feedback(msg,good){
 
-  const el=$("feedback");
+  const el=
+    $("feedback");
 
-  el.textContent=msg;
+
+  el.textContent=
+    msg;
+
 
   el.className=
     "feedback "
     +
-    (good?"good":"bad");
+    (
+      good
+        ? "good"
+        : "bad"
+    );
+
 
   void el.offsetWidth;
 
-  el.classList.add("show");
+
+  el.classList.add(
+    "show"
+  );
 
 }
 
 
-/* =====================================================
+/* =========================================================
    SOUND
-===================================================== */
+========================================================= */
 
-function beep(freq=500,dur=.06){
+function beep(
+  frequency=500,
+  duration=.06
+){
 
   if(!state.sound)
     return;
 
+
   try{
 
-    const C=
-      window.AudioContext||
+    const AudioCtx=
+      window.AudioContext
+      ||
       window.webkitAudioContext;
 
-    if(!C)return;
 
-    const c=
-      beep.ctx||
-      (beep.ctx=new C());
+    if(!AudioCtx)
+      return;
 
-    if(c.state==="suspended")
-      c.resume();
 
-    const o=
-      c.createOscillator();
+    const ctx=
+      beep.ctx
+      ||
+      (
+        beep.ctx=
+        new AudioCtx()
+      );
 
-    const g=
-      c.createGain();
 
-    o.frequency.value=freq;
+    if(
+      ctx.state===
+      "suspended"
+    ){
 
-    o.type="sine";
+      ctx.resume();
 
-    g.gain.setValueAtTime(
+    }
+
+
+    const oscillator=
+      ctx.createOscillator();
+
+    const gain=
+      ctx.createGain();
+
+
+    oscillator.frequency.value=
+      frequency;
+
+    oscillator.type=
+      "sine";
+
+
+    gain.gain.setValueAtTime(
       .045,
-      c.currentTime
+      ctx.currentTime
     );
 
-    g.gain.exponentialRampToValueAtTime(
+
+    gain.gain.exponentialRampToValueAtTime(
       .001,
-      c.currentTime+dur
+      ctx.currentTime+
+      duration
     );
 
-    o.connect(g);
 
-    g.connect(c.destination);
-
-    o.start();
-
-    o.stop(
-      c.currentTime+dur
+    oscillator.connect(
+      gain
     );
+
+    gain.connect(
+      ctx.destination
+    );
+
+
+    oscillator.start();
+
+    oscillator.stop(
+      ctx.currentTime+
+      duration
+    );
+
 
   }catch(_){}
 
 }
 
 
-/* =====================================================
+/* =========================================================
    START GAME
-===================================================== */
+========================================================= */
 
 function startGame({
+
   quick=false,
+
   survival=false,
+
   random=false,
+
   mission=null
+
 }={}){
+
 
   stopGame(false);
 
-  state.quick=quick;
 
-  state.survival=survival;
+  state.quick=
+    quick;
 
-  state.random=random;
+  state.survival=
+    survival;
 
-  state.score=0;
+  state.random=
+    random;
 
-  state.combo=0;
 
-  state.level=1;
+  state.score=
+    0;
 
-  state.lives=3;
+  state.combo=
+    0;
 
-  state.timeLeft=60;
+  state.level=
+    1;
 
-  state.elapsed=0;
+  state.lives=
+    3;
+
+
+  state.timeLeft=
+    60;
+
+
+  state.elapsed=
+    0;
+
 
   state.startTime=
     performance.now();
 
-  state.running=true;
 
-  state.bombReady=true;
+  state.lastFrame=
+    performance.now();
 
-  state.randomBucket=-1;
+
+  state.randomBucket=
+    -1;
+
+
+  state.running=
+    true;
+
+
+  state.bombReady=
+    true;
 
 
   if(random){
@@ -2429,34 +5328,45 @@ function startGame({
     state.mission=
       mission
       ||
-      missions[state.selected]
+      missions[
+        state.selected
+      ]
       ||
       missions[0];
 
   }
 
 
-  $("arena").innerHTML="";
+  $("arena").innerHTML=
+    "";
+
 
   state.targets.clear();
 
+
   $("gameOverlay")
-    .classList.remove("show");
+    .classList.remove(
+      "show"
+    );
+
 
   $("bomb")
-    .classList.remove("cool");
+    .classList.remove(
+      "cool"
+    );
+
 
   show("game");
 
+
   updateHud();
 
-  beep(700,.08);
 
+  beep(
+    700,
+    .08
+  );
 
-  /*
-    Random:
-    أول تغيير بعد 20 ثانية.
-  */
 
   state.spawnTimer=
     setInterval(
@@ -2472,11 +5382,14 @@ function startGame({
     );
 
 
-  spawnWave();
+  /*
+    Always start with actual targets.
+  */
+
   spawnWave();
 
-  state.lastFrame=
-    performance.now();
+  spawnWave();
+
 
   state.raf=
     requestAnimationFrame(
@@ -2486,13 +5399,16 @@ function startGame({
 }
 
 
-/* =====================================================
-   STOP
-===================================================== */
+/* =========================================================
+   STOP GAME
+========================================================= */
 
-function stopGame(count=true){
+function stopGame(
+  count=true
+){
 
-  state.running=false;
+  state.running=
+    false;
 
 
   if(state.spawnTimer){
@@ -2501,7 +5417,8 @@ function stopGame(count=true){
       state.spawnTimer
     );
 
-    state.spawnTimer=null;
+    state.spawnTimer=
+      null;
 
   }
 
@@ -2512,7 +5429,8 @@ function stopGame(count=true){
       state.timer
     );
 
-    state.timer=null;
+    state.timer=
+      null;
 
   }
 
@@ -2523,7 +5441,8 @@ function stopGame(count=true){
       state.raf
     );
 
-    state.raf=null;
+    state.raf=
+      null;
 
   }
 
@@ -2534,14 +5453,17 @@ function stopGame(count=true){
       state.bombCooldown
     );
 
-    state.bombCooldown=null;
+    state.bombCooldown=
+      null;
 
   }
 
 
   state.targets.forEach(
-    t=>t.el.remove()
+    target =>
+      target.el.remove()
   );
+
 
   state.targets.clear();
 
@@ -2549,6 +5471,7 @@ function stopGame(count=true){
   if(count){
 
     state.games++;
+
 
     localStorage.setItem(
       "nh_games",
@@ -2560,9 +5483,9 @@ function stopGame(count=true){
 }
 
 
-/* =====================================================
-   SECOND / RANDOM TIMER
-===================================================== */
+/* =========================================================
+   TIMER
+========================================================= */
 
 function secondTick(){
 
@@ -2578,17 +5501,26 @@ function secondTick(){
     )/1000;
 
 
+  /* QUICK */
+
   if(state.quick){
 
     state.timeLeft=
       Math.max(
         0,
-        60-Math.floor(state.elapsed)
+        60-
+        Math.floor(
+          state.elapsed
+        )
       );
+
 
     updateHud();
 
-    if(state.timeLeft<=0){
+
+    if(
+      state.timeLeft<=0
+    ){
 
       endGame(
         text("timeOver")
@@ -2601,6 +5533,8 @@ function secondTick(){
   }
 
 
+  /* RANDOM */
+
   if(state.random){
 
     const bucket=
@@ -2609,12 +5543,20 @@ function secondTick(){
       );
 
 
-    if(bucket!==state.randomBucket){
+    if(
+      bucket!==
+      state.randomBucket
+    ){
 
-      state.randomBucket=bucket;
+      state.randomBucket=
+        bucket;
 
-      if(bucket>0)
+
+      if(bucket>0){
+
         nextRandomMission();
+
+      }
 
     }
 
@@ -2623,78 +5565,109 @@ function secondTick(){
 }
 
 
-/* =====================================================
+/* =========================================================
    RANDOM MISSION
-===================================================== */
+========================================================= */
 
-function randomMission(exclude){
+function randomMission(
+  exclude
+){
 
-  let m;
+  let mission;
+
 
   do{
 
-    m=
+    mission=
       missions[
-        rand(0,missions.length-1)
+        rand(
+          0,
+          missions.length-1
+        )
       ];
 
   }while(
-    exclude &&
-    m.id===exclude.id &&
+
+    exclude
+    &&
+    mission.id===
+    exclude.id
+    &&
     missions.length>1
+
   );
 
-  return m;
+
+  return mission;
 
 }
 
 
 function nextRandomMission(){
 
-  if(!state.running||!state.random)
+  if(
+    !state.running
+    ||
+    !state.random
+  )
     return;
 
 
-  const old=
-    state.mission;
-
-
   state.mission=
-    randomMission(old);
+    randomMission(
+      state.mission
+    );
 
 
   /*
-    عند تغيير المهمة:
-    نحذف الأعداد القديمة ونولد موجة جديدة
-    حتى يكون هناك دائمًا عدد صحيح للمهمة الجديدة.
+    Clear old targets so that the
+    new mission immediately gets
+    a fresh guaranteed correct target.
   */
 
   state.targets.forEach(
-    t=>t.el.remove()
+    target =>
+      target.el.remove()
   );
+
 
   state.targets.clear();
 
+
   spawnWave();
+
   spawnWave();
+
 
   updateHud();
 
+
   feedback(
+
     text("randomMission")
-    +" — "
-    +missionName(state.mission),
+    +
+    " — "
+    +
+    missionName(
+      state.mission
+    ),
+
     true
+
   );
 
-  beep(850,.08);
+
+  beep(
+    850,
+    .08
+  );
 
 }
 
 
-/* =====================================================
-   SPAWN
-===================================================== */
+/* =========================================================
+   CORRECT NUMBER
+========================================================= */
 
 function makeCorrect(){
 
@@ -2702,6 +5675,10 @@ function makeCorrect(){
 
 }
 
+
+/* =========================================================
+   SPAWN WAVE
+========================================================= */
 
 function spawnWave(){
 
@@ -2712,6 +5689,7 @@ function spawnWave(){
   const arena=
     $("arena");
 
+
   const rect=
     arena.getBoundingClientRect();
 
@@ -2721,7 +5699,8 @@ function spawnWave(){
 
 
   /*
-    الرقم الأول مضمون أنه صحيح.
+    IMPORTANT:
+    First value is always correct.
   */
 
   const values=[
@@ -2733,23 +5712,30 @@ function spawnWave(){
 
 
   /*
-    بقية الأرقام يجب أن تكون خاطئة
-    بالنسبة للمهمة الحالية.
+    Add only wrong distractors.
   */
 
   while(
-    values.length<count &&
+
+    values.length<count
+    &&
     tries<500
+
   ){
 
     tries++;
 
+
     const n=
       rand(1,99);
 
+
     if(
-      !values.includes(n) &&
+
+      !values.includes(n)
+      &&
       !state.mission.test(n)
+
     ){
 
       values.push(n);
@@ -2760,21 +5746,31 @@ function spawnWave(){
 
 
   /*
-    احتياط إضافي.
+    Guaranteed fallback for distractors.
   */
 
-  if(values.length<count){
+  if(
+    values.length<count
+  ){
 
     for(
+
       let n=1;
-      n<=99 &&
+
+      n<=99
+      &&
       values.length<count;
+
       n++
+
     ){
 
       if(
-        !values.includes(n) &&
+
+        !values.includes(n)
+        &&
         !state.mission.test(n)
+
       ){
 
         values.push(n);
@@ -2803,20 +5799,22 @@ function spawnWave(){
 
 
   values.forEach(
-    value=>{
+    value => {
+
 
       let x=
         rand(
-          Math.ceil(size/2)+5,
+          Math.ceil(
+            size/2
+          )+5,
+
           Math.floor(
-            rect.width-size/2-5
+            rect.width-
+            size/2-
+            5
           )
         );
 
-
-      /*
-        تبدأ الأعداد من أعلى منطقة اللعب.
-      */
 
       let y=
         -size/2-5;
@@ -2826,22 +5824,33 @@ function spawnWave(){
 
 
       while(
-        attempts<20 &&
+
+        attempts<20
+        &&
         occupied.some(
-          p=>
-            Math.abs(p-x)
-            <
-            size*.9
+          p =>
+          Math.abs(
+            p-x
+          )
+          <
+          size*.9
         )
+
       ){
 
         x=
           rand(
-            Math.ceil(size/2)+5,
+            Math.ceil(
+              size/2
+            )+5,
+
             Math.floor(
-              rect.width-size/2-5
+              rect.width-
+              size/2-
+              5
             )
           );
+
 
         attempts++;
 
@@ -2857,10 +5866,13 @@ function spawnWave(){
         );
 
 
+      el.type=
+        "button";
+
+
       el.className=
         "target";
 
-      el.type="button";
 
       el.textContent=
         value;
@@ -2869,26 +5881,28 @@ function spawnWave(){
       el.style.width=
         size+"px";
 
+
       el.style.height=
         size+"px";
 
+
       el.style.left=
         x+"px";
+
 
       el.style.top=
         y+"px";
 
 
-      arena.appendChild(el);
-
-
-      const id=
-        state.nextId++;
+      arena.appendChild(
+        el
+      );
 
 
       const obj={
 
-        id,
+        id:
+          state.nextId++,
 
         value,
 
@@ -2904,16 +5918,22 @@ function spawnWave(){
           rect.height/
           Math.max(
             2.0,
-            4.3-state.level*.11
+            4.3-
+            state.level*.11
           )
           +
-          rand(-10,10)
+          rand(
+            -10,
+            10
+          )
 
       };
 
 
       /*
-        نربط الكائن بالزر.
+        The DOM element keeps
+        a direct reference to its
+        game object.
       */
 
       el.__numberHunterTarget=
@@ -2921,19 +5941,20 @@ function spawnWave(){
 
 
       state.targets.set(
-        id,
+        obj.id,
         obj
       );
 
     }
+
   );
 
 }
 
 
-/* =====================================================
+/* =========================================================
    ANIMATION
-===================================================== */
+========================================================= */
 
 function animateTargets(now){
 
@@ -2944,21 +5965,26 @@ function animateTargets(now){
   const dt=
     Math.min(
       .035,
+
       (
         now-
         (
-          state.lastFrame||
+          state.lastFrame
+          ||
           now
         )
       )/1000
+
     );
 
 
-  state.lastFrame=now;
+  state.lastFrame=
+    now;
 
 
   const arena=
     $("arena");
+
 
   const h=
     arena.clientHeight;
@@ -2967,36 +5993,38 @@ function animateTargets(now){
   for(
     const [
       id,
-      t
+      target
     ]
-    of [...state.targets]
+    of [
+      ...state.targets
+    ]
   ){
 
-    t.y+=
-      t.speed*dt;
+    target.y+=
+      target.speed*dt;
 
 
-    t.el.style.top=
-      t.y+"px";
+    target.el.style.top=
+      target.y+"px";
 
 
     if(
-      t.y>
-      h+t.size
+      target.y>
+      h+
+      target.size
     ){
 
-      state.targets.delete(id);
+      state.targets.delete(
+        id
+      );
 
-      t.el.remove();
+
+      target.el.remove();
 
     }
 
   }
 
-
-  /*
-    استمرار الحركة.
-  */
 
   if(state.running){
 
@@ -3010,33 +6038,51 @@ function animateTargets(now){
 }
 
 
-/* =====================================================
+/* =========================================================
    TOUCH / CLICK
-===================================================== */
+========================================================= */
 
 /*
-  مهم جدًا:
+  FIXED BEHAVIOUR:
 
-  لا نعتمد pointerdown لقتل الرقم.
+  pointerdown = remember the target.
 
-  pointerdown = بداية اللمس فقط
-  pointerup   = نتحقق من المسافة
-  إذا تحرك الإصبع أكثر من 8px => سحب/تمرير
-  وبالتالي لا يتم احتساب الرقم.
+  pointerup = determine whether this
+  was a real tap.
+
+  <= 12px movement:
+  REAL TAP → hit.
+
+  > 12px movement:
+  SWIPE / DRAG → ignored.
+
+  This prevents scrolling/swiping
+  from activating numbers.
 */
 
-let pressTarget=null;
+let pressTarget=
+  null;
 
-let pressPointerId=null;
+let pressPointerId=
+  null;
 
-let pressX=0;
+let pressX=
+  0;
 
-let pressY=0;
+let pressY=
+  0;
 
 
 $("arena").addEventListener(
+
   "pointerdown",
-  event=>{
+
+  event => {
+
+
+    if(!state.running)
+      return;
+
 
     const target=
       event.target.closest(
@@ -3044,17 +6090,25 @@ $("arena").addEventListener(
       );
 
 
-    if(
-      !target||
-      !state.running
-    )
+    if(!target)
       return;
 
 
-    pressTarget=target;
+    const obj=
+      target.__numberHunterTarget;
+
+
+    if(!obj)
+      return;
+
+
+    pressTarget=
+      target;
+
 
     pressPointerId=
       event.pointerId;
+
 
     pressX=
       event.clientX;
@@ -3077,18 +6131,26 @@ $("arena").addEventListener(
     event.stopPropagation();
 
   },
+
   {
     passive:false
   }
+
 );
 
 
 $("arena").addEventListener(
+
   "pointerup",
-  event=>{
+
+  event => {
+
+
+    if(!pressTarget)
+      return;
+
 
     if(
-      !pressTarget||
       event.pointerId!==
       pressPointerId
     )
@@ -3099,39 +6161,58 @@ $("arena").addEventListener(
       event.clientX-
       pressX;
 
+
     const dy=
       event.clientY-
       pressY;
 
 
     const distance=
-      Math.hypot(dx,dy);
+      Math.hypot(
+        dx,
+        dy
+      );
 
 
     const target=
       pressTarget;
 
 
-    pressTarget=null;
+    pressTarget=
+      null;
 
-    pressPointerId=null;
+
+    pressPointerId=
+      null;
 
 
     /*
-      8px هي عتبة السماح.
-      أي حركة أكبر = Swipe/Drag.
+      Only a genuine tap activates.
     */
 
     if(
-      distance<=8 &&
+
+      distance<=12
+      &&
+      target
+      &&
       target.isConnected
+      &&
+      state.running
+
     ){
 
       const obj=
         target.__numberHunterTarget;
 
-      if(obj)
-        hitTarget(obj);
+
+      if(obj){
+
+        hitTarget(
+          obj
+        );
+
+      }
 
     }
 
@@ -3139,47 +6220,65 @@ $("arena").addEventListener(
     event.preventDefault();
 
   },
+
   {
     passive:false
   }
+
 );
 
 
 $("arena").addEventListener(
+
   "pointercancel",
-  ()=>{
-    pressTarget=null;
-    pressPointerId=null;
+
+  () => {
+
+    pressTarget=
+      null;
+
+    pressPointerId=
+      null;
+
   }
+
 );
 
 
-/* =====================================================
-   HIT
-===================================================== */
+/* =========================================================
+   HIT TARGET
+========================================================= */
 
-function hitTarget(t){
+function hitTarget(target){
 
   if(
-    !state.running||
-    !state.targets.has(t.id)
+
+    !state.running
+    ||
+    !state.targets.has(
+      target.id
+    )
+
   )
     return;
 
 
   state.targets.delete(
-    t.id
+    target.id
   );
 
 
   /*
-    نتحقق من المهمة الحالية لحظة الضغط،
-    وليس من نتيجة قديمة.
+    Always check against the
+    CURRENT mission.
+
+    This is important for
+    Random Challenge.
   */
 
   const correct=
     state.mission.test(
-      t.value
+      target.value
     );
 
 
@@ -3213,22 +6312,28 @@ function hitTarget(t){
     }
 
 
-    t.el.classList.add(
+    target.el.classList.add(
       "correct-hit"
     );
 
 
     setTimeout(
-      ()=>t.el.remove(),
+      () =>
+        target.el.remove(),
       180
     );
 
 
     feedback(
+
       text("correct")
-      +"  +"
-      +gained,
+      +
+      "  +"
+      +
+      gained,
+
       true
+
     );
 
 
@@ -3246,6 +6351,7 @@ function hitTarget(t){
       state.bestCombo=
         state.combo;
 
+
       localStorage.setItem(
         "nh_combo",
         state.bestCombo
@@ -3255,19 +6361,23 @@ function hitTarget(t){
 
   }else{
 
-    t.el.classList.add(
+
+    target.el.classList.add(
       "wrong",
       "wrong-hit"
     );
 
 
     setTimeout(
-      ()=>t.el.remove(),
+      () =>
+        target.el.remove(),
       380
     );
 
 
-    state.combo=0;
+    state.combo=
+      0;
+
 
     state.lives=
       Math.max(
@@ -3294,9 +6404,11 @@ function hitTarget(t){
 
       updateHud();
 
+
       endGame(
         text("gameOver")
       );
+
 
       return;
 
@@ -3310,20 +6422,24 @@ function hitTarget(t){
 }
 
 
-/* =====================================================
+/* =========================================================
    BOMB
-===================================================== */
+========================================================= */
 
 function useBomb(){
 
   if(
-    !state.running||
+
+    !state.running
+    ||
     !state.bombReady
+
   )
     return;
 
 
-  state.bombReady=false;
+  state.bombReady=
+    false;
 
 
   $("bomb")
@@ -3332,18 +6448,22 @@ function useBomb(){
     );
 
 
+  updateHud();
+
+
   for(
-    const t
+    const target
     of state.targets.values()
   ){
 
-    t.el.classList.add(
+    target.el.classList.add(
       "correct-hit"
     );
 
 
     setTimeout(
-      ()=>t.el.remove(),
+      () =>
+        target.el.remove(),
       180
     );
 
@@ -3366,29 +6486,38 @@ function useBomb(){
 
   state.bombCooldown=
     setTimeout(
-      ()=>{
+      () => {
+
 
         if(state.running){
 
-          state.bombReady=true;
+          state.bombReady=
+            true;
+
 
           $("bomb")
             .classList.remove(
               "cool"
             );
 
+
+          updateHud();
+
         }
 
+
       },
+
       6000
+
     );
 
 }
 
 
-/* =====================================================
-   END
-===================================================== */
+/* =========================================================
+   END GAME
+========================================================= */
 
 function endGame(reason){
 
@@ -3406,6 +6535,7 @@ function endGame(reason){
 
     state.best=
       state.score;
+
 
     localStorage.setItem(
       "nh_best",
@@ -3427,11 +6557,16 @@ function endGame(reason){
 
   $("resultInfo")
     .textContent=
-    text("score")
-    +" • "
-    +text("bestCombo")
-    +" : "
-    +state.bestCombo;
+
+      text("score")
+      +
+      " • "
+      +
+      text("bestCombo")
+      +
+      " : "
+      +
+      state.bestCombo;
 
 
   $("againBtn")
@@ -3461,25 +6596,11 @@ function endGame(reason){
 }
 
 
-/* =====================================================
-   EXIT
-===================================================== */
+/* =========================================================
+   EXIT GAME
+========================================================= */
 
 function exitGame(){
-
-  if(!state.running){
-
-    $("gameOverlay")
-      .classList.remove(
-        "show"
-      );
-
-    show("home");
-
-    return;
-
-  }
-
 
   stopGame(false);
 
@@ -3492,14 +6613,37 @@ function exitGame(){
 
   show("home");
 
+
+  updateHome();
+
 }
 
 
-/* =====================================================
-   RESET STATS
-===================================================== */
+/* =========================================================
+   RESET MODAL
+========================================================= */
 
 function openResetModal(){
+
+  $("resetTitle")
+    .textContent=
+    text("resetTitle");
+
+
+  $("resetMessage")
+    .textContent=
+    text("resetMessage");
+
+
+  $("resetCancel")
+    .textContent=
+    text("cancel");
+
+
+  $("resetConfirm")
+    .textContent=
+    text("resetConfirm");
+
 
   $("resetModal")
     .classList.add(
@@ -3521,11 +6665,14 @@ function closeResetModal(){
 
 function resetStats(){
 
-  state.best=0;
+  state.best=
+    0;
 
-  state.games=0;
+  state.games=
+    0;
 
-  state.bestCombo=0;
+  state.bestCombo=
+    0;
 
 
   localStorage.removeItem(
@@ -3543,7 +6690,9 @@ function resetStats(){
 
   updateHome();
 
+
   closeResetModal();
+
 
   toast(
     text("resetDone")
@@ -3552,17 +6701,19 @@ function resetStats(){
 }
 
 
-/* =====================================================
+/* =========================================================
    LANGUAGE
-===================================================== */
+========================================================= */
 
-function setLang(l){
+function setLang(language){
 
-  state.lang=l;
+  state.lang=
+    language;
+
 
   localStorage.setItem(
     "nh_lang",
-    l
+    language
   );
 
 
@@ -3573,79 +6724,86 @@ function setLang(l){
   updateHow();
 
 
-  if(state.mission)
+  if(state.mission){
+
     updateHud();
 
+  }
 
-  $("langBtn").textContent=
-    l==="ar"
-    ?"FR"
-    :
-    l==="fr"
-    ?"EN"
-    :
-    "AR";
 
 }
 
 
-/* =====================================================
-   BUTTON EVENTS
-===================================================== */
+/* =========================================================
+   HOME EVENTS
+========================================================= */
 
 
-/* Normal */
+/*
+  Normal game:
+  mission selection first.
+*/
 
 $("playBtn").onclick=
-  ()=>{
+  () =>
     openMissionChoice(
       "normal"
     );
-  };
 
 
-/* Quick = mission choice first */
+/*
+  Quick Hunt:
+  mission selection first.
+*/
 
 $("quickBtn").onclick=
-  ()=>{
+  () =>
     openMissionChoice(
       "quick"
     );
-  };
 
 
-/* Mission list */
+/*
+  Mission selection.
+*/
 
 $("missionsBtn").onclick=
-  ()=>{
+  () =>
     openMissionChoice(
       "normal"
     );
-  };
 
 
-/* Random */
+/*
+  Random Challenge:
+  starts immediately with a random mission.
+*/
 
 $("randomBtn").onclick=
-  ()=>{
+  () =>
     startGame({
       random:true
     });
-  };
 
 
-/* Survival = mission choice first */
+/*
+  Survival:
+  mission selection first.
+*/
 
 $("survivalBtn").onclick=
-  ()=>{
+  () =>
     openMissionChoice(
       "survival"
     );
-  };
 
+
+/*
+  How to play.
+*/
 
 $("howBtn").onclick=
-  ()=>{
+  () => {
 
     updateHow();
 
@@ -3654,37 +6812,52 @@ $("howBtn").onclick=
   };
 
 
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
 $("missionsBack").onclick=
-  ()=>{
+  () =>
     show("home");
-  };
 
 
 $("howBack").onclick=
-  ()=>{
+  () =>
     show("home");
-  };
 
 
-/*
-  زر البدء من صفحة المهمة:
-  يحترم الوضع الذي اختاره المستخدم.
-*/
+$("howPlay").onclick=
+  () =>
+    openMissionChoice(
+      "normal"
+    );
+
+
+/* =========================================================
+   START SELECTED MISSION
+========================================================= */
 
 $("startSelected").onclick=
-  ()=>{
+  () => {
+
 
     const mission=
-      missions[state.selected];
+      missions[
+        state.selected
+      ];
 
 
     if(
-      state.choiceMode==="quick"
+      state.choiceMode===
+      "quick"
     ){
 
       startGame({
+
         quick:true,
+
         mission
+
       });
 
       return;
@@ -3693,12 +6866,16 @@ $("startSelected").onclick=
 
 
     if(
-      state.choiceMode==="survival"
+      state.choiceMode===
+      "survival"
     ){
 
       startGame({
+
         survival:true,
+
         mission
+
       });
 
       return;
@@ -3707,19 +6884,17 @@ $("startSelected").onclick=
 
 
     startGame({
+
       mission
+
     });
 
   };
 
 
-$("howPlay").onclick=
-  ()=>{
-    openMissionChoice(
-      "normal"
-    );
-  };
-
+/* =========================================================
+   GAME BUTTONS
+========================================================= */
 
 $("bomb").onclick=
   useBomb;
@@ -3730,13 +6905,15 @@ $("exitGame").onclick=
 
 
 /*
-  إعادة اللعب:
-  Quick/Survival يحافظان على المهمة.
-  Random يبدأ بمهمة عشوائية جديدة.
+  Play again preserves the selected
+  game mode.
+
+  Random gets a fresh random mission.
 */
 
 $("againBtn").onclick=
-  ()=>{
+  () => {
+
 
     if(state.random){
 
@@ -3765,7 +6942,7 @@ $("againBtn").onclick=
 
 
 $("menuBtn").onclick=
-  ()=>{
+  () => {
 
     stopGame(false);
 
@@ -3776,56 +6953,85 @@ $("menuBtn").onclick=
 
     show("home");
 
+    updateHome();
+
   };
 
 
-/* Sound */
+/* =========================================================
+   SOUND
+========================================================= */
 
 $("soundBtn").onclick=
-  ()=>{
+  () => {
+
 
     state.sound=
       !state.sound;
 
+
     localStorage.setItem(
+
       "nh_sound",
+
       state.sound
-      ?"on"
-      :"off"
+        ? "on"
+        : "off"
+
     );
+
 
     $("soundBtn")
       .textContent=
       state.sound
-      ?"🔊"
-      :"🔇";
+        ? "🔊"
+        : "🔇";
 
 
-    if(state.sound)
-      beep(600,.06);
+    if(state.sound){
+
+      beep(
+        600,
+        .06
+      );
+
+    }
 
   };
 
 
-/* Language */
+/* =========================================================
+   LANGUAGE BUTTON
+========================================================= */
 
 $("langBtn").onclick=
-  ()=>{
+  () => {
+
 
     setLang(
+
       state.lang==="ar"
-      ?"fr"
-      :
+
+        ? "fr"
+
+        :
+
       state.lang==="fr"
-      ?"en"
-      :
-      "ar"
+
+        ? "en"
+
+        :
+
+          "ar"
+
     );
 
   };
 
 
-/* Reset */
+/* =========================================================
+   RESET
+========================================================= */
 
 $("resetBtn").onclick=
   openResetModal;
@@ -3839,40 +7045,38 @@ $("resetConfirm").onclick=
   resetStats;
 
 
-/* Prevent modal background from acting as game */
+/*
+  Close modal when tapping outside.
+*/
 
-$("resetModal").addEventListener(
-  "pointerdown",
-  e=>{
-    if(
-      e.target===
-      $("resetModal")
-    ){
+$("resetModal")
+  .addEventListener(
 
-      e.preventDefault();
+    "pointerdown",
+
+    event => {
+
+      if(
+        event.target===
+        $("resetModal")
+      ){
+
+        closeResetModal();
+
+      }
 
     }
-  },
-  {
-    passive:false
-  }
-);
+
+  );
 
 
-/* =====================================================
+/* =========================================================
    INITIALIZATION
-===================================================== */
+========================================================= */
 
 setLang(
   state.lang
 );
-
-
-$("soundBtn")
-  .textContent=
-  state.sound
-  ?"🔊"
-  :"🔇";
 
 
 updateHome();
@@ -3880,6 +7084,7 @@ updateHome();
 updateHow();
 
 buildMissions();
+
 
 })();
 
