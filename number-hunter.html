@@ -22,17 +22,30 @@
 }
 
 /* =========================================================
-   RESET & VIEWPORT FIX (Chrome Mobile)
+   RESET & VIEWPORT FIX (Bulletproof Mobile Fix)
 ========================================================= */
 *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; font-family: 'Cairo', system-ui, -apple-system, sans-serif; }
-html, body { margin:0; position: fixed; inset: 0; width: 100%; height: 100dvh; overflow: hidden; background:var(--bg); color:var(--text); touch-action:none; overscroll-behavior:none; }
+html, body { 
+  margin:0; 
+  padding:0; 
+  width: 100%; 
+  height: 100%; 
+  height: calc(var(--vh, 1vh) * 100); /* استخدام المتغير الديناميكي */
+  position: fixed; 
+  inset: 0; 
+  overflow: hidden; 
+  background:var(--bg); 
+  color:var(--text); 
+  touch-action:none; 
+  overscroll-behavior:none; 
+}
 button { font:inherit; border:0; outline:none; cursor:pointer; touch-action:manipulation; }
 
 /* =========================================================
    APP & SCREENS
 ========================================================= */
-#app { width:100%; height:100dvh; min-height:100dvh; position:relative; overflow:hidden; }
-.screen { position:fixed; inset:0; width:100%; height:100dvh; min-height:100dvh; display:none; overflow-y:auto; overflow-x:hidden; padding: env(safe-area-inset-top) 14px calc(env(safe-area-inset-bottom) + 18px); }
+#app { width:100%; height:100%; position:absolute; inset:0; overflow:hidden; }
+.screen { position:absolute; inset:0; width:100%; height:100%; display:none; overflow-y:auto; overflow-x:hidden; padding: env(safe-area-inset-top) 14px calc(env(safe-area-inset-bottom) + 18px); }
 .screen.active { display:flex; flex-direction:column; }
 .shell { width:min(100%,760px); margin:auto; padding:10px 0 18px; }
 
@@ -40,7 +53,7 @@ button { font:inherit; border:0; outline:none; cursor:pointer; touch-action:mani
    NEW HOME UI CSS
 ========================================================= */
 #home { padding: 0 !important; background-color: #e2e8f0; display: flex; justify-content: flex-start; align-items: center; }
-.app-container { width: 100%; max-width: 414px; margin: 0 auto; background-color: #f3f6ff; min-height: 100dvh; position: relative; padding: 20px; padding-top: calc(env(safe-area-inset-top) + 20px); padding-bottom: calc(env(safe-area-inset-bottom) + 20px); box-shadow: 0 0 40px rgba(0,0,0,0.1); overflow-y: auto; overflow-x: hidden; }
+.app-container { width: 100%; max-width: 414px; margin: 0 auto; background-color: #f3f6ff; min-height: 100%; height: 100%; position: relative; padding: 20px; padding-top: calc(env(safe-area-inset-top) + 20px); padding-bottom: calc(env(safe-area-inset-bottom) + 20px); box-shadow: 0 0 40px rgba(0,0,0,0.1); overflow-y: auto; overflow-x: hidden; }
 .app-container::-webkit-scrollbar { display: none; }
 .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
 .header-left { display: flex; gap: 10px; align-items: center; }
@@ -108,7 +121,7 @@ button { font:inherit; border:0; outline:none; cursor:pointer; touch-action:mani
 .footer { text-align: center; color: #64748b; font-size: 0.75rem; font-weight: 700; padding-bottom: 20px;}
 .footer-brand { display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 5px; }
 .footer-brand::before, .footer-brand::after { content: ""; height: 1px; width: 30px; background: #cbd5e1; display: inline-block; }
-@media (min-width: 450px) { .app-container { border-radius: 30px; margin-top: 20px; height: calc(100dvh - 40px); min-height: auto; } }
+@media (min-width: 450px) { .app-container { border-radius: 30px; margin-top: 20px; height: calc(100% - 40px); } }
 
 /* =========================================================
    ORIGINAL GAME CSS (Missions, Game, Modal, Toast)
@@ -140,7 +153,11 @@ button { font:inherit; border:0; outline:none; cursor:pointer; touch-action:mani
 .hud-box small { font-size:9px; color:var(--muted); font-weight:800; }
 .hearts { font-size:15px !important; letter-spacing:0; }
 .mission-bar { margin-top:7px; min-height:42px; background: rgba(255,255,255,.96); border:1px solid var(--border); border-radius:17px; padding:8px 12px; display:flex; align-items:center; justify-content:center; text-align:center; box-shadow: 0 8px 24px rgba(42,76,130,.10); font-size:12px; font-weight:900; color:var(--blue); }
-.arena { position:absolute; left:9px; right:9px; top: calc(env(safe-area-inset-top) + 105px); bottom: calc(env(safe-area-inset-bottom) + 75px); overflow:hidden; border: 1px solid rgba(40,100,199,.12); border-radius:29px; background: rgba(255,255,255,.52); touch-action:none; user-select:none; -webkit-user-select:none; }
+
+/* تم تعديل التموضع هنا لضمان عدم اختفاء الأزرار */
+.arena { position:absolute; left:9px; right:9px; top: calc(env(safe-area-inset-top) + 105px); bottom: calc(env(safe-area-inset-bottom) + 85px); overflow:hidden; border: 1px solid rgba(40,100,199,.12); border-radius:29px; background: rgba(255,255,255,.52); touch-action:none; user-select:none; -webkit-user-select:none; }
+.bottom-tools { position:absolute; bottom: calc(env(safe-area-inset-bottom) + 15px); left:10px; right:10px; z-index:40; display:flex; justify-content:space-between; align-items:center; pointer-events:none; }
+
 .target { position:absolute; width: clamp(58px, 16vw, 78px); height: clamp(58px, 16vw, 78px); border-radius:50%; background: linear-gradient(145deg, #ffffff, #edf3ff); border:3px solid #4d82df; box-shadow: 0 10px 24px rgba(44,93,174,.18); display:grid; place-items:center; font-weight:900; font-size: clamp(19px, 5.5vw, 26px); color:#204f9f; transform: translate(-50%,-50%); will-change: top; z-index:5; padding:0; user-select:none; -webkit-user-select:none; }
 .target:active { transform: translate(-50%,-50%) scale(.9); }
 .target.wrong { border-color:#d9a0a5; background:#fff3f4; color:#c83f4c; }
@@ -153,7 +170,6 @@ button { font:inherit; border:0; outline:none; cursor:pointer; touch-action:mani
 .feedback.good { color:var(--green); }
 .feedback.bad { color:var(--red); }
 @keyframes feed { 0%{ opacity:0; transform: translate(-50%,8px); } 15%,75%{ opacity:1; transform: translate(-50%,0); } 100%{ opacity:0; transform: translate(-50%,-8px); } }
-.bottom-tools { position:absolute; bottom: calc(env(safe-area-inset-bottom) + 10px); left:10px; right:10px; z-index:40; display:flex; justify-content:space-between; align-items:center; pointer-events:none; }
 .game-tool { pointer-events:auto; height:52px; border-radius:18px; background:#fff; border:1px solid var(--border); box-shadow: 0 10px 25px rgba(42,76,130,.14); }
 .exit-game { width:58px; font-size:23px; color:#667085; }
 .bomb { min-width:90px; padding:0 13px; font-size:23px; }
@@ -412,6 +428,17 @@ button { font:inherit; border:0; outline:none; cursor:pointer; touch-action:mani
 <script>
 (() => {
 "use strict";
+
+// --- إصلاح مشكلة شريط المتصفح السفلي (Mobile Chrome Viewport Fix) ---
+function setVH() {
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+setVH();
+window.addEventListener('resize', setVH);
+window.addEventListener('orientationchange', setVH);
+// ----------------------------------------------------------------------
+
 const $ = id => document.getElementById(id);
 const screens = ["home", "missions", "how", "game"];
 
