@@ -22,7 +22,7 @@
 }
 
 /* =========================================================
-   RESET & BULLETPROOF VIEWPORT FIX FOR BLOGGER
+   RESET
 ========================================================= */
 *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; font-family: 'Cairo', system-ui, -apple-system, sans-serif; }
 
@@ -37,9 +37,6 @@ html, body {
 
 button { font:inherit; border:0; outline:none; cursor:pointer; touch-action:manipulation; }
 
-/* 
-   إجبار التطبيق على الخروج من هيكل بلوجر وأخذ حجم الشاشة الحقيقي
-*/
 #app { 
   position: fixed !important; 
   top: 0 !important; 
@@ -66,7 +63,7 @@ button { font:inherit; border:0; outline:none; cursor:pointer; touch-action:mani
 .shell { width:min(100%,760px); margin:auto; padding:15px 15px 30px; }
 
 /* =========================================================
-   NEW HOME UI CSS
+   HOME UI
 ========================================================= */
 #home { padding: 0 !important; background-color: #e2e8f0; display: flex; justify-content: flex-start; align-items: center; }
 .app-container { width: 100%; max-width: 414px; margin: 0 auto; background-color: #f3f6ff; height: 100%; position: relative; padding: 15px; overflow-y: auto; overflow-x: hidden; }
@@ -140,7 +137,7 @@ button { font:inherit; border:0; outline:none; cursor:pointer; touch-action:mani
 @media (min-width: 450px) { .app-container { border-radius: 30px; margin-top: 20px; height: calc(100% - 40px); } }
 
 /* =========================================================
-   ORIGINAL GAME CSS (Missions, Game, Modal, Toast)
+   MISSIONS & HOW
 ========================================================= */
 #missions, #how { background: linear-gradient(180deg, #f7f9fd, #edf4ff); padding: 0 !important; }
 .inner-header { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
@@ -162,7 +159,9 @@ button { font:inherit; border:0; outline:none; cursor:pointer; touch-action:mani
 .rule { background:#f7f9fe; border:1px solid var(--border); border-radius:17px; padding:11px; margin:8px 0; font-size:12px; font-weight:600;}
 .rule strong { color:var(--blue); font-weight:800;}
 
-/* --- الحاوية الخاصة بشاشة اللعب (مهم جداً هنا) --- */
+/* =========================================================
+   GAME SCREEN - تم تطبيق فكرتك هنا
+========================================================= */
 #game.screen { padding: 0 !important; overflow: hidden !important; background: linear-gradient(180deg, #f7f9fd, #edf3ff); }
 .game-top { position:absolute !important; top: 10px !important; left:10px !important; right:10px !important; z-index:20 !important; }
 .hud { display:grid; grid-template-columns: 1fr 1.25fr 1fr; gap:7px; }
@@ -172,9 +171,36 @@ button { font:inherit; border:0; outline:none; cursor:pointer; touch-action:mani
 .hearts { font-size:15px !important; letter-spacing:0; }
 .mission-bar { margin-top:7px; min-height:42px; background: rgba(255,255,255,.96); border:1px solid var(--border); border-radius:17px; padding:8px 12px; display:flex; align-items:center; justify-content:center; text-align:center; box-shadow: 0 8px 24px rgba(42,76,130,.10); font-size:12px; font-weight:900; color:var(--blue); }
 
-/* --- ربط ساحة اللعب والأزرار السفلية بشكل مباشر --- */
-.bottom-tools { position:absolute !important; bottom: 15px !important; left:10px !important; right:10px !important; height: 55px !important; z-index:40 !important; display:flex !important; justify-content:space-between !important; align-items:center !important; pointer-events:none; }
-.arena { position:absolute !important; left:10px !important; right:10px !important; top: 115px !important; bottom: 85px !important; height: auto !important; overflow:hidden !important; border: 1px solid rgba(40,100,199,.12); border-radius:29px; background: rgba(255,255,255,.52); touch-action:none; user-select:none; -webkit-user-select:none; }
+/* --- تقليص مساحة اللعب ورفع الأزرار (تطبيق فكرتك) --- */
+.arena { 
+  position:absolute !important; 
+  left:10px !important; 
+  right:10px !important; 
+  top: 115px !important; 
+  bottom: 130px !important; /* تم تقليص المساحة من الأسفل بشكل كبير لترك مساحة كافية للأزرار */
+  height: auto !important; 
+  overflow:hidden !important; 
+  border: 1px solid rgba(40,100,199,.12); 
+  border-radius:29px; 
+  background: rgba(255,255,255,.52); 
+  touch-action:none; 
+  user-select:none; 
+  -webkit-user-select:none; 
+}
+
+.bottom-tools { 
+  position:absolute !important; 
+  bottom: 40px !important; /* تم رفع الأزرار للأعلى لتظهر دائماً */
+  left:10px !important; 
+  right:10px !important; 
+  height: 55px !important; 
+  z-index:40 !important; 
+  display:flex !important; 
+  justify-content:space-between !important; 
+  align-items:center !important; 
+  pointer-events:none; 
+}
+/* ----------------------------------------------------- */
 
 .target { position:absolute; width: clamp(58px, 16vw, 78px); height: clamp(58px, 16vw, 78px); border-radius:50%; background: linear-gradient(145deg, #ffffff, #edf3ff); border:3px solid #4d82df; box-shadow: 0 10px 24px rgba(44,93,174,.18); display:grid; place-items:center; font-weight:900; font-size: clamp(19px, 5.5vw, 26px); color:#204f9f; transform: translate(-50%,-50%); will-change: top; z-index:5; padding:0; user-select:none; -webkit-user-select:none; }
 .target:active { transform: translate(-50%,-50%) scale(.9); }
@@ -447,24 +473,6 @@ button { font:inherit; border:0; outline:none; cursor:pointer; touch-action:mani
 (() => {
 "use strict";
 
-/* =========================================================
-   إصلاح الحجم الحقيقي للشاشة (Bulletproof Pixel Height JS Fix)
-========================================================= */
-function enforceRealHeight() {
-    const app = document.getElementById('app');
-    if(app) {
-        app.style.height = window.innerHeight + 'px';
-    }
-}
-window.addEventListener('resize', enforceRealHeight);
-window.addEventListener('orientationchange', enforceRealHeight);
-enforceRealHeight();
-// تشغيل الدالة مرة أخرى بعد ثانية لضمان اكتمال تحميل أي إطار أو شريط متصفح
-setTimeout(enforceRealHeight, 1000); 
-
-/* =========================================================
-   منطق اللعبة
-========================================================= */
 const $ = id => document.getElementById(id);
 const screens = ["home", "missions", "how", "game"];
 
@@ -601,7 +609,6 @@ function shuffle(a){
 }
 function show(id){ 
   screens.forEach(s => $(s).classList.toggle("active", s===id)); 
-  enforceRealHeight(); 
 }
 
 function updateHome(){
