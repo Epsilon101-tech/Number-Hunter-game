@@ -22,38 +22,54 @@
 }
 
 /* =========================================================
-   RESET & VIEWPORT FIX (Bulletproof Mobile Fix)
+   RESET & BULLETPROOF VIEWPORT FIX FOR BLOGGER
 ========================================================= */
 *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; font-family: 'Cairo', system-ui, -apple-system, sans-serif; }
-html, body { 
-  margin:0; 
-  padding:0; 
-  width: 100%; 
-  height: 100%; 
-  height: calc(var(--vh, 1vh) * 100); /* استخدام المتغير الديناميكي */
-  position: fixed; 
-  inset: 0; 
-  overflow: hidden; 
-  background:var(--bg); 
-  color:var(--text); 
+
+html, body {
+  margin:0 !important; 
+  padding:0 !important; 
+  overflow: hidden !important; 
+  background: var(--bg); 
   touch-action:none; 
-  overscroll-behavior:none; 
+  overscroll-behavior:none;
 }
+
 button { font:inherit; border:0; outline:none; cursor:pointer; touch-action:manipulation; }
 
-/* =========================================================
-   APP & SCREENS
-========================================================= */
-#app { width:100%; height:100%; position:absolute; inset:0; overflow:hidden; }
-.screen { position:absolute; inset:0; width:100%; height:100%; display:none; overflow-y:auto; overflow-x:hidden; padding: env(safe-area-inset-top) 14px calc(env(safe-area-inset-bottom) + 18px); }
-.screen.active { display:flex; flex-direction:column; }
-.shell { width:min(100%,760px); margin:auto; padding:10px 0 18px; }
+/* 
+   إجبار التطبيق على الخروج من هيكل بلوجر وأخذ حجم الشاشة الحقيقي
+*/
+#app { 
+  position: fixed !important; 
+  top: 0 !important; 
+  left: 0 !important; 
+  right: 0 !important; 
+  bottom: 0 !important;
+  width: 100vw !important; 
+  z-index: 999999 !important; 
+  background: var(--bg) !important;
+  overflow: hidden !important; 
+}
+
+.screen { 
+  position: absolute !important; 
+  inset: 0 !important; 
+  width: 100% !important; 
+  height: 100% !important; 
+  display: none; 
+  overflow-y: auto !important; 
+  overflow-x: hidden !important; 
+}
+
+.screen.active { display:flex !important; flex-direction:column; }
+.shell { width:min(100%,760px); margin:auto; padding:15px 15px 30px; }
 
 /* =========================================================
    NEW HOME UI CSS
 ========================================================= */
 #home { padding: 0 !important; background-color: #e2e8f0; display: flex; justify-content: flex-start; align-items: center; }
-.app-container { width: 100%; max-width: 414px; margin: 0 auto; background-color: #f3f6ff; min-height: 100%; height: 100%; position: relative; padding: 20px; padding-top: calc(env(safe-area-inset-top) + 20px); padding-bottom: calc(env(safe-area-inset-bottom) + 20px); box-shadow: 0 0 40px rgba(0,0,0,0.1); overflow-y: auto; overflow-x: hidden; }
+.app-container { width: 100%; max-width: 414px; margin: 0 auto; background-color: #f3f6ff; height: 100%; position: relative; padding: 15px; overflow-y: auto; overflow-x: hidden; }
 .app-container::-webkit-scrollbar { display: none; }
 .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
 .header-left { display: flex; gap: 10px; align-items: center; }
@@ -126,7 +142,7 @@ button { font:inherit; border:0; outline:none; cursor:pointer; touch-action:mani
 /* =========================================================
    ORIGINAL GAME CSS (Missions, Game, Modal, Toast)
 ========================================================= */
-#missions, #how { background: linear-gradient(180deg, #f7f9fd, #edf4ff); }
+#missions, #how { background: linear-gradient(180deg, #f7f9fd, #edf4ff); padding: 0 !important; }
 .inner-header { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
 .inner-header-info { flex:1; text-align:right; }
 .inner-title { color:var(--blue); font-size:25px; font-weight:900; }
@@ -145,8 +161,10 @@ button { font:inherit; border:0; outline:none; cursor:pointer; touch-action:mani
 .how { line-height:1.7; color:#526176; }
 .rule { background:#f7f9fe; border:1px solid var(--border); border-radius:17px; padding:11px; margin:8px 0; font-size:12px; font-weight:600;}
 .rule strong { color:var(--blue); font-weight:800;}
-#game { padding:0; overflow:hidden; background: linear-gradient(180deg, #f7f9fd, #edf3ff); }
-.game-top { position:absolute; top: calc(env(safe-area-inset-top) + 8px); left:10px; right:10px; z-index:20; }
+
+/* --- الحاوية الخاصة بشاشة اللعب (مهم جداً هنا) --- */
+#game.screen { padding: 0 !important; overflow: hidden !important; background: linear-gradient(180deg, #f7f9fd, #edf3ff); }
+.game-top { position:absolute !important; top: 10px !important; left:10px !important; right:10px !important; z-index:20 !important; }
 .hud { display:grid; grid-template-columns: 1fr 1.25fr 1fr; gap:7px; }
 .hud-box { min-height:57px; background: rgba(255,255,255,.95); border:1px solid var(--border); box-shadow: 0 8px 24px rgba(42,76,130,.12); border-radius:16px; padding:7px; text-align:center; backdrop-filter:blur(8px); }
 .hud-box b { display:block; color:var(--blue); font-size:17px; line-height:1.2; font-weight:900;}
@@ -154,9 +172,9 @@ button { font:inherit; border:0; outline:none; cursor:pointer; touch-action:mani
 .hearts { font-size:15px !important; letter-spacing:0; }
 .mission-bar { margin-top:7px; min-height:42px; background: rgba(255,255,255,.96); border:1px solid var(--border); border-radius:17px; padding:8px 12px; display:flex; align-items:center; justify-content:center; text-align:center; box-shadow: 0 8px 24px rgba(42,76,130,.10); font-size:12px; font-weight:900; color:var(--blue); }
 
-/* تم تعديل التموضع هنا لضمان عدم اختفاء الأزرار */
-.arena { position:absolute; left:9px; right:9px; top: calc(env(safe-area-inset-top) + 105px); bottom: calc(env(safe-area-inset-bottom) + 85px); overflow:hidden; border: 1px solid rgba(40,100,199,.12); border-radius:29px; background: rgba(255,255,255,.52); touch-action:none; user-select:none; -webkit-user-select:none; }
-.bottom-tools { position:absolute; bottom: calc(env(safe-area-inset-bottom) + 15px); left:10px; right:10px; z-index:40; display:flex; justify-content:space-between; align-items:center; pointer-events:none; }
+/* --- ربط ساحة اللعب والأزرار السفلية بشكل مباشر --- */
+.bottom-tools { position:absolute !important; bottom: 15px !important; left:10px !important; right:10px !important; height: 55px !important; z-index:40 !important; display:flex !important; justify-content:space-between !important; align-items:center !important; pointer-events:none; }
+.arena { position:absolute !important; left:10px !important; right:10px !important; top: 115px !important; bottom: 85px !important; height: auto !important; overflow:hidden !important; border: 1px solid rgba(40,100,199,.12); border-radius:29px; background: rgba(255,255,255,.52); touch-action:none; user-select:none; -webkit-user-select:none; }
 
 .target { position:absolute; width: clamp(58px, 16vw, 78px); height: clamp(58px, 16vw, 78px); border-radius:50%; background: linear-gradient(145deg, #ffffff, #edf3ff); border:3px solid #4d82df; box-shadow: 0 10px 24px rgba(44,93,174,.18); display:grid; place-items:center; font-weight:900; font-size: clamp(19px, 5.5vw, 26px); color:#204f9f; transform: translate(-50%,-50%); will-change: top; z-index:5; padding:0; user-select:none; -webkit-user-select:none; }
 .target:active { transform: translate(-50%,-50%) scale(.9); }
@@ -180,7 +198,7 @@ button { font:inherit; border:0; outline:none; cursor:pointer; touch-action:mani
 .result { width:min(100%,420px); background:#fff; border:1px solid var(--border); border-radius:30px; padding:25px; text-align:center; box-shadow:var(--shadow); }
 .result h2 { margin:0; color:var(--blue); font-size:30px; font-weight:900;}
 .final-score { font-size:45px; font-weight:900; color:var(--purple); margin:8px 0; }
-.toast { position:absolute; top: calc(env(safe-area-inset-top) + 12px); right:12px; left:12px; z-index:100; background:#fff; border:1px solid var(--border); border-radius:16px; padding:11px; text-align:center; box-shadow:var(--shadow); display:none; font-size:12px; font-weight:900; }
+.toast { position:absolute; top: 20px; right:12px; left:12px; z-index:100; background:#fff; border:1px solid var(--border); border-radius:16px; padding:11px; text-align:center; box-shadow:var(--shadow); display:none; font-size:12px; font-weight:900; }
 .modal { position:absolute; inset:0; z-index:200; display:none; place-items:center; padding:20px; background: rgba(245,248,253,.80); backdrop-filter:blur(8px); }
 .modal.show { display:grid; }
 .modal-card { width:min(100%,390px); background:#fff; border:1px solid var(--border); border-radius:28px; padding:23px; box-shadow:var(--shadow); text-align:center; }
@@ -429,16 +447,24 @@ button { font:inherit; border:0; outline:none; cursor:pointer; touch-action:mani
 (() => {
 "use strict";
 
-// --- إصلاح مشكلة شريط المتصفح السفلي (Mobile Chrome Viewport Fix) ---
-function setVH() {
-  let vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
+/* =========================================================
+   إصلاح الحجم الحقيقي للشاشة (Bulletproof Pixel Height JS Fix)
+========================================================= */
+function enforceRealHeight() {
+    const app = document.getElementById('app');
+    if(app) {
+        app.style.height = window.innerHeight + 'px';
+    }
 }
-setVH();
-window.addEventListener('resize', setVH);
-window.addEventListener('orientationchange', setVH);
-// ----------------------------------------------------------------------
+window.addEventListener('resize', enforceRealHeight);
+window.addEventListener('orientationchange', enforceRealHeight);
+enforceRealHeight();
+// تشغيل الدالة مرة أخرى بعد ثانية لضمان اكتمال تحميل أي إطار أو شريط متصفح
+setTimeout(enforceRealHeight, 1000); 
 
+/* =========================================================
+   منطق اللعبة
+========================================================= */
 const $ = id => document.getElementById(id);
 const screens = ["home", "missions", "how", "game"];
 
@@ -573,7 +599,10 @@ function shuffle(a){
   }
   return a;
 }
-function show(id){ screens.forEach(s => $(s).classList.toggle("active", s===id)); }
+function show(id){ 
+  screens.forEach(s => $(s).classList.toggle("active", s===id)); 
+  enforceRealHeight(); 
+}
 
 function updateHome(){
   $("best").textContent = state.best;
