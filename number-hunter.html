@@ -8,257 +8,272 @@
 
 <!-- خطوط جوجل (Cairo) -->
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<!-- مكتبة الأيقونات Font Awesome -->
+<!-- أيقونات Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
 /* =========================================================
-   ROOT & BASE
+   ROOT & BASE RESET
 ========================================================= */
 :root {
-  --bg:#f4f7fd; --surface:#ffffff; --surface-soft:#f7faff; --blue:#2459b7; --blue-2:#2f72e5; --blue-3:#4e8df0;
-  --purple:#8650e5; --purple-2:#a16bed; --text:#17243a; --muted:#748196; --border:#dce5f3; --green:#19a873;
-  --red:#dc5361; --gold:#f5b938; --shadow: 0 14px 38px rgba(44,76,130,.11); --shadow-small: 0 8px 22px rgba(44,76,130,.10);
+  --bg:#f4f7fd; --surface:#ffffff; --surface-soft:#f7faff; --blue:#2459b7; --blue-2:#2f72e5;
+  --purple:#8650e5; --red:#ef4444; --green:#10b981; --gold:#f59e0b; --text:#17243a;
+  --muted:#64748b; --border:#e2e8f0; --shadow: 0 10px 25px rgba(36,89,183,0.08);
 }
 
-*{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; font-family: 'Cairo', system-ui, -apple-system, sans-serif; }
+*{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; font-family:'Cairo', system-ui, sans-serif; }
 
 html, body {
-  margin:0 !important; 
-  padding:0 !important; 
-  overflow: hidden !important; 
-  background: var(--bg); 
-  touch-action:none; 
-  overscroll-behavior:none;
+  margin:0 !important; padding:0 !important; overflow:hidden !important;
+  background:var(--bg); touch-action:none; overscroll-behavior:none;
 }
 
 button { font:inherit; border:0; outline:none; cursor:pointer; touch-action:manipulation; }
 
-#app { 
-  position: fixed !important; 
-  top: 0 !important; 
-  left: 0 !important; 
-  right: 0 !important; 
-  bottom: 0 !important;
-  width: 100vw !important; 
-  z-index: 999999 !important; 
-  background: var(--bg) !important;
-  overflow: hidden !important; 
+#app {
+  position:fixed !important; inset:0 !important; width:100vw !important; height:100vh !important;
+  z-index:999999 !important; background:var(--bg) !important; overflow:hidden !important;
 }
 
-.screen { 
-  position: absolute !important; 
-  inset: 0 !important; 
-  width: 100% !important; 
-  height: 100% !important; 
-  display: none; 
-  overflow-y: auto !important; 
-  overflow-x: hidden !important; 
+.screen {
+  position:absolute !important; inset:0 !important; width:100% !important; height:100% !important;
+  display:none; overflow-y:auto !important; overflow-x:hidden !important;
 }
 
 .screen.active { display:flex !important; flex-direction:column; }
-.shell { width:min(100%,760px); margin:auto; padding:15px 15px 30px; }
+.shell { width:min(100%,680px); margin:auto; padding:15px; }
 
 /* =========================================================
    HOME UI
 ========================================================= */
-#home { padding: 0 !important; background-color: #e2e8f0; display: flex; justify-content: flex-start; align-items: center; }
-.app-container { width: 100%; max-width: 414px; margin: 0 auto; background-color: #f3f6ff; height: 100%; position: relative; padding: 15px; overflow-y: auto; overflow-x: hidden; }
-.app-container::-webkit-scrollbar { display: none; }
-.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-.header-left { display: flex; gap: 8px; align-items: center; }
-.icon-btn-new { background: #ffffff; border: none; width: 38px; height: 38px; border-radius: 12px; display: flex; justify-content: center; align-items: center; color: #2563eb; font-size: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); cursor: pointer; transition: 0.2s;}
-.icon-btn-new:hover { background: #f8fafc; }
-.lang-btn-new { background: #ffffff; border: none; height: 38px; padding: 0 12px; border-radius: 12px; display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 0.85rem; color: #1e293b; box-shadow: 0 2px 4px rgba(0,0,0,0.05); cursor: pointer; }
-.header-center { text-align: center; }
-.header-center h1 { font-size: 1.15rem; font-weight: 900; color: #2563eb; margin:0; line-height: 1; }
-.header-center p { font-size: 0.68rem; color: #64748b; margin-top: 3px; font-weight: 700; margin-bottom: 0;}
+#home { padding:0 !important; background-color:#e2e8f0; display:flex; justify-content:center; align-items:center; }
+.app-container {
+  width:100%; max-width:414px; margin:0 auto; background-color:#f8fafc; height:100%;
+  position:relative; padding:14px; overflow-y:auto; overflow-x:hidden;
+}
+.app-container::-webkit-scrollbar { display:none; }
 
-.hero-card { background: linear-gradient(135deg, #ffffff 0%, #e8f0fe 100%); border-radius: 22px; padding: 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 15px; position: relative; overflow: hidden; }
-.hero-content { flex: 1; z-index: 2; text-align: right; }
-.hero-content h2 { font-size: 1.6rem; font-weight: 900; color: #2563eb; line-height: 1.2; margin: 0 0 4px; }
-.hero-content p { font-size: 0.78rem; color: #64748b; font-weight: 700; margin:0; }
-.prime-numbers { font-size: 0.75rem; color: #2563eb; font-weight: 800; margin: 8px 0; letter-spacing: 1px; }
-.badge { background: rgba(37, 99, 235, 0.1); color: #2563eb; padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 800; display: inline-block; }
-.hero-image { width: 100px; height: 100px; position: relative; z-index: 2; display: flex; justify-content: center; align-items: center; }
-.floating-num { position: absolute; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: white; font-weight: bold; display: flex; justify-content: center; align-items: center; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(37,99,235,0.4); }
-.num-7 { width: 52px; height: 52px; font-size: 1.7rem; transform: rotate(-5deg); z-index: 3; }
-.num-11 { width: 40px; height: 40px; font-size: 1.1rem; top: -8px; right: 0; background: linear-gradient(135deg, #a855f7 0%, #6d28d9 100%); transform: rotate(10deg); z-index: 2; }
-.num-2 { width: 32px; height: 32px; font-size: 0.95rem; top: 10px; left: -8px; background: #60a5fa; transform: rotate(-15deg); z-index: 1; }
-.num-5 { width: 36px; height: 36px; font-size: 1rem; bottom: -8px; left: 8px; background: #c084fc; transform: rotate(15deg); z-index: 2; }
+.header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+.header-left { display:flex; gap:8px; align-items:center; }
+.icon-btn-new {
+  background:#fff; border:none; width:38px; height:38px; border-radius:12px;
+  display:flex; justify-content:center; align-items:center; color:#2563eb;
+  font-size:1rem; box-shadow:0 2px 5px rgba(0,0,0,0.04); cursor:pointer;
+}
+.lang-btn-new {
+  background:#fff; border:none; height:38px; padding:0 12px; border-radius:12px;
+  display:flex; align-items:center; font-weight:800; font-size:0.85rem; color:#1e293b;
+  box-shadow:0 2px 5px rgba(0,0,0,0.04); cursor:pointer;
+}
+.header-center { text-align:center; }
+.header-center h1 { font-size:1.15rem; font-weight:900; color:#2563eb; margin:0; line-height:1; }
+.header-center p { font-size:0.68rem; color:#64748b; margin-top:3px; font-weight:700; margin-bottom:0;}
 
-.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 15px; }
-.stat-card { background: #ffffff; border-radius: 15px; padding: 10px 4px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-.stat-card i { font-size: 1.3rem; margin-bottom: 4px; }
-.stat-card .fa-trophy { color: #fbbf24; }
-.stat-card .fa-gamepad { color: #60a5fa; }
-.stat-card .fa-fire { color: #ef4444; }
-.stat-value { font-size: 1.15rem; font-weight: 900; color: #1e293b; line-height: 1; }
-.stat-label { font-size: 0.65rem; color: #64748b; font-weight: 700; margin-top: 4px; }
+.hero-card {
+  background:linear-gradient(135deg, #ffffff 0%, #edf4ff 100%);
+  border-radius:20px; padding:14px 16px; display:flex; justify-content:space-between;
+  align-items:center; box-shadow:0 4px 15px rgba(0,0,0,0.04); margin-bottom:12px;
+}
+.hero-content { flex:1; text-align:right; }
+.hero-content h2 { font-size:1.5rem; font-weight:900; color:#2563eb; line-height:1.2; margin:0 0 4px; }
+.hero-content p { font-size:0.75rem; color:#64748b; font-weight:700; margin:0; }
+.prime-numbers { font-size:0.75rem; color:#2563eb; font-weight:800; margin:6px 0; letter-spacing:1px; }
+.badge { background:rgba(37,99,235,0.1); color:#2563eb; padding:3px 10px; border-radius:20px; font-size:0.7rem; font-weight:800; display:inline-block; }
+.hero-image { width:95px; height:95px; position:relative; display:flex; justify-content:center; align-items:center; }
+.floating-num {
+  position:absolute; background:linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  color:white; font-weight:bold; display:flex; justify-content:center; align-items:center;
+  border-radius:12px; box-shadow:0 8px 14px rgba(37,99,235,0.3);
+}
+.num-7 { width:48px; height:48px; font-size:1.5rem; transform:rotate(-5deg); z-index:3; }
+.num-11 { width:38px; height:38px; font-size:1rem; top:-6px; right:0; background:linear-gradient(135deg, #a855f7 0%, #6d28d9 100%); transform:rotate(10deg); z-index:2; }
+.num-2 { width:30px; height:30px; font-size:0.9rem; top:8px; left:-6px; background:#60a5fa; transform:rotate(-15deg); z-index:1; }
+.num-5 { width:34px; height:34px; font-size:0.95rem; bottom:-6px; left:8px; background:#c084fc; transform:rotate(15deg); z-index:2; }
 
-.action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-.action-card { border-radius: 16px; padding: 14px; display: flex; align-items: center; gap: 10px; text-decoration: none; box-shadow: 0 4px 15px rgba(0,0,0,0.05); position: relative; overflow: hidden; border: none; cursor: pointer; text-align: right; transition: 0.2s; }
-.action-card:active { transform: scale(0.97); }
-.action-icon { width: 38px; height: 38px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.1rem; flex-shrink: 0; }
-.action-text h3 { font-size: 0.95rem; font-weight: 900; margin: 0 0 2px; }
-.action-text p { font-size: 0.65rem; opacity: 0.9; margin: 0; font-weight: 600;}
-.action-arrow { position: absolute; left: 12px; font-size: 0.75rem; opacity: 0.7; }
-[dir="ltr"] .action-arrow { left:auto; right:12px; transform:rotate(180deg); }
+.stats-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; margin-bottom:14px; }
+.stat-card { background:#fff; border-radius:15px; padding:10px 4px; text-align:center; box-shadow:0 2px 4px rgba(0,0,0,0.04); }
+.stat-card i { font-size:1.25rem; margin-bottom:4px; }
+.stat-card .fa-trophy { color:#f59e0b; }
+.stat-card .fa-gamepad { color:#3b82f6; }
+.stat-card .fa-fire { color:#ef4444; }
+.stat-value { font-size:1.15rem; font-weight:900; color:#1e293b; line-height:1; }
+.stat-label { font-size:0.62rem; color:#64748b; font-weight:700; margin-top:4px; }
 
-.btn-play { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: #ffffff; }
-.btn-play .action-icon { background: rgba(255,255,255,0.2); color: white; }
-.btn-fast { background: linear-gradient(135deg, #a855f7 0%, #6d28d9 100%); color: #ffffff; }
-.btn-fast .action-icon { background: rgba(255,255,255,0.2); color: white; }
-.btn-mission, .btn-random { background: #ffffff; color: #1e293b; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-.btn-mission .action-text p, .btn-random .action-text p { color: #64748b; }
-.btn-mission .action-icon { background: #eff6ff; color: #2563eb; }
-.btn-random .action-icon { background: #fdf2f8; color: #db2777; }
+/* أنماط اللعب الأربعة المتميزة */
+.action-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px; }
+.action-card {
+  border-radius:18px; padding:14px; display:flex; flex-direction:column;
+  justify-content:space-between; min-height:102px; border:none; cursor:pointer;
+  text-align:right; position:relative; overflow:hidden; transition:transform 0.15s ease;
+  box-shadow:0 4px 12px rgba(0,0,0,0.04);
+}
+.action-card:active { transform:scale(0.97); }
+.card-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.action-icon {
+  width:36px; height:36px; border-radius:10px; display:grid; place-items:center;
+  font-size:1.1rem; flex-shrink:0;
+}
+.action-arrow { font-size:0.75rem; opacity:0.6; }
+[dir="ltr"] .action-arrow { transform:rotate(180deg); }
+.action-text h3 { font-size:0.95rem; font-weight:900; margin:0 0 2px; }
+.action-text p { font-size:0.65rem; margin:0; font-weight:600; line-height:1.3; }
 
-.btn-survival { width: 100%; background: #ecfdf5; border-radius: 16px; padding: 13px 15px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #d1fae5; cursor: pointer; margin-bottom: 12px; color: #047857; transition: 0.2s; }
-.btn-survival:active { transform: scale(0.98); }
-.survival-content { display: flex; align-items: center; gap: 12px; }
-.survival-content i { font-size: 1.4rem; color: #ef4444; }
-.survival-text { text-align: right; }
-.survival-text h3 { font-size: 0.95rem; font-weight: 900; margin:0; }
-.survival-text p { font-size: 0.68rem; opacity: 0.85; margin:0; font-weight: 600;}
+/* تخصيص مظهر كل نمط */
+.btn-levels { background:linear-gradient(135deg, #2563eb, #1d4ed8); color:#fff; }
+.btn-levels .action-icon { background:rgba(255,255,255,0.22); color:#fff; }
+.btn-levels p { opacity:0.9; }
 
-.footer-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px; }
-.btn-how-to, .btn-reset { border-radius: 16px; padding: 12px; display: flex; align-items: center; gap: 10px; border: none; cursor: pointer; text-align: right; position: relative; transition: 0.2s; }
-.btn-how-to:active, .btn-reset:active { transform: scale(0.98); }
-.btn-how-to { background: #eff6ff; color: #1e40af; }
-.btn-reset { background: #fef2f2; color: #e11d48; }
-.footer-icon { width: 34px; height: 34px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1rem; flex-shrink: 0; }
-.btn-how-to .footer-icon { background: #2563eb; color: white; }
-.btn-reset .footer-icon { background: #e11d48; color: white; }
-.footer-action-text h3 { font-size: 0.88rem; font-weight: 900; margin:0; }
-.footer-action-text p { font-size: 0.62rem; opacity: 0.8; margin:0; font-weight: 600;}
-.footer-arrow { position: absolute; left: 12px; font-size: 0.75rem; }
-[dir="ltr"] .footer-arrow { left:auto; right:12px; transform:rotate(180deg); }
+.btn-speed { background:linear-gradient(135deg, #9333ea, #7e22ce); color:#fff; }
+.btn-speed .action-icon { background:rgba(255,255,255,0.22); color:#fff; }
+.btn-speed p { opacity:0.9; }
 
-.footer { text-align: center; color: #64748b; font-size: 0.72rem; font-weight: 700; padding-bottom: 20px;}
-.footer-brand { display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 4px; }
-.footer-brand::before, .footer-brand::after { content: ""; height: 1px; width: 25px; background: #cbd5e1; display: inline-block; }
-@media (min-width: 450px) { .app-container { border-radius: 28px; margin-top: 15px; height: calc(100% - 30px); } }
+.btn-hardcore { background:linear-gradient(135deg, #dc2626, #b91c1c); color:#fff; }
+.btn-hardcore .action-icon { background:rgba(255,255,255,0.22); color:#fff; }
+.btn-hardcore p { opacity:0.9; }
+
+.btn-practice { background:#ffffff; color:#1e293b; border:1px solid #e2e8f0; }
+.btn-practice .action-icon { background:#ecfdf5; color:#059669; }
+.btn-practice p { color:#64748b; }
+
+.footer-actions { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:20px; }
+.btn-secondary {
+  border-radius:15px; padding:11px 13px; display:flex; align-items:center; gap:8px;
+  border:none; cursor:pointer; text-align:right; position:relative; background:#fff;
+  border:1px solid #e2e8f0;
+}
+.btn-secondary:active { transform:scale(0.97); }
+.sec-icon {
+  width:32px; height:32px; border-radius:8px; display:grid; place-items:center;
+  font-size:0.95rem; flex-shrink:0;
+}
+.btn-how .sec-icon { background:#eff6ff; color:#2563eb; }
+.btn-reset .sec-icon { background:#fef2f2; color:#ef4444; }
+.sec-text h3 { font-size:0.85rem; font-weight:900; margin:0; }
+.sec-text p { font-size:0.62rem; color:#64748b; margin:0; font-weight:600; }
+
+.footer { text-align:center; color:#64748b; font-size:0.7rem; font-weight:700; padding-bottom:15px; }
+.footer-brand { display:flex; align-items:center; justify-content:center; gap:5px; margin-bottom:4px; }
+.footer-brand::before, .footer-brand::after { content:""; height:1px; width:25px; background:#cbd5e1; display:inline-block; }
+@media (min-width: 450px) { .app-container { border-radius:28px; margin-top:15px; height:calc(100% - 30px); } }
 
 /* =========================================================
-   MISSIONS & HOW
+   MISSIONS SCREEN (التدريب الحر)
 ========================================================= */
-#missions, #how { background: linear-gradient(180deg, #f7f9fd, #edf4ff); padding: 0 !important; }
+#missions, #how { background:linear-gradient(180deg, #f8fafc, #edf4ff); padding:0 !important; }
 .inner-header { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
 .inner-header-info { flex:1; text-align:right; }
-.inner-title { color:var(--blue); font-size:23px; font-weight:900; }
-.inner-sub { color:var(--muted); font-size:11px; margin-top:2px; font-weight:700;}
-.card { background:#fff; border:1px solid var(--border); border-radius:24px; box-shadow:var(--shadow); padding:16px; }
-.section-title { margin:0 0 4px; color:var(--blue); font-size:19px; font-weight:900; }
-.choice-note { color:var(--muted); font-size:11px; font-weight:700; margin-bottom:12px; }
-.mission-list { display:grid; gap:8px; }
-.mission-choice { width:100%; display:flex; align-items:center; gap:11px; padding:10px; border-radius:18px; background:#f8faff; border:1px solid var(--border); text-align:right; color:var(--text); cursor:pointer;}
-.mission-choice.selected { background:#edf5ff; border-color:#83acef; box-shadow: 0 6px 18px rgba(40,100,215,.10); }
-.mission-choice .mi { width:40px; height:40px; border-radius:12px; background:#e7f0ff; display:grid; place-items:center; font-size:19px; flex:none; }
-.mission-choice strong { display:block; font-size:13.5px; font-weight:900; }
-.mission-choice small { display:block; margin-top:2px; color:var(--muted); font-size:9.5px; font-weight:700;}
-.big-action { width:100%; min-height:52px; border-radius:18px; margin-top:12px; background: linear-gradient(135deg, #3279e8, #2457c9); color:#fff; font-weight:900; font-size:16px; box-shadow: 0 10px 22px rgba(40,100,215,.20); cursor:pointer; }
-.big-action.secondary { background:#fff; color:var(--blue); border:1px solid var(--border); box-shadow:var(--shadow-small); }
-.how { line-height:1.65; color:#526176; }
-.rule { background:#f7f9fe; border:1px solid var(--border); border-radius:16px; padding:10px 12px; margin:7px 0; font-size:11.5px; font-weight:600;}
-.rule strong { color:var(--blue); font-weight:800;}
+.inner-title { color:var(--blue); font-size:22px; font-weight:900; }
+.inner-sub { color:var(--muted); font-size:11px; margin-top:2px; font-weight:700; }
+.card { background:#fff; border:1px solid var(--border); border-radius:22px; box-shadow:var(--shadow); padding:16px; }
+.mission-list { display:grid; gap:8px; max-height:55vh; overflow-y:auto; padding-bottom:5px; }
+.mission-choice {
+  width:100%; display:flex; align-items:center; gap:10px; padding:10px; border-radius:16px;
+  background:#f8fafc; border:1px solid var(--border); text-align:right; color:var(--text); cursor:pointer;
+}
+.mission-choice.selected { background:#eff6ff; border-color:#3b82f6; box-shadow:0 4px 12px rgba(37,99,235,0.1); }
+.mission-choice .mi { width:38px; height:38px; border-radius:10px; background:#e0edff; display:grid; place-items:center; font-size:18px; flex:none; }
+.mission-choice strong { display:block; font-size:13px; font-weight:900; }
+.mission-choice small { display:block; margin-top:2px; color:var(--muted); font-size:9.5px; font-weight:700; }
+.big-action {
+  width:100%; min-height:50px; border-radius:16px; margin-top:12px;
+  background:linear-gradient(135deg, #2563eb, #1d4ed8); color:#fff; font-weight:900;
+  font-size:15px; box-shadow:0 8px 18px rgba(37,99,235,0.25); cursor:pointer;
+}
+.big-action.secondary { background:#fff; color:var(--blue); border:1px solid var(--border); box-shadow:none; }
+.rule { background:#f8fafc; border:1px solid var(--border); border-radius:14px; padding:10px 12px; margin:7px 0; font-size:11.5px; font-weight:600; line-height:1.6; }
+.rule strong { color:var(--blue); font-weight:800; }
 
 /* =========================================================
-   GAME SCREEN
+   GAMEPLAY SCREEN
 ========================================================= */
-#game.screen { padding: 0 !important; overflow: hidden !important; background: linear-gradient(180deg, #f7f9fd, #edf3ff); }
-.game-top { position:absolute !important; top: 10px !important; left:10px !important; right:10px !important; z-index:20 !important; }
+#game.screen { padding:0 !important; overflow:hidden !important; background:linear-gradient(180deg, #f8fafc, #edf3ff); }
+.game-top { position:absolute !important; top:10px !important; left:10px !important; right:10px !important; z-index:20 !important; }
 .hud { display:grid; grid-template-columns: 1fr 1.25fr 1fr; gap:7px; }
-.hud-box { min-height:55px; background: rgba(255,255,255,.95); border:1px solid var(--border); box-shadow: 0 8px 24px rgba(42,76,130,.12); border-radius:16px; padding:6px; text-align:center; backdrop-filter:blur(8px); }
-.hud-box b { display:block; color:var(--blue); font-size:17px; line-height:1.2; font-weight:900;}
+.hud-box {
+  min-height:54px; background:rgba(255,255,255,0.96); border:1px solid var(--border);
+  box-shadow:0 6px 18px rgba(36,89,183,0.08); border-radius:15px; padding:5px; text-align:center; backdrop-filter:blur(6px);
+}
+.hud-box b { display:block; color:var(--blue); font-size:17px; line-height:1.2; font-weight:900; }
 .hud-box small { font-size:9px; color:var(--muted); font-weight:800; }
 .hearts { font-size:14px !important; letter-spacing:0; }
-.mission-bar { margin-top:7px; min-height:42px; background: rgba(255,255,255,.96); border:1px solid var(--border); border-radius:16px; padding:8px 12px; display:flex; align-items:center; justify-content:center; text-align:center; box-shadow: 0 8px 24px rgba(42,76,130,.10); font-size:12px; font-weight:900; color:var(--blue); }
-
-.arena { 
-  position:absolute !important; 
-  left:10px !important; 
-  right:10px !important; 
-  top: 118px !important; 
-  bottom: 110px !important; 
-  height: auto !important; 
-  overflow:hidden !important; 
-  border: 1px solid rgba(40,100,199,.12); 
-  border-radius:26px; 
-  background: rgba(255,255,255,.55); 
-  touch-action:none; 
-  user-select:none; 
-  -webkit-user-select:none; 
+.mission-bar {
+  margin-top:6px; min-height:40px; background:rgba(255,255,255,0.96); border:1px solid var(--border);
+  border-radius:15px; padding:6px 10px; display:flex; align-items:center; justify-content:center;
+  text-align:center; box-shadow:0 6px 18px rgba(36,89,183,0.06); font-size:12px; font-weight:900; color:var(--blue);
 }
 
-.bottom-tools { 
-  position:absolute !important; 
-  bottom: 30px !important; 
-  left:10px !important; 
-  right:10px !important; 
-  height: 55px !important; 
-  z-index:40 !important; 
-  display:flex !important; 
-  justify-content:space-between !important; 
-  align-items:center !important; 
-  pointer-events:none; 
+.arena {
+  position:absolute !important; left:10px !important; right:10px !important;
+  top:115px !important; bottom:105px !important; height:auto !important; overflow:hidden !important;
+  border:1px solid rgba(40,100,199,0.12); border-radius:24px; background:rgba(255,255,255,0.6);
+  touch-action:none; user-select:none; -webkit-user-select:none;
 }
 
-.target { 
-  position:absolute; 
-  width: clamp(56px, 15vw, 74px); 
-  height: clamp(56px, 15vw, 74px); 
-  border-radius:50%; 
-  background: linear-gradient(145deg, #ffffff, #edf3ff); 
-  border:3px solid #3b82f6; 
-  box-shadow: 0 8px 20px rgba(44,93,174,.18); 
-  display:grid; 
-  place-items:center; 
-  font-weight:900; 
-  font-size: clamp(18px, 5vw, 25px); 
-  color:#1e40af; 
-  transform: translate(-50%,-50%); 
-  will-change: top, left; 
-  z-index:5; 
-  padding:0; 
-  user-select:none; 
+.bottom-tools {
+  position:absolute !important; bottom:30px !important; left:10px !important; right:10px !important;
+  height:50px !important; z-index:40 !important; display:flex !important;
+  justify-content:space-between !important; align-items:center !important; pointer-events:none;
 }
-.target:active { transform: translate(-50%,-50%) scale(.9); }
-.target.wrong { border-color:#d9a0a5; background:#fff3f4; color:#c83f4c; }
-.target.correct-hit { animation: pop .18s ease-out forwards; }
-.target.wrong-hit { animation: shake .35s ease; }
-@keyframes pop { to { transform: translate(-50%,-50%) scale(1.4); opacity:0; } }
-@keyframes shake { 0%,100%{ transform: translate(-50%,-50%); } 25%{ transform: translate(calc(-50% - 6px), -50%); } 75%{ transform: translate(calc(-50% + 6px), -50%); } }
+.game-tool {
+  pointer-events:auto; height:48px; border-radius:15px; background:#fff; border:1px solid var(--border);
+  box-shadow:0 6px 18px rgba(36,89,183,0.1); cursor:pointer;
+}
+.exit-game { width:50px; font-size:18px; color:#64748b; }
+.bomb { min-width:85px; padding:0 12px; font-size:19px; }
+.bomb small { display:block; font-size:8.5px; color:var(--muted); font-weight:800; margin-top:-2px; }
+.bomb.cool { opacity:0.4; filter:grayscale(0.8); pointer-events:none; }
 
-.feedback { position:absolute; top:30%; left:50%; transform: translateX(-50%); z-index:30; pointer-events:none; padding:8px 16px; border-radius:14px; background: rgba(255,255,255,.98); box-shadow:var(--shadow); font-weight:900; opacity:0; font-size:14px; }
-.feedback.show { animation: feed .75s ease forwards; }
+.target {
+  position:absolute; width:clamp(54px, 15vw, 70px); height:clamp(54px, 15vw, 70px);
+  border-radius:50%; background:linear-gradient(145deg, #ffffff, #edf4ff); border:3px solid #3b82f6;
+  box-shadow:0 6px 16px rgba(37,99,235,0.16); display:grid; place-items:center; font-weight:900;
+  font-size:clamp(17px, 5vw, 24px); color:#1e40af; transform:translate(-50%,-50%);
+  will-change:top, left; z-index:5; padding:0; user-select:none;
+}
+.target:active { transform:translate(-50%,-50%) scale(0.9); }
+.target.wrong { border-color:#fca5a5; background:#fff1f2; color:#e11d48; }
+.target.correct-hit { animation:pop 0.16s ease-out forwards; }
+.target.wrong-hit { animation:shake 0.3s ease; }
+@keyframes pop { to { transform:translate(-50%,-50%) scale(1.4); opacity:0; } }
+@keyframes shake { 0%,100%{ transform:translate(-50%,-50%); } 25%{ transform:translate(calc(-50% - 6px), -50%); } 75%{ transform:translate(calc(-50% + 6px), -50%); } }
+
+.feedback {
+  position:absolute; top:30%; left:50%; transform:translateX(-50%); z-index:30; pointer-events:none;
+  padding:8px 16px; border-radius:14px; background:rgba(255,255,255,0.98); box-shadow:var(--shadow);
+  font-weight:900; opacity:0; font-size:13.5px;
+}
+.feedback.show { animation:feed 0.75s ease forwards; }
 .feedback.good { color:var(--green); }
 .feedback.bad { color:var(--red); }
-.feedback.lvl { color:var(--purple); border:2px solid var(--purple-2); transform: translateX(-50%) scale(1.1); }
-@keyframes feed { 0%{ opacity:0; transform: translate(-50%,10px); } 20%,80%{ opacity:1; transform: translate(-50%,0); } 100%{ opacity:0; transform: translate(-50%,-10px); } }
+.feedback.lvl { color:var(--purple); border:2px solid var(--purple); transform:translateX(-50%) scale(1.08); }
+@keyframes feed { 0%{ opacity:0; transform:translate(-50%,8px); } 20%,80%{ opacity:1; transform:translate(-50%,0); } 100%{ opacity:0; transform:translate(-50%,-8px); } }
 
-.game-tool { pointer-events:auto; height:50px; border-radius:16px; background:#fff; border:1px solid var(--border); box-shadow: 0 8px 22px rgba(42,76,130,.12); cursor:pointer;}
-.exit-game { width:54px; font-size:20px; color:#64748b; }
-.bomb { min-width:85px; padding:0 12px; font-size:20px; }
-.bomb small { display:block; font-size:8.5px; color:var(--muted); font-weight:800; margin-top:-2px; }
-.bomb.cool { opacity:.4; filter:grayscale(.8); pointer-events:none; }
-
-.overlay { position:absolute; inset:0; z-index:60; display:none; place-items:center; background: rgba(245,248,253,.85); backdrop-filter:blur(9px); padding:20px; }
+.overlay {
+  position:absolute; inset:0; z-index:60; display:none; place-items:center;
+  background:rgba(244,247,253,0.85); backdrop-filter:blur(8px); padding:20px;
+}
 .overlay.show { display:grid; }
-.result { width:min(100%,380px); background:#fff; border:1px solid var(--border); border-radius:28px; padding:22px; text-align:center; box-shadow:var(--shadow); }
-.result h2 { margin:0; color:var(--blue); font-size:26px; font-weight:900;}
-.final-score { font-size:42px; font-weight:900; color:var(--purple); margin:6px 0; }
-.toast { position:absolute; top: 18px; right:12px; left:12px; z-index:100; background:#fff; border:1px solid var(--border); border-radius:14px; padding:10px; text-align:center; box-shadow:var(--shadow); display:none; font-size:12px; font-weight:900; }
+.result {
+  width:min(100%,360px); background:#fff; border:1px solid var(--border); border-radius:26px;
+  padding:22px; text-align:center; box-shadow:var(--shadow);
+}
+.result h2 { margin:0; color:var(--blue); font-size:24px; font-weight:900; }
+.final-score { font-size:40px; font-weight:900; color:var(--purple); margin:6px 0; }
+.toast {
+  position:absolute; top:18px; right:12px; left:12px; z-index:100; background:#fff;
+  border:1px solid var(--border); border-radius:14px; padding:10px; text-align:center;
+  box-shadow:var(--shadow); display:none; font-size:12px; font-weight:900;
+}
 
-.modal { position:absolute; inset:0; z-index:200; display:none; place-items:center; padding:20px; background: rgba(245,248,253,.82); backdrop-filter:blur(8px); }
+.modal { position:absolute; inset:0; z-index:200; display:none; place-items:center; padding:20px; background:rgba(244,247,253,0.82); backdrop-filter:blur(6px); }
 .modal.show { display:grid; }
-.modal-card { width:min(100%,360px); background:#fff; border:1px solid var(--border); border-radius:26px; padding:20px; box-shadow:var(--shadow); text-align:center; }
-.modal-card h2 { margin:0 0 6px; color:var(--blue); font-weight:900; font-size:1.25rem;}
-.modal-card p { margin:0; color:var(--muted); line-height:1.6; font-size:12.5px; font-weight:600;}
-.modal-actions { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:16px; }
-.modal-actions button { min-height:48px; border-radius:15px; font-weight:900; }
-.danger-btn { color:var(--red); background:#fff3f4; border:1px solid #f0cbd0; cursor:pointer; }
-.icon-btn { width:46px; height:46px; border-radius:15px; background:#fff; border:1px solid var(--border); color:var(--text); box-shadow:var(--shadow-small); display:grid; place-items:center; font-size:18px; cursor:pointer;}
+.modal-card { width:min(100%,350px); background:#fff; border:1px solid var(--border); border-radius:24px; padding:20px; box-shadow:var(--shadow); text-align:center; }
+.modal-card h2 { margin:0 0 6px; color:var(--blue); font-weight:900; font-size:1.2rem; }
+.modal-card p { margin:0; color:var(--muted); line-height:1.6; font-size:12px; font-weight:600; }
+.modal-actions { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:16px; }
+.modal-actions button { min-height:46px; border-radius:14px; font-weight:900; }
+.danger-btn { color:var(--red); background:#fef2f2; border:1px solid #fecaca; cursor:pointer; }
+.icon-btn { width:44px; height:44px; border-radius:14px; background:#fff; border:1px solid var(--border); color:var(--text); box-shadow:0 2px 6px rgba(0,0,0,0.04); display:grid; place-items:center; font-size:16px; cursor:pointer; }
 </style>
 </head>
 <body>
@@ -269,232 +284,222 @@ button { font:inherit; border:0; outline:none; cursor:pointer; touch-action:mani
      HOME SCREEN
 ===================================================== -->
 <section id="home" class="screen active">
-    <div class="app-container">
-        
-        <!-- Header -->
-        <header class="header">
-            <div class="header-left">
-                <button class="icon-btn-new" id="soundBtn"><i class="fa-solid fa-volume-high"></i></button>
-                <button class="lang-btn-new" id="langBtn">FR</button>
-            </div>
-            <div class="header-center">
-                <h1>IA Math</h1>
-                <p id="brandSub">رياضيات • صائد الأعداد</p>
-            </div>
-            <button class="icon-btn-new" id="infoTopBtn" type="button"><i class="fa-solid fa-question"></i></button>
-        </header>
+  <div class="app-container">
+    
+    <!-- شريط علوي -->
+    <header class="header">
+      <div class="header-left">
+        <button class="icon-btn-new" id="soundBtn"><i class="fa-solid fa-volume-high"></i></button>
+        <button class="lang-btn-new" id="langBtn">FR</button>
+      </div>
+      <div class="header-center">
+        <h1>IA Math</h1>
+        <p id="brandSub">رياضيات • صائد الأعداد</p>
+      </div>
+      <button class="icon-btn-new" id="infoTopBtn" type="button"><i class="fa-solid fa-question"></i></button>
+    </header>
 
-        <!-- Hero Card -->
-        <section class="hero-card">
-            <div class="hero-content">
-                <h2 id="homeTitle">صائد<br>الأعداد</h2>
-                <p id="tagline">رياضيات • سرعة • دقة</p>
-                <div class="prime-numbers">2 • 3 • 5 • 7 • 11 • 13</div>
-                <div class="badge">تعلم .. تدرب .. تفوّق</div>
-            </div>
-            <div class="hero-image">
-                <div class="floating-num num-7">7</div>
-                <div class="floating-num num-11">11</div>
-                <div class="floating-num num-2">2</div>
-                <div class="floating-num num-5">5</div>
-            </div>
-        </section>
+    <!-- البطاقة البصرية -->
+    <section class="hero-card">
+      <div class="hero-content">
+        <h2 id="homeTitle">صائد<br>الأعداد</h2>
+        <p id="tagline">رياضيات • سرعة • دقة</p>
+        <div class="prime-numbers">2 • 3 • 5 • 7 • 11 • 13</div>
+        <div class="badge">تعلم .. تدرب .. تفوّق</div>
+      </div>
+      <div class="hero-image">
+        <div class="floating-num num-7">7</div>
+        <div class="floating-num num-11">11</div>
+        <div class="floating-num num-2">2</div>
+        <div class="floating-num num-5">5</div>
+      </div>
+    </section>
 
-        <!-- Stats -->
-        <section class="stats-grid">
-            <div class="stat-card">
-                <i class="fa-solid fa-trophy"></i>
-                <div class="stat-value" id="best">0</div>
-                <div class="stat-label" id="bestLabel">أفضل نتيجة</div>
-            </div>
-            <div class="stat-card">
-                <i class="fa-solid fa-gamepad"></i>
-                <div class="stat-value" id="games">0</div>
-                <div class="stat-label" id="gamesLabel">المباريات</div>
-            </div>
-            <div class="stat-card">
-                <i class="fa-solid fa-fire"></i>
-                <div class="stat-value" id="streak">0</div>
-                <div class="stat-label" id="comboLabel">أفضل كومبو</div>
-            </div>
-        </section>
+    <!-- الإحصائيات -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <i class="fa-solid fa-trophy"></i>
+        <div class="stat-value" id="best">0</div>
+        <div class="stat-label" id="bestLabel">أفضل نتيجة</div>
+      </div>
+      <div class="stat-card">
+        <i class="fa-solid fa-gamepad"></i>
+        <div class="stat-value" id="games">0</div>
+        <div class="stat-label" id="gamesLabel">المباريات</div>
+      </div>
+      <div class="stat-card">
+        <i class="fa-solid fa-fire"></i>
+        <div class="stat-value" id="streak">0</div>
+        <div class="stat-label" id="comboLabel">أفضل كومبو</div>
+      </div>
+    </section>
 
-        <!-- Main Actions -->
-        <section class="action-grid">
-            <!-- نمط المراحل المتدرجة -->
-            <button class="action-card btn-play" id="playBtn" type="button">
-                <div class="action-icon"><i class="fa-solid fa-layer-group"></i></div>
-                <div class="action-text">
-                    <h3 id="playT">تدرج المستويات</h3>
-                    <p id="playP">سهل ثم يزداد صعوبة</p>
-                </div>
-                <i class="fa-solid fa-chevron-left action-arrow"></i>
-            </button>
+    <!-- الأنماط الأربعة غير المكررة -->
+    <section class="action-grid">
+      <!-- 1. رحلة المستويات -->
+      <button class="action-card btn-levels" id="levelsBtn" type="button">
+        <div class="card-top">
+          <div class="action-icon"><i class="fa-solid fa-layer-group"></i></div>
+          <i class="fa-solid fa-chevron-left action-arrow"></i>
+        </div>
+        <div class="action-text">
+          <h3 id="mode1T">رحلة المستويات</h3>
+          <p id="mode1P">تدرج بالصعوبة والسرعة</p>
+        </div>
+      </button>
 
-            <!-- الصيد السريع -->
-            <button class="action-card btn-fast" id="quickBtn" type="button">
-                <div class="action-icon"><i class="fa-solid fa-bolt"></i></div>
-                <div class="action-text">
-                    <h3 id="quickT">الصيد السريع</h3>
-                    <p id="quickP">60 ثانية من التركيز</p>
-                </div>
-                <i class="fa-solid fa-chevron-left action-arrow"></i>
-            </button>
+      <!-- 2. سباق الـ 60 ثانية -->
+      <button class="action-card btn-speed" id="timeAttackBtn" type="button">
+        <div class="card-top">
+          <div class="action-icon"><i class="fa-solid fa-bolt"></i></div>
+          <i class="fa-solid fa-chevron-left action-arrow"></i>
+        </div>
+        <div class="action-text">
+          <h3 id="mode2T">سباق 60 ثانية</h3>
+          <p id="mode2P">قلوب مفتوحة • ضد الساعة</p>
+        </div>
+      </button>
 
-            <!-- تدريب حر باختيار المهمة -->
-            <button class="action-card btn-mission" id="missionsBtn" type="button">
-                <div class="action-icon"><i class="fa-solid fa-bullseye"></i></div>
-                <div class="action-text">
-                    <h3 id="missionsT">تدريب حر</h3>
-                    <p id="missionsP">اختر نوع الأعداد المفضل</p>
-                </div>
-                <i class="fa-solid fa-chevron-left action-arrow"></i>
-            </button>
+      <!-- 3. البقاء الحاسم -->
+      <button class="action-card btn-hardcore" id="hardcoreBtn" type="button">
+        <div class="card-top">
+          <div class="action-icon"><i class="fa-solid fa-skull"></i></div>
+          <i class="fa-solid fa-chevron-left action-arrow"></i>
+        </div>
+        <div class="action-text">
+          <h3 id="mode3T">البقاء الحاسم</h3>
+          <p id="mode3P">❤️ قلب 1 • خطأ واحد تخسر</p>
+        </div>
+      </button>
 
-            <!-- التحدي العشوائي -->
-            <button class="action-card btn-random" id="randomBtn" type="button">
-                <div class="action-icon"><i class="fa-solid fa-dice"></i></div>
-                <div class="action-text">
-                    <h3 id="randomT">التحدي المتغير</h3>
-                    <p id="randomP">مهمة جديدة كل 20 ثانية</p>
-                </div>
-                <i class="fa-solid fa-chevron-left action-arrow"></i>
-            </button>
-        </section>
+      <!-- 4. التدريب الحر -->
+      <button class="action-card btn-practice" id="practiceBtn" type="button">
+        <div class="card-top">
+          <div class="action-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+          <i class="fa-solid fa-chevron-left action-arrow"></i>
+        </div>
+        <div class="action-text">
+          <h3 id="mode4T">التدريب الحر</h3>
+          <p id="mode4P">اختر قاعدة وتدرب بهدوء</p>
+        </div>
+      </button>
+    </section>
 
-        <!-- وضع البقاء -->
-        <button class="btn-survival" id="survivalBtn" type="button">
-            <div class="survival-content">
-                <i class="fa-solid fa-heart"></i>
-                <div class="survival-text">
-                    <h3 id="survivalTitle">وضع البقاء – 3 قلوب</h3>
-                    <p id="survivalSub">تحدي المهارة والاستمرار بلا توقف</p>
-                </div>
-            </div>
-            <i class="fa-solid fa-chevron-left action-arrow" style="position:static;"></i>
-        </button>
+    <!-- الأزرار السفلية -->
+    <section class="footer-actions">
+      <button class="btn-secondary btn-how" id="howBtn" type="button">
+        <div class="sec-icon"><i class="fa-solid fa-info"></i></div>
+        <div class="sec-text">
+          <h3 id="howT">طريقة اللعب</h3>
+          <p id="howP">القواعد والأنماط</p>
+        </div>
+      </button>
 
-        <!-- Footer Actions -->
-        <section class="footer-actions">
-            <button class="btn-how-to" id="howBtn" type="button">
-                <div class="footer-icon"><i class="fa-solid fa-info"></i></div>
-                <div class="footer-action-text">
-                    <h3 id="howT">طريقة اللعب</h3>
-                    <p id="howP">تعلم القواعد والنصائح</p>
-                </div>
-                <i class="fa-solid fa-chevron-left footer-arrow"></i>
-            </button>
+      <button class="btn-secondary btn-reset" id="resetBtn" type="button">
+        <div class="sec-icon"><i class="fa-solid fa-rotate-right"></i></div>
+        <div class="sec-text">
+          <h3 id="resetT">الإحصائيات</h3>
+          <p id="resetP">تصفير السجلات</p>
+        </div>
+      </button>
+    </section>
 
-            <button class="btn-reset" id="resetBtn" type="button">
-                <div class="footer-icon"><i class="fa-solid fa-rotate-right"></i></div>
-                <div class="footer-action-text">
-                    <h3 id="resetT">إعادة الإحصائيات</h3>
-                    <p id="resetP">مسح جميع النتائج</p>
-                </div>
-                <i class="fa-solid fa-chevron-left footer-arrow"></i>
-            </button>
-        </section>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-brand">
-                صائد الأعداد <i class="fa-solid fa-heart" style="color: #ef4444; margin: 0 3px;"></i> IA Math
-            </div>
-            <p id="footerNote">ممارسة اليوم .. لعقل أقوى غدًا</p>
-        </footer>
-    </div>
+    <footer class="footer">
+      <div class="footer-brand">
+        صائد الأعداد <i class="fa-solid fa-heart" style="color:#ef4444; margin:0 3px;"></i> IA Math
+      </div>
+      <p id="footerNote">ممارسة اليوم .. لعقل أقوى غدًا</p>
+    </footer>
+  </div>
 </section>
 
 <!-- =====================================================
-     MISSIONS SELECT SCREEN
+     MISSIONS (التدريب الحر)
 ===================================================== -->
 <section id="missions" class="screen">
-<div class="shell">
-<div class="inner-header">
-<button class="icon-btn" id="missionsBack" type="button"><i class="fa-solid fa-arrow-right"></i></button>
-<div class="inner-header-info">
-<div class="inner-title" id="chooseTitle">اختيار المهمة</div>
-<div class="inner-sub" id="chooseSub">اختر القاعدة الرياضية ثم ابدأ</div>
-</div>
-</div>
-<div class="card">
-<h2 class="section-title" id="missionHeading">🎯 اختر نوع الأعداد</h2>
-<div id="choiceNote" class="choice-note"></div>
-<div id="missionList" class="mission-list"></div>
-<button class="big-action" id="startSelected" type="button">ابدأ التدريب</button>
-</div>
-</div>
+  <div class="shell">
+    <div class="inner-header">
+      <button class="icon-btn" id="missionsBack" type="button"><i class="fa-solid fa-arrow-right"></i></button>
+      <div class="inner-header-info">
+        <div class="inner-title" id="chooseTitle">التدريب الحر</div>
+        <div class="inner-sub" id="chooseSub">اختر القاعدة الرياضية التي تريد التدرب عليها</div>
+      </div>
+    </div>
+    <div class="card">
+      <div id="missionList" class="mission-list"></div>
+      <button class="big-action" id="startSelected" type="button">ابدأ التدريب الآن</button>
+    </div>
+  </div>
 </section>
 
 <!-- =====================================================
-     HOW TO PLAY SCREEN
+     HOW TO PLAY
 ===================================================== -->
 <section id="how" class="screen">
-<div class="shell">
-<div class="inner-header">
-<button class="icon-btn" id="howBack" type="button"><i class="fa-solid fa-arrow-right"></i></button>
-<div class="inner-header-info">
-<div class="inner-title" id="howTitle">طريقة اللعب</div>
-<div class="inner-sub" id="howSub">NUMBER HUNTER</div>
-</div>
-</div>
-<div class="card how">
-<div class="rule"><strong id="howGoalTitle">🎯 الهدف:</strong> <span id="howGoal">اضغط فقط على الأعداد التي تحقق المهمة المكتوبة أعلى الشاشة.</span></div>
-<div class="rule"><strong id="howProgTitle">📈 تدرج الصعوبة:</strong> <span id="howProg">تبدأ اللعبة بأرقام وسرعات سهلة، وتزداد السرعة وحجم الأعداد مع كل ارتقاء بالمستوى.</span></div>
-<div class="rule"><strong id="howLivesTitle">❤️ القلوب:</strong> <span id="howLives">لديك 3 قلوب. كل اختيار خاطئ يفقدك قلباً.</span></div>
-<div class="rule"><strong id="howComboTitle">🔥 الكومبو:</strong> <span id="howCombo">كل إجابة صحيحة متتالية تضاعف النقاط.</span></div>
-<div class="rule"><strong id="howBombTitle">💣 القنبلة:</strong> <span id="howBomb">تمسح الأعداد المتراكمة دون خصم قلوب أو منح نقاط.</span></div>
-<button class="big-action" id="howPlay" type="button">▶ ابدأ اللعب الآن</button>
-</div>
-</div>
+  <div class="shell">
+    <div class="inner-header">
+      <button class="icon-btn" id="howBack" type="button"><i class="fa-solid fa-arrow-right"></i></button>
+      <div class="inner-header-info">
+        <div class="inner-title" id="howTitle">طريقة اللعب</div>
+        <div class="inner-sub">NUMBER HUNTER — IA MATH</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="rule"><strong>🎯 رحلة المستويات:</strong> تبدأ بأرقام صغيرة وسرعة هادئة وتتدرج صعوبتها تلقائياً مع كل 5 إجابات صحيحة.</div>
+      <div class="rule"><strong>⚡ سباق 60 ثانية:</strong> القلوب مفتوحة ولا توجد خسارة فورية، لكن كل خطأ يخصم 3 ثوانٍ من الوقت!</div>
+      <div class="rule"><strong>☠️ البقاء الحاسم:</strong> لديك قلب واحد فقط! خطأ واحد ينهي الجولة. للمحترفين فقط.</div>
+      <div class="rule"><strong>🎓 التدريب الحر:</strong> اختر قاعدة معينة (أولية، مضاعفات 3، زوجية...) وتمرن عليها بدون ضغط.</div>
+      <div class="rule"><strong>💣 القنبلة:</strong> تمسح الأعداد المتراكمة لإنقاذك في الأوقات الصعبة.</div>
+      <button class="big-action" id="howPlay" type="button">▶ ابدأ اللعب</button>
+    </div>
+  </div>
 </section>
 
 <!-- =====================================================
-     GAMEPLAY SCREEN
+     GAME ARENA
 ===================================================== -->
 <section id="game" class="screen">
-<div class="game-top">
-<div class="hud">
-<div class="hud-box"><b id="score">0</b><small id="scoreLabel">النقاط</small></div>
-<div class="hud-box"><b id="level">1</b><small id="levelLabel">المستوى</small></div>
-<div class="hud-box"><b id="heartHud" class="hearts">❤️❤️❤️</b><small id="timeHud">القلوب</small></div>
-</div>
-<div class="mission-bar" id="missionBar">🎯 المهمة الحالية</div>
-</div>
+  <div class="game-top">
+    <div class="hud">
+      <div class="hud-box"><b id="score">0</b><small id="scoreLabel">النقاط</small></div>
+      <div class="hud-box"><b id="level">1</b><small id="levelLabel">المستوى</small></div>
+      <div class="hud-box"><b id="heartHud" class="hearts">❤️❤️❤️</b><small id="statusHud">القلوب</small></div>
+    </div>
+    <div class="mission-bar" id="missionBar">🎯 المهمة الحالية</div>
+  </div>
 
-<div id="arena" class="arena"></div>
-<div id="feedback" class="feedback"></div>
+  <div id="arena" class="arena"></div>
+  <div id="feedback" class="feedback"></div>
 
-<div class="bottom-tools">
-<button id="exitGame" class="game-tool exit-game" type="button"><i class="fa-solid fa-xmark"></i></button>
-<button id="bomb" class="game-tool bomb" type="button">💣<small id="bombText">قنبلة</small></button>
-</div>
+  <div class="bottom-tools">
+    <button id="exitGame" class="game-tool exit-game" type="button"><i class="fa-solid fa-xmark"></i></button>
+    <button id="bomb" class="game-tool bomb" type="button">💣<small id="bombText">قنبلة</small></button>
+  </div>
 
-<!-- GAME OVER OVERLAY -->
-<div id="gameOverlay" class="overlay">
-<div class="result">
-<h2 id="resultTitle">انتهت الجولة</h2>
-<div class="final-score" id="finalScore">0</div>
-<div id="resultInfo" style="color:#718096; font-weight:700; margin-bottom:15px;">النقاط</div>
-<button class="big-action" id="againBtn" type="button">↻ إعادة اللعب</button>
-<button class="big-action secondary" id="menuBtn" type="button">⌂ القائمة الرئيسية</button>
-</div>
-</div>
+  <!-- نتيجة النهاية -->
+  <div id="gameOverlay" class="overlay">
+    <div class="result">
+      <h2 id="resultTitle">انتهت الجولة</h2>
+      <div class="final-score" id="finalScore">0</div>
+      <div id="resultInfo" style="color:#64748b; font-weight:700; margin-bottom:15px;">النقاط</div>
+      <button class="big-action" id="againBtn" type="button">↻ إعادة اللعب</button>
+      <button class="big-action secondary" id="menuBtn" type="button">⌂ القائمة الرئيسية</button>
+    </div>
+  </div>
 </section>
 
-<!-- =====================================================
-     RESET MODAL & TOAST
-===================================================== -->
+<!-- نافذة تصفير البيانات -->
 <div id="resetModal" class="modal">
-<div class="modal-card">
-<h2 id="resetTitle">إعادة الإحصائيات؟</h2>
-<p id="resetMessage">سيتم حذف أفضل نتيجة وعدد المباريات وأفضل كومبو.</p>
-<div class="modal-actions">
-<button id="resetCancel" class="big-action secondary" type="button">إلغاء</button>
-<button id="resetConfirm" class="danger-btn" type="button">إعادة الضبط</button>
+  <div class="modal-card">
+    <h2 id="resetTitle">إعادة الإحصائيات؟</h2>
+    <p id="resetMessage">سيتم حذف أفضل نتيجة وعدد المباريات وأفضل كومبو.</p>
+    <div class="modal-actions">
+      <button id="resetCancel" class="big-action secondary" type="button">إلغاء</button>
+      <button id="resetConfirm" class="danger-btn" type="button">مسح</button>
+    </div>
+  </div>
 </div>
-</div>
-</div>
+
 <div id="toast" class="toast"></div>
 
 </div>
@@ -512,19 +517,19 @@ const state = {
   best: +(localStorage.getItem("nh_best") || 0),
   games: +(localStorage.getItem("nh_games") || 0),
   bestCombo: +(localStorage.getItem("nh_combo") || 0),
-  
-  // Game states
+
+  // إعدادات الجولة
+  mode: "levels", // 'levels' | 'time_attack' | 'hardcore' | 'practice'
   score: 0,
   combo: 0,
   level: 1,
   correctHits: 0,
   lives: 3,
-  running: false,
-  mode: "progressive", // 'progressive' | 'free' | 'quick' | 'survival' | 'random'
   timeLeft: 60,
-  elapsed: 0,
+  running: false,
   startTime: 0,
   mission: null,
+  selectedMissionIndex: 0,
   targets: new Map(),
   nextId: 1,
   spawnTimeout: null,
@@ -532,75 +537,72 @@ const state = {
   raf: null,
   lastFrame: 0,
   bombReady: true,
-  bombCooldown: null,
-  selected: 0,
-  choiceMode: "free",
-  randomBucket: -1
+  bombCooldown: null
 };
 
-// قواعد الأعداد مع دوال توليد ذكية تتكيف مع مستوى الصعوبة
+// قواعد الأعداد مع توليد ديناميكي يعتمد على مستوى الصعوبة
 const missions = [
   {
     id: "prime", icon: "🔵",
     ar: "الأعداد الأولية", fr: "Nombres premiers", en: "Prime numbers",
-    desc: { ar: "اختر الأعداد التي تقبل القسمة فقط على 1 ونفسها", fr: "Choisissez les nombres divisibles par 1 et eux-mêmes", en: "Divisible only by 1 and itself" },
+    desc: { ar: "تقبل القسمة على 1 ونفسها فقط (مثل 2، 3، 5، 7، 11)", fr: "Divisible par 1 et par lui-même uniquement", en: "Divisible only by 1 and itself" },
     test: n => isPrime(n),
     make: (lvl) => {
       const p1 = [2, 3, 5, 7, 11, 13, 17, 19];
       const p2 = [23, 29, 31, 37, 41, 43, 47];
       const p3 = [53, 59, 61, 67, 71, 73, 79, 83, 89, 97];
-      if (lvl === 1) return pick(p1);
-      if (lvl === 2) return pick([...p1, ...p2]);
+      if (lvl <= 2) return pick(p1);
+      if (lvl <= 4) return pick([...p1, ...p2]);
       return pick([...p1, ...p2, ...p3]);
     }
   },
   {
     id: "even", icon: "🟦",
     ar: "الأعداد الزوجية", fr: "Nombres pairs", en: "Even numbers",
-    desc: { ar: "الأعداد التي تقبل القسمة على 2 (آحادها 0، 2، 4، 6، 8)", fr: "Nombres divisibles par 2", en: "Numbers divisible by 2" },
+    desc: { ar: "تقبل القسمة على 2 (آحادها 0، 2، 4، 6، 8)", fr: "Nombres divisibles par 2", en: "Numbers divisible by 2" },
     test: n => n > 0 && n % 2 === 0,
     make: (lvl) => {
-      const max = lvl === 1 ? 20 : (lvl === 2 ? 50 : 100);
+      const max = lvl <= 2 ? 30 : (lvl <= 4 ? 60 : 100);
       return rand(1, Math.floor(max / 2)) * 2;
     }
   },
   {
     id: "odd", icon: "🟪",
     ar: "الأعداد الفردية", fr: "Nombres impairs", en: "Odd numbers",
-    desc: { ar: "الأعداد التي لا تقبل القسمة على 2 (آحادها 1، 3، 5، 7، 9)", fr: "Nombres non divisibles par 2", en: "Numbers not divisible by 2" },
+    desc: { ar: "لا تقبل القسمة على 2 (آحادها 1، 3، 5، 7، 9)", fr: "Nombres non divisibles par 2", en: "Numbers not divisible by 2" },
     test: n => n > 0 && n % 2 !== 0,
     make: (lvl) => {
-      const max = lvl === 1 ? 20 : (lvl === 2 ? 50 : 99);
+      const max = lvl <= 2 ? 30 : (lvl <= 4 ? 60 : 99);
       return rand(1, Math.ceil(max / 2)) * 2 - 1;
     }
   },
   {
     id: "m3", icon: "3️⃣",
     ar: "مضاعفات 3", fr: "Multiples de 3", en: "Multiples of 3",
-    desc: { ar: "الأعداد الناتجة عن جدول ضرب 3", fr: "Nombres dans la table de 3", en: "Numbers in the 3 times table" },
+    desc: { ar: "الأعداد الناتجة من جدول ضرب 3 (3، 6، 9، 12...)", fr: "Table de multiplication de 3", en: "Multiples of 3" },
     test: n => n > 0 && n % 3 === 0,
     make: (lvl) => {
-      const maxK = lvl === 1 ? 6 : (lvl === 2 ? 15 : 30);
+      const maxK = lvl <= 2 ? 8 : (lvl <= 4 ? 18 : 33);
       return 3 * rand(1, maxK);
     }
   },
   {
     id: "m5", icon: "5️⃣",
     ar: "مضاعفات 5", fr: "Multiples de 5", en: "Multiples of 5",
-    desc: { ar: "الأعداد التي تنتهي بـ 0 أو 5", fr: "Nombres qui se terminent par 0 ou 5", en: "Numbers ending in 0 or 5" },
+    desc: { ar: "الأعداد التي تنتهي برقم 0 أو 5", fr: "Nombres se terminant par 0 ou 5", en: "Numbers ending with 0 or 5" },
     test: n => n > 0 && n % 5 === 0,
     make: (lvl) => {
-      const maxK = lvl === 1 ? 6 : (lvl === 2 ? 12 : 20);
+      const maxK = lvl <= 2 ? 8 : (lvl <= 4 ? 14 : 20);
       return 5 * rand(1, maxK);
     }
   },
   {
     id: "square", icon: "²",
     ar: "المربعات الكاملة", fr: "Carrés parfaits", en: "Perfect squares",
-    desc: { ar: "مثل 1، 4، 9، 16، 25… حاصل ضرب عدد في نفسه", fr: "Comme 1, 4, 9, 16, 25…", en: "Such as 1, 4, 9, 16, 25…" },
+    desc: { ar: "مثل 1، 4، 9، 16، 25، 36، 49، 64...", fr: "Comme 1, 4, 9, 16, 25, 36...", en: "Such as 1, 4, 9, 16, 25, 36..." },
     test: n => n > 0 && Number.isInteger(Math.sqrt(n)),
     make: (lvl) => {
-      const pool = lvl === 1 ? [1, 4, 9, 16, 25] : [1, 4, 9, 16, 25, 36, 49, 64, 81, 100];
+      const pool = lvl <= 2 ? [1, 4, 9, 16, 25] : [1, 4, 9, 16, 25, 36, 49, 64, 81, 100];
       return pick(pool);
     }
   }
@@ -609,66 +611,48 @@ const missions = [
 const T = {
 ar: {
   tag: "رياضيات • سرعة • دقة", title: "صائد الأعداد", brandSub: "رياضيات • صائد الأعداد",
-  play: "تدرج المستويات", playP: "سهل ثم يزداد صعوبة", quick: "الصيد السريع", quickP: "60 ثانية • حطم رقمك",
-  missions: "تدريب حر", missionsP: "اختر نوع الأعداد المفضل", random: "التحدي المتغير", randomP: "مهمة جديدة كل 20 ثانية",
-  survival: "وضع البقاء – 3 قلوب", survivalSub: "تحدي المهارة والاستمرار بلا توقف", how: "طريقة اللعب", howP: "تعلم القواعد والنصائح",
-  reset: "إعادة الإحصائيات", resetP: "مسح جميع النتائج", footer: "ممارسة اليوم .. لعقل أقوى غدًا", best: "أفضل نتيجة",
-  games: "المباريات", bestCombo: "أفضل كومبو", choose: "اختيار المهمة", chooseSub: "اختر القاعدة الرياضية ثم ابدأ",
-  missionHeading: "🎯 اختر نوع الأعداد", freeNote: "تدرب بحرية مع تدرج الصعوبة في نوع الأعداد المختار.",
-  quickNote: "60 ثانية سريعة لجمع أكبر عدد من النقاط.", survivalNote: "3 قلوب فقط، كل خطأ يكلفك حياة!",
-  start: "ابدأ التدريب", score: "النقاط", level: "المستوى", hearts: "القلوب", time: "الوقت",
+  best: "أفضل نتيجة", games: "المباريات", bestCombo: "أفضل كومبو",
+  mode1T: "رحلة المستويات", mode1P: "تدرج بالصعوبة والسرعة",
+  mode2T: "سباق 60 ثانية", mode2P: "قلوب مفتوحة • ضد الساعة",
+  mode3T: "البقاء الحاسم", mode3P: "❤️ قلب 1 • خطأ واحد تخسر",
+  mode4T: "التدريب الحر", mode4P: "اختر قاعدة وتدرب بهدوء",
+  howT: "طريقة اللعب", howP: "القواعد والأنماط", resetT: "الإحصائيات", resetP: "تصفير السجلات",
+  score: "النقاط", level: "المستوى", hearts: "القلوب", time: "الوقت",
   correct: "✓ رائع!", wrong: "✕ خطأ!", bomb: "قنبلة", bombMsg: "💣 تم مسح الشاشة", cool: "شحن...",
-  gameOver: "انتهت الجولة", timeOver: "انتهى الوقت!", again: "↻ إعادة اللعب", menu: "⌂ القائمة الرئيسية",
-  randomMission: "🎲 مهمة جديدة", seconds: "ث", exit: "خروج", levelUp: "🚀 ارتقاء للمستوى",
-  howGoalTitle: "🎯 الهدف:", howGoal: "اضغط فقط على الأعداد التي تحقق المهمة المكتوبة أعلى الشاشة.",
-  howProgTitle: "📈 تدرج الصعوبة:", howProg: "تبدأ اللعبة بأرقام وسرعات سهلة، وتزداد السرعة وحجم الأعداد مع كل ارتقاء بالمستوى.",
-  howLivesTitle: "❤️ القلوب:", howLives: "لديك 3 قلوب. كل اختيار خاطئ يفقدك قلباً. انتهاء القلوب ينهي اللعبة.",
-  howComboTitle: "🔥 الكومبو:", howCombo: "كل إجابة صحيحة متتالية تضاعف النقاط المحتسبة.",
-  howBombTitle: "💣 القنبلة:", howBomb: "تمسح الشاشة فوراً عند تكدس الأرقام دون أن تخسر قلباً.",
-  howPlay: "▶ ابدأ اللعب الآن", resetTitle: "إعادة الإحصائيات؟", resetMessage: "سيتم حذف أفضل نتيجة وعدد المباريات وأفضل كومبو نهائياً.",
-  cancel: "إلغاء", resetConfirm: "إعادة الضبط", resetDone: "تم تصفير الإحصائيات بنجاح"
+  gameOver: "انتهت الجولة", timeOver: "انتهى الوقت!", again: "↻ إعادة اللعب", menu: "⌂ القائمة",
+  levelUp: "🚀 ارتقاء للمستوى", penalty: "-3 ثوانٍ!", seconds: "ث",
+  resetTitle: "إعادة الإحصائيات؟", resetMessage: "سيتم حذف جميع السجلات والنتائج نهائياً.",
+  cancel: "إلغاء", resetConfirm: "مسح", resetDone: "تم تصفير البيانات بنجاح"
 },
 fr: {
   tag: "Mathématiques • Vitesse • Précision", title: "CHASSE AUX NOMBRES", brandSub: "Mathématiques • CHASSE AUX NOMBRES",
-  play: "PROGRESSION", playP: "Facile puis de plus en plus dur", quick: "CHASSE RAPIDE", quickP: "60 secondes chrono",
-  missions: "ENTRAÎNEMENT", missionsP: "Choisissez votre type de nombre", random: "DÉFI VARIÉ", randomP: "Nouvelle règle toutes les 20s",
-  survival: "MODE SURVIE – 3 VIES", survivalSub: "Endurance et précision absolue", how: "COMMENT JOUER", howP: "Règles et conseils",
-  reset: "RÉINITIALISER", resetP: "Effacer les scores", footer: "Entraînez votre esprit chaque jour", best: "MEILLEUR SCORE",
-  games: "PARTIES", bestCombo: "MEILLEUR COMBO", choose: "CHOIX DU DÉFI", chooseSub: "Choisissez la règle puis commencez",
-  missionHeading: "🎯 Type de nombres", freeNote: "Entraînez-vous avec une difficulté progressive.",
-  quickNote: "La partie dure exactement 60 secondes.", survivalNote: "3 vies pour aller le plus loin possible.",
-  start: "COMMENCER", score: "SCORE", level: "NIVEAU", hearts: "VIES", time: "TEMPS",
+  best: "MEILLEUR SCORE", games: "PARTIES", bestCombo: "MEILLEUR COMBO",
+  mode1T: "PROGRESSION", mode1P: "Difficulté et vitesse adaptatives",
+  mode2T: "CHRONO 60s", mode2P: "Vies illimitées • Contre-la-montre",
+  mode3T: "SURVIE ULTIME", mode3P: "❤️ 1 Seule vie • Zéro erreur",
+  mode4T: "ENTRAÎNEMENT", mode4P: "Pratiquez une règle précise",
+  howT: "COMMENT JOUER", howP: "Règles et astuces", resetT: "STATS", resetP: "Réinitialiser",
+  score: "SCORE", level: "NIVEAU", hearts: "VIES", time: "TEMPS",
   correct: "✓ Bravo !", wrong: "✕ Erreur !", bomb: "Bombe", bombMsg: "💣 Écran vidé !", cool: "CHARGE...",
   gameOver: "PARTIE TERMINÉE", timeOver: "TEMPS ÉCOULÉ !", again: "↻ REJOUER", menu: "⌂ MENU",
-  randomMission: "🎲 Nouvelle règle", seconds: "s", exit: "Quitter", levelUp: "🚀 NIVEAU SUPÉRIEUR",
-  howGoalTitle: "🎯 Objectif :", howGoal: "Touchez uniquement les nombres qui correspondent à la mission affichée.",
-  howProgTitle: "📈 Progression :", howProg: "Le jeu commence lentement avec de petits nombres puis accélère progressivement.",
-  howLivesTitle: "❤️ Vies :", howLives: "Vous avez 3 vies. Chaque mauvaise réponse retire une vie.",
-  howComboTitle: "🔥 Combo :", howCombo: "Enchaîner les bonnes réponses multiplie vos points.",
-  howBombTitle: "💣 Bombe :", howBomb: "Efface tous les nombres à l'écran sans pénalité.",
-  howPlay: "▶ JOUER MAINTENANT", resetTitle: "Réinitialiser ?", resetMessage: "Toutes les statistiques seront supprimées.",
-  cancel: "Annuler", resetConfirm: "Réinitialiser", resetDone: "Statistiques remises à zéro"
+  levelUp: "🚀 NIVEAU SUPÉRIEUR", penalty: "-3 secondes !", seconds: "s",
+  resetTitle: "Réinitialiser ?", resetMessage: "Toutes les données seront supprimées.",
+  cancel: "Annuler", resetConfirm: "Supprimer", resetDone: "Données remises à zéro"
 },
 en: {
   tag: "Mathematics • Speed • Precision", title: "NUMBER HUNTER", brandSub: "Mathematics • NUMBER HUNTER",
-  play: "LEVEL JOURNEY", playP: "Easy start with adaptive difficulty", quick: "QUICK HUNT", quickP: "60 seconds challenge",
-  missions: "FREE PRACTICE", missionsP: "Choose specific number challenge", random: "RANDOM SHIFT", randomP: "New mission every 20 seconds",
-  survival: "SURVIVAL – 3 LIVES", survivalSub: "Survive as long as you can", how: "HOW TO PLAY", howP: "Rules and advice",
-  reset: "RESET STATS", resetP: "Clear records", footer: "Train today for a stronger mind", best: "HIGH SCORE",
-  games: "GAMES", bestCombo: "BEST COMBO", choose: "SELECT MISSION", chooseSub: "Pick your topic and begin",
-  missionHeading: "🎯 Select Number Type", freeNote: "Practice freely with adaptive progression.",
-  quickNote: "Fast 60-second hunt for the highest score.", survivalNote: "Only 3 lives. One mistake costs a life!",
-  start: "START GAME", score: "SCORE", level: "LEVEL", hearts: "LIVES", time: "TIME",
+  best: "HIGH SCORE", games: "GAMES", bestCombo: "BEST COMBO",
+  mode1T: "LEVEL JOURNEY", mode1P: "Adaptive difficulty & speed",
+  mode2T: "60s TIME ATTACK", mode2P: "Infinite lives • Beat clock",
+  mode3T: "HARDCORE SURVIVAL", mode3P: "❤️ 1 Life only • Zero mistakes",
+  mode4T: "FREE PRACTICE", mode4P: "Select rule and practice",
+  howT: "HOW TO PLAY", howP: "Rules & modes", resetT: "STATS", resetP: "Reset records",
+  score: "SCORE", level: "LEVEL", hearts: "LIVES", time: "TIME",
   correct: "✓ Great!", wrong: "✕ Mistake!", bomb: "Bomb", bombMsg: "💣 Screen cleared!", cool: "COOL...",
-  gameOver: "GAME OVER", timeOver: "TIME'S UP!", again: "↻ PLAY AGAIN", menu: "⌂ MAIN MENU",
-  randomMission: "🎲 New Rule", seconds: "s", exit: "Exit", levelUp: "🚀 LEVEL UP",
-  howGoalTitle: "🎯 Goal:", howGoal: "Tap only numbers matching the current top banner rule.",
-  howProgTitle: "📈 Difficulty:", howProg: "Starts simple with small numbers and speeds up as your level grows.",
-  howLivesTitle: "❤️ Lives:", howLives: "3 lives total. Hitting the wrong number costs a life.",
-  howComboTitle: "🔥 Combo:", howCombo: "Consecutive correct hits grant higher multiplier scores.",
-  howBombTitle: "💣 Bomb:", howBomb: "Wipes all active numbers without penalties.",
-  howPlay: "▶ START NOW", resetTitle: "Reset stats?", resetMessage: "All records and scores will be permanently deleted.",
-  cancel: "Cancel", resetConfirm: "Reset", resetDone: "Stats cleared successfully"
+  gameOver: "GAME OVER", timeOver: "TIME'S UP!", again: "↻ PLAY AGAIN", menu: "⌂ MENU",
+  levelUp: "🚀 LEVEL UP", penalty: "-3 Seconds!", seconds: "s",
+  resetTitle: "Reset Stats?", resetMessage: "All records will be erased.",
+  cancel: "Cancel", resetConfirm: "Reset", resetDone: "Stats reset successfully"
 }
 };
 
@@ -686,9 +670,7 @@ function isPrime(n){
   return true;
 }
 
-function show(id){ 
-  screens.forEach(s => $(s).classList.toggle("active", s === id)); 
-}
+function show(id){ screens.forEach(s => $(s).classList.toggle("active", s === id)); }
 
 function updateHome(){
   $("best").textContent = state.best;
@@ -696,105 +678,75 @@ function updateHome(){
   $("streak").textContent = state.bestCombo;
   $("brandSub").textContent = text("brandSub");
   $("tagline").textContent = text("tag");
-  $("playT").textContent = text("play");
-  $("playP").textContent = text("playP");
-  $("quickT").textContent = text("quick");
-  $("quickP").textContent = text("quickP");
-  $("missionsT").textContent = text("missions");
-  $("missionsP").textContent = text("missionsP");
-  $("randomT").textContent = text("random");
-  $("randomP").textContent = text("randomP");
-  $("survivalTitle").textContent = text("survival");
-  $("survivalSub").textContent = text("survivalSub");
-  $("howT").textContent = text("how");
-  $("howP").textContent = text("howP");
-  $("resetT").textContent = text("reset");
-  $("resetP").textContent = text("resetP");
   $("bestLabel").textContent = text("best");
   $("gamesLabel").textContent = text("games");
   $("comboLabel").textContent = text("bestCombo");
-  $("footerNote").textContent = text("footer");
-  
+
+  $("mode1T").textContent = text("mode1T"); $("mode1P").textContent = text("mode1P");
+  $("mode2T").textContent = text("mode2T"); $("mode2P").textContent = text("mode2P");
+  $("mode3T").textContent = text("mode3T"); $("mode3P").textContent = text("mode3P");
+  $("mode4T").textContent = text("mode4T"); $("mode4P").textContent = text("mode4P");
+  $("howT").textContent = text("howT"); $("howP").textContent = text("howP");
+  $("resetT").textContent = text("resetT"); $("resetP").textContent = text("resetP");
+
   $("homeTitle").innerHTML = state.lang==="ar" ? "صائد<br>الأعداد" : (state.lang==="fr" ? "CHASSE<br>AUX NOMBRES" : "NUMBER<br>HUNTER");
   $("soundBtn").innerHTML = state.sound ? '<i class="fa-solid fa-volume-high"></i>' : '<i class="fa-solid fa-volume-xmark"></i>';
   $("langBtn").textContent = state.lang==="ar" ? "FR" : (state.lang==="fr" ? "EN" : "AR");
-  
+
   document.documentElement.lang = state.lang;
   document.documentElement.dir = state.lang==="ar" ? "rtl" : "ltr";
   document.title = text("title") + " — IA Math";
 }
 
-function openMissionChoice(mode){
-  state.choiceMode = mode;
-  buildMissions();
-  show("missions");
-}
-
-function buildMissions(){
+function buildMissionsList(){
   $("missionList").innerHTML = "";
   missions.forEach((m, i) => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "mission-choice" + (i === state.selected ? " selected" : "");
-    button.innerHTML = `<span class="mi">${m.icon}</span><span><strong>${missionName(m)}</strong><small>${missionDescription(m)}</small></span>`;
-    button.onclick = () => { state.selected = i; buildMissions(); };
-    $("missionList").appendChild(button);
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "mission-choice" + (i === state.selectedMissionIndex ? " selected" : "");
+    btn.innerHTML = `<span class="mi">${m.icon}</span><span><strong>${missionName(m)}</strong><small>${missionDescription(m)}</small></span>`;
+    btn.onclick = () => { state.selectedMissionIndex = i; buildMissionsList(); };
+    $("missionList").appendChild(btn);
   });
-  $("chooseTitle").textContent = text("choose");
-  $("chooseSub").textContent = text("chooseSub");
-  $("missionHeading").textContent = text("missionHeading");
-  $("choiceNote").textContent = state.choiceMode==="quick" ? text("quickNote") : (state.choiceMode==="survival" ? text("survivalNote") : text("freeNote"));
-  $("startSelected").textContent = text("start");
-}
-
-function updateHow(){
-  $("howTitle").textContent = text("how");
-  $("howSub").textContent = text("brandSub");
-  $("howGoalTitle").textContent = text("howGoalTitle");
-  $("howGoal").textContent = text("howGoal");
-  $("howProgTitle").textContent = text("howProgTitle");
-  $("howProg").textContent = text("howProg");
-  $("howLivesTitle").textContent = text("howLivesTitle");
-  $("howLives").textContent = text("howLives");
-  $("howComboTitle").textContent = text("howComboTitle");
-  $("howCombo").textContent = text("howCombo");
-  $("howBombTitle").textContent = text("howBombTitle");
-  $("howBomb").textContent = text("howBomb");
-  $("howPlay").textContent = text("howPlay");
 }
 
 function updateHud(){
   $("score").textContent = state.score;
-  $("level").textContent = state.level;
   $("scoreLabel").textContent = text("score");
+  $("level").textContent = state.level;
   $("levelLabel").textContent = text("level");
-  
-  if(state.mode === "quick"){
+
+  if(state.mode === "time_attack"){
     $("heartHud").textContent = state.timeLeft + text("seconds");
-    $("timeHud").textContent = text("time");
+    $("statusHud").textContent = text("time");
+  } else if(state.mode === "hardcore"){
+    $("heartHud").textContent = "❤️";
+    $("statusHud").textContent = text("hearts");
+  } else if(state.mode === "practice"){
+    $("heartHud").textContent = "♾️";
+    $("statusHud").textContent = text("hearts");
   } else {
+    // رحلة المستويات (3 قلوب)
     $("heartHud").textContent = "❤️".repeat(Math.max(0, state.lives)) + "🖤".repeat(Math.max(0, 3 - state.lives));
-    $("timeHud").textContent = text("hearts");
+    $("statusHud").textContent = text("hearts");
   }
-  
+
   if(state.mission){
-    $("missionBar").textContent = "🎯 " + missionName(state.mission) + (state.mode === "random" ? " • " + text("random") : "");
+    $("missionBar").textContent = "🎯 " + missionName(state.mission);
   }
   $("bombText").textContent = state.bombReady ? text("bomb") : text("cool");
 }
 
 function toast(msg){
   const el = $("toast");
-  el.textContent = msg;
-  el.style.display = "block";
+  el.textContent = msg; el.style.display = "block";
   clearTimeout(toast.timer);
   toast.timer = setTimeout(() => { el.style.display = "none"; }, 1200);
 }
 
 function feedback(msg, type="good"){
   const el = $("feedback");
-  el.textContent = msg;
-  el.className = "feedback " + type;
+  el.textContent = msg; el.className = "feedback " + type;
   void el.offsetWidth;
   el.classList.add("show");
 }
@@ -806,61 +758,62 @@ function beep(frequency=500, duration=.06){
     if(!AudioCtx) return;
     const ctx = beep.ctx || (beep.ctx = new AudioCtx());
     if(ctx.state==="suspended") ctx.resume();
-    const oscillator = ctx.createOscillator();
+    const osc = ctx.createOscillator();
     const gain = ctx.createGain();
-    oscillator.frequency.value = frequency;
-    oscillator.type = "sine";
-    gain.gain.setValueAtTime(.04, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + duration);
-    oscillator.connect(gain);
-    gain.connect(ctx.destination);
-    oscillator.start();
-    oscillator.stop(ctx.currentTime + duration);
+    osc.frequency.value = frequency;
+    osc.type = "sine";
+    gain.gain.setValueAtTime(0.04, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(); osc.stop(ctx.currentTime + duration);
   }catch(_){}
 }
 
 /* =========================================================
-   START / STOP / ENGINE
+   GAME ENGINE
 ========================================================= */
-function startGame({ mode = "progressive", mission = null } = {}){
+function startGame(mode){
   stopGame(false);
   state.mode = mode;
   state.score = 0;
   state.combo = 0;
   state.level = 1;
   state.correctHits = 0;
-  state.lives = 3;
-  state.timeLeft = 60;
-  state.elapsed = 0;
-  state.startTime = performance.now();
-  state.lastFrame = performance.now();
-  state.randomBucket = -1;
   state.running = true;
   state.bombReady = true;
+  state.startTime = performance.now();
+  state.lastFrame = performance.now();
 
-  if (mode === "random") {
-    state.mission = randomMission(null);
-  } else if (mode === "progressive") {
-    state.mission = missions[0]; // يبدأ بالأولية ثم ينتقل لقواعد أخرى مع تقدم المستويات
+  // تخصيص الحالة بناءً على النمط
+  if(mode === "hardcore"){
+    state.lives = 1; // خطأ واحد وتخسر
+    state.mission = missions[0];
+  } else if(mode === "time_attack"){
+    state.timeLeft = 60; // 60 ثانية
+    state.lives = 999;
+    state.mission = missions[0];
+  } else if(mode === "practice"){
+    state.lives = 999;
+    state.mission = missions[state.selectedMissionIndex];
   } else {
-    state.mission = mission || missions[state.selected] || missions[0];
+    // رحلة المستويات
+    state.lives = 3;
+    state.mission = missions[0];
   }
-  
+
   $("arena").innerHTML = "";
   state.targets.clear();
   $("gameOverlay").classList.remove("show");
   $("bomb").classList.remove("cool");
   show("game");
   updateHud();
-  beep(700, .08);
+  beep(700, 0.08);
 
-  // بدء حلقة السقوط والتوقيت
-  state.timer = setInterval(secondTick, 250);
+  state.timer = setInterval(gameTick, 250);
   state.raf = requestAnimationFrame(animateTargets);
 
-  // إطلاق أول عنصرين فوراً
   spawnTarget();
-  setTimeout(spawnTarget, 450);
+  setTimeout(spawnTarget, 400);
   scheduleNextSpawn();
 }
 
@@ -878,59 +831,46 @@ function stopGame(count=true){
   }
 }
 
-function secondTick(){
+function gameTick(){
   if(!state.running) return;
-  state.elapsed = (performance.now() - state.startTime) / 1000;
-  
-  if(state.mode === "quick"){
-    state.timeLeft = Math.max(0, 60 - Math.floor(state.elapsed));
+  const elapsed = (performance.now() - state.startTime) / 1000;
+
+  if(state.mode === "time_attack"){
+    state.timeLeft = Math.max(0, 60 - Math.floor(elapsed));
     updateHud();
     if(state.timeLeft <= 0){
       endGame(text("timeOver"));
       return;
     }
   }
-  
-  if(state.mode === "random"){
-    const bucket = Math.floor(state.elapsed / 20);
-    if(bucket !== state.randomBucket){
-      state.randomBucket = bucket;
-      if(bucket > 0) nextRandomMission();
+
+  // تبديل القاعدة كل 15 ثانية في سباق السرعة لزيادة التحدي
+  if(state.mode === "time_attack" || state.mode === "hardcore"){
+    const shiftIdx = Math.floor(elapsed / 15) % missions.length;
+    if(state.mission.id !== missions[shiftIdx].id){
+      state.mission = missions[shiftIdx];
+      feedback("🎯 " + missionName(state.mission), "lvl");
+      beep(800, 0.08);
+      updateHud();
     }
   }
 }
 
-function randomMission(exclude){
-  let m;
-  do { 
-    m = missions[rand(0, missions.length - 1)]; 
-  } while (exclude && m.id === exclude.id && missions.length > 1);
-  return m;
-}
-
-function nextRandomMission(){
-  if(!state.running || state.mode !== "random") return;
-  state.mission = randomMission(state.mission);
-  feedback(text("randomMission") + " : " + missionName(state.mission), "lvl");
-  beep(820, .1);
-  updateHud();
-}
-
-/* =========================================================
-   توليد الأرقام مع تدرج الصعوبة
-========================================================= */
 function scheduleNextSpawn(){
   if(!state.running) return;
-  // معدل الظهور يتسارع تدريجياً مع زيادة المستوى
-  // المستوى 1: كرة كل 1050ms (هادئ)، المستوى 5: كل 650ms
-  const baseInterval = Math.max(550, 1100 - (state.level - 1) * 70);
-  const jitter = rand(-80, 80);
+  // وتيرة التوليد تتكيف مع النمط والمستوى
+  let baseInterval = 1100;
+  if(state.mode === "hardcore") baseInterval = 750;
+  else if(state.mode === "time_attack") baseInterval = 850;
+  else if(state.mode === "practice") baseInterval = 1200;
+  else baseInterval = Math.max(550, 1100 - (state.level - 1) * 70);
+
   state.spawnTimeout = setTimeout(() => {
     if(state.running){
       spawnTarget();
       scheduleNextSpawn();
     }
-  }, baseInterval + jitter);
+  }, baseInterval + rand(-60, 60));
 }
 
 function spawnTarget(){
@@ -939,69 +879,42 @@ function spawnTarget(){
   const rect = arena.getBoundingClientRect();
   if(rect.width <= 0 || rect.height <= 0) return;
 
-  // تحديد القيمة: نضمن أن 40% إلى 50% من الكرات الظاهرة صحيحة دائماً
   const existingCorrect = [...state.targets.values()].filter(t => state.mission.test(t.value)).length;
-  let isCorrect = existingCorrect === 0 ? true : Math.random() < 0.45;
-  
+  const isCorrect = existingCorrect === 0 ? true : Math.random() < 0.45;
+
   let val;
-  const maxNumberForLevel = state.level === 1 ? 25 : (state.level === 2 ? 50 : (state.level === 3 ? 75 : 100));
+  const maxNumber = state.level === 1 ? 25 : (state.level === 2 ? 50 : 100);
 
   if(isCorrect){
     val = state.mission.make(state.level);
   } else {
-    // توليد رقم خاطئ غير مطابق للمهمة وضمن نطاق المستوى الحالي
     let tries = 0;
     do {
-      val = rand(1, maxNumberForLevel);
+      val = rand(1, maxNumber);
       tries++;
-    } while(state.mission.test(val) && tries < 60);
-    
-    // ملاذ أخير إذا صادف رقم صحيح
+    } while(state.mission.test(val) && tries < 50);
     if(state.mission.test(val)) val = 1;
   }
 
-  const size = Math.min(74, Math.max(56, rect.width * 0.16));
-  
-  // اختيار إحداثي X لا يتصادم مباشرة مع الكرات في الأعلى
+  const size = Math.min(70, Math.max(54, rect.width * 0.16));
   const minX = Math.ceil(size / 2) + 6;
   const maxX = Math.floor(rect.width - size / 2) - 6;
   let x = rand(minX, maxX);
-  
-  const topTargets = [...state.targets.values()].filter(t => t.y < size * 1.5);
-  for(let i = 0; i < 10; i++){
-    if(topTargets.some(t => Math.abs(t.x - x) < size * 1.1)){
-      x = rand(minX, maxX);
-    } else {
-      break;
-    }
-  }
 
   const el = document.createElement("button");
-  el.type = "button";
-  el.className = "target";
-  el.textContent = val;
-  el.style.width = size + "px";
-  el.style.height = size + "px";
-  el.style.left = x + "px";
-  el.style.top = (-size / 2) + "px";
+  el.type = "button"; el.className = "target"; el.textContent = val;
+  el.style.width = size + "px"; el.style.height = size + "px";
+  el.style.left = x + "px"; el.style.top = (-size / 2) + "px";
   arena.appendChild(el);
 
-  // حساب السرعة بناءً على المستوى:
-  // المستوى 1: تقطع الشاشة في ~6.2 ثوانٍ (سهل ومريح جداً للملاحظة)
-  // المستوى 5: تقطع الشاشة في ~3.8 ثوانٍ
-  const travelDuration = Math.max(2.2, 6.2 - (state.level - 1) * 0.45);
-  const speed = (rect.height / travelDuration) + rand(-10, 10);
+  // حساب سرعة السقوط
+  let travelSeconds = 6.0;
+  if(state.mode === "hardcore") travelSeconds = 3.6;
+  else if(state.mode === "practice") travelSeconds = 6.5;
+  else travelSeconds = Math.max(2.4, 6.0 - (state.level - 1) * 0.45);
 
-  const obj = {
-    id: state.nextId++,
-    value: val,
-    el,
-    x,
-    y: -size / 2,
-    size,
-    speed
-  };
-
+  const speed = (rect.height / travelSeconds) + rand(-8, 8);
+  const obj = { id: state.nextId++, value: val, el, x, y: -size / 2, size, speed };
   el.__nhObj = obj;
   state.targets.set(obj.id, obj);
 }
@@ -1010,7 +923,6 @@ function animateTargets(now){
   if(!state.running) return;
   const dt = Math.min(0.035, (now - (state.lastFrame || now)) / 1000);
   state.lastFrame = now;
-  
   const arena = $("arena");
   const h = arena.clientHeight;
 
@@ -1018,7 +930,6 @@ function animateTargets(now){
     target.y += target.speed * dt;
     target.el.style.top = target.y + "px";
 
-    // إذا خرجت الكرة من الأسفل
     if(target.y > h + target.size / 2 + 10){
       state.targets.delete(id);
       target.el.remove();
@@ -1028,68 +939,72 @@ function animateTargets(now){
   if(state.running) state.raf = requestAnimationFrame(animateTargets);
 }
 
-/* =========================================================
-   التحكم والنقر
-========================================================= */
 $("arena").addEventListener("pointerdown", event => {
   if(!state.running) return;
   const el = event.target.closest(".target");
-  if(!el) return;
-  const obj = el.__nhObj;
-  if(obj) hitTarget(obj);
+  if(!el || !el.__nhObj) return;
+  hitTarget(el.__nhObj);
   event.preventDefault();
 }, { passive:false });
 
 function hitTarget(target){
   if(!state.running || !state.targets.has(target.id)) return;
   state.targets.delete(target.id);
-  
-  const correct = state.mission.test(target.value);
-  if(correct){
+
+  const isCorrect = state.mission.test(target.value);
+
+  if(isCorrect){
     state.combo++;
     state.correctHits++;
     
-    // معادلة النقاط: تزداد مع الكومبو والمستوى
-    const gained = (10 + Math.min(15, state.combo) * 2) * state.level;
+    // احتساب النقاط
+    const multiplier = state.mode === "hardcore" ? 2.5 : 1;
+    const gained = Math.round((10 + Math.min(15, state.combo) * 2) * state.level * multiplier);
     state.score += gained;
-    
-    // التقدم في المستويات: كل 6 إجابات صحيحة يرتقي المستوى!
-    if(state.correctHits % 6 === 0 && state.level < 10){
+
+    // ترقية المستوى في نمط المستويات
+    if(state.mode === "levels" && state.correctHits % 5 === 0 && state.level < 10){
       state.level++;
-      beep(880, .12);
-      setTimeout(() => beep(1100, .15), 130);
+      beep(880, 0.12);
+      setTimeout(() => beep(1100, 0.15), 120);
       feedback(text("levelUp") + " " + state.level + " 🚀", "lvl");
-      
-      // في وضع المغامرة المتدرجة: تبديل المهمة أحياناً لإضافة تحدٍ جديد
-      if(state.mode === "progressive"){
-        const nextIdx = (state.level - 1) % missions.length;
-        state.mission = missions[nextIdx];
-      }
+      // تغيير القاعدة كل مستويين لإثراء التجربة
+      const nextMission = missions[(state.level - 1) % missions.length];
+      state.mission = nextMission;
     } else {
       feedback(text("correct") + " +" + gained, "good");
-      beep(700, .05);
+      beep(700, 0.05);
     }
 
     target.el.classList.add("correct-hit");
-    setTimeout(() => target.el.remove(), 180);
+    setTimeout(() => target.el.remove(), 160);
 
     if(state.combo > state.bestCombo){
       state.bestCombo = state.combo;
       localStorage.setItem("nh_combo", state.bestCombo);
     }
   } else {
-    // خطأ
+    // إجابة خاطئة
     state.combo = 0;
-    state.lives = Math.max(0, state.lives - 1);
     target.el.classList.add("wrong", "wrong-hit");
-    setTimeout(() => target.el.remove(), 350);
-    feedback(text("wrong"), "bad");
-    beep(180, .12);
+    setTimeout(() => target.el.remove(), 320);
+    beep(180, 0.12);
 
-    if(state.lives <= 0){
-      updateHud();
-      endGame(text("gameOver"));
-      return;
+    if(state.mode === "time_attack"){
+      // خصم وقت بدلاً من فقدان القلوب
+      state.startTime -= 3000;
+      feedback(text("penalty"), "bad");
+    } else if(state.mode === "practice"){
+      feedback(text("wrong"), "bad");
+    } else {
+      // نقصان قلب
+      state.lives--;
+      feedback(text("wrong"), "bad");
+      if(state.lives <= 0){
+        updateHud();
+        endGame(text("gameOver"));
+        return;
+      }
     }
   }
   updateHud();
@@ -1103,11 +1018,11 @@ function useBomb(){
 
   for(const t of state.targets.values()){
     t.el.classList.add("correct-hit");
-    setTimeout(() => t.el.remove(), 160);
+    setTimeout(() => t.el.remove(), 150);
   }
   state.targets.clear();
   toast(text("bombMsg"));
-  beep(300, .15);
+  beep(300, 0.15);
 
   state.bombCooldown = setTimeout(() => {
     if(state.running){
@@ -1115,7 +1030,7 @@ function useBomb(){
       $("bomb").classList.remove("cool");
       updateHud();
     }
-  }, 7000);
+  }, 6000);
 }
 
 function endGame(reason){
@@ -1131,7 +1046,7 @@ function endGame(reason){
   $("againBtn").textContent = text("again");
   $("menuBtn").textContent = text("menu");
   $("gameOverlay").classList.add("show");
-  beep(130, .25);
+  beep(130, 0.25);
   updateHome();
 }
 
@@ -1143,105 +1058,57 @@ function exitGame(){
 }
 
 /* =========================================================
-   MODALS & SETTINGS
+   UI EVENTS & ROUTING
 ========================================================= */
-function openResetModal(){
-  $("resetTitle").textContent = text("resetTitle");
-  $("resetMessage").textContent = text("resetMessage");
-  $("resetCancel").textContent = text("cancel");
-  $("resetConfirm").textContent = text("resetConfirm");
-  $("resetModal").classList.add("show");
-}
+$("levelsBtn").onclick = () => startGame("levels");
+$("timeAttackBtn").onclick = () => startGame("time_attack");
+$("hardcoreBtn").onclick = () => startGame("hardcore");
 
-function closeResetModal(){ $("resetModal").classList.remove("show"); }
-
-function resetStats(){
-  state.best = 0; state.games = 0; state.bestCombo = 0;
-  localStorage.removeItem("nh_best");
-  localStorage.removeItem("nh_games");
-  localStorage.removeItem("nh_combo");
-  updateHome();
-  closeResetModal();
-  toast(text("resetDone"));
-}
-
-function setLang(lang){
-  state.lang = lang;
-  localStorage.setItem("nh_lang", lang);
-  updateHome();
-  buildMissions();
-  updateHow();
-  if(state.mission) updateHud();
-}
-
-/* =========================================================
-   EVENT LISTENERS
-========================================================= */
-// ابدأ اللعب: وضع المراحل المتدرجة الصعوبة تلقائياً
-$("playBtn").onclick = () => startGame({ mode: "progressive" });
-
-// الصيد السريع
-$("quickBtn").onclick = () => openMissionChoice("quick");
-
-// تدريب حر
-$("missionsBtn").onclick = () => openMissionChoice("free");
-
-// التحدي العشوائي
-$("randomBtn").onclick = () => startGame({ mode: "random" });
-
-// وضع البقاء
-$("survivalBtn").onclick = () => openMissionChoice("survival");
-
-$("howBtn").onclick = () => { updateHow(); show("how"); };
-$("infoTopBtn").onclick = () => { updateHow(); show("how"); };
-$("missionsBack").onclick = () => show("home");
-$("howBack").onclick = () => show("home");
-$("howPlay").onclick = () => startGame({ mode: "progressive" });
-
-$("startSelected").onclick = () => {
-  const selectedMission = missions[state.selected];
-  if(state.choiceMode === "quick"){
-    startGame({ mode: "quick", mission: selectedMission });
-  } else if(state.choiceMode === "survival"){
-    startGame({ mode: "survival", mission: selectedMission });
-  } else {
-    startGame({ mode: "free", mission: selectedMission });
-  }
+$("practiceBtn").onclick = () => {
+  buildMissionsList();
+  show("missions");
 };
+
+$("startSelected").onclick = () => startGame("practice");
+$("missionsBack").onclick = () => show("home");
+$("howBtn").onclick = () => show("how");
+$("infoTopBtn").onclick = () => show("how");
+$("howBack").onclick = () => show("home");
+$("howPlay").onclick = () => startGame("levels");
 
 $("bomb").onclick = useBomb;
 $("exitGame").onclick = exitGame;
-$("againBtn").onclick = () => {
-  startGame({ mode: state.mode, mission: state.mission });
-};
-$("menuBtn").onclick = () => {
-  stopGame(false);
-  $("gameOverlay").classList.remove("show");
-  show("home");
-  updateHome();
-};
+$("againBtn").onclick = () => startGame(state.mode);
+$("menuBtn").onclick = exitGame;
 
 $("soundBtn").onclick = () => {
   state.sound = !state.sound;
   localStorage.setItem("nh_sound", state.sound ? "on" : "off");
   $("soundBtn").innerHTML = state.sound ? '<i class="fa-solid fa-volume-high"></i>' : '<i class="fa-solid fa-volume-xmark"></i>';
-  if(state.sound) beep(600, .06);
+  if(state.sound) beep(600, 0.06);
 };
 
 $("langBtn").onclick = () => {
-  setLang(state.lang === "ar" ? "fr" : (state.lang === "fr" ? "en" : "ar"));
+  const nextLang = state.lang === "ar" ? "fr" : (state.lang === "fr" ? "en" : "ar");
+  state.lang = nextLang;
+  localStorage.setItem("nh_lang", nextLang);
+  updateHome();
+  buildMissionsList();
 };
 
-$("resetBtn").onclick = openResetModal;
-$("resetCancel").onclick = closeResetModal;
-$("resetConfirm").onclick = resetStats;
-$("resetModal").onclick = (e) => { if(e.target === $("resetModal")) closeResetModal(); };
+$("resetBtn").onclick = () => $("resetModal").classList.add("show");
+$("resetCancel").onclick = () => $("resetModal").classList.remove("show");
+$("resetConfirm").onclick = () => {
+  state.best = 0; state.games = 0; state.bestCombo = 0;
+  localStorage.removeItem("nh_best"); localStorage.removeItem("nh_games"); localStorage.removeItem("nh_combo");
+  updateHome();
+  $("resetModal").classList.remove("show");
+  toast(text("resetDone"));
+};
 
-// INITIALIZE
-setLang(state.lang);
+// INITIALIZATION
 updateHome();
-updateHow();
-buildMissions();
+buildMissionsList();
 
 })();
 </script>
